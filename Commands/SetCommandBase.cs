@@ -7,12 +7,14 @@ using Newtonsoft.Json;
 namespace TypedRest.Commands
 {
     /// <summary>
-    /// Base class for building commands operating on a <typeparamref name="TEndpoint"/>.
+    /// Base class for building commands operating on a <typeparamref name="TEndpoint"/> using <typeparamref name="TItem"/>s.
     /// </summary>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IRestSet{TEntity}"/> to operate on.</typeparam>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    public class SetCommandBase<TEndpoint, TEntity> : EndpointCommand
-        where TEndpoint : IRestSet<TEntity>
+    /// <typeparam name="TItem">The specific type of <see cref="IRestItem{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="RestSetBase{TItem,TEntity}"/> to operate on.</typeparam>
+    public class SetCommandBase<TEntity, TItem, TEndpoint> : EndpointCommand
+        where TItem : class, IRestItem<TEntity>
+        where TEndpoint : RestSetBase<TEntity, TItem>
     {
         /// <summary>
         /// The REST endpoint this command operates on.

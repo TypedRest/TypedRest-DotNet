@@ -63,12 +63,12 @@
     <Compile Include="Commands\SetCommandBase.cs" />
     <Compile Include="IRestEndpoint.cs" />
     <Compile Include="IRestItem.cs" />
-    <Compile Include="IRestSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestEndpoint.cs" />
     <Compile Include="RestEntryPoint.cs" />
     <Compile Include="RestItem.cs" />
     <Compile Include="RestSet.cs" />
+    <Compile Include="RestSetBase.cs" />
     <Compile Include="UriClientExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single entity.
+    /// REST endpoint that represents a single <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class RestItem<TEntity> : RestEndpoint, IRestItem<TEntity>
