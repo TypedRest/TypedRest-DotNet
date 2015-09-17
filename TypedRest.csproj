@@ -55,6 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\EndpointCommand.cs" />
+    <Compile Include="Commands\EntryPointCommand.cs" />
+    <Compile Include="Commands\IEndpointCommand.cs" />
+    <Compile Include="Commands\ItemCommand.cs" />
+    <Compile Include="Commands\SetCommand.cs" />
+    <Compile Include="Commands\SetCommandBase.cs" />
     <Compile Include="IRestEndpoint.cs" />
     <Compile Include="IRestItem.cs" />
     <Compile Include="IRestSet.cs" />
