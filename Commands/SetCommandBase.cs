@@ -7,14 +7,14 @@ using Newtonsoft.Json;
 namespace TypedRest.Commands
 {
     /// <summary>
-    /// Base class for building commands operating on a <typeparamref name="TEndpoint"/> using <typeparamref name="TItem"/>s.
+    /// Base class for building commands operating on a <typeparamref name="TEndpoint"/> using <typeparamref name="TElement"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    /// <typeparam name="TItem">The specific type of <see cref="IRestItem{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="RestSetBase{TItem,TEntity}"/> to operate on.</typeparam>
-    public class SetCommandBase<TEntity, TItem, TEndpoint> : EndpointCommand
-        where TItem : class, IRestItem<TEntity>
-        where TEndpoint : RestSetBase<TEntity, TItem>
+    /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="RestSetBase{TElement,TEntity}"/> to operate on.</typeparam>
+    public class SetCommandBase<TEntity, TElement, TEndpoint> : EndpointCommand
+        where TElement : class, IRestElement<TEntity>
+        where TEndpoint : RestSetBase<TEntity, TElement>
     {
         /// <summary>
         /// The REST endpoint this command operates on.
@@ -49,11 +49,11 @@ namespace TypedRest.Commands
         }
 
         /// <summary>
-        /// Creates a sub-<see cref="EndpointCommand"/> based on the given <paramref name="id"/>, usually a sub-type of <see cref="ItemCommand{TEntity}"/>.
+        /// Creates a sub-<see cref="EndpointCommand"/> based on the given <paramref name="id"/>, usually a sub-type of <see cref="ElementCommand{TEntity}"/>.
         /// </summary>
         protected virtual EndpointCommand GetSubCommand(object id)
         {
-            return new ItemCommand<TEntity>(Endpoint[id]);
+            return new ElementCommand<TEntity>(Endpoint[id]);
         }
 
         /// <summary>

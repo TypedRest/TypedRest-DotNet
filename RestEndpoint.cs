@@ -20,8 +20,8 @@ namespace TypedRest
         /// <summary>
         /// Creates a new REST endpoint with an absolute URI.
         /// </summary>
-        /// <param name="httpClient">The HTTP client used to communicate with the remote item.</param>
-        /// <param name="uri">The HTTP URI of the remote item.</param>
+        /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
+        /// <param name="uri">The HTTP URI of the remote element.</param>
         protected RestEndpoint(HttpClient httpClient, Uri uri)
         {
             HttpClient = httpClient;

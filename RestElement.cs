@@ -9,14 +9,14 @@ namespace TypedRest
     /// REST endpoint that represents a single <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class RestItem<TEntity> : RestEndpoint, IRestItem<TEntity>
+    public class RestElement<TEntity> : RestEndpoint, IRestElement<TEntity>
     {
         /// <summary>
-        /// Creates a new item endpoint.
+        /// Creates a new element endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        public RestItem(IRestEndpoint parent, Uri relativeUri)
+        public RestElement(IRestEndpoint parent, Uri relativeUri)
             : base(parent, relativeUri)
         {
         }
@@ -29,9 +29,9 @@ namespace TypedRest
             return await response.Content.ReadAsAsync<TEntity>(cancellationToken);
         }
 
-        public virtual async Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HttpClient.PutAsJsonAsync(Uri, item, cancellationToken);
+            var response = await HttpClient.PutAsJsonAsync(Uri, entity, cancellationToken);
             await HandleErrors(response);
         }
 

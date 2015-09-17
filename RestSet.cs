@@ -3,10 +3,10 @@
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a set of <typeparamref name="TEntity"/>s providing <see cref="RestItem{TEntity}"/>s.
+    /// REST endpoint that represents a set of <typeparamref name="TEntity"/>s as <see cref="RestElement{TEntity}"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class RestSet<TEntity> : RestSetBase<TEntity, RestItem<TEntity>>
+    public class RestSet<TEntity> : RestSetBase<TEntity, RestElement<TEntity>>
     {
         public RestSet(IRestEndpoint parent, Uri relativeUri) : base(parent, relativeUri)
         {
@@ -16,9 +16,9 @@ namespace TypedRest
         {
         }
 
-        protected override RestItem<TEntity> GetItem(Uri relativeUri)
+        protected override RestElement<TEntity> GetElement(Uri relativeUri)
         {
-            return new RestItem<TEntity>(this, relativeUri);
+            return new RestElement<TEntity>(this, relativeUri);
         }
     }
 }

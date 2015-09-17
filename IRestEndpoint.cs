@@ -9,12 +9,12 @@ namespace TypedRest
     public interface IRestEndpoint
     {
         /// <summary>
-        /// The HTTP client used to communicate with the remote item.
+        /// The HTTP client used to communicate with the remote resource.
         /// </summary>
         HttpClient HttpClient { get; }
 
         /// <summary>
-        /// The HTTP URI of the remote item.
+        /// The HTTP URI of the remote resource.
         /// </summary>
         Uri Uri { get; }
     }

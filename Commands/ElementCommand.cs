@@ -6,21 +6,21 @@ using Newtonsoft.Json;
 namespace TypedRest.Commands
 {
     /// <summary>
-    /// Command operating on a <see cref="IRestItem{TEntity}"/>.
+    /// Command operating on a <see cref="IRestElement{TEntity}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the <see cref="IRestItem{TEntity}"/> represents.</typeparam>
-    public class ItemCommand<TEntity> : EndpointCommand
+    /// <typeparam name="TEntity">The type of entity the <see cref="IRestElement{TEntity}"/> represents.</typeparam>
+    public class ElementCommand<TEntity> : EndpointCommand
     {
         /// <summary>
         /// The REST endpoint this command operates on.
         /// </summary>
-        protected readonly new IRestItem<TEntity> Endpoint;
+        protected readonly new IRestElement<TEntity> Endpoint;
 
         /// <summary>
-        /// Creates a new REST item command.
+        /// Creates a new REST element command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public ItemCommand(IRestItem<TEntity> endpoint) : base(endpoint)
+        public ElementCommand(IRestElement<TEntity> endpoint) : base(endpoint)
         {
             Endpoint = endpoint;
         }
