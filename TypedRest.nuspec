@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>TypedRest</id>
+		<version>$version$</version>
+		<authors>1&amp;1 Internet SE</authors>
+		<projectUrl>https://github.com/1and1-webhosting-infrastructure/TypedRest</projectUrl>
+		<description>TypedRest helps you build type-safe fluent-style REST API clients.</description>
+		<summary>Build type-safe fluent-style REST API clients</summary>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<tags>Typed REST</tags>
+	</metadata>
+</package>
