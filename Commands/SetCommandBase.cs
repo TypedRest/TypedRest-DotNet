@@ -11,10 +11,10 @@ namespace TypedRest.Commands
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="RestSetBase{TElement,TEntity}"/> to operate on.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="IRestSet{TElement,TEntity}"/> to operate on.</typeparam>
     public class SetCommandBase<TEntity, TElement, TEndpoint> : EndpointCommand
         where TElement : class, IRestElement<TEntity>
-        where TEndpoint : RestSetBase<TEntity, TElement>
+        where TEndpoint : IRestSet<TEntity, TElement>
     {
         /// <summary>
         /// The REST endpoint this command operates on.
