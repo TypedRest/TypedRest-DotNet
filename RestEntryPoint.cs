@@ -5,9 +5,9 @@ using System.Net.Http;
 namespace TypedRest
 {
     /// <summary>
-    /// Entry point to a REST interface.
+    /// Entry point to a REST interface. Derive from this class and add your own set of child-<see cref="RestEndpoint"/>s as properties.
     /// </summary>
-    public abstract class RestEntryPoint : RestEndpoint
+    public class RestEntryPoint : RestEndpoint
     {
         /// <summary>
         /// Creates a new REST interface.

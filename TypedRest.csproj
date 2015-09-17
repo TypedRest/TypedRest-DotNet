@@ -55,6 +55,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRestEndpoint.cs" />
+    <Compile Include="IRestItem.cs" />
+    <Compile Include="IRestSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestEndpoint.cs" />
     <Compile Include="RestEntryPoint.cs" />

@@ -11,16 +11,10 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint, i.e. a remote HTTP resource.
     /// </summary>
-    public abstract class RestEndpoint
+    public abstract class RestEndpoint : IRestEndpoint
     {
-        /// <summary>
-        /// The HTTP client used to communicate with the remote item.
-        /// </summary>
-        protected readonly HttpClient HttpClient;
+        public HttpClient HttpClient { get; }
 
-        /// <summary>
-        /// The HTTP URI of the remote item.
-        /// </summary>
         public Uri Uri { get; }
 
         /// <summary>
@@ -39,7 +33,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected RestEndpoint(RestEndpoint parent, Uri relativeUri)
+        protected RestEndpoint(IRestEndpoint parent, Uri relativeUri)
             : this(parent.HttpClient, new Uri(parent.Uri, relativeUri))
         {
         }
