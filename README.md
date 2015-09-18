@@ -38,7 +38,7 @@ You can then perform CRUD operations like this:
 ```cs
 var server = new SampleRestEntryPoint(new Uri("http://myservice/api/"));
 var packages = server.Packages.ReadAllAsync();
-var resource = await server.Packages.CreateAsync(new Package {...});
+var element = await server.Packages.CreateAsync(new Package {...});
 var package = await server.Packages[1].ReadAsync();
 await server.Packages[1].UpdateAsync(package);
 await server.Packages[1].DeleteAsync();
