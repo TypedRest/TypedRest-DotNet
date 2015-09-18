@@ -39,6 +39,16 @@ namespace TypedRest
         }
 
         /// <summary>
+        /// Creates a new REST endpoint with a relative URI.
+        /// </summary>
+        /// <param name="parent">The parent endpoint containing this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
+        protected RestEndpoint(IRestEndpoint parent, string relativeUri)
+            : this(parent, new Uri(relativeUri, UriKind.Relative))
+        {
+        }
+
+        /// <summary>
         /// Sends an HTTP POST with an empty body to a <paramref name="relativeUri"/> below the <see cref="Uri"/>.
         /// </summary>
         protected async Task CommandPostAsync(Uri relativeUri)

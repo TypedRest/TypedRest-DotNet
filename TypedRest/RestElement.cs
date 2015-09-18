@@ -21,6 +21,16 @@ namespace TypedRest
         {
         }
 
+        /// <summary>
+        /// Creates a new element endpoint.
+        /// </summary>
+        /// <param name="parent">The parent endpoint containing this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
+        public RestElement(IRestEndpoint parent, string relativeUri)
+            : base(parent, relativeUri)
+        {
+        }
+
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.GetAsync(Uri, cancellationToken);

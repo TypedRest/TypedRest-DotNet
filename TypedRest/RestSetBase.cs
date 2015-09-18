@@ -31,6 +31,7 @@ namespace TypedRest
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
         protected RestSetBase(IRestEndpoint parent, string relativeUri)
+            // Use this instead of base to ensure trailing slash gets appended for REST Set URIs
             : this(parent, new Uri(relativeUri, UriKind.Relative))
         {
         }
