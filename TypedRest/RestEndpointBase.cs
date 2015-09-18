@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint, i.e. a remote HTTP resource.
+    /// Base class for building REST endpoints, i.e. remote HTTP resources.
     /// </summary>
-    public abstract class RestEndpoint : IRestEndpoint
+    public abstract class RestEndpointBase : IRestEndpoint
     {
         public HttpClient HttpClient { get; private set; }
 
@@ -22,7 +22,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="uri">The HTTP URI of the remote element.</param>
-        protected RestEndpoint(HttpClient httpClient, Uri uri)
+        protected RestEndpointBase(HttpClient httpClient, Uri uri)
         {
             HttpClient = httpClient;
             Uri = uri;
@@ -33,7 +33,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected RestEndpoint(IRestEndpoint parent, Uri relativeUri)
+        protected RestEndpointBase(IRestEndpoint parent, Uri relativeUri)
             : this(parent.HttpClient, new Uri(parent.Uri.EnsureTrailingSlash(), relativeUri))
         {
         }
@@ -43,7 +43,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected RestEndpoint(IRestEndpoint parent, string relativeUri)
+        protected RestEndpointBase(IRestEndpoint parent, string relativeUri)
             : this(parent, new Uri(relativeUri, UriKind.Relative))
         {
         }
@@ -82,7 +82,7 @@ namespace TypedRest
         {
             if (response.IsSuccessStatusCode) return;
 
-            var message = (response.Content.Headers.ContentType.MediaType == "application/json")
+            string message = (response.Content.Headers.ContentType.MediaType == "application/json")
                 ? JsonConvert.DeserializeAnonymousType(await response.Content.ReadAsStringAsync(), new {Message = ""}).Message
                 : response.ReasonPhrase;
 

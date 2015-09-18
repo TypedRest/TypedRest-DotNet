@@ -12,7 +12,7 @@ namespace TypedRest
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class RestSetBase<TEntity, TElement> : RestEndpoint, IRestSet<TEntity, TElement>
+    public abstract class RestSetBase<TEntity, TElement> : RestEndpointBase, IRestSet<TEntity, TElement>
         where TElement : class, IRestElement<TEntity>
     {
         /// <summary>

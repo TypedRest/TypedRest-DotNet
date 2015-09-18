@@ -60,7 +60,7 @@
     <Compile Include="IRestEndpoint.cs" />
     <Compile Include="IRestElement.cs" />
     <Compile Include="IRestSet.cs" />
-    <Compile Include="RestEndpoint.cs" />
+    <Compile Include="RestEndpointBase.cs" />
     <Compile Include="RestEntryPoint.cs" />
     <Compile Include="RestElement.cs" />
     <Compile Include="RestSet.cs" />

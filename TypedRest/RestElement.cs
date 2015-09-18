@@ -9,7 +9,7 @@ namespace TypedRest
     /// REST endpoint that represents a single <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class RestElement<TEntity> : RestEndpoint, IRestElement<TEntity>
+    public class RestElement<TEntity> : RestEndpointBase, IRestElement<TEntity>
     {
         /// <summary>
         /// Creates a new element endpoint.
