@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -36,7 +37,8 @@ namespace TypedRest.Commands
             switch (args[0].ToLowerInvariant())
             {
                 case "update":
-                    await Endpoint.UpdateAsync(InputEntity());
+                    var updatedEntity = InputEntity(args.Skip(1).ToList());
+                    await Endpoint.UpdateAsync(updatedEntity);
                     break;
 
                 case "delete":
@@ -44,16 +46,16 @@ namespace TypedRest.Commands
                     break;
 
                 default:
-                    throw new ArgumentException("Unknown argument");
+                    throw new ArgumentException($"Unknown command: {args[0]}");
             }
         }
 
         /// <summary>
-        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. via JSON on the command-line.
+        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
-        protected virtual TEntity InputEntity()
+        protected virtual TEntity InputEntity(IReadOnlyList<string> args)
         {
-            return JsonConvert.DeserializeObject<TEntity>(Console.ReadLine());
+            return JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
         }
 
         /// <summary>

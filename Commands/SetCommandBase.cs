@@ -38,7 +38,8 @@ namespace TypedRest.Commands
             }
             else if (args[0].ToLowerInvariant() == "create")
             {
-                var newResource = await Endpoint.CreateAsync(InputEntity());
+                var newEntity = InputEntity(args.Skip(1).ToList());
+                var newResource = await Endpoint.CreateAsync(newEntity);
                 Console.WriteLine(newResource.Uri);
             }
             else
@@ -57,11 +58,11 @@ namespace TypedRest.Commands
         }
 
         /// <summary>
-        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. via JSON on the command-line.
+        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
-        protected virtual TEntity InputEntity()
+        protected virtual TEntity InputEntity(IReadOnlyList<string> args)
         {
-            return JsonConvert.DeserializeObject<TEntity>(Console.ReadLine());
+            return JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
         }
 
         /// <summary>
