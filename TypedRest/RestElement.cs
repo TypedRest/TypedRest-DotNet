@@ -24,7 +24,7 @@ namespace TypedRest
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.GetAsync(Uri, cancellationToken);
-            await HandleErrors(response);
+            await HandleErrorsAsync(response);
 
             return await response.Content.ReadAsAsync<TEntity>(cancellationToken);
         }
@@ -32,13 +32,13 @@ namespace TypedRest
         public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.PutAsJsonAsync(Uri, entity, cancellationToken);
-            await HandleErrors(response);
+            await HandleErrorsAsync(response);
         }
 
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.DeleteAsync(Uri, cancellationToken);
-            await HandleErrors(response);
+            await HandleErrorsAsync(response);
         }
     }
 }

@@ -39,6 +39,28 @@ namespace TypedRest
         }
 
         /// <summary>
+        /// Sends an HTTP POST with an empty body to a <paramref name="relativeUri"/> below the <see cref="Uri"/>.
+        /// </summary>
+        protected async Task CommandPostAsync(Uri relativeUri)
+        {
+            var response = await HttpClient.PostAsync(
+                new Uri(Uri.EnsureTrailingSlash(), relativeUri),
+                new StringContent(""));
+            await HandleErrorsAsync(response);
+        }
+
+        /// <summary>
+        /// Sends an HTTP POST with an empty body to a <paramref name="relativeUri"/> below the <see cref="Uri"/>.
+        /// </summary>
+        protected async Task CommandPostAsync(string relativeUri)
+        {
+            var response = await HttpClient.PostAsync(
+                new Uri(Uri.EnsureTrailingSlash(), relativeUri),
+                new StringContent(""));
+            await HandleErrorsAsync(response);
+        }
+
+        /// <summary>
         /// Wraps HTTP status codes in appropriate <see cref="Exception"/> types.
         /// </summary>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
@@ -46,7 +68,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected static async Task HandleErrors(HttpResponseMessage response)
+        protected static async Task HandleErrorsAsync(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode) return;
 

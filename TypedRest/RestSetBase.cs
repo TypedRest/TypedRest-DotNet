@@ -44,7 +44,7 @@ namespace TypedRest
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.GetAsync(Uri, cancellationToken);
-            await HandleErrors(response);
+            await HandleErrorsAsync(response);
 
             return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken);
         }
@@ -53,7 +53,7 @@ namespace TypedRest
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.PostAsJsonAsync(Uri, entity, cancellationToken);
-            await HandleErrors(response);
+            await HandleErrorsAsync(response);
 
             return (response.StatusCode == HttpStatusCode.Created)
                 ? GetElement(response.Headers.Location)
