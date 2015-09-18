@@ -12,22 +12,16 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IRestSet{TElement,TEntity}"/> to operate on.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public class SetCommandBase<TEntity, TEndpoint, TElement> : EndpointCommand
+    public class SetCommandBase<TEntity, TEndpoint, TElement> : EndpointCommand<TEndpoint>
         where TEndpoint : IRestSet<TEntity, TElement>
         where TElement : class, IRestElement<TEntity>
     {
-        /// <summary>
-        /// The REST endpoint this command operates on.
-        /// </summary>
-        protected new readonly TEndpoint Endpoint;
-
         /// <summary>
         /// Creates a new REST set command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         protected SetCommandBase(TEndpoint endpoint) : base(endpoint)
         {
-            Endpoint = endpoint;
         }
 
         public override async Task ExecuteAsync(IReadOnlyList<string> args)
@@ -50,9 +44,9 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Creates a sub-<see cref="EndpointCommand"/> based on the given <paramref name="id"/>, usually a sub-type of <see cref="ElementCommand{TEntity}"/>.
+        /// Creates a sub-<see cref="IEndpointCommand"/> based on the given <paramref name="id"/>, usually a sub-type of <see cref="ElementCommand{TEntity}"/>.
         /// </summary>
-        protected virtual EndpointCommand GetSubCommand(object id)
+        protected virtual IEndpointCommand GetSubCommand(object id)
         {
             return new ElementCommand<TEntity>(Endpoint[id]);
         }

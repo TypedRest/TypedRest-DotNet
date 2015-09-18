@@ -10,20 +10,14 @@ namespace TypedRest.CommandLine
     /// Command operating on a <see cref="IRestElement{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <see cref="IRestElement{TEntity}"/> represents.</typeparam>
-    public class ElementCommand<TEntity> : EndpointCommand
+    public class ElementCommand<TEntity> : EndpointCommand<IRestElement<TEntity>>
     {
-        /// <summary>
-        /// The REST endpoint this command operates on.
-        /// </summary>
-        protected readonly new IRestElement<TEntity> Endpoint;
-
         /// <summary>
         /// Creates a new REST element command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         public ElementCommand(IRestElement<TEntity> endpoint) : base(endpoint)
         {
-            Endpoint = endpoint;
         }
 
         public override async Task ExecuteAsync(IReadOnlyList<string> args)
