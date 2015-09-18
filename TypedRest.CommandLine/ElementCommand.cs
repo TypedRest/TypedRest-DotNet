@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TypedRest.Commands
+namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Command operating on a <see cref="IRestElement{TEntity}"/>.
@@ -46,7 +46,7 @@ namespace TypedRest.Commands
                     break;
 
                 default:
-                    throw new ArgumentException($"Unknown command: {args[0]}");
+                    throw new ArgumentException("Unknown command: " +args[0]);
             }
         }
 

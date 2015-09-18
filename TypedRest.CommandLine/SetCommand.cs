@@ -1,4 +1,4 @@
-﻿namespace TypedRest.Commands
+﻿namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Command operating on a <see cref="RestSet{TEntity}"/> using <see cref="RestElement{TEntity}"/>s.

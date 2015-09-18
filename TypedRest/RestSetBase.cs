@@ -35,7 +35,10 @@ namespace TypedRest
         {
         }
 
-        public TElement this[object id] => GetElement(new Uri(id.ToString(), UriKind.Relative));
+        public TElement this[object id]
+        {
+            get { return GetElement(new Uri(id.ToString(), UriKind.Relative)); }
+        }
 
         public virtual async Task<IEnumerable<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))

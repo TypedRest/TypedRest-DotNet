@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TypedRest.Commands
+namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Entry point for commands operating on a REST API. Internally creates sub-<see cref="EndpointCommand"/>s.

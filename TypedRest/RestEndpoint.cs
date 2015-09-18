@@ -13,9 +13,9 @@ namespace TypedRest
     /// </summary>
     public abstract class RestEndpoint : IRestEndpoint
     {
-        public HttpClient HttpClient { get; }
+        public HttpClient HttpClient { get; private set; }
 
-        public Uri Uri { get; }
+        public Uri Uri { get; private set; }
 
         /// <summary>
         /// Creates a new REST endpoint with an absolute URI.

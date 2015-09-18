@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TypedRest.Commands
+namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Command operating on an <see cref="IRestEndpoint"/>.

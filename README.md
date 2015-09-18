@@ -2,8 +2,9 @@
 
 TypedRest helps you build type-safe fluent-style REST API clients.
 
-NuGet package:
+NuGet packages:
 * [TypedRest](https://www.nuget.org/packages/TypedRest/)
+* [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
 
 
 ## Usecase sample
@@ -20,15 +21,15 @@ class Package
 
 ## Getting started
 
-Install the `TypedRest` NuGet package in your REST client project. You can then use the classes `RestEntryPoint`, `RestElementSet` and `RestElement` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
+Install the `TypedRest` NuGet package in your REST client project. You can then use the classes `RestEntryPoint`, `RestSet` and `RestElement` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
 ```cs
 class SampleRestEntryPoint : RestEntryPoint
 {
-  public RestElementSet<Package> Packages { get; }
+  public RestSet<Package> Packages { get; }
 
   public SampleRestEntryPoint([Uri uri) : base(uri)
   {
-    Packages = new RestElementSet<Package>(this, relativeUri: "packages");
+    Packages = new RestSet<Package>(this, relativeUri: "packages");
   }
 }
 ```
@@ -42,3 +43,8 @@ var package = await server.Packages[1].ReadAsync();
 await server.Packages[1].UpdateAsync(package);
 await server.Packages[1].DeleteAsync();
 ```
+
+
+## Build command-line clients
+
+Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryPointCommand`, `SetCommand` and `ElementCommand` to build command objects that parse arguments and operate on `RestEntryPoint`s, `RestSet`s and `RestElement`s.

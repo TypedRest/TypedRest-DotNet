@@ -10,8 +10,11 @@ nuget restore TypedRest.sln
 msbuild TypedRest.sln /nologo /t:Rebuild /p:Configuration=Release
 if errorlevel 1 pause
 
-::Create NuGet package
-nuget pack TypedRest.csproj -Symbols -Properties Configuration=Release
+::Create NuGet packages
+mkdir build\Packages
+nuget pack TypedRest\TypedRest.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
+if errorlevel 1 pause
+nuget pack TypedRest.CommandLine\TypedRest.CommandLine.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
 if errorlevel 1 pause
 
 goto end
