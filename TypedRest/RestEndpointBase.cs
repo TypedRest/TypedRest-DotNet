@@ -56,7 +56,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected async Task CommandPostAsync(Uri relativeUri)
+        protected async Task ExecutePostAsync(Uri relativeUri)
         {
             var response = await HttpClient.PostAsync(
                 new Uri(Uri.EnsureTrailingSlash(), relativeUri),
@@ -72,7 +72,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected async Task CommandPostAsync(string relativeUri)
+        protected async Task ExecutePostAsync(string relativeUri)
         {
             var response = await HttpClient.PostAsync(
                 new Uri(Uri.EnsureTrailingSlash(), relativeUri),
