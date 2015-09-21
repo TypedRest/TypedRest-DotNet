@@ -17,7 +17,7 @@ namespace TypedRest
         where TElement : class, IRestElement<TEntity>
     {
         /// <summary>
-        /// Returns a <see cref="RestElement{TEntity}"/> for a specific element of this set. Does not perform any network traffic yet.
+        /// Returns a <typeparamref name="TElement"/> for a specific element of this set. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="id">The ID used to identify the element within the set.</param>
         TElement this[object id] { get; }
@@ -37,7 +37,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <returns>The newly created <see cref="RestElement{TEntity}"/>; may be <see langword="null"/> if the server deferred creating the resource.</returns>
+        /// <returns>The newly created <typeparamref name="TEntity"/>; may be <see langword="null"/> if the server deferred creating the resource.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>

@@ -65,7 +65,7 @@
     <Compile Include="RestElement.cs" />
     <Compile Include="RestSet.cs" />
     <Compile Include="RestSetBase.cs" />
-    <Compile Include="UriClientExtensions.cs" />
+    <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -62,7 +62,7 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Instantiates a child <typeparamref name="TEntity"/> for an element in this set.
+        /// Instantiates a <typeparamref name="TElement"/> for an element in this set.
         /// </summary>
         protected abstract TElement GetElement(Uri relativeUri);
     }

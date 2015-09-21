@@ -1,6 +1,6 @@
 # TypedRest
 
-TypedRest helps you build type-safe fluent-style REST API clients.
+TypedRest helps you build type-safe fluent-style JSON REST API clients.
 
 NuGet packages:
 * [TypedRest](https://www.nuget.org/packages/TypedRest/)
