@@ -29,7 +29,7 @@ namespace TypedRest
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<IEnumerable<TEntity>> ReadAllAsync(
+        Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

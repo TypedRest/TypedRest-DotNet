@@ -41,7 +41,7 @@ namespace TypedRest
             get { return GetElement(new Uri(id.ToString(), UriKind.Relative)); }
         }
 
-        public virtual async Task<IEnumerable<TEntity>> ReadAllAsync(
+        public virtual async Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HttpClient.GetAsync(Uri, cancellationToken);
