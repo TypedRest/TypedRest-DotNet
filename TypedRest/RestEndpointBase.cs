@@ -94,7 +94,7 @@ namespace TypedRest
 
             string message = (response.Content.Headers.ContentType.MediaType == "application/json")
                 ? JsonConvert.DeserializeAnonymousType(await response.Content.ReadAsStringAsync(), new {Message = ""}).Message
-                : response.ReasonPhrase;
+                : response.StatusCode + " " + response.ReasonPhrase;
 
             switch (response.StatusCode)
             {
