@@ -7,9 +7,19 @@ NuGet packages:
 * [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
 
 
+## Nomenclature
+
+We use the following terms in the library and documentation:
+* An __entity__ is a data transfer object that can be serialized as JSON.
+* An __endpoint__ is a REST resource at a specific URI.
+* An __entry point__ is an _endpoint_ that is the top-level URI of a REST interface.
+* An __element__ is an _endpoint_ that represents a single _entity_.
+* A __set__ is an _endpoint_ that represents a collection of _entities_ and provides an _element_ for each of them.
+
+
 ## Usecase sample
 
-We'll use this simple POCO (Plain old CLR object) class modelling software packages as an example:
+We'll use this simple POCO (Plain old CLR object) class modelling software packages as a sample _entity_ type:
 ```cs
 class Package
 {
