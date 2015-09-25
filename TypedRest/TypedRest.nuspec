@@ -3,8 +3,9 @@
 	<metadata>
 		<id>TypedRest</id>
 		<version>$version$</version>
-		<authors>1&amp;1 Internet SE</authors>
-		<projectUrl>https://github.com/1and1-webhosting-infrastructure/TypedRest</projectUrl>
+		<authors>Bastian Eicher</authors>
+		<copyright>1&amp;1 Internet SE</copyright>
+		<projectUrl>https://github.com/1and1-webhosting-infrastructure/TypedRest-DotNet</projectUrl>
 		<description>TypedRest helps you build type-safe fluent-style REST API clients.</description>
 		<summary>Build type-safe fluent-style REST API clients</summary>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
