@@ -5,10 +5,10 @@
 		<version>$version$</version>
 		<authors>Bastian Eicher</authors>
 		<copyright>1&amp;1 Internet SE</copyright>
-		<projectUrl>https://github.com/1and1-webhosting-infrastructure/TypedRest-DotNet</projectUrl>
+		<projectUrl>https://github.com/1and1/TypedRest-DotNet</projectUrl>
 		<description>TypedRest.CommandLine helps you build simple command-line clients using REST clients designed with TypedRest.</description>
 		<summary>Build command-line interface using TypedRest client</summary>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<tags>Typed REST</tags>
+		<tags>Typed REST Commandline CLI</tags>
 	</metadata>
 </package>
