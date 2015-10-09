@@ -33,8 +33,8 @@ namespace TypedRest.CommandLine
             else if (args[0].ToLowerInvariant() == "create")
             {
                 var newEntity = InputEntity(args.Skip(1).ToList());
-                var newResource = await Endpoint.CreateAsync(newEntity);
-                Console.WriteLine(newResource.Uri);
+                var newEndpoint = await Endpoint.CreateAsync(newEntity);
+                Console.WriteLine(newEndpoint.Uri);
             }
             else
             {
