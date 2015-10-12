@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockEntity.cs" />
-    <Compile Include="RestSetTests.cs" />
+    <Compile Include="RestCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UriUtilsTest.cs" />

@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Base class for building REST endpoints that represents a set of <typeparamref name="TEntity"/>s as <typeparamref name="TElement"/>s.
+    /// Base class for building REST endpoints that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElement"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class RestSetBase<TEntity, TElement> : RestEndpointBase, IRestSet<TEntity, TElement>
+    public abstract class RestCollectionBase<TEntity, TElement> : RestEndpointBase, IRestCollection<TEntity, TElement>
         where TElement : class, IRestElement<TEntity>
     {
         /// <summary>
-        /// Creates a new element set endpoint.
+        /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected RestSetBase(IRestEndpoint parent, Uri relativeUri)
+        protected RestCollectionBase(IRestEndpoint parent, Uri relativeUri)
             : base(parent, relativeUri.EnsureTrailingSlash())
         {
         }
 
         /// <summary>
-        /// Creates a new element set endpoint.
+        /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected RestSetBase(IRestEndpoint parent, string relativeUri)
-            // Use this instead of base to ensure trailing slash gets appended for REST Set URIs
+        protected RestCollectionBase(IRestEndpoint parent, string relativeUri)
+            // Use this instead of base to ensure trailing slash gets appended for REST collection URIs
             : this(parent, new Uri(relativeUri, UriKind.Relative))
         {
         }

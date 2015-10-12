@@ -10,17 +10,17 @@ namespace TypedRest.CommandLine
     /// Base class for building commands operating on a <typeparamref name="TEndpoint"/> using <typeparamref name="TElement"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IRestSet{TElement,TEntity}"/> to operate on.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="IRestCollection{TEntity,TElement}"/> to operate on.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public class SetCommandBase<TEntity, TEndpoint, TElement> : EndpointCommand<TEndpoint>
-        where TEndpoint : IRestSet<TEntity, TElement>
+    public class CollectionCommandBase<TEntity, TEndpoint, TElement> : EndpointCommand<TEndpoint>
+        where TEndpoint : IRestCollection<TEntity, TElement>
         where TElement : class, IRestElement<TEntity>
     {
         /// <summary>
-        /// Creates a new REST set command.
+        /// Creates a new REST collection command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        protected SetCommandBase(TEndpoint endpoint) : base(endpoint)
+        protected CollectionCommandBase(TEndpoint endpoint) : base(endpoint)
         {
         }
 
@@ -60,7 +60,7 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Outputs a set of <typeparamref name="TEntity"/> to the user, e.g. via IDs on the command-line.
+        /// Outputs a collection of <typeparamref name="TEntity"/> to the user, e.g. via IDs on the command-line.
         /// </summary>
         protected virtual void OutputEntities(IEnumerable<TEntity> entities)
         {

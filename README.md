@@ -31,15 +31,15 @@ class Package
 
 ## Getting started
 
-Install the `TypedRest` NuGet package in your REST client project. You can then use the classes `RestEntryPoint`, `RestSet` and `RestElement` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
+Install the `TypedRest` NuGet package in your REST client project. You can then use the classes `RestEntryPoint`, `RestCollection` and `RestElement` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
 ```cs
 class SampleRestEntryPoint : RestEntryPoint
 {
-  public RestSet<Package> Packages { get; }
+  public RestCollection<Package> Packages { get; }
 
   public SampleRestEntryPoint([Uri uri) : base(uri)
   {
-    Packages = new RestSet<Package>(this, relativeUri: "packages");
+    Packages = new RestCollection<Package>(this, relativeUri: "packages");
   }
 }
 ```
@@ -57,4 +57,4 @@ await server.Packages[1].DeleteAsync();
 
 ## Build command-line clients
 
-Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryPointCommand`, `SetCommand` and `ElementCommand` to build command objects that parse arguments and operate on `RestEntryPoint`s, `RestSet`s and `RestElement`s.
+Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryPointCommand`, `SetCommand` and `ElementCommand` to build command objects that parse arguments and operate on `RestEntryPoint`s, `RestCollection`s and `RestElement`s.

@@ -59,12 +59,12 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="IRestEndpoint.cs" />
     <Compile Include="IRestElement.cs" />
-    <Compile Include="IRestSet.cs" />
+    <Compile Include="IRestCollection.cs" />
     <Compile Include="RestEndpointBase.cs" />
     <Compile Include="RestEntryPoint.cs" />
     <Compile Include="RestElement.cs" />
-    <Compile Include="RestSet.cs" />
-    <Compile Include="RestSetBase.cs" />
+    <Compile Include="RestCollection.cs" />
+    <Compile Include="RestCollectionBase.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

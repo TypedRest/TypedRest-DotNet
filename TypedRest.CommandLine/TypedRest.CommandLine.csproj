@@ -56,8 +56,8 @@
     <Compile Include="EndpointCommand.cs" />
     <Compile Include="EntryPointCommand.cs" />
     <Compile Include="IEndpointCommand.cs" />
-    <Compile Include="SetCommand.cs" />
-    <Compile Include="SetCommandBase.cs" />
+    <Compile Include="CollectionCommand.cs" />
+    <Compile Include="CollectionCommandBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
