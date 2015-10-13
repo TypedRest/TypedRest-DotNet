@@ -11,7 +11,7 @@ namespace TypedRest
     /// <summary>
     /// Base class for building REST endpoints, i.e. remote HTTP resources.
     /// </summary>
-    public abstract class RestEndpointBase : IRestEndpoint
+    public abstract class EndpointBase : IEndpoint
     {
         public HttpClient HttpClient { get; private set; }
 
@@ -22,8 +22,11 @@ namespace TypedRest
         /// </summary>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="uri">The HTTP URI of the remote element.</param>
-        protected RestEndpointBase(HttpClient httpClient, Uri uri)
+        protected EndpointBase(HttpClient httpClient, Uri uri)
         {
+            if (httpClient == null) throw new ArgumentNullException("httpClient");
+            if (uri == null) throw new ArgumentNullException("uri");
+
             HttpClient = httpClient;
             Uri = uri;
         }
@@ -33,7 +36,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected RestEndpointBase(IRestEndpoint parent, Uri relativeUri)
+        protected EndpointBase(IEndpoint parent, Uri relativeUri)
             : this(parent.HttpClient, new Uri(parent.Uri.EnsureTrailingSlash(), relativeUri))
         {
         }
@@ -43,7 +46,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected RestEndpointBase(IRestEndpoint parent, string relativeUri)
+        protected EndpointBase(IEndpoint parent, string relativeUri)
             : this(parent, new Uri(relativeUri, UriKind.Relative))
         {
         }

@@ -6,15 +6,15 @@ using NUnit.Framework;
 namespace TypedRest
 {
     [TestFixture, Ignore("Server mock not implemented yet")]
-    public class RestCollectionTests : RestEndpointTest
+    public class CollectionEndpointTest : EndpointTestBase
     {
-        private IRestCollection<MockEntity, RestElement<MockEntity>> _endpoint;
+        private ICollectionEndpoint<MockEntity, ElementEndpoint<MockEntity>> _endpoint;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _endpoint = new RestCollection<MockEntity>(EntryPoint, "endpoint");
+            _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
         [Test]

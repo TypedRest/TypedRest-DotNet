@@ -6,7 +6,7 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint, i.e. a remote HTTP resource.
     /// </summary>
-    public interface IRestEndpoint
+    public interface IEndpoint
     {
         /// <summary>
         /// The HTTP client used to communicate with the remote resource.

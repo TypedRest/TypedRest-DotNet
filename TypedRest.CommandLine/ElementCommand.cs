@@ -7,16 +7,16 @@ using Newtonsoft.Json;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Command operating on a <see cref="IRestElement{TEntity}"/>.
+    /// Command operating on a <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the <see cref="IRestElement{TEntity}"/> represents.</typeparam>
-    public class ElementCommand<TEntity> : EndpointCommand<IRestElement<TEntity>>
+    /// <typeparam name="TEntity">The type of entity the <see cref="IElementEndpoint{TEntity}"/> represents.</typeparam>
+    public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
     {
         /// <summary>
         /// Creates a new REST element command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public ElementCommand(IRestElement<TEntity> endpoint) : base(endpoint)
+        public ElementCommand(IElementEndpoint<TEntity> endpoint) : base(endpoint)
         {
         }
 

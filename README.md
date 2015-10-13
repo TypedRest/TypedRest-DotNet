@@ -31,22 +31,24 @@ class Package
 
 ## Getting started
 
-Install the `TypedRest` NuGet package in your REST client project. You can then use the classes `RestEntryPoint`, `RestCollection` and `RestElement` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
-```cs
-class SampleRestEntryPoint : RestEntryPoint
-{
-  public RestCollection<Package> Packages { get; }
+Install the `TypedRest` NuGet package in your REST client project.
 
-  public SampleRestEntryPoint([Uri uri) : base(uri)
+You can then use the classes `EntryEndpoint`, `CollectionEndpoint` and `ElementEndpoint` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
+```cs
+class SampleEntryEndpoint : EntryEndpoint
+{
+  public CollectionEndpoint<Package> Packages { get; }
+
+  public SampleEntryEndpoint(Uri uri) : base(uri)
   {
-    Packages = new RestCollection<Package>(this, relativeUri: "packages");
+    Packages = new CollectionEndpoint<Package>(this, relativeUri: "packages");
   }
 }
 ```
 
 You can then perform CRUD operations like this:
 ```cs
-var server = new SampleRestEntryPoint(new Uri("http://myservice/api/"));
+var server = new SampleEntryEndpoint(new Uri("http://myservice/api/"));
 var packages = server.Packages.ReadAllAsync();
 var element = await server.Packages.CreateAsync(new Package {...});
 var package = await server.Packages[1].ReadAsync();
@@ -57,4 +59,4 @@ await server.Packages[1].DeleteAsync();
 
 ## Build command-line clients
 
-Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryPointCommand`, `SetCommand` and `ElementCommand` to build command objects that parse arguments and operate on `RestEntryPoint`s, `RestCollection`s and `RestElement`s.
+Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryCommand`, `CollectionCommand` and `ElementCommand` to build command objects that parse arguments and operate on `EntryEndpoint`s, `CollectionEndpoint`s and `ElementEndpoint`s.

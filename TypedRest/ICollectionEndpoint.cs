@@ -12,9 +12,9 @@ namespace TypedRest
     /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElement"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public interface IRestCollection<TEntity, TElement> : IRestEndpoint
-        where TElement : class, IRestElement<TEntity>
+    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    public interface ICollectionEndpoint<TEntity, TElement> : IEndpoint
+        where TElement : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Returns a <typeparamref name="TElement"/> for a specific element of this collection. Does not perform any network traffic yet.

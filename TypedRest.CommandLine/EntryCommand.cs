@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Entry point for commands operating on a REST API. Internally creates sub-<see cref="IEndpointCommand"/>s.
+    /// Command operating on an <see cref="EntryEndpoint"/>. Internally creates sub-<see cref="IEndpointCommand"/>s.
     /// </summary>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="RestEntryPoint"/> to operate on.</typeparam>
-    public abstract class EntryPointCommand<TEndpoint> : EndpointCommand<TEndpoint>
-        where TEndpoint : RestEntryPoint
+    /// <typeparam name="TEndpoint">The specific type of <see cref="EntryEndpoint"/> to operate on.</typeparam>
+    public abstract class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>
+        where TEndpoint : EntryEndpoint
     {
         /// <summary>
         /// Creates a new REST entry point command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        protected EntryPointCommand(TEndpoint endpoint) : base(endpoint)
+        protected EntryCommand(TEndpoint endpoint) : base(endpoint)
         {
         }
 

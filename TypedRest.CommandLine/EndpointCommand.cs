@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Command operating on an <typeparamref name="TEndpoint"/>.
+    /// Command operating on an <see cref="IEndpoint"/>.
     /// </summary>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IRestEndpoint"/> to operate on.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
     public abstract class EndpointCommand<TEndpoint> : IEndpointCommand
-        where TEndpoint : IRestEndpoint
+        where TEndpoint : IEndpoint
     {
         /// <summary>
         /// The REST endpoint this command operates on.

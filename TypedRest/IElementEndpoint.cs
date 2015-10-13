@@ -12,7 +12,7 @@ namespace TypedRest
     /// REST endpoint that represents a single entity.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public interface IRestElement<TEntity> : IRestEndpoint
+    public interface IElementEndpoint<TEntity> : IEndpoint
     {
         /// <summary>
         /// Returns the specific <typeparamref name="TEntity"/>.

@@ -64,8 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="RestElementTest.cs" />
-    <Compile Include="RestEndpointTest.cs" />
+    <Compile Include="ElementEndpointTest.cs" />
+    <Compile Include="EndpointTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TypedRest.CommandLine\TypedRest.CommandLine.csproj">
@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockEntity.cs" />
-    <Compile Include="RestCollectionTests.cs" />
+    <Compile Include="CollectionEndpointTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UriUtilsTest.cs" />

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Command operating on an <see cref="IRestEndpoint"/>.
+    /// Command operating on an <see cref="IEndpoint"/>.
     /// </summary>
     public interface IEndpointCommand
     {

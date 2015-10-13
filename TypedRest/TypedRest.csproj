@@ -57,19 +57,20 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="IRestEndpoint.cs" />
-    <Compile Include="IRestElement.cs" />
-    <Compile Include="IRestCollection.cs" />
-    <Compile Include="RestEndpointBase.cs" />
-    <Compile Include="RestEntryPoint.cs" />
-    <Compile Include="RestElement.cs" />
-    <Compile Include="RestCollection.cs" />
-    <Compile Include="RestCollectionBase.cs" />
+    <Compile Include="CollectionEndpoint.cs" />
+    <Compile Include="CollectionEndpointBase.cs" />
+    <Compile Include="ElementEndpoint.cs" />
+    <Compile Include="EndpointBase.cs" />
+    <Compile Include="EntryEndpoint.cs" />
+    <Compile Include="ICollectionEndpoint.cs" />
+    <Compile Include="IElementEndpoint.cs" />
+    <Compile Include="IEndpoint.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="TypedRest.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,14 +9,14 @@ namespace TypedRest
     /// REST endpoint that represents a single <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class RestElement<TEntity> : RestEndpointBase, IRestElement<TEntity>
+    public class ElementEndpoint<TEntity> : EndpointBase, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new element endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        public RestElement(IRestEndpoint parent, Uri relativeUri)
+        public ElementEndpoint(IEndpoint parent, Uri relativeUri)
             : base(parent, relativeUri)
         {
         }
@@ -26,7 +26,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        public RestElement(IRestEndpoint parent, string relativeUri)
+        public ElementEndpoint(IEndpoint parent, string relativeUri)
             : base(parent, relativeUri)
         {
         }

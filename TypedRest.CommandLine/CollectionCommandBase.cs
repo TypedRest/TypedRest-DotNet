@@ -10,11 +10,11 @@ namespace TypedRest.CommandLine
     /// Base class for building commands operating on a <typeparamref name="TEndpoint"/> using <typeparamref name="TElement"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IRestCollection{TEntity,TElement}"/> to operate on.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IRestElement{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
+    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public class CollectionCommandBase<TEntity, TEndpoint, TElement> : EndpointCommand<TEndpoint>
-        where TEndpoint : IRestCollection<TEntity, TElement>
-        where TElement : class, IRestElement<TEntity>
+        where TEndpoint : ICollectionEndpoint<TEntity, TElement>
+        where TElement : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new REST collection command.
