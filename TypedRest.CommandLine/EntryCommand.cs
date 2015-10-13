@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TypedRest.CommandLine
@@ -19,10 +20,11 @@ namespace TypedRest.CommandLine
         {
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args)
+        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var command = GetSubCommand(args[0]);
-            await command.ExecuteAsync(args.Skip(1).ToList());
+            await command.ExecuteAsync(args.Skip(1).ToList(), cancellationToken);
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -24,22 +25,23 @@ namespace TypedRest.CommandLine
         {
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args)
+        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count == 0)
             {
-                OutputEntities(await Endpoint.ReadAllAsync());
+                OutputEntities(await Endpoint.ReadAllAsync(cancellationToken));
             }
             else if (args[0].ToLowerInvariant() == "create")
             {
                 var newEntity = InputEntity(args.Skip(1).ToList());
-                var newEndpoint = await Endpoint.CreateAsync(newEntity);
+                var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
                 Console.WriteLine(newEndpoint.Uri);
             }
             else
             {
                 var subCommand = GetSubCommand(args[0]);
-                await subCommand.ExecuteAsync(args.Skip(1).ToList());
+                await subCommand.ExecuteAsync(args.Skip(1).ToList(), cancellationToken);
             }
         }
 
@@ -60,7 +62,7 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Outputs a collection of <typeparamref name="TEntity"/> to the user, e.g. via IDs on the command-line.
+        /// Outputs a collection of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.
         /// </summary>
         protected virtual void OutputEntities(IEnumerable<TEntity> entities)
         {

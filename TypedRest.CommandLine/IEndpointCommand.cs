@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TypedRest.CommandLine
@@ -9,8 +10,10 @@ namespace TypedRest.CommandLine
     public interface IEndpointCommand
     {
         /// <summary>
-        /// Parses the <paramref name="args"/> and executes the result.
+        /// Parses command-line arguments and executes the resulting operation.
         /// </summary>
-        Task ExecuteAsync(IReadOnlyList<string> args);
+        /// <param name="args">The command-line arguments.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

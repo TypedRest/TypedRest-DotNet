@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Command operating on a <see cref="IElementEndpoint{TEntity}"/>.
+    /// Command operating on an <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <see cref="IElementEndpoint{TEntity}"/> represents.</typeparam>
     public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
@@ -20,11 +21,12 @@ namespace TypedRest.CommandLine
         {
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args)
+        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count == 0)
             {
-                OutputEntity(await Endpoint.ReadAsync());
+                OutputEntity(await Endpoint.ReadAsync(cancellationToken));
                 return;
             }
 
@@ -32,15 +34,15 @@ namespace TypedRest.CommandLine
             {
                 case "update":
                     var updatedEntity = InputEntity(args.Skip(1).ToList());
-                    await Endpoint.UpdateAsync(updatedEntity);
+                    await Endpoint.UpdateAsync(updatedEntity, cancellationToken);
                     break;
 
                 case "delete":
-                    await Endpoint.DeleteAsync();
+                    await Endpoint.DeleteAsync(cancellationToken);
                     break;
 
                 default:
-                    throw new ArgumentException("Unknown command: " +args[0]);
+                    throw new ArgumentException("Unknown command: " + args[0]);
             }
         }
 

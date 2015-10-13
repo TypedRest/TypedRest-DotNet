@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TypedRest.CommandLine
@@ -24,6 +25,7 @@ namespace TypedRest.CommandLine
             Endpoint = endpoint;
         }
 
-        public abstract Task ExecuteAsync(IReadOnlyList<string> args);
+        public abstract Task ExecuteAsync(IReadOnlyList<string> args,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }
