@@ -33,7 +33,7 @@ class Package
 
 Install the `TypedRest` NuGet package in your REST client project.
 
-You can then use the classes `EntryEndpoint`, `CollectionEndpoint` and `ElementEndpoint` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
+You can then use the classes `EntryEndpoint`, `CollectionEndpoint`, `ElementEndpoint`, `PaginationEndpoint` and `StreamEndpoint`. to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
 ```cs
 class SampleEntryEndpoint : EntryEndpoint
 {
@@ -59,4 +59,4 @@ await server.Packages[1].DeleteAsync();
 
 ## Build command-line clients
 
-Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryCommand`, `CollectionCommand` and `ElementCommand` to build command objects that parse arguments and operate on `EntryEndpoint`s, `CollectionEndpoint`s and `ElementEndpoint`s.
+Install the `TypedRest.CommmandLine` NuGet package in your command-line project. You can then use the classes `EntryCommand`, `CollectionCommand`, `ElementCommand`, `PaginationCommand` and `StreamCommand` to build command objects that parse arguments and operate on `EntryEndpoint`s, `CollectionEndpoint`s, `ElementEndpoint`s, `PaginationEndpoint`s and `StreamEndpoint`s.

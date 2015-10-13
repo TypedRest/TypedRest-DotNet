@@ -90,6 +90,7 @@ namespace TypedRest
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
+        /// <exception cref="IndexOutOfRangeException"><see cref="HttpStatusCode.RequestedRangeNotSatisfiable"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         protected static async Task HandleErrorsAsync(HttpResponseMessage response)
         {
@@ -111,6 +112,8 @@ namespace TypedRest
                     throw new KeyNotFoundException(message);
                 case HttpStatusCode.Conflict:
                     throw new InvalidOperationException(message);
+                case HttpStatusCode.RequestedRangeNotSatisfiable:
+                    throw new IndexOutOfRangeException(message);
                 default:
                     throw new HttpRequestException(message);
             }
