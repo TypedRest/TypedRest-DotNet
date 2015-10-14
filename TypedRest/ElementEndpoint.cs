@@ -41,7 +41,7 @@ namespace TypedRest
 
         public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HttpClient.PutAsJsonAsync(Uri, entity, cancellationToken);
+            var response = await HttpClient.PutAsync(Uri, entity, BuildJsonFormatter(), cancellationToken);
             await HandleErrorsAsync(response);
         }
 

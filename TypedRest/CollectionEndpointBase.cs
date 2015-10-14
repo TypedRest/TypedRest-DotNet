@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TypedRest
 {
@@ -53,7 +56,7 @@ namespace TypedRest
         public virtual async Task<TElement> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HttpClient.PostAsJsonAsync(Uri, entity, cancellationToken);
+            var response = await HttpClient.PostAsync(Uri, entity, BuildJsonFormatter(), cancellationToken);
             await HandleErrorsAsync(response);
 
             return (response.StatusCode == HttpStatusCode.Created)

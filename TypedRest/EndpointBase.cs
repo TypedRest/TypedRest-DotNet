@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -117,6 +118,11 @@ namespace TypedRest
                 default:
                     throw new HttpRequestException(message);
             }
+        }
+
+        protected static JsonMediaTypeFormatter BuildJsonFormatter()
+        {
+            return new JsonMediaTypeFormatter {SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}};
         }
     }
 }

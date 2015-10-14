@@ -15,11 +15,15 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
         /// <param name="credentials">The credentials used to authenticate against the REST interface. Can be <see langword="null"/> for no authentication.</param>
         public EntryEndpoint(Uri uri, ICredentials credentials = null)
-            : base(new HttpClient((credentials == null)
-                ? new HttpClientHandler()
-                : new HttpClientHandler {PreAuthenticate = true, Credentials = credentials})
-            {BaseAddress = uri.EnsureTrailingSlash()}, uri.EnsureTrailingSlash())
+            : base(BuildHttpClient(credentials), uri.EnsureTrailingSlash())
         {
+        }
+
+        private static HttpClient BuildHttpClient(ICredentials credentials)
+        {
+            return new HttpClient((credentials == null)
+                ? new HttpClientHandler()
+                : new HttpClientHandler {PreAuthenticate = true, Credentials = credentials});
         }
     }
 }
