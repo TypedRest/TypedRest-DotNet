@@ -79,9 +79,11 @@
     <Compile Include="IEndpoint.cs" />
     <Compile Include="IPaginationEndpoint.cs" />
     <Compile Include="IStreamEndpoint.cs" />
+    <Compile Include="ITriggerEndpoint.cs" />
     <Compile Include="PaginationEndpoint.cs" />
     <Compile Include="PartialResponse.cs" />
     <Compile Include="StreamEndpoint.cs" />
+    <Compile Include="TriggerEndpoint.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

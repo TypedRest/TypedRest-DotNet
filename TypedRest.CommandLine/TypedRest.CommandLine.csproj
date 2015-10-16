@@ -65,6 +65,7 @@
     <Compile Include="CollectionCommandBase.cs" />
     <Compile Include="PaginationCommand.cs" />
     <Compile Include="StreamCommand.cs" />
+    <Compile Include="TriggerCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

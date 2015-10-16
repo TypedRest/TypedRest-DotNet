@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="PaginationEndpointTest.cs" />
     <Compile Include="StreamEndpointTest.cs" />
+    <Compile Include="TriggerEndpointTest.cs" />
     <Compile Include="UriUtilsTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
