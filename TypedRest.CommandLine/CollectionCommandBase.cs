@@ -13,7 +13,7 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public class CollectionCommandBase<TEntity, TEndpoint, TElement> : EndpointCommand<TEndpoint>
+    public class CollectionCommandBase<TEntity, TEndpoint, TElement> : EndpointCommandBase<TEndpoint>
         where TEndpoint : ICollectionEndpoint<TEntity, TElement>
         where TElement : class, IElementEndpoint<TEntity>
     {
@@ -29,9 +29,7 @@ namespace TypedRest.CommandLine
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count == 0)
-            {
                 OutputEntities(await Endpoint.ReadAllAsync(cancellationToken));
-            }
             else if (args[0].ToLowerInvariant() == "create")
             {
                 var newEntity = InputEntity(args.Skip(1).ToList());
@@ -39,18 +37,12 @@ namespace TypedRest.CommandLine
                 Console.WriteLine(newEndpoint.Uri);
             }
             else
-            {
-                var subCommand = GetSubCommand(args[0]);
-                await subCommand.ExecuteAsync(args.Skip(1).ToList(), cancellationToken);
-            }
+                await base.ExecuteAsync(args, cancellationToken);
         }
 
-        /// <summary>
-        /// Creates a sub-<see cref="IEndpointCommand"/> based on the given <paramref name="id"/>, usually a sub-type of <see cref="ElementCommand{TEntity}"/>.
-        /// </summary>
-        protected virtual IEndpointCommand GetSubCommand(object id)
+        protected override IEndpointCommand GetSubCommand(string name)
         {
-            return new ElementCommand<TEntity>(Endpoint[id]);
+            return new ElementCommand<TEntity>(Endpoint[name]);
         }
 
         /// <summary>

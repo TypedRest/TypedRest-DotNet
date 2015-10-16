@@ -25,7 +25,7 @@ namespace TypedRest.CommandLine
             Endpoint = endpoint;
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count > 0 && args[0].ToLowerInvariant() == "stream")
@@ -45,7 +45,7 @@ namespace TypedRest.CommandLine
                 }
             }
 
-            await base.ExecuteAsync(args, cancellationToken);
+            await base.ExecuteInnerAsync(args, cancellationToken);
         }
 
         private async Task StreamFromBeginning(CancellationToken cancellationToken)

@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// Command operating on an <see cref="IPaginationEndpoint{TElement}"/>.
     /// </summary>
     /// <typeparam name="TElement">The type of element the <see cref="IPaginationEndpoint{TElement}"/> represents.</typeparam>
-    public class PaginationCommand<TElement> : EndpointCommand<IPaginationEndpoint<TElement>>
+    public class PaginationCommand<TElement> : EndpointCommandBase<IPaginationEndpoint<TElement>>
     {
         /// <summary>
         /// Creates a new REST pagination command.
@@ -20,7 +20,7 @@ namespace TypedRest.CommandLine
         {
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             switch (args.Count)

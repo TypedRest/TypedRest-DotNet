@@ -7,7 +7,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Command operating on an <see cref="ITriggerEndpoint"/>.
     /// </summary>
-    public class TriggerCommand : EndpointCommand<ITriggerEndpoint>
+    public class TriggerCommand : EndpointCommandBase<ITriggerEndpoint>
     {
         /// <summary>
         /// Creates a new REST element command.
@@ -17,7 +17,7 @@ namespace TypedRest.CommandLine
         {
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             await Endpoint.TriggerAsync(cancellationToken);

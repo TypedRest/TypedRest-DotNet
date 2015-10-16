@@ -58,8 +58,7 @@
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ElementCommand.cs" />
-    <Compile Include="EndpointCommand.cs" />
-    <Compile Include="EntryCommand.cs" />
+    <Compile Include="EndpointCommandBase.cs" />
     <Compile Include="IEndpointCommand.cs" />
     <Compile Include="CollectionCommand.cs" />
     <Compile Include="CollectionCommandBase.cs" />

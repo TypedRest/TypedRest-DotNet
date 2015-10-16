@@ -11,7 +11,7 @@ namespace TypedRest.CommandLine
     /// Command operating on an <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <see cref="IElementEndpoint{TEntity}"/> represents.</typeparam>
-    public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
+    public class ElementCommand<TEntity> : EndpointCommandBase<IElementEndpoint<TEntity>>
     {
         /// <summary>
         /// Creates a new REST element command.
@@ -21,7 +21,7 @@ namespace TypedRest.CommandLine
         {
         }
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args,
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count == 0)
@@ -42,7 +42,8 @@ namespace TypedRest.CommandLine
                     break;
 
                 default:
-                    throw new ArgumentException("Unknown command: " + args[0]);
+                    await base.ExecuteInnerAsync(args, cancellationToken);
+                    break;
             }
         }
 
