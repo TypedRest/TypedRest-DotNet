@@ -12,9 +12,10 @@ NuGet packages:
 We use the following terms in the library and documentation:
 * An __entity__ is a data transfer object that can be serialized as JSON.
 * An __endpoint__ is a REST resource at a specific URI.
-* An __entry point__ is an _endpoint_ that is the top-level URI of a REST interface.
-* An __element__ is an _endpoint_ that represents a single _entity_.
-* A __set__ is an _endpoint_ that represents a collection of _entities_ and provides an _element_ for each of them.
+* An __entry endpoint__ is an _endpoint_ that is the top-level URI of a REST interface.
+* An __element endpoint__ is an _endpoint_ that represents a single _entity_.
+* A __collection endpoint__ is an _endpoint_ that represents a collection of _entities_ and provides an _element endpoint_ for each of them.
+* A __trigger endpoint__ is an _endpoint_ that represents an RPC call to trigger a single action (intentionally un-RESTful).
 
 
 ## Usecase sample
@@ -33,7 +34,7 @@ class Package
 
 Install the `TypedRest` NuGet package in your REST client project.
 
-You can then use the classes `EntryEndpoint`, `CollectionEndpoint`, `ElementEndpoint`, `TriggerEndpoint`, `PaginationEndpoint` and `StreamEndpoint`. to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
+You can then use the classes `EntryEndpoint`, `CollectionEndpoint`, `ElementEndpoint`, `TriggerEndpoint`, `PaginationEndpoint` and `StreamEndpoint` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
 ```cs
 class SampleEntryEndpoint : EntryEndpoint
 {
