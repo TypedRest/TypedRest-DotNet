@@ -28,7 +28,7 @@ namespace TypedRest
             //        .withBody("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")));
 
             var result = await _endpoint.ReadAllAsync();
-            result.Should().Equal(new MockEntity {Id = 5, Name = "test"});
+            result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace TypedRest
             //        .withStatus(201)
             //        .withHeader("Location", location.toASCIIString())));
 
-            var element = await _endpoint.CreateAsync(new MockEntity {Id = 5, Name = "test"});
+            var element = await _endpoint.CreateAsync(new MockEntity(5, "test"));
             element.Uri.Should().Be(location);
         }
     }

@@ -27,7 +27,7 @@ namespace TypedRest
             //                .withBody("{\"id\":5,\"name\":\"test\"}")));
 
             var result = await _endpoint.ReadAsync();
-            result.Should().Be(new MockEntity {Id = 5, Name = "test"});
+            result.Should().Be(new MockEntity(5, "test"));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace TypedRest
             //        .willReturn(aResponse()
             //                .withStatus(204)));
 
-            await _endpoint.UpdateAsync(new MockEntity {Id = 5, Name = "test"});
+            await _endpoint.UpdateAsync(new MockEntity(5, "test"));
         }
 
         [Test]
