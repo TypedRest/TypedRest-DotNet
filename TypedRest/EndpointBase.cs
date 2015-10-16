@@ -88,9 +88,18 @@ namespace TypedRest
             }
         }
 
-        protected static JsonMediaTypeFormatter BuildJsonFormatter()
+        /// <summary>
+        /// The <see cref="MediaTypeFormatter"/> used to serialize entities for transmission.
+        /// </summary>
+        protected virtual MediaTypeFormatter Serializer
         {
-            return new JsonMediaTypeFormatter {SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}};
+            get
+            {
+                return new JsonMediaTypeFormatter
+                {
+                    SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}
+                };
+            }
         }
     }
 }

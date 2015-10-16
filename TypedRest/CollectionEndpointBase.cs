@@ -53,7 +53,7 @@ namespace TypedRest
         public virtual async Task<TElement> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HttpClient.PostAsync(Uri, entity, BuildJsonFormatter(), cancellationToken);
+            var response = await HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken);
             await HandleErrorsAsync(response);
 
             return (response.StatusCode == HttpStatusCode.Created)
