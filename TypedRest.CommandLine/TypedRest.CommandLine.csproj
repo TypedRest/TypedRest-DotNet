@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BlobCommand.cs" />
     <Compile Include="ElementCommand.cs" />
     <Compile Include="EndpointCommandBase.cs" />
     <Compile Include="IEndpointCommand.cs" />

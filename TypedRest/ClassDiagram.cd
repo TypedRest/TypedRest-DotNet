@@ -11,7 +11,7 @@
   <Class Name="TypedRest.EndpointBase" Collapsed="true">
     <Position X="3.75" Y="5.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AEIAEAAAAAAAAAAAAAAAAAAACAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAEAAAAAAAACAAAAAAAAAACAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>EndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -60,9 +60,17 @@
       <Method Name="PartialResponse" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>PartialResponse.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.BlobEndpoint" Collapsed="true">
+    <Position X="10.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BlobEndpoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="TypedRest.IElementEndpoint&lt;TEntity&gt;">
     <Position X="0.5" Y="2.25" Width="2.25" />
@@ -97,6 +105,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCAAAAAA=</HashCode>
       <FileName>IPaginationEndpoint.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TypedRest.IBlobEndpoint">
+    <Position X="11.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IBlobEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

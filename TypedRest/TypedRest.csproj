@@ -69,11 +69,13 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BlobEndpoint.cs" />
     <Compile Include="CollectionEndpoint.cs" />
     <Compile Include="CollectionEndpointBase.cs" />
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
     <Compile Include="EntryEndpoint.cs" />
+    <Compile Include="IBlobEndpoint.cs" />
     <Compile Include="ICollectionEndpoint.cs" />
     <Compile Include="IElementEndpoint.cs" />
     <Compile Include="IEndpoint.cs" />
