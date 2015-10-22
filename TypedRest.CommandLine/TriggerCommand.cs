@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     public class TriggerCommand : CommandBase<ITriggerEndpoint>
     {
         /// <summary>
-        /// Creates a new REST element command.
+        /// Creates a new REST trigger command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         public TriggerCommand(ITriggerEndpoint endpoint) : base(endpoint)

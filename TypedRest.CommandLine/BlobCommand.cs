@@ -10,6 +10,10 @@ namespace TypedRest.CommandLine
     /// </summary>
     public class BlobCommand : CommandBase<IBlobEndpoint>
     {
+        /// <summary>
+        /// Creates a new REST blob command.
+        /// </summary>
+        /// <param name="endpoint">The REST endpoint this command operates on.</param>
         public BlobCommand(IBlobEndpoint endpoint) : base(endpoint)
         {
         }

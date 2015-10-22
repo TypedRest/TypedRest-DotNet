@@ -68,7 +68,9 @@
     <Compile Include="TriggerCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="TypedRest.CommandLine.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TypedRest\TypedRest.csproj">
