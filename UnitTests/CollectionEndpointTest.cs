@@ -8,7 +8,7 @@ namespace TypedRest
     [TestFixture, Ignore("Server mock not implemented yet")]
     public class CollectionEndpointTest : EndpointTestBase
     {
-        private ICollectionEndpoint<MockEntity, ElementEndpoint<MockEntity>> _endpoint;
+        private CollectionEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

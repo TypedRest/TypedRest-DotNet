@@ -4,15 +4,15 @@ using System.Net.Http.Headers;
 namespace TypedRest
 {
     /// <summary>
-    /// Represents a <see cref="IPaginationEndpoint{TElement}.ReadPartialAsync"/> response.
+    /// Represents a subset of a set of elements.
     /// </summary>
-    /// <typeparam name="TElement">The type of element the response contains.</typeparam>
-    public class PartialResponse<TElement>
+    /// <typeparam name="TEntity">The type of element the response contains.</typeparam>
+    public class PartialResponse<TEntity>
     {
         /// <summary>
         /// The returned elements.
         /// </summary>
-        public readonly IReadOnlyCollection<TElement> Elements;
+        public readonly IReadOnlyCollection<TEntity> Elements;
 
         /// <summary>
         /// The range the <see cref="Elements"/> come from.
@@ -24,7 +24,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="elements">The returned elements.</param>
         /// <param name="range">The range the <paramref name="elements"/> come from.</param>
-        public PartialResponse(IReadOnlyCollection<TElement> elements, ContentRangeHeaderValue range)
+        public PartialResponse(IReadOnlyCollection<TEntity> elements, ContentRangeHeaderValue range)
         {
             Elements = elements;
             Range = range;

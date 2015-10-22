@@ -8,7 +8,7 @@ namespace TypedRest
     [TestFixture, Ignore("Server mock not implemented yet")]
     public class StreamEndpointTest : EndpointTestBase
     {
-        private IStreamEndpoint<MockEntity> _endpoint;
+        private StreamEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

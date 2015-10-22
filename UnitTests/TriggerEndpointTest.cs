@@ -6,7 +6,7 @@ namespace TypedRest
     [TestFixture, Ignore("Server mock not implemented yet")]
     public class TriggerEndpointTest : EndpointTestBase
     {
-        private ITriggerEndpoint _endpoint;
+        private TriggerEndpoint _endpoint;
 
         [SetUp]
         public override void SetUp()

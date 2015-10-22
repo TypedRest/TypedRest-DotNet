@@ -7,15 +7,15 @@ using NUnit.Framework;
 namespace TypedRest
 {
     [TestFixture, Ignore("Server mock not implemented yet")]
-    public class PaginationEndpointTest : EndpointTestBase
+    public class PagedCollectionEndpointTest : EndpointTestBase
     {
-        private IPaginationEndpoint<MockEntity> _endpoint;
+        private PagedCollectionEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _endpoint = new PaginationEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new PagedCollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace TypedRest
         }
 
         [Test]
-        public async Task TestReadPartialOffset()
+        public async Task TestReadRangeOffset()
         {
             //stubFor(get(urlEqualTo("/endpoint"))
             //        .withHeader("Accept", equalTo(jsonMime))
@@ -44,13 +44,13 @@ namespace TypedRest
             //                .withHeader("Content-Range", "elements 1-1/2")
             //                .withBody("[{\"id\":6,\"name\":\"test2\"}]")));
 
-            var response = await _endpoint.ReadPartialAsync(new RangeItemHeaderValue(from: 1, to: null));
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: null));
             response.Elements.Should().Equal(new MockEntity {Id = 6, Name = "test2"});
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2));
         }
 
         [Test]
-        public async Task TestReadPartialHead()
+        public async Task TestReadRangeHead()
         {
             //stubFor(get(urlEqualTo("/endpoint"))
             //        .withHeader("Accept", equalTo(jsonMime))
@@ -61,13 +61,13 @@ namespace TypedRest
             //                .withHeader("Content-Range", "elements 0-1/2")
             //                .withBody("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")));
 
-            var response = await _endpoint.ReadPartialAsync(new RangeItemHeaderValue(from: 1, to: 1));
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: 1));
             response.Elements.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2));
         }
 
         [Test]
-        public async Task TestReadPartialTail()
+        public async Task TestReadRangeTail()
         {
             //stubFor(get(urlEqualTo("/endpoint"))
             //        .withHeader("Accept", equalTo(jsonMime))
@@ -78,7 +78,7 @@ namespace TypedRest
             //                .withHeader("Content-Range", "elements 2-2/*")
             //                .withBody("[{\"id\":6,\"name\":\"test2\"}]")));
 
-            var response = await _endpoint.ReadPartialAsync(new RangeItemHeaderValue(from: null, to: 1));
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: null, to: 1));
             response.Elements.Should().Equal(new MockEntity(6, "test2"));
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2));
         }
@@ -96,7 +96,7 @@ namespace TypedRest
             string exceptionMessage = null;
             try
             {
-                await _endpoint.ReadPartialAsync(new RangeItemHeaderValue(from: 5, to: 10));
+                await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 5, to: 10));
             }
             catch (IndexOutOfRangeException ex)
             {

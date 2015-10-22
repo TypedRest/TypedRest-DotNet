@@ -8,7 +8,7 @@ namespace TypedRest
     [TestFixture, Ignore("Server mock not implemented yet")]
     public class BlobEndpointTest : EndpointTestBase
     {
-        private IBlobEndpoint _endpoint;
+        private BlobEndpoint _endpoint;
 
         [SetUp]
         public override void SetUp()

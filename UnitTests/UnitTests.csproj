@@ -104,7 +104,7 @@
     <Compile Include="CollectionEndpointTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PaginationEndpointTest.cs" />
+    <Compile Include="PagedCollectionEndpointTest.cs" />
     <Compile Include="StreamEndpointTest.cs" />
     <Compile Include="TriggerEndpointTest.cs" />
     <Compile Include="UriUtilsTest.cs" />

@@ -7,7 +7,7 @@ namespace TypedRest
     [TestFixture, Ignore("Server mock not implemented yet")]
     public class ElementEndpointTest : EndpointTestBase
     {
-        private IElementEndpoint<MockEntity> _endpoint;
+        private ElementEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

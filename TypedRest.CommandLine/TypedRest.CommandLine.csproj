@@ -63,8 +63,10 @@
     <Compile Include="ICommand.cs" />
     <Compile Include="CollectionCommand.cs" />
     <Compile Include="CollectionCommandBase.cs" />
-    <Compile Include="PaginationCommand.cs" />
+    <Compile Include="PagedCollectionCommand.cs" />
+    <Compile Include="PagedCollectionCommandBase.cs" />
     <Compile Include="StreamCommand.cs" />
+    <Compile Include="StreamCommandBase.cs" />
     <Compile Include="TriggerCommand.cs" />
   </ItemGroup>
   <ItemGroup>

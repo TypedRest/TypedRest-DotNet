@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Base class for building commands operating on a <typeparamref name="TEndpoint"/> using <typeparamref name="TElement"/>s.
+    /// Base class for building commands operating on an <see cref="ICollectionEndpoint{TEntity,TElement}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public class CollectionCommandBase<TEntity, TEndpoint, TElement> : CommandBase<TEndpoint>
+    public abstract class CollectionCommandBase<TEntity, TEndpoint, TElement> : CommandBase<TEndpoint>
         where TEndpoint : ICollectionEndpoint<TEntity, TElement>
         where TElement : class, IElementEndpoint<TEntity>
     {
@@ -42,8 +42,13 @@ namespace TypedRest.CommandLine
 
         protected override ICommand GetSubCommand(string name)
         {
-            return new ElementCommand<TEntity>(Endpoint[name]);
+            return GetElementCommand(Endpoint[name]);
         }
+
+        /// <summary>
+        /// Creates a sub-<see cref="ICommand"/> for the given <paramref name="element"/>.
+        /// </summary>
+        protected abstract ICommand GetElementCommand(TElement element);
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
