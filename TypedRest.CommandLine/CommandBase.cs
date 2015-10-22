@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// Command operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class EndpointCommandBase<TEndpoint> : IEndpointCommand
+    public abstract class CommandBase<TEndpoint> : ICommand
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace TypedRest.CommandLine
         /// Creates a new REST endpoint command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        protected EndpointCommandBase(TEndpoint endpoint)
+        protected CommandBase(TEndpoint endpoint)
         {
             Endpoint = endpoint;
         }
@@ -36,16 +36,16 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Creates a sub-<see cref="IEndpointCommand"/> based on the given <paramref name="name"/>.
+        /// Creates a sub-<see cref="ICommand"/> based on the given <paramref name="name"/>.
         /// </summary>
-        /// <returns>The <see cref="IEndpointCommand"/> or <see langword="null"/> if the <paramref name="name"/> does not match.</returns>
-        protected virtual IEndpointCommand GetSubCommand(string name)
+        /// <returns>The <see cref="ICommand"/> or <see langword="null"/> if the <paramref name="name"/> does not match.</returns>
+        protected virtual ICommand GetSubCommand(string name)
         {
             return null;
         }
 
         /// <summary>
-        /// Parses command-line arguments and executes the resulting operation when no additional sub-<see cref="IEndpointCommand"/> is specified.
+        /// Parses command-line arguments and executes the resulting operation when no additional sub-<see cref="ICommand"/> is specified.
         /// </summary>
         /// <param name="args">The command-line arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>

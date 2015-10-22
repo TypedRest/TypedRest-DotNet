@@ -59,8 +59,8 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BlobCommand.cs" />
     <Compile Include="ElementCommand.cs" />
-    <Compile Include="EndpointCommandBase.cs" />
-    <Compile Include="IEndpointCommand.cs" />
+    <Compile Include="CommandBase.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="CollectionCommand.cs" />
     <Compile Include="CollectionCommandBase.cs" />
     <Compile Include="PaginationCommand.cs" />

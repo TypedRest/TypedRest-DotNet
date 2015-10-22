@@ -7,7 +7,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Command operating on an <see cref="ITriggerEndpoint"/>.
     /// </summary>
-    public class TriggerCommand : EndpointCommandBase<ITriggerEndpoint>
+    public class TriggerCommand : CommandBase<ITriggerEndpoint>
     {
         /// <summary>
         /// Creates a new REST element command.

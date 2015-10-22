@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// Command operating on an <see cref="IPaginationEndpoint{TElement}"/>.
     /// </summary>
     /// <typeparam name="TElement">The type of element the <see cref="IPaginationEndpoint{TElement}"/> represents.</typeparam>
-    public class PaginationCommand<TElement> : EndpointCommandBase<IPaginationEndpoint<TElement>>
+    public class PaginationCommand<TElement> : CommandBase<IPaginationEndpoint<TElement>>
     {
         /// <summary>
         /// Creates a new REST pagination command.

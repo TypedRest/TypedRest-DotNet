@@ -13,7 +13,7 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
     /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public class CollectionCommandBase<TEntity, TEndpoint, TElement> : EndpointCommandBase<TEndpoint>
+    public class CollectionCommandBase<TEntity, TEndpoint, TElement> : CommandBase<TEndpoint>
         where TEndpoint : ICollectionEndpoint<TEntity, TElement>
         where TElement : class, IElementEndpoint<TEntity>
     {
@@ -40,7 +40,7 @@ namespace TypedRest.CommandLine
                 await base.ExecuteAsync(args, cancellationToken);
         }
 
-        protected override IEndpointCommand GetSubCommand(string name)
+        protected override ICommand GetSubCommand(string name)
         {
             return new ElementCommand<TEntity>(Endpoint[name]);
         }
