@@ -5,6 +5,7 @@ TypedRest helps you build type-safe fluent-style JSON REST API clients.
 NuGet packages:
 * [TypedRest](https://www.nuget.org/packages/TypedRest/)
 * [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
+* [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/)
 
 
 ## Nomenclature
@@ -65,6 +66,13 @@ await server.Packages[1].DeleteAsync();
 Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/) NuGet package in your command-line project. You can then use the classes ``CollectionCommand`, `ElementCommand`, `TriggerCommand`, `PaginationCommand`, `StreamCommand` and `BlobCommand` to build command objects that parse arguments and operate on `CollectionEndpoint`s, `ElementEndpoint`s, `TriggerEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
 
 
+## Build GUI clients
+
+Install the [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/) NuGet package to build GUIs with WPF and [Caliburn.Micro](http://caliburnmicro.com/). Derive from `Bootstrapper<TRootView>` and add this class to your `<Application.Resources>` in `App.xaml`.
+
+You can then use the classes `CollectionViewModel`, `ElementViewModel`, `TriggerViewModel`, `PaginationViewModel`, `StreamViewModel` and `BlobViewModel` to operate on `CollectionEndpoint`s, `ElementEndpoint`s, `TriggerEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
+
+
 ## Sample project
 
 The source code includes a sample projects.
@@ -72,3 +80,5 @@ The source code includes a sample projects.
 `Samples\Library` demonstrates how to create a client library for a REST interface using `TypedRest`.
 
 `Samples\CommandLine` demonstrates how to use such a client library and `TypedRest.CommmandLine` to create a command-line client for a REST interface.
+
+`Samples\Wpf` demonstrates how to use such a client library and `TypedRest.Wpf` to create a GUI client for a REST interface.

@@ -16,6 +16,8 @@ nuget pack TypedRest\TypedRest.csproj -Properties Configuration=Release -Include
 if errorlevel 1 pause
 nuget pack TypedRest.CommandLine\TypedRest.CommandLine.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
 if errorlevel 1 pause
+nuget pack TypedRest.Wpf\TypedRest.Wpf.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
+if errorlevel 1 pause
 
 goto end
 rem Error messages
