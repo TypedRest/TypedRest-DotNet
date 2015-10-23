@@ -61,3 +61,12 @@ await server.Packages[1].DeleteAsync();
 ## Build command-line clients
 
 Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/) NuGet package in your command-line project. You can then use the classes ``CollectionCommand`, `ElementCommand`, `TriggerCommand`, `PaginationCommand`, `StreamCommand` and `BlobCommand` to build command objects that parse arguments and operate on `CollectionEndpoint`s, `ElementEndpoint`s, `TriggerEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
+
+
+## Sample project
+
+The source code includes a sample projects.
+
+`Samples\Library` demonstrates how to create a client library for a REST interface using `TypedRest`.
+
+`Samples\CommandLine` demonstrates how to use such a client library and `TypedRest.CommmandLine` to create a command-line client for a REST interface.
