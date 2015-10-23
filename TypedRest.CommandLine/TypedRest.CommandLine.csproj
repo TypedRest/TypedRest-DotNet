@@ -60,6 +60,8 @@
     <Compile Include="BlobCommand.cs" />
     <Compile Include="ElementCommand.cs" />
     <Compile Include="CommandBase.cs" />
+    <Compile Include="EntryCommand.cs" />
+    <Compile Include="Executor.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="CollectionCommand.cs" />
     <Compile Include="CollectionCommandBase.cs" />
