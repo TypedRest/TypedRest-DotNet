@@ -36,10 +36,7 @@ namespace TypedRest
         {
         }
 
-        public TElementEndpoint this[object id]
-        {
-            get { return GetElement(new Uri(id.ToString(), UriKind.Relative)); }
-        }
+        public abstract TElementEndpoint this[string id] { get; }
 
         public virtual async Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))
@@ -57,13 +54,8 @@ namespace TypedRest
             await HandleErrorsAsync(response);
 
             return (response.StatusCode == HttpStatusCode.Created)
-                ? GetElement(response.Headers.Location)
+                ? this[response.Headers.Location.OriginalString]
                 : null;
         }
-
-        /// <summary>
-        /// Instantiates a <typeparamref name="TElement"/> for an element in this set.
-        /// </summary>
-        protected abstract TElement GetElement(Uri relativeUri);
     }
 }

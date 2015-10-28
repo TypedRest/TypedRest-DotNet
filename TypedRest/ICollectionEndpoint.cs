@@ -20,7 +20,7 @@ namespace TypedRest
         /// Returns a <typeparamref name="TElementEndpoint"/> for a specific element of this collection. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="id">The ID used to identify the element within the collection.</param>
-        TElementEndpoint this[object id] { get; }
+        TElementEndpoint this[string id] { get; }
 
         /// <summary>
         /// Returns all <typeparamref name="TEntity"/>s.

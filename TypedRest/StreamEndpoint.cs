@@ -26,9 +26,9 @@ namespace TypedRest
         {
         }
 
-        protected override ElementEndpoint<TEntity> GetElement(Uri relativeUri)
+        public override ElementEndpoint<TEntity> this[string id]
         {
-            return new ElementEndpoint<TEntity>(this, relativeUri);
+            get { return new ElementEndpoint<TEntity>(this, id); }
         }
     }
 }
