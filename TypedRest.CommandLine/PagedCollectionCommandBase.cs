@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IPagedCollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public abstract class PagedCollectionCommandBase<TEntity, TEndpoint, TElement> :
         CollectionCommandBase<TEntity, TEndpoint, TElement>
         where TEndpoint : IPagedCollectionEndpoint<TEntity, TElement>

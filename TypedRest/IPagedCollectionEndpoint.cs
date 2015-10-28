@@ -12,7 +12,7 @@ namespace TypedRest
     /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElement"/>s with pagination support.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface IPagedCollectionEndpoint<TEntity, TElement> : ICollectionEndpoint<TEntity, TElement>
         where TElement : class, IElementEndpoint<TEntity>
     {

@@ -6,7 +6,7 @@ namespace TypedRest
     /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/>s to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface IStreamEndpoint<TEntity, TElement> : IPagedCollectionEndpoint<TEntity, TElement>
         where TElement : class, IElementEndpoint<TEntity>
     {
