@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Base class for building REST endpoints that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElement"/>s with pagination support using the HTTP Range header.
+    /// Base class for building REST endpoints that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s with pagination support using the HTTP Range header.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class PagedCollectionEndpointBase<TEntity, TElement> : CollectionEndpointBase<TEntity, TElement>, IPagedCollectionEndpoint<TEntity, TElement>
-        where TElement : class, IElementEndpoint<TEntity>
+    /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    public abstract class PagedCollectionEndpointBase<TEntity, TElementEndpoint> : CollectionEndpointBase<TEntity, TElementEndpoint>, IPagedCollectionEndpoint<TEntity, TElementEndpoint>
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new paged collection endpoint.

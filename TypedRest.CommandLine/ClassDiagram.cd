@@ -14,7 +14,7 @@
       <FileName>CollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.CollectionCommandBase&lt;TEntity, TEndpoint, TElement&gt;" Collapsed="true">
+  <Class Name="TypedRest.CommandLine.CollectionCommandBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
     <Position X="3" Y="4" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAQAAwAAEA=</HashCode>
@@ -40,7 +40,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="11.75" Y="7.5" Width="3.75" />
+    <Position X="12" Y="7.5" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>StreamCommand.cs</FileName>
@@ -54,21 +54,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.PagedCollectionCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="7.25" Y="6.5" Width="4.25" />
+    <Position X="7.25" Y="6.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>PagedCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.PagedCollectionCommandBase&lt;TEntity, TEndpoint, TElement&gt;" Collapsed="true">
-    <Position X="7.25" Y="5.25" Width="4.25" />
+  <Class Name="TypedRest.CommandLine.PagedCollectionCommandBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
+    <Position X="7.25" Y="5.25" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAEA=</HashCode>
       <FileName>PagedCollectionCommandBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.StreamCommandBase&lt;TEntity, TEndpoint, TElement&gt;" Collapsed="true">
-    <Position X="11.75" Y="6.5" Width="3.75" />
+  <Class Name="TypedRest.CommandLine.StreamCommandBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
+    <Position X="12" Y="6.5" Width="4" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAEA=</HashCode>
       <FileName>StreamCommandBase.cs</FileName>

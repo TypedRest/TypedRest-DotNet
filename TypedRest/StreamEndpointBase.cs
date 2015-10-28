@@ -8,9 +8,9 @@ namespace TypedRest
     /// Base class for building REST endpoints that represents a stream of <typeparamref name="TEntity"/>s. Uses the HTTP Range header.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class StreamEndpointBase<TEntity, TElement> : PagedCollectionEndpointBase<TEntity, TElement>, IStreamEndpoint<TEntity, TElement>
-        where TElement : class, IElementEndpoint<TEntity>
+    /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    public abstract class StreamEndpointBase<TEntity, TElementEndpoint> : PagedCollectionEndpointBase<TEntity, TElementEndpoint>, IStreamEndpoint<TEntity, TElementEndpoint>
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new stream endpoint.

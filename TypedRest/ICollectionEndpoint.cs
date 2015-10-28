@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElement"/>s.
+    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public interface ICollectionEndpoint<TEntity, TElement> : IEndpoint
-        where TElement : class, IElementEndpoint<TEntity>
+    /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    public interface ICollectionEndpoint<TEntity, TElementEndpoint> : IEndpoint
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
-        /// Returns a <typeparamref name="TElement"/> for a specific element of this collection. Does not perform any network traffic yet.
+        /// Returns a <typeparamref name="TElementEndpoint"/> for a specific element of this collection. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="id">The ID used to identify the element within the collection.</param>
-        TElement this[object id] { get; }
+        TElementEndpoint this[object id] { get; }
 
         /// <summary>
         /// Returns all <typeparamref name="TEntity"/>s.
@@ -43,7 +43,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TElement> CreateAsync(TEntity entity,
+        Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken));
     }
 }

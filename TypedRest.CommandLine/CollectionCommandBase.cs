@@ -8,14 +8,14 @@ using Newtonsoft.Json;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Base class for building commands operating on an <see cref="ICollectionEndpoint{TEntity,TElement}"/>.
+    /// Base class for building commands operating on an <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class CollectionCommandBase<TEntity, TEndpoint, TElement> : CommandBase<TEndpoint>
-        where TEndpoint : ICollectionEndpoint<TEntity, TElement>
-        where TElement : class, IElementEndpoint<TEntity>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
+    /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
+    public abstract class CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> : CommandBase<TEndpoint>
+        where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new REST collection command.
@@ -48,7 +48,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a sub-<see cref="ICommand"/> for the given <paramref name="element"/>.
         /// </summary>
-        protected abstract ICommand GetElementCommand(TElement element);
+        protected abstract ICommand GetElementCommand(TElementEndpoint element);
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.

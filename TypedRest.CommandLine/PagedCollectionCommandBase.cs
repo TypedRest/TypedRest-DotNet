@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Base class for building commands operating on an <see cref="IPagedCollectionEndpoint{TEntity,TElement}"/>.
+    /// Base class for building commands operating on an <see cref="IPagedCollectionEndpoint{TEntity,TElementEndpoint}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IPagedCollectionEndpoint{TEntity,TElement}"/> to operate on.</typeparam>
-    /// <typeparam name="TElement">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class PagedCollectionCommandBase<TEntity, TEndpoint, TElement> :
-        CollectionCommandBase<TEntity, TEndpoint, TElement>
-        where TEndpoint : IPagedCollectionEndpoint<TEntity, TElement>
-        where TElement : class, IElementEndpoint<TEntity>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="IPagedCollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
+    /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
+    public abstract class PagedCollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> :
+        CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint>
+        where TEndpoint : IPagedCollectionEndpoint<TEntity, TElementEndpoint>
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new REST paged collection command.
