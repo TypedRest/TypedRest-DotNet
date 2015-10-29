@@ -25,8 +25,8 @@ namespace TypedRest
         /// <param name="uri">The HTTP URI of the remote element.</param>
         protected EndpointBase(HttpClient httpClient, Uri uri)
         {
-            if (httpClient == null) throw new ArgumentNullException("httpClient");
-            if (uri == null) throw new ArgumentNullException("uri");
+            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
+            if (uri == null) throw new ArgumentNullException(nameof(uri));
 
             HttpClient = httpClient;
             Uri = uri;
@@ -91,15 +91,7 @@ namespace TypedRest
         /// <summary>
         /// The <see cref="MediaTypeFormatter"/> used to serialize entities for transmission.
         /// </summary>
-        protected virtual MediaTypeFormatter Serializer
-        {
-            get
-            {
-                return new JsonMediaTypeFormatter
-                {
-                    SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}
-                };
-            }
-        }
+        protected virtual MediaTypeFormatter Serializer =>
+            new JsonMediaTypeFormatter {SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}};
     }
 }

@@ -45,10 +45,7 @@ namespace TypedRest
 
         public abstract TElementEndpoint this[string key] { get; }
 
-        public TElementEndpoint this[TEntity entity]
-        {
-            get { return this[GetCollectionKey(entity)]; }
-        }
+        public TElementEndpoint this[TEntity entity] => this[GetCollectionKey(entity)];
 
         /// <summary>
         /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
