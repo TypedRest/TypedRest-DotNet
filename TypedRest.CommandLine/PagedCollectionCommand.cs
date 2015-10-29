@@ -4,8 +4,7 @@
     /// Command operating on a <see cref="PagedCollectionEndpoint{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <see cref="PagedCollectionEndpoint{TEntity}"/> represents.</typeparam>
-    public class PagedCollectionCommand<TEntity> :
-        PagedCollectionCommandBase<TEntity, PagedCollectionEndpoint<TEntity>, ElementEndpoint<TEntity>>
+    public class PagedCollectionCommand<TEntity> : PagedCollectionCommandBase<TEntity, PagedCollectionEndpoint<TEntity>, ElementEndpoint<TEntity>>
     {
         /// <summary>
         /// Creates a new REST paged collection command.
@@ -15,9 +14,9 @@
         {
         }
 
-        protected override ICommand GetElementCommand(ElementEndpoint<TEntity> element)
+        protected override ICommand GetElementCommand(ElementEndpoint<TEntity> elementEndpoint)
         {
-            return new ElementCommand<TEntity>(element);
+            return new ElementCommand<TEntity>(elementEndpoint);
         }
     }
 }

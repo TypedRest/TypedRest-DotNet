@@ -46,9 +46,9 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Creates a sub-<see cref="ICommand"/> for the given <paramref name="element"/>.
+        /// Creates a sub-<see cref="ICommand"/> for the given <paramref name="elementEndpoint"/>.
         /// </summary>
-        protected abstract ICommand GetElementCommand(TElementEndpoint element);
+        protected abstract ICommand GetElementCommand(TElementEndpoint elementEndpoint);
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
