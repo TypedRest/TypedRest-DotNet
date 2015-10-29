@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +18,8 @@ namespace TypedRest
     public abstract class CollectionEndpointBase<TEntity, TElementEndpoint> : EndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
+        private readonly MethodInfo _keyGetMethod;
+
         /// <summary>
         /// Creates a new element collection endpoint.
         /// </summary>
@@ -23,6 +28,8 @@ namespace TypedRest
         protected CollectionEndpointBase(IEndpoint parent, Uri relativeUri)
             : base(parent, relativeUri.EnsureTrailingSlash())
         {
+            var keyProperty = typeof(TEntity).GetPublicProperties().FirstOrDefault(x => x.HasAttribute<KeyAttribute>());
+            if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
         }
 
         /// <summary>
@@ -37,6 +44,20 @@ namespace TypedRest
         }
 
         public abstract TElementEndpoint this[string key] { get; }
+
+        public TElementEndpoint this[TEntity entity]
+        {
+            get { return this[GetCollectionKey(entity)]; }
+        }
+
+        /// <summary>
+        /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
+        /// </summary>
+        protected virtual string GetCollectionKey(TEntity entity)
+        {
+            if (_keyGetMethod == null) throw new InvalidOperationException(typeof(TElementEndpoint).Name + " has no property marked with [Key] attribute.");
+            return _keyGetMethod.Invoke(entity, null).ToString();
+        }
 
         public virtual async Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))

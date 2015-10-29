@@ -24,7 +24,9 @@ We'll use this simple POCO (Plain old CLR object) class modelling software packa
 ```cs
 class Package
 {
+  [Key]
   public long Id { get; set; }
+
   public string Name { get; set; }
 }
 ```

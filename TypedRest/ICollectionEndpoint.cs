@@ -23,6 +23,12 @@ namespace TypedRest
         TElementEndpoint this[string key] { get; }
 
         /// <summary>
+        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific element of this collection. Does not perform any network traffic yet.
+        /// </summary>
+        /// <param name="entity">A previously fetched instance of the entity to retrieve a new state for.</param>
+        TElementEndpoint this[TEntity entity] { get; }
+
+        /// <summary>
         /// Returns all <typeparamref name="TEntity"/>s.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>

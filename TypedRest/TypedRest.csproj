@@ -47,6 +47,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -85,6 +86,7 @@
     <Compile Include="PagedCollectionEndpoint.cs" />
     <Compile Include="PagedCollectionEndpointBase.cs" />
     <Compile Include="PartialResponse.cs" />
+    <Compile Include="PropertyExtensions.cs" />
     <Compile Include="StreamEndpoint.cs" />
     <Compile Include="StreamEndpointBase.cs" />
     <Compile Include="TriggerEndpoint.cs" />

@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class CollectionEndpointTest : EndpointTestBase
     {
         private CollectionEndpoint<MockEntity> _endpoint;
@@ -17,7 +17,7 @@ namespace TypedRest
             _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
-        [Test]
+        [Test, Ignore("Server mock not implemented yet")]
         public async Task TestReadAll()
         {
             //stubFor(get(urlEqualTo("/endpoint/"))
@@ -31,7 +31,7 @@ namespace TypedRest
             result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
         }
 
-        [Test]
+        [Test, Ignore("Server mock not implemented yet")]
         public async Task TestCreate()
         {
             var location = new Uri("/endpoint/new", UriKind.Relative);
@@ -44,6 +44,20 @@ namespace TypedRest
 
             var element = await _endpoint.CreateAsync(new MockEntity(5, "test"));
             element.Uri.Should().Be(location);
+        }
+
+        [Test]
+        public void TestGetById()
+        {
+            _endpoint["1"].Uri
+                .Should().Be(new Uri(_endpoint.Uri, "1"));
+        }
+
+        [Test]
+        public void TestGetByEntity()
+        {
+            _endpoint[new MockEntity(1, "test")].Uri
+                .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
     }
 }
