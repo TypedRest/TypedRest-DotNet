@@ -36,7 +36,7 @@ namespace TypedRest
         {
         }
 
-        public abstract TElementEndpoint this[string id] { get; }
+        public abstract TElementEndpoint this[string key] { get; }
 
         public virtual async Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))

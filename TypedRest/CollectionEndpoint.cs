@@ -26,9 +26,9 @@ namespace TypedRest
         {
         }
 
-        public override ElementEndpoint<TEntity> this[string id]
+        public override ElementEndpoint<TEntity> this[string key]
         {
-            get { return new ElementEndpoint<TEntity>(this, id); }
+            get { return new ElementEndpoint<TEntity>(this, key); }
         }
     }
 }
