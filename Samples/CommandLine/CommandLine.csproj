@@ -50,6 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ResourceCollectionCommand.cs" />
+    <Compile Include="ResourceElementCommand.cs" />
+    <Compile Include="ResourceRevisionCollectionCommand.cs" />
+    <Compile Include="ResourceRevisionElementCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

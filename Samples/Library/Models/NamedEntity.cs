@@ -3,9 +3,9 @@
 namespace TypedRest.Samples.Library.Models
 {
     /// <summary>
-    /// A software package like an application or a library.
+    /// An entity with a unique numeric identifier and a human-readable name.
     /// </summary>
-    public class Package
+    public abstract class NamedEntity
     {
         [Key]
         public long Id { get; set; }
