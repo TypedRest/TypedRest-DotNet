@@ -1,5 +1,5 @@
-﻿<UserControl x:Class="TypedRest.Wpf.Views.TriggerView"
+﻿<UserControl x:Class="TypedRest.Samples.Wpf.Views.UpdateResourceElementView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Button x:Name="Trigger" Content="{Binding DisplayName}" />
+    <DataGrid x:Name="Entity"/>
 </UserControl>

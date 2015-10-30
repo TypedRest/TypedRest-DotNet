@@ -7,16 +7,14 @@ namespace TypedRest.Wpf.ViewModels
     /// </summary>
     public class TriggerViewModel : ViewModelBase<ITriggerEndpoint>
     {
-        public string Caption { get; private set; }
-
         /// <summary>
         /// Creates a new REST trigger view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        /// <param name="caption"></param>
+        /// <param name="caption">A caption for the triggerable action.</param>
         public TriggerViewModel(ITriggerEndpoint endpoint, string caption) : base(endpoint)
         {
-            Caption = caption;
+            DisplayName = caption;
         }
 
         public async Task Trigger()

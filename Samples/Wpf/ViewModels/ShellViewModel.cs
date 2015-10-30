@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Caliburn.Micro;
 using TypedRest.Samples.Library.Endpoints;
 using TypedRest.Samples.Library.Models;
@@ -12,7 +13,7 @@ namespace TypedRest.Samples.Wpf.ViewModels
 
         protected override void OnInitialize()
         {
-            _endpoint = new SampleEntryEndpoint(new Uri("http://localhost:8080/"));
+            _endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/api"), new NetworkCredential("webconsole", "abc"));
 
             base.OnInitialize();
         }
@@ -24,7 +25,7 @@ namespace TypedRest.Samples.Wpf.ViewModels
 
         public void ListTargets()
         {
-            ActivateItem(new CollectionViewModel<Target>(_endpoint.Targets) {DisplayName = "Targets"});
+            ActivateItem(new CollectionViewModel<Target>(_endpoint.Targets));
         }
     }
 }

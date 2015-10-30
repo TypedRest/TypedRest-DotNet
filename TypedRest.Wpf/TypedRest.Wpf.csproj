@@ -92,12 +92,14 @@
     <Compile Include="ViewModels\BlobViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModelBase.cs" />
-    <Compile Include="ViewModels\ElementViewModel.cs" />
+    <Compile Include="ViewModels\CreateElementViewModel.cs" />
+    <Compile Include="ViewModels\ElementViewModelBase.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModelBase.cs" />
     <Compile Include="ViewModels\StreamViewModel.cs" />
     <Compile Include="ViewModels\StreamViewModelBase.cs" />
     <Compile Include="ViewModels\TriggerViewModel.cs" />
+    <Compile Include="ViewModels\UpdateElementViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

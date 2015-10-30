@@ -9,12 +9,16 @@ namespace TypedRest.Samples.Wpf.ViewModels
     {
         public ResourceRevisionCollectionViewModel(ResourceRevisionCollection endpoint) : base(endpoint)
         {
-            DisplayName = "Resource revisions";
         }
 
-        protected override IScreen GetElementScreen(ResourceRevisionElement elementEndpoint)
+        protected override IScreen BuildCreateElementScreen()
         {
-            return new ResourceRevisionElementViewModel(elementEndpoint);
+            return new CreateResourceRevisionElementViewModel(Endpoint);
+        }
+
+        protected override IScreen BuildUpdateElementScreen(ResourceRevisionElement elementEndpoint)
+        {
+            return new UpdateResourceRevisionElementViewModel(elementEndpoint);
         }
     }
 }

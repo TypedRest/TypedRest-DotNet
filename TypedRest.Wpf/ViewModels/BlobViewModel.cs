@@ -9,8 +9,10 @@
         /// Creates a new REST blob view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        public BlobViewModel(IBlobEndpoint endpoint) : base(endpoint)
+        /// <param name="caption">A caption for the blob.</param>
+        public BlobViewModel(IBlobEndpoint endpoint, string caption) : base(endpoint)
         {
+            DisplayName = caption;
         }
     }
 }
