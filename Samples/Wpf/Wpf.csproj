@@ -81,6 +81,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="ViewModels\PagedResourceCollectionViewModel.cs" />
     <Compile Include="ViewModels\ResourceCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreateResourceElementViewModel.cs" />
     <Compile Include="ViewModels\ResourceRevisionCollectionViewModel.cs" />
@@ -108,6 +109,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\PagedResourceCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\UpdateResourceElementView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

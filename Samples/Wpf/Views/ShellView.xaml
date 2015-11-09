@@ -6,7 +6,9 @@
         Title="TypedRest WPF Sample">
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button x:Name="AddTestData">Test data</Button>
             <Button x:Name="ListResources">Resources</Button>
+            <Button x:Name="ListResourcesPaged">Resources (paged)</Button>
             <Button x:Name="ListTargets">Targets</Button>
         </StackPanel>
         <TabControl x:Name="Items">

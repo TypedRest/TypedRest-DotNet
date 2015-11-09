@@ -6,7 +6,7 @@ namespace TypedRest.Samples.Wpf.ViewModels
 {
     public class CreateResourceElementViewModel : CreateElementViewModel<Resource, ResourceElement>
     {
-        public CreateResourceElementViewModel(ResourceCollection endpoint) : base(endpoint)
+        public CreateResourceElementViewModel(ICollectionEndpoint<Resource, ResourceElement> endpoint) : base(endpoint)
         {
         }
     }

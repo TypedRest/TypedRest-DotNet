@@ -6,7 +6,7 @@ namespace TypedRest.Samples.Wpf.ViewModels
 {
     public class CreateResourceRevisionElementViewModel : CreateElementViewModel<ResourceRevision, ResourceRevisionElement>
     {
-        public CreateResourceRevisionElementViewModel(ResourceRevisionCollection endpoint) : base(endpoint)
+        public CreateResourceRevisionElementViewModel(ICollectionEndpoint<ResourceRevision, ResourceRevisionElement> endpoint) : base(endpoint)
         {
         }
     }

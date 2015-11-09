@@ -9,24 +9,34 @@ namespace TypedRest.Samples.Wpf.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        private SampleEntryEndpoint _endpoint;
+        protected SampleEntryEndpoint Endpoint;
 
         protected override void OnInitialize()
         {
-            _endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/api"),
+            Endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/api"),
                 new NetworkCredential("webconsole", "abc"));
 
             base.OnInitialize();
         }
 
+        public void AddTestData()
+        {
+            ActivateItem(new TriggerViewModel(Endpoint.TestData, caption: "Test data"));
+        }
+
         public void ListResources()
         {
-            ActivateItem(new ResourceCollectionViewModel(_endpoint.Resources));
+            ActivateItem(new ResourceCollectionViewModel(Endpoint.Resources));
+        }
+
+        public void ListResourcesPaged()
+        {
+            ActivateItem(new PagedResourceCollectionViewModel(Endpoint.ResourcesPaged));
         }
 
         public void ListTargets()
         {
-            ActivateItem(new CollectionViewModel<Target>(_endpoint.Targets));
+            ActivateItem(new CollectionViewModel<Target>(Endpoint.Targets));
         }
     }
 }
