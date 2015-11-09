@@ -6,7 +6,7 @@ namespace TypedRest.Samples.Library.Models
     /// <summary>
     /// A single log event.
     /// </summary>
-    public class Event
+    public class LogEvent
     {
         /// <summary>
         /// Indicates when this event occured.

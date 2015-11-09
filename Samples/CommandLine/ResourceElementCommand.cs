@@ -20,7 +20,7 @@ namespace TypedRest.Samples.CommandLine
                 case "revisions":
                     return new ResourceRevisionCollectionCommand(Endpoint.Revisions);
                 case "events":
-                    return new StreamCommand<Event>(Endpoint.Events);
+                    return new StreamCommand<LogEvent>(Endpoint.Events);
                 default:
                     return base.GetSubCommand(name);
             }

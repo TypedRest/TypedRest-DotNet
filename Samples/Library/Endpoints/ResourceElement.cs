@@ -14,15 +14,15 @@ namespace TypedRest.Samples.Library.Endpoints
         public ResourceRevisionCollection Revisions => new ResourceRevisionCollection(this);
 
         /// <summary>
-        /// Exposes all <see cref="Event"/>s that relate to this resource.
+        /// Exposes all <see cref="LogEvent"/>s that relate to this resource.
         /// </summary>
-        public StreamEndpoint<Event> Events => new StreamEndpoint<Event>(this, relativeUri: "events");
+        public StreamEndpoint<LogEvent> Events => new StreamEndpoint<LogEvent>(this, relativeUri: "events");
 
-        public ResourceElement(ResourceCollection parent, Uri relativeUri) : base(parent, relativeUri)
+        public ResourceElement(IEndpoint parent, Uri relativeUri) : base(parent, relativeUri)
         {
         }
 
-        public ResourceElement(ResourceCollection parent, string relativeUri) : base(parent, relativeUri)
+        public ResourceElement(IEndpoint parent, string relativeUri) : base(parent, relativeUri)
         {
         }
     }

@@ -47,12 +47,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\PagedResourceCollection.cs" />
     <Compile Include="Endpoints\SampleEntryEndpoint.cs" />
     <Compile Include="Endpoints\ResourceCollection.cs" />
     <Compile Include="Endpoints\ResourceElement.cs" />
     <Compile Include="Endpoints\ResourceRevisionCollection.cs" />
     <Compile Include="Endpoints\ResourceRevisionElement.cs" />
-    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\LogEvent.cs" />
     <Compile Include="Models\NamedEntity.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\ResourceRevision.cs" />
