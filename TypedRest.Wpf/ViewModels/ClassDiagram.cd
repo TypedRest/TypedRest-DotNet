@@ -17,19 +17,19 @@
   <Class Name="TypedRest.Wpf.ViewModels.CollectionViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
     <Position X="4.75" Y="1.75" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAIAAQAACAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <HashCode>AEEAAABAAAAAAAAAIAAQAACCACAAAAAAAAABAAEAAAA=</HashCode>
       <FileName>ViewModels\CollectionViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.CreateElementViewModel&lt;TEntity, TElementEndpoint&gt;" Collapsed="true">
     <Position X="0.5" Y="3" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CreateElementViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.StreamViewModel&lt;TEntity&gt;" Collapsed="true">
-    <Position X="13" Y="5.5" Width="4" />
+    <Position X="13" Y="4.25" Width="4" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\StreamViewModel.cs</FileName>
@@ -38,14 +38,14 @@
   <Class Name="TypedRest.Wpf.ViewModels.TriggerViewModel" Collapsed="true">
     <Position X="13.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\TriggerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.ViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
     <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAAAAEAAAAAgAAAAAAEAAAAAAAACAAA=</HashCode>
+      <HashCode>gAAAAIAAAAAAAAAAAEAAAAAiAAAAAAEAAAAAAAACAAA=</HashCode>
       <FileName>ViewModels\ViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -64,7 +64,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.StreamViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="13" Y="4.25" Width="4" />
+    <Position X="13" Y="3" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\StreamViewModelBase.cs</FileName>
@@ -73,7 +73,7 @@
   <Class Name="TypedRest.Wpf.ViewModels.UpdateElementViewModel&lt;TEntity&gt;" Collapsed="true">
     <Position X="3" Y="3" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\UpdateElementViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
