@@ -45,7 +45,7 @@ namespace TypedRest
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri)
             {
-                Headers = { Range = new RangeHeaderValue { Ranges = { range }, Unit = RangeUnit } }
+                Headers = {Range = new RangeHeaderValue {Ranges = {range}, Unit = RangeUnit}}
             };
 
             var response = await HttpClient.SendAsync(request, cancellationToken);

@@ -22,7 +22,8 @@ namespace TypedRest.Samples.Library.Endpoints
         {
         }
 
-        public ResourceRevisionElement(ResourceRevisionCollection parent, string relativeUri) : base(parent, relativeUri)
+        public ResourceRevisionElement(ResourceRevisionCollection parent, string relativeUri)
+            : base(parent, relativeUri)
         {
         }
     }

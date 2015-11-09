@@ -13,7 +13,7 @@ namespace TypedRest.Samples.CommandLine
             Endpoint = endpoint;
         }
 
-        protected override  ICommand GetSubCommand(string name)
+        protected override ICommand GetSubCommand(string name)
         {
             switch (name.ToLowerInvariant())
             {

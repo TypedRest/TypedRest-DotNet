@@ -13,7 +13,8 @@ namespace TypedRest.Samples.Wpf.ViewModels
 
         protected override void OnInitialize()
         {
-            _endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/api"), new NetworkCredential("webconsole", "abc"));
+            _endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/api"),
+                new NetworkCredential("webconsole", "abc"));
 
             base.OnInitialize();
         }

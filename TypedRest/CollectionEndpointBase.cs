@@ -52,7 +52,8 @@ namespace TypedRest
         /// </summary>
         protected virtual string GetCollectionKey(TEntity entity)
         {
-            if (_keyGetMethod == null) throw new InvalidOperationException(typeof(TElementEndpoint).Name + " has no property marked with [Key] attribute.");
+            if (_keyGetMethod == null)
+                throw new InvalidOperationException(typeof (TElementEndpoint).Name + " has no property marked with [Key] attribute.");
             return _keyGetMethod.Invoke(entity, null).ToString();
         }
 
