@@ -9,6 +9,7 @@ namespace TypedRest.Samples.Wpf.ViewModels
     {
         public ResourceCollectionViewModel(ResourceCollection endpoint) : base(endpoint)
         {
+            DisplayName = "Resources";
         }
 
         protected override IScreen BuildCreateElementScreen()

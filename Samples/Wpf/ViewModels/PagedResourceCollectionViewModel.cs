@@ -9,6 +9,7 @@ namespace TypedRest.Samples.Wpf.ViewModels
     {
         public PagedResourceCollectionViewModel(PagedResourceCollection endpoint) : base(endpoint)
         {
+            DisplayName = "Resources (paged)";
         }
 
         protected override IScreen BuildCreateElementScreen()
