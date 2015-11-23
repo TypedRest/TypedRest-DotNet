@@ -3,16 +3,16 @@
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// View model for updating an existing <see cref="IElementEndpoint{TEntity}"/>.
+    /// View model for showing or updating an existing elemented represented by a <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity to update.</typeparam>
-    public class UpdateElementViewModel<TEntity> : ElementViewModelBase<TEntity, IElementEndpoint<TEntity>>
+    /// <typeparam name="TEntity">The type of entity to represent.</typeparam>
+    public class ElementViewModel<TEntity> : ElementViewModelBase<TEntity, IElementEndpoint<TEntity>>
     {
         /// <summary>
-        /// Creates a new REST element updating view model.
+        /// Creates a new REST element view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        public UpdateElementViewModel(IElementEndpoint<TEntity> endpoint) : base(endpoint)
+        public ElementViewModel(IElementEndpoint<TEntity> endpoint) : base(endpoint)
         {
         }
 

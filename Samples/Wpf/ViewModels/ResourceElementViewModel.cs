@@ -5,11 +5,11 @@ using TypedRest.Wpf.ViewModels;
 
 namespace TypedRest.Samples.Wpf.ViewModels
 {
-    public class UpdateResourceElementViewModel : UpdateElementViewModel<Resource>
+    public class ResourceElementViewModel : ElementViewModel<Resource>
     {
         protected new readonly ResourceElement Endpoint;
 
-        public UpdateResourceElementViewModel(ResourceElement endpoint) : base(endpoint)
+        public ResourceElementViewModel(ResourceElement endpoint) : base(endpoint)
         {
             Endpoint = endpoint;
         }

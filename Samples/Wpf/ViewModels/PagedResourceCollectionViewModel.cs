@@ -12,14 +12,14 @@ namespace TypedRest.Samples.Wpf.ViewModels
             DisplayName = "Resources (paged)";
         }
 
+        protected override IScreen BuildElementScreen(ResourceElement elementEndpoint)
+        {
+            return new ResourceElementViewModel(elementEndpoint);
+        }
+
         protected override IScreen BuildCreateElementScreen()
         {
             return new CreateResourceElementViewModel(Endpoint);
-        }
-
-        protected override IScreen BuildUpdateElementScreen(ResourceElement elementEndpoint)
-        {
-            return new UpdateResourceElementViewModel(elementEndpoint);
         }
     }
 }

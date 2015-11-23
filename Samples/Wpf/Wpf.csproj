@@ -87,8 +87,8 @@
     <Compile Include="ViewModels\ResourceRevisionCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreateResourceRevisionElementViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="ViewModels\UpdateResourceElementViewModel.cs" />
-    <Compile Include="ViewModels\UpdateResourceRevisionElementViewModel.cs" />
+    <Compile Include="ViewModels\ResourceElementViewModel.cs" />
+    <Compile Include="ViewModels\ResourceRevisionElementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -113,11 +113,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UpdateResourceElementView.xaml">
+    <Page Include="Views\ResourceElementView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UpdateResourceRevisionElementView.xaml">
+    <Page Include="Views\ResourceRevisionElementView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

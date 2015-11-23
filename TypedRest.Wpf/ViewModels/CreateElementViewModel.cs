@@ -3,7 +3,7 @@
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// View model for creating a new <see cref="IElementEndpoint{TEntity}"/>.
+    /// View model for creating a new element in a <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity to create.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> provides for <typeparamref name="TEntity"/>s.</typeparam>

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
@@ -41,7 +42,7 @@ namespace TypedRest.Wpf.ViewModels
 
         public ICollection<TEntity> Elements { get; private set; }
 
-        public TEntity SelectedElement { get; set; }
+        public ICollection<TEntity> SelectedElements { get; set; }
 
         protected override async Task OnLoad()
         {
@@ -50,39 +51,46 @@ namespace TypedRest.Wpf.ViewModels
         }
 
         /// <summary>
-        /// Handler for creating a new entity.
+        /// Handler for opening an existing element in the collection.
         /// </summary>
-        protected virtual Task OnCreate()
+        protected virtual void OpenElement(TEntity entity)
         {
-            var screen = BuildCreateElementScreen();
-            throw new NotImplementedException();
+            ((IConductor)Parent).ActivateItem(BuildElementScreen(Endpoint[entity]));
         }
 
         /// <summary>
-        /// Creates a sub-<see cref="IScreen"/> for creating a new <typeparamref name="TEntity"/> in the collection endpoint.
+        /// Builds a sub-<see cref="IScreen"/> for viewing or editing an existing <typeparamref name="TEntity"/> represented by the given <paramref name="elementEndpoint"/>.
+        /// </summary>
+        protected abstract IScreen BuildElementScreen(TElementEndpoint elementEndpoint);
+
+        /// <summary>
+        /// Handler for deleting all selected elements.
+        /// </summary>
+        public virtual async Task DeleteElements()
+        {
+            string message = "Are you sure you want to delete the following elements?" +
+                             SelectedElements.Select(x => x.ToString())
+                                 .Aggregate((workingSet, entity) => workingSet + "\n" + entity);
+
+            if (MessageBox.Show(message, "Delete elements", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
+                MessageBoxResult.Yes)
+            {
+                foreach (var entity in SelectedElements)
+                    await Endpoint[entity].DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Handler for creating a new element in the collection.
+        /// </summary>
+        public virtual void CreateElement()
+        {
+            ((IConductor)Parent).ActivateItem(BuildCreateElementScreen());
+        }
+
+        /// <summary>
+        /// Builds a sub-<see cref="IScreen"/> for creating a new <typeparamref name="TEntity"/> in the collection endpoint.
         /// </summary>
         protected abstract IScreen BuildCreateElementScreen();
-
-        /// <summary>
-        /// Handler for updating an existing <paramref name="entity"/>.
-        /// </summary>
-        protected virtual Task OnUpdate(TEntity entity)
-        {
-            var screen = BuildUpdateElementScreen(Endpoint[entity]);
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Creates a sub-<see cref="IScreen"/> for editing an existing <typeparamref name="TEntity"/> represented by the given <paramref name="elementEndpoint"/>.
-        /// </summary>
-        protected abstract IScreen BuildUpdateElementScreen(TElementEndpoint elementEndpoint);
-
-        /// <summary>
-        /// Handler for deleting a set of existing <paramref name="entities"/>.
-        /// </summary>
-        protected virtual Task OnDelete(IEnumerable<TEntity> entities)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

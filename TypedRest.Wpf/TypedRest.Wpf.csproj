@@ -99,7 +99,7 @@
     <Compile Include="ViewModels\StreamViewModel.cs" />
     <Compile Include="ViewModels\StreamViewModelBase.cs" />
     <Compile Include="ViewModels\TriggerViewModel.cs" />
-    <Compile Include="ViewModels\UpdateElementViewModel.cs" />
+    <Compile Include="ViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

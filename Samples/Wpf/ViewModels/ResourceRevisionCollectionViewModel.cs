@@ -12,14 +12,14 @@ namespace TypedRest.Samples.Wpf.ViewModels
             DisplayName = "Revisions";
         }
 
+        protected override IScreen BuildElementScreen(ResourceRevisionElement elementEndpoint)
+        {
+            return new ResourceRevisionElementViewModel(elementEndpoint);
+        }
+
         protected override IScreen BuildCreateElementScreen()
         {
             return new CreateResourceRevisionElementViewModel(Endpoint);
-        }
-
-        protected override IScreen BuildUpdateElementScreen(ResourceRevisionElement elementEndpoint)
-        {
-            return new UpdateResourceRevisionElementViewModel(elementEndpoint);
         }
     }
 }

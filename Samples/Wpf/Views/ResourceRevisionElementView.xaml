@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="TypedRest.Samples.Wpf.Views.UpdateResourceElementView"
+﻿<UserControl x:Class="TypedRest.Samples.Wpf.Views.ResourceRevisionElementView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Orientation="Vertical">
         <DataGrid x:Name="Entity" />
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="ListRevisions">Revisions</Button>
-            <Button x:Name="ListEvents">Events</Button>
+            <Button x:Name="DoPromote">Promote</Button>
         </StackPanel>
     </StackPanel>
 </UserControl>
