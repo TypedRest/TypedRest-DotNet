@@ -29,7 +29,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Controls whether selecting individual elements opens an edit view.
         /// </summary>
-        public bool CanUpdate { get; set; }
+        public bool CanOpenElement { get; set; }
 
         /// <summary>
         /// Creates a new REST collection view model.
@@ -44,7 +44,7 @@ namespace TypedRest.Wpf.ViewModels
 
         public ICollection<TEntity> SelectedElements { get; set; }
 
-        protected override async Task OnLoad()
+        protected override async Task OnLoadAync()
         {
             Elements = await Endpoint.ReadAllAsync(CancellationToken);
             NotifyOfPropertyChange(() => Elements);
@@ -53,7 +53,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Handler for opening an existing element in the collection.
         /// </summary>
-        protected virtual void OpenElement(TEntity entity)
+        protected virtual void OnOpenElement(TEntity entity)
         {
             ((IConductor)Parent).ActivateItem(BuildElementScreen(Endpoint[entity]));
         }
@@ -66,7 +66,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Handler for deleting all selected elements.
         /// </summary>
-        public virtual async Task DeleteElements()
+        public virtual async Task OnDeleteElements()
         {
             string message = "Are you sure you want to delete the following elements?" +
                              SelectedElements.Select(x => x.ToString())
@@ -75,15 +75,18 @@ namespace TypedRest.Wpf.ViewModels
             if (MessageBox.Show(message, "Delete elements", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
                 MessageBoxResult.Yes)
             {
-                foreach (var entity in SelectedElements)
-                    await Endpoint[entity].DeleteAsync();
+                await WithErrorHandlingAsync(async () =>
+                {
+                    foreach (var entity in SelectedElements)
+                        await Endpoint[entity].DeleteAsync();
+                });
             }
         }
 
         /// <summary>
         /// Handler for creating a new element in the collection.
         /// </summary>
-        public virtual void CreateElement()
+        public virtual void OnCreateElement()
         {
             ((IConductor)Parent).ActivateItem(BuildCreateElementScreen());
         }

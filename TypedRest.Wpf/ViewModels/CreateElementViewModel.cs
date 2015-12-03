@@ -19,7 +19,7 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = "New " + typeof(TEntity).Name;
         }
 
-        protected override async Task OnSave()
+        protected override async Task OnSaveAsync()
         {
             await Endpoint.CreateAsync(Entity, CancellationToken);
         }

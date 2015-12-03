@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -17,7 +18,16 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = caption;
         }
 
-        public async Task Trigger()
+        public async void Trigger()
+        {
+            await WithErrorHandlingAsync(async () =>
+            {
+                await OnTriggerAsync();
+                MessageBox.Show("Successful.", DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
+            });
+        }
+
+        private async Task OnTriggerAsync()
         {
             await Endpoint.TriggerAsync();
         }

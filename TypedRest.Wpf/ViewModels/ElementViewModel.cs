@@ -16,14 +16,14 @@ namespace TypedRest.Wpf.ViewModels
         {
         }
 
-        protected override async Task OnLoad()
+        protected override async Task OnLoadAync()
         {
             Entity = await Endpoint.ReadAsync(CancellationToken);
             DisplayName = Entity.ToString();
             NotifyOfPropertyChange(() => Entity);
         }
 
-        protected override async Task OnSave()
+        protected override async Task OnSaveAsync()
         {
             await Endpoint.UpdateAsync(Entity, CancellationToken);
         }

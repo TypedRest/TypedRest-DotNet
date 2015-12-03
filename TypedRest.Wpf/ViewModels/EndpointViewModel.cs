@@ -1,5 +1,10 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
@@ -35,25 +40,63 @@ namespace TypedRest.Wpf.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            // TODO: Error handling
-            await OnLoad();
+            await RefreshAsync();
         }
 
         /// <summary>
         /// Reloads data from the endpoint.
         /// </summary>
-        public async Task RefreshData()
+        public async Task RefreshAsync()
         {
-            // TODO: Error handling
-            await OnLoad();
+            await WithErrorHandlingAsync(OnLoadAync);
         }
 
         /// <summary>
         /// Handler for loading data for the endpoint.
         /// </summary>
-        protected virtual Task OnLoad()
+        protected virtual Task OnLoadAync()
         {
             return Task.FromResult(true);
+        }
+
+        protected async Task WithErrorHandlingAsync(Func<Task> action)
+        {
+            try
+            {
+                await action();
+            }
+            catch (InvalidDataException ex)
+            {
+                OnError(ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                OnError(ex);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                OnError(ex);
+            }
+            catch (InvalidOperationException ex)
+            {
+                OnError(ex);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                OnError(ex);
+            }
+            catch (HttpRequestException ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Handler for errors reported by REST endpoints.
+        /// </summary>
+        protected virtual void OnError(Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
         protected override void OnDeactivate(bool close)

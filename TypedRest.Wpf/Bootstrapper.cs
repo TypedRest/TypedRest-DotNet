@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
@@ -29,19 +26,8 @@ namespace TypedRest.Wpf
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            if (e.Exception is InvalidDataException
-                || e.Exception is UnauthorizedAccessException
-                || e.Exception is KeyNotFoundException
-                || e.Exception is InvalidOperationException
-                || e.Exception is IndexOutOfRangeException
-                || e.Exception is HttpRequestException)
-            {
-                MessageBox.Show(e.Exception.Message, "REST error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                e.Handled = true;
-            }
-            else if (e.Exception is OperationCanceledException)
-                e.Handled = true;
+            MessageBox.Show(e.Exception.Message, "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Stop);
+            e.Handled = true;
 
             base.OnUnhandledException(sender, e);
         }

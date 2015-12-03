@@ -20,9 +20,20 @@ namespace TypedRest.Wpf.ViewModels
         {
         }
 
+        public bool CanSave { get; set; }
+
+        public async void Save()
+        {
+            await WithErrorHandlingAsync(async () =>
+            {
+                await OnSaveAsync();
+                TryClose();
+            });
+        }
+
         /// <summary>
         /// Handler for saving the input.
         /// </summary>
-        protected abstract Task OnSave();
+        protected abstract Task OnSaveAsync();
     }
 }

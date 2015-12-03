@@ -18,7 +18,7 @@
         {
             CanCreate = false;
             CanDelete = false;
-            CanUpdate = false;
+            CanOpenElement = false;
         }
     }
 }
