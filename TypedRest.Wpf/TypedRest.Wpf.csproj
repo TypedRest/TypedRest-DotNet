@@ -100,7 +100,7 @@
     <Compile Include="ViewModels\StreamViewModelBase.cs" />
     <Compile Include="ViewModels\TriggerViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\EndpointViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

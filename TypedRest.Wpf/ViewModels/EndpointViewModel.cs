@@ -8,7 +8,7 @@ namespace TypedRest.Wpf.ViewModels
     /// Common base class for view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class ViewModelBase<TEndpoint> : Screen
+    public abstract class EndpointViewModel<TEndpoint> : Screen
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -20,7 +20,7 @@ namespace TypedRest.Wpf.ViewModels
         /// Creates a new REST endpoint view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        protected ViewModelBase(TEndpoint endpoint)
+        protected EndpointViewModel(TEndpoint endpoint)
         {
             Endpoint = endpoint;
         }

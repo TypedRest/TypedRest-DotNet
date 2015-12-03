@@ -7,7 +7,7 @@ namespace TypedRest.Wpf.ViewModels
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the view model represents.</typeparam>
     /// <typeparam name="TEndpoint">The type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class ElementViewModelBase<TEntity, TEndpoint> : ViewModelBase<TEndpoint>
+    public abstract class ElementViewModelBase<TEntity, TEndpoint> : EndpointViewModel<TEndpoint>
         where TEndpoint : IEndpoint
     {
         public TEntity Entity { get; protected set; }

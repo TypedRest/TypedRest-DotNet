@@ -3,7 +3,7 @@
     /// <summary>
     /// View model operating on an <see cref="IBlobEndpoint"/>.
     /// </summary>
-    public class BlobViewModel : ViewModelBase<IBlobEndpoint>
+    public class BlobViewModel : EndpointViewModel<IBlobEndpoint>
     {
         /// <summary>
         /// Creates a new REST blob view model.

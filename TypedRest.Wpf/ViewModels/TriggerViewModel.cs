@@ -5,7 +5,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <summary>
     /// View model operating on an <see cref="ITriggerEndpoint"/>.
     /// </summary>
-    public class TriggerViewModel : ViewModelBase<ITriggerEndpoint>
+    public class TriggerViewModel : EndpointViewModel<ITriggerEndpoint>
     {
         /// <summary>
         /// Creates a new REST trigger view model.
