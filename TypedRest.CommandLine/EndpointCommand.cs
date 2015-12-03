@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// Command operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class CommandBase<TEndpoint> : ICommand
+    public abstract class EndpointCommand<TEndpoint> : ICommand
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace TypedRest.CommandLine
         /// Creates a new REST endpoint command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        protected CommandBase(TEndpoint endpoint)
+        protected EndpointCommand(TEndpoint endpoint)
         {
             Endpoint = endpoint;
         }

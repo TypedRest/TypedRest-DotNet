@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// Command providing an entry point to a hierachy of <see cref="IEndpoint"/>s.
     /// </summary>
     /// <typeparamref name="TEndpoint">The specific type of <see cref="IEndpoint"/> the command starts with.</typeparamref>
-    public class EntryCommand<TEndpoint> : CommandBase<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, ICommand>>>
+    public class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, ICommand>>>
         where TEndpoint : IEndpoint
     {
         /// <summary>

@@ -13,7 +13,7 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> : CommandBase<TEndpoint>
+    public abstract class CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> : EndpointCommand<TEndpoint>
         where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {

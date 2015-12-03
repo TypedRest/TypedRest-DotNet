@@ -11,7 +11,7 @@ namespace TypedRest.CommandLine
     /// Command operating on an <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <see cref="IElementEndpoint{TEntity}"/> represents.</typeparam>
-    public class ElementCommand<TEntity> : CommandBase<IElementEndpoint<TEntity>>
+    public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
     {
         /// <summary>
         /// Creates a new REST element command.

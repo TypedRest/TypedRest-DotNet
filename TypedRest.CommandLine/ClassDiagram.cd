@@ -21,14 +21,11 @@
       <FileName>CollectionCommandBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.CommandBase&lt;TEndpoint&gt;">
+  <Class Name="TypedRest.CommandLine.EndpointCommand&lt;TEndpoint&gt;">
     <Position X="3.75" Y="1.5" Width="2.5" />
-    <Members>
-      <Method Name="CommandBase" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAQIAEA=</HashCode>
-      <FileName>CommandBase.cs</FileName>
+      <FileName>EndpointCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

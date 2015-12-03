@@ -8,7 +8,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Command operating on an <see cref="IBlobEndpoint"/>.
     /// </summary>
-    public class BlobCommand : CommandBase<IBlobEndpoint>
+    public class BlobCommand : EndpointCommand<IBlobEndpoint>
     {
         /// <summary>
         /// Creates a new REST blob command.
