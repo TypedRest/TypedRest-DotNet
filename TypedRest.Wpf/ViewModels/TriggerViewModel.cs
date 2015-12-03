@@ -23,6 +23,7 @@ namespace TypedRest.Wpf.ViewModels
             await WithErrorHandlingAsync(async () =>
             {
                 await OnTriggerAsync();
+                await RefreshWatchersAsync();
                 MessageBox.Show("Successful.", DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

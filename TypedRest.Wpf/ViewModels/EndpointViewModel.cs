@@ -13,7 +13,7 @@ namespace TypedRest.Wpf.ViewModels
     /// Common base class for view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class EndpointViewModel<TEndpoint> : Screen
+    public abstract class EndpointViewModel<TEndpoint> : Screen, IWatcher
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -43,9 +43,6 @@ namespace TypedRest.Wpf.ViewModels
             await RefreshAsync();
         }
 
-        /// <summary>
-        /// Reloads data from the endpoint.
-        /// </summary>
         public async Task RefreshAsync()
         {
             await WithErrorHandlingAsync(OnLoadAync);
@@ -99,10 +96,43 @@ namespace TypedRest.Wpf.ViewModels
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
+        public ICollection<IWatcher> Watching { get; } = new List<IWatcher>();
+
+        public ICollection<IWatcher> Watchers { get; } = new List<IWatcher>();
+
+        /// <summary>
+        /// Starts watching another view model for refresh notifications.
+        /// </summary>
+        /// <param name="target">The target to watch.</param>
+        protected void Watch(IWatcher target)
+        {
+            target.Watchers.Add(this);
+            Watching.Add(target);
+        }
+
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);
+            // Automatically stop watching on detach
+            foreach (var target in Watching)
+                target.Watchers.Remove(this);
+            Watching.Clear();
+
+            // Automatically stop being watched on detach
+            foreach (var watcher in Watchers)
+                watcher.Watching.Remove(this);
+            Watchers.Clear();
+
             _cancellationTokenSource.Cancel();
+            base.OnDeactivate(close);
+        }
+
+        public async Task RefreshWatchersAsync()
+        {
+            foreach (var watcher in Watchers)
+            {
+                await watcher.RefreshAsync();
+                await watcher.RefreshWatchersAsync();
+            }
         }
     }
 }

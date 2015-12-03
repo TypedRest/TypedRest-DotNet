@@ -94,6 +94,7 @@
     <Compile Include="ViewModels\CollectionViewModelBase.cs" />
     <Compile Include="ViewModels\CreateElementViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModelBase.cs" />
+    <Compile Include="ViewModels\IWatcher.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModelBase.cs" />
     <Compile Include="ViewModels\StreamViewModel.cs" />

@@ -27,6 +27,7 @@ namespace TypedRest.Wpf.ViewModels
             await WithErrorHandlingAsync(async () =>
             {
                 await OnSaveAsync();
+                await RefreshWatchersAsync();
                 TryClose();
             });
         }
