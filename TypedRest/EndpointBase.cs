@@ -65,26 +65,27 @@ namespace TypedRest
         {
             if (response.IsSuccessStatusCode) return;
 
+            string body = await response.Content.ReadAsStringAsync();
             string message = (response.Content.Headers.ContentType.MediaType == "application/json")
-                ? JsonConvert.DeserializeAnonymousType(await response.Content.ReadAsStringAsync(), new {Message = ""}).Message
+                ? JsonConvert.DeserializeAnonymousType(body, new {Message = ""}).Message
                 : response.StatusCode + " " + response.ReasonPhrase;
 
             switch (response.StatusCode)
             {
                 case HttpStatusCode.BadRequest:
-                    throw new InvalidDataException(message);
+                    throw new InvalidDataException(message, new HttpRequestException(body));
                 case HttpStatusCode.Unauthorized:
                 case HttpStatusCode.Forbidden:
-                    throw new UnauthorizedAccessException(message);
+                    throw new UnauthorizedAccessException(message, new HttpRequestException(body));
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.Gone:
-                    throw new KeyNotFoundException(message);
+                    throw new KeyNotFoundException(message, new HttpRequestException(body));
                 case HttpStatusCode.Conflict:
-                    throw new InvalidOperationException(message);
+                    throw new InvalidOperationException(message, new HttpRequestException(body));
                 case HttpStatusCode.RequestedRangeNotSatisfiable:
-                    throw new IndexOutOfRangeException(message);
+                    throw new IndexOutOfRangeException(message, new HttpRequestException(body));
                 default:
-                    throw new HttpRequestException(message);
+                    throw new HttpRequestException(message, new HttpRequestException(body));
             }
         }
 

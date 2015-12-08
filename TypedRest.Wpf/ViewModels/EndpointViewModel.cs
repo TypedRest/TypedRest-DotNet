@@ -82,10 +82,6 @@ namespace TypedRest.Wpf.ViewModels
             {
                 OnError(ex);
             }
-            catch (HttpRequestException ex)
-            {
-                OnError(ex);
-            }
         }
 
         /// <summary>
