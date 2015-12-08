@@ -16,7 +16,7 @@ namespace TypedRest.Wpf.ViewModels
         {
         }
 
-        protected override async Task OnLoadAync()
+        protected override async Task OnLoadAsync()
         {
             Entity = await Endpoint.ReadAsync(CancellationToken);
             DisplayName = Entity.ToString();

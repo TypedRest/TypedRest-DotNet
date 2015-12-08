@@ -44,7 +44,7 @@ namespace TypedRest.Wpf.ViewModels
 
         public ICollection<TEntity> SelectedElements { get; set; }
 
-        protected override async Task OnLoadAync()
+        protected override async Task OnLoadAsync()
         {
             Elements = await Endpoint.ReadAllAsync(CancellationToken);
             NotifyOfPropertyChange(() => Elements);

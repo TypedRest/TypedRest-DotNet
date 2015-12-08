@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -45,13 +44,13 @@ namespace TypedRest.Wpf.ViewModels
 
         public async Task RefreshAsync()
         {
-            await WithErrorHandlingAsync(OnLoadAync);
+            await WithErrorHandlingAsync(OnLoadAsync);
         }
 
         /// <summary>
         /// Handler for loading data for the endpoint.
         /// </summary>
-        protected virtual Task OnLoadAync()
+        protected virtual Task OnLoadAsync()
         {
             return Task.FromResult(true);
         }
