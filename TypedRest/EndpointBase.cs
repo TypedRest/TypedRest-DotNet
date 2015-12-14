@@ -53,6 +53,19 @@ namespace TypedRest
         }
 
         /// <summary>
+        /// Handles the response of a REST request and wraps HTTP status codes in appropriate <see cref="Exception"/> types.
+        /// </summary>
+        /// <param name="responseTask">A response promise for a request that has started executing.</param>
+        /// <returns>The resolved <paramref name="responseTask"/>.</returns>
+        protected async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
+        {
+            var response = await responseTask;
+            await HandleErrorsAsync(response);
+
+            return response;
+        }
+
+        /// <summary>
         /// Wraps HTTP status codes in appropriate <see cref="Exception"/> types.
         /// </summary>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
@@ -61,7 +74,7 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="IndexOutOfRangeException"><see cref="HttpStatusCode.RequestedRangeNotSatisfiable"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected static async Task HandleErrorsAsync(HttpResponseMessage response)
+        protected virtual async Task HandleErrorsAsync(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode) return;
 

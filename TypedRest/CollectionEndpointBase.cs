@@ -60,17 +60,14 @@ namespace TypedRest
         public virtual async Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HttpClient.GetAsync(Uri, cancellationToken);
-            await HandleErrorsAsync(response);
-
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
             return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken);
         }
 
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken);
-            await HandleErrorsAsync(response);
+            var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
             return (response.StatusCode == HttpStatusCode.Created)
                 ? this[response.Headers.Location.OriginalString]

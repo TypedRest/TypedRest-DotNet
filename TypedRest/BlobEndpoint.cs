@@ -32,16 +32,14 @@ namespace TypedRest
 
         public async Task DownloadToAsync(Stream stream)
         {
-            var response = await HttpClient.GetAsync(Uri);
-            await HandleErrorsAsync(response);
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri));
 
             await response.Content.CopyToAsync(stream);
         }
 
         public async Task UploadFromAsync(Stream stream)
         {
-            var response = await HttpClient.PutAsync(Uri, new StreamContent(stream));
-            await HandleErrorsAsync(response);
+            await HandleResponseAsync(HttpClient.PutAsync(Uri, new StreamContent(stream)));
         }
     }
 }

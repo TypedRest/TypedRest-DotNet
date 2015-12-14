@@ -48,9 +48,7 @@ namespace TypedRest
                 Headers = {Range = new RangeHeaderValue {Ranges = {range}, Unit = RangeUnit}}
             };
 
-            var response = await HttpClient.SendAsync(request, cancellationToken);
-            await HandleErrorsAsync(response);
-
+            var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
             return new PartialResponse<TEntity>(
                 elements: await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken),
                 range: response.Content.Headers.ContentRange);
