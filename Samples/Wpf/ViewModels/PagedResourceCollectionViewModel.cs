@@ -7,19 +7,20 @@ namespace TypedRest.Samples.Wpf.ViewModels
 {
     public class PagedResourceCollectionViewModel : PagedCollectionViewModelBase<Resource, PagedResourceCollection, ResourceElement>
     {
-        public PagedResourceCollectionViewModel(PagedResourceCollection endpoint) : base(endpoint)
+        public PagedResourceCollectionViewModel(PagedResourceCollection endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
             DisplayName = "Resources (paged)";
         }
 
         protected override IScreen BuildElementScreen(ResourceElement elementEndpoint)
         {
-            return new ResourceElementViewModel(elementEndpoint);
+            return new ResourceElementViewModel(elementEndpoint, EventAggregator);
         }
 
         protected override IScreen BuildCreateElementScreen()
         {
-            return new CreateResourceElementViewModel(Endpoint);
+            return new CreateResourceElementViewModel(Endpoint, EventAggregator);
         }
     }
 }

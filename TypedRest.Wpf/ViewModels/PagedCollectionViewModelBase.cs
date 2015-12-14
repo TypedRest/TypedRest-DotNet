@@ -1,4 +1,6 @@
-﻿namespace TypedRest.Wpf.ViewModels
+﻿using Caliburn.Micro;
+
+namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
     /// Base class for building view models operatingon an <see cref="IPagedCollectionEndpoint{TEntity,TElementEndpoint}"/>.
@@ -14,7 +16,9 @@
         /// Creates a new REST paged collection view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        protected PagedCollectionViewModelBase(TEndpoint endpoint) : base(endpoint)
+        /// <param name="eventAggregator">Used to send refresh notifications.</param>
+        protected PagedCollectionViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
         }
     }

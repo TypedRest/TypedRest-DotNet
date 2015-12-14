@@ -89,12 +89,16 @@
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\ElementCreatedEvent.cs" />
+    <Compile Include="Events\ElementEvent.cs" />
+    <Compile Include="Events\ElementUpdatedEvent.cs" />
+    <Compile Include="Events\EndpointEvent.cs" />
+    <Compile Include="Events\TriggerEvent.cs" />
     <Compile Include="ViewModels\BlobViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModelBase.cs" />
     <Compile Include="ViewModels\CreateElementViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModelBase.cs" />
-    <Compile Include="ViewModels\IWatcher.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModelBase.cs" />
     <Compile Include="ViewModels\StreamViewModel.cs" />
@@ -104,6 +108,7 @@
     <Compile Include="ViewModels\EndpointViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Events\ClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="TypedRest.Wpf.nuspec" />
     <None Include="ViewModels\ClassDiagram.cd" />

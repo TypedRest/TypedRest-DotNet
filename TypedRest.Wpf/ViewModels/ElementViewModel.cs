@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Caliburn.Micro;
+using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -12,7 +14,9 @@ namespace TypedRest.Wpf.ViewModels
         /// Creates a new REST element view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        public ElementViewModel(IElementEndpoint<TEntity> endpoint) : base(endpoint)
+        /// <param name="eventAggregator">Used to send refresh notifications.</param>
+        public ElementViewModel(IElementEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
         }
 
@@ -26,6 +30,7 @@ namespace TypedRest.Wpf.ViewModels
         protected override async Task OnSaveAsync()
         {
             await Endpoint.UpdateAsync(Entity, CancellationToken);
+            EventAggregator.Publish(new ElementUpdatedEvent<TEntity>(Endpoint), null);
         }
     }
 }

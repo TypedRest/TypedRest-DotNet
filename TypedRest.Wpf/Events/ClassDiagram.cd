@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TypedRest.Wpf.Events.ElementCreatedEvent&lt;TEntity&gt;" Collapsed="true">
+    <Position X="3.25" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\ElementCreatedEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.Events.ElementEvent&lt;TEntity&gt;" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\ElementEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.Events.EndpointEvent&lt;TEndpoint&gt;">
+    <Position X="3.5" Y="0.5" Width="2" />
+    <Members>
+      <Method Name="EndpointEvent" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\EndpointEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.Events.TriggerEvent&lt;TEndpoint&gt;" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\TriggerEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.Events.ElementUpdatedEvent&lt;TEntity&gt;" Collapsed="true">
+    <Position X="0.5" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\ElementUpdatedEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

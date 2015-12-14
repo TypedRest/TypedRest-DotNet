@@ -12,18 +12,20 @@ namespace TypedRest.Wpf.ViewModels
         /// Creates a new REST paged collection view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        public StreamViewModel(StreamEndpoint<TEntity> endpoint) : base(endpoint)
+        /// <param name="eventAggregator">Used to send refresh notifications.</param>
+        public StreamViewModel(StreamEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
         }
 
         protected override IScreen BuildElementScreen(ElementEndpoint<TEntity> elementEndpoint)
         {
-            return new ElementViewModel<TEntity>(elementEndpoint);
+            return new ElementViewModel<TEntity>(elementEndpoint, EventAggregator);
         }
 
         protected override IScreen BuildCreateElementScreen()
         {
-            return new CreateElementViewModel<TEntity, ElementEndpoint<TEntity>>(Endpoint);
+            return new CreateElementViewModel<TEntity, ElementEndpoint<TEntity>>(Endpoint, EventAggregator);
         }
     }
 }

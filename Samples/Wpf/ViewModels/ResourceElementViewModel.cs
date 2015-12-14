@@ -9,19 +9,20 @@ namespace TypedRest.Samples.Wpf.ViewModels
     {
         protected new readonly ResourceElement Endpoint;
 
-        public ResourceElementViewModel(ResourceElement endpoint) : base(endpoint)
+        public ResourceElementViewModel(ResourceElement endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
             Endpoint = endpoint;
         }
 
         public void ListRevisions()
         {
-            ((IConductor)Parent).ActivateItem(new ResourceRevisionCollectionViewModel(Endpoint.Revisions));
+            ((IConductor)Parent).ActivateItem(new ResourceRevisionCollectionViewModel(Endpoint.Revisions, EventAggregator));
         }
 
         public void ListEvents()
         {
-            ((IConductor)Parent).ActivateItem(new StreamViewModel<LogEvent>(Endpoint.Events));
+            ((IConductor)Parent).ActivateItem(new StreamViewModel<LogEvent>(Endpoint.Events, EventAggregator));
         }
     }
 }

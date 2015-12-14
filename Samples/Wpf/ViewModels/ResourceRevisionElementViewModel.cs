@@ -9,14 +9,15 @@ namespace TypedRest.Samples.Wpf.ViewModels
     {
         protected new readonly ResourceRevisionElement Endpoint;
 
-        public ResourceRevisionElementViewModel(ResourceRevisionElement endpoint) : base(endpoint)
+        public ResourceRevisionElementViewModel(ResourceRevisionElement endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
             Endpoint = endpoint;
         }
 
         public void DoPromote()
         {
-            ((IConductor)Parent).ActivateItem(new TriggerViewModel(Endpoint.Promote, caption: "Promote"));
+            ((IConductor)Parent).ActivateItem(new TriggerViewModel(Endpoint.Promote, EventAggregator, caption: "Promote"));
         }
     }
 }

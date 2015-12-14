@@ -12,7 +12,7 @@ namespace TypedRest.Wpf.ViewModels
     /// Common base class for view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class EndpointViewModel<TEndpoint> : Screen, IWatcher
+    public abstract class EndpointViewModel<TEndpoint> : Screen
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -21,12 +21,19 @@ namespace TypedRest.Wpf.ViewModels
         protected readonly TEndpoint Endpoint;
 
         /// <summary>
+        /// Used to send refresh notifications.
+        /// </summary>
+        protected readonly IEventAggregator EventAggregator;
+
+        /// <summary>
         /// Creates a new REST endpoint view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        protected EndpointViewModel(TEndpoint endpoint)
+        /// <param name="eventAggregator">Used to send refresh notifications.</param>
+        protected EndpointViewModel(TEndpoint endpoint, IEventAggregator eventAggregator)
         {
             Endpoint = endpoint;
+            EventAggregator = eventAggregator;
         }
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -38,8 +45,15 @@ namespace TypedRest.Wpf.ViewModels
             base.OnActivate();
 
             _cancellationTokenSource = new CancellationTokenSource();
-
             await RefreshAsync();
+            EventAggregator.Subscribe(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            EventAggregator.Unsubscribe(this);
+
+            base.OnDeactivate(close);
         }
 
         public async Task RefreshAsync()
@@ -89,45 +103,6 @@ namespace TypedRest.Wpf.ViewModels
         protected virtual void OnError(Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        }
-
-        public ICollection<IWatcher> Watching { get; } = new List<IWatcher>();
-
-        public ICollection<IWatcher> Watchers { get; } = new List<IWatcher>();
-
-        /// <summary>
-        /// Starts watching another view model for refresh notifications.
-        /// </summary>
-        /// <param name="target">The target to watch.</param>
-        protected void Watch(IWatcher target)
-        {
-            target.Watchers.Add(this);
-            Watching.Add(target);
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            // Automatically stop watching on detach
-            foreach (var target in Watching)
-                target.Watchers.Remove(this);
-            Watching.Clear();
-
-            // Automatically stop being watched on detach
-            foreach (var watcher in Watchers)
-                watcher.Watching.Remove(this);
-            Watchers.Clear();
-
-            _cancellationTokenSource.Cancel();
-            base.OnDeactivate(close);
-        }
-
-        public async Task RefreshWatchersAsync()
-        {
-            foreach (var watcher in Watchers)
-            {
-                await watcher.RefreshAsync();
-                await watcher.RefreshWatchersAsync();
-            }
         }
     }
 }

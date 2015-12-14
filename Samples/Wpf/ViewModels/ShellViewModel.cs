@@ -15,10 +15,11 @@ namespace TypedRest.Samples.Wpf.ViewModels
 
             var endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/api"),
                 new NetworkCredential("webconsole", "abc"));
+            var eventAggregator = new EventAggregator();
 
-            EnsureItem(new ResourceCollectionViewModel(endpoint.Resources));
-            EnsureItem(new PagedResourceCollectionViewModel(endpoint.ResourcesPaged));
-            EnsureItem(new CollectionViewModel<Target>(endpoint.Targets));
+            EnsureItem(new ResourceCollectionViewModel(endpoint.Resources, eventAggregator));
+            EnsureItem(new PagedResourceCollectionViewModel(endpoint.ResourcesPaged, eventAggregator));
+            EnsureItem(new CollectionViewModel<Target>(endpoint.Targets, eventAggregator));
         }
     }
 }

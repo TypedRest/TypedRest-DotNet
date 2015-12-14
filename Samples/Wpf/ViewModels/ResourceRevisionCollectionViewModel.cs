@@ -7,19 +7,20 @@ namespace TypedRest.Samples.Wpf.ViewModels
 {
     public class ResourceRevisionCollectionViewModel : CollectionViewModelBase<ResourceRevision, ResourceRevisionCollection, ResourceRevisionElement>
     {
-        public ResourceRevisionCollectionViewModel(ResourceRevisionCollection endpoint) : base(endpoint)
+        public ResourceRevisionCollectionViewModel(ResourceRevisionCollection endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
             DisplayName = "Revisions";
         }
 
         protected override IScreen BuildElementScreen(ResourceRevisionElement elementEndpoint)
         {
-            return new ResourceRevisionElementViewModel(elementEndpoint);
+            return new ResourceRevisionElementViewModel(elementEndpoint, EventAggregator);
         }
 
         protected override IScreen BuildCreateElementScreen()
         {
-            return new CreateResourceRevisionElementViewModel(Endpoint);
+            return new CreateResourceRevisionElementViewModel(Endpoint, EventAggregator);
         }
     }
 }

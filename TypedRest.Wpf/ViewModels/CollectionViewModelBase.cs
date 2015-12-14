@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -12,7 +13,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint> : EndpointViewModel<TEndpoint>
+    public abstract class CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint> : EndpointViewModel<TEndpoint>, IHandle<ElementEvent<TEntity>>
         where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
@@ -35,7 +36,9 @@ namespace TypedRest.Wpf.ViewModels
         /// Creates a new REST collection view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
-        protected CollectionViewModelBase(TEndpoint endpoint) : base(endpoint)
+        /// <param name="eventAggregator">Used to send refresh notifications.</param>
+        protected CollectionViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
+            : base(endpoint, eventAggregator)
         {
             DisplayName = typeof (TEntity).Name;
         }
@@ -95,5 +98,11 @@ namespace TypedRest.Wpf.ViewModels
         /// Builds a sub-<see cref="IScreen"/> for creating a new <typeparamref name="TEntity"/> in the collection endpoint.
         /// </summary>
         protected abstract IScreen BuildCreateElementScreen();
+
+        // Refresh when child elements are created or updated
+        public async void Handle(ElementEvent<TEntity> message)
+        {
+            await RefreshAsync();
+        }
     }
 }
