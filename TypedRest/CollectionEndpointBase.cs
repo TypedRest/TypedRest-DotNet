@@ -43,12 +43,12 @@ namespace TypedRest
         {
         }
 
-        public abstract TElementEndpoint this[string key] { get; }
+        public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
-        public TElementEndpoint this[TEntity entity] => this[GetCollectionKey(entity)];
+        public TElementEndpoint this[TEntity entity] => this[new Uri(GetCollectionKey(entity), UriKind.Relative)];
 
         /// <summary>
-        /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
+        /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[Uri]"/>.
         /// </summary>
         protected virtual string GetCollectionKey(TEntity entity)
         {
@@ -70,7 +70,7 @@ namespace TypedRest
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
             return (response.StatusCode == HttpStatusCode.Created)
-                ? this[response.Headers.Location.OriginalString]
+                ? this[response.Headers.Location]
                 : null;
         }
     }

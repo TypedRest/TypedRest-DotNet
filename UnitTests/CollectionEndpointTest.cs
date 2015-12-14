@@ -47,9 +47,9 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestGetById()
+        public void TestGetByRelativeUri()
         {
-            _endpoint["1"].Uri
+            _endpoint[new Uri("1", UriKind.Relative)].Uri
                 .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
 

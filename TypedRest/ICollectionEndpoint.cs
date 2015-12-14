@@ -17,13 +17,13 @@ namespace TypedRest
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
-        /// Returns a <typeparamref name="TElementEndpoint"/> for a specific element of this collection. Does not perform any network traffic yet.
+        /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. Does not perform any network traffic yet.
         /// </summary>
-        /// <param name="key">The key used to identify the element within the collection.</param>
-        TElementEndpoint this[string key] { get; }
+        /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
+        TElementEndpoint this[Uri relativeUri] { get; }
 
         /// <summary>
-        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific element of this collection. Does not perform any network traffic yet.
+        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="entity">A previously fetched instance of the entity to retrieve a new state for.</param>
         TElementEndpoint this[TEntity entity] { get; }

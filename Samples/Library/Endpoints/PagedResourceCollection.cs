@@ -1,4 +1,5 @@
-﻿using TypedRest.Samples.Library.Models;
+﻿using System;
+using TypedRest.Samples.Library.Models;
 
 namespace TypedRest.Samples.Library.Endpoints
 {
@@ -11,6 +12,6 @@ namespace TypedRest.Samples.Library.Endpoints
         {
         }
 
-        public override ResourceElement this[string key] => new ResourceElement(this, relativeUri: key);
+        public override ResourceElement this[Uri relativeUri] => new ResourceElement(this, relativeUri);
     }
 }
