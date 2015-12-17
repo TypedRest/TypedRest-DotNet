@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -12,7 +14,7 @@ namespace TypedRest.Wpf.ViewModels
     /// Common base class for view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class EndpointViewModel<TEndpoint> : Screen
+    public abstract class EndpointViewModel<TEndpoint> : Screen, IHandle<IEndpointEvent>
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -103,6 +105,13 @@ namespace TypedRest.Wpf.ViewModels
         protected virtual void OnError(Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+
+        // Refresh when notifications are sent from the server
+        public async void Handle(IEndpointEvent message)
+        {
+            if (message.Endpoint.NotifyTargets.Contains(Endpoint.Uri))
+                await RefreshAsync();
         }
     }
 }

@@ -93,6 +93,7 @@
     <Compile Include="Events\ElementEvent.cs" />
     <Compile Include="Events\ElementUpdatedEvent.cs" />
     <Compile Include="Events\EndpointEvent.cs" />
+    <Compile Include="Events\IEndpointEvent.cs" />
     <Compile Include="Events\TriggerEvent.cs" />
     <Compile Include="ViewModels\BlobViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />

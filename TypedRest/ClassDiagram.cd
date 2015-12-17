@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TypedRest.ElementEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="2.25" Y="9" Width="2.25" />
+    <Position X="2.25" Y="9.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>ElementEndpoint.cs</FileName>
@@ -9,44 +9,44 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.EndpointBase" Collapsed="true">
-    <Position X="3.75" Y="7.75" Width="2.25" />
+    <Position X="3.75" Y="8.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAAAAAACAAAAAAAAAACAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAEAAAAAAAACAJBAAAAAAACAAAAAAACCBAQAQAAAA=</HashCode>
       <FileName>EndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.CollectionEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="4.75" Y="10.25" Width="3" />
+    <Position X="4.75" Y="11" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CollectionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CollectionEndpointBase&lt;TEntity, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="4.75" Y="9" Width="3" />
+    <Position X="4.75" Y="9.75" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAQAIAAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAIBAAACAAAAAAAAAAAAAAAACAQAIAAAIA=</HashCode>
       <FileName>CollectionEndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.EntryEndpoint" Collapsed="true">
-    <Position X="0.5" Y="9" Width="1.5" />
+    <Position X="0.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>EntryEndpoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.StreamEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="12" Y="12.75" Width="3.25" />
+    <Position X="12" Y="13.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StreamEndpoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.PartialResponse&lt;TEntity&gt;">
-    <Position X="6.25" Y="4.5" Width="2.25" />
+    <Position X="6.25" Y="5.25" Width="2.25" />
     <Members>
       <Method Name="PartialResponse" Hidden="true" />
     </Members>
@@ -56,7 +56,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.BlobEndpoint" Collapsed="true">
-    <Position X="8" Y="9" Width="1.5" />
+    <Position X="8" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BlobEndpoint.cs</FileName>
@@ -64,7 +64,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.TriggerEndpoint" Collapsed="true">
-    <Position X="9.75" Y="9" Width="1.5" />
+    <Position X="9.75" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>TriggerEndpoint.cs</FileName>
@@ -72,14 +72,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.PagedCollectionEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="8" Y="11.5" Width="3.75" />
+    <Position X="8" Y="12.25" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>PagedCollectionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.PagedCollectionEndpointBase&lt;TEntity, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="8" Y="10.25" Width="3.75" />
+    <Position X="8" Y="11" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>PagedCollectionEndpointBase.cs</FileName>
@@ -87,7 +87,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.StreamEndpointBase&lt;TEntity, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="12" Y="11.5" Width="3.25" />
+    <Position X="12" Y="12.25" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StreamEndpointBase.cs</FileName>
@@ -95,7 +95,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="TypedRest.IElementEndpoint&lt;TEntity&gt;">
-    <Position X="0.5" Y="2.25" Width="2.25" />
+    <Position X="0.5" Y="3" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>IElementEndpoint.cs</FileName>
@@ -104,40 +104,40 @@
   <Interface Name="TypedRest.IEndpoint">
     <Position X="4.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAACABAQAAAAAA=</HashCode>
       <FileName>IEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.ICollectionEndpoint&lt;TEntity, TElementEndpoint&gt;">
-    <Position X="3" Y="2.25" Width="3" />
+    <Position X="3" Y="3" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAQAIAAAAA=</HashCode>
       <FileName>ICollectionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IStreamEndpoint&lt;TEntity, TElementEndpoint&gt;">
-    <Position X="3" Y="6" Width="3" />
+    <Position X="3" Y="6.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IStreamEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IBlobEndpoint">
-    <Position X="6.25" Y="2.25" Width="1.5" />
+    <Position X="6.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IBlobEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.ITriggerEndpoint">
-    <Position X="8" Y="2.25" Width="1.5" />
+    <Position X="8" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>ITriggerEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IPagedCollectionEndpoint&lt;TEntity, TElementEndpoint&gt;">
-    <Position X="3" Y="4.5" Width="3" />
+    <Position X="3" Y="5.25" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPagedCollectionEndpoint.cs</FileName>

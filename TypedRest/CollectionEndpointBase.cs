@@ -45,7 +45,34 @@ namespace TypedRest
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
-        public TElementEndpoint this[TEntity entity] => this[new Uri(GetCollectionKey(entity), UriKind.Relative)];
+        public TElementEndpoint this[TEntity entity]
+        {
+            get
+            {
+                var relativeUri = ChildTemplate.BindByName(Uri, new Dictionary<string, string>
+                {
+                    {"id", GetCollectionKey(entity)}
+                });
+                return this[relativeUri];
+            }
+        }
+
+        /// <summary>
+        /// The URI template used to construct URIs of child elements of thiscollection.
+        /// </summary>
+        protected UriTemplate ChildTemplate = new UriTemplate("{id}");
+
+        /// <summary>
+        /// The HTTP Link header relation type used by the server to set the collection child element URI template.
+        /// </summary>
+        public string ChildTemplateRel { get; set; } = "child-template";
+
+        protected override void HandleLink(string href, string rel = null, string title = null)
+        {
+            if (rel == ChildTemplateRel) ChildTemplate = new UriTemplate(href);
+
+            base.HandleLink(href, rel, title);
+        }
 
         /// <summary>
         /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[Uri]"/>.

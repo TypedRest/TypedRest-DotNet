@@ -8,7 +8,8 @@ namespace TypedRest.Samples.Library.Endpoints
     /// </summary>
     public class ResourceCollection : CollectionEndpointBase<Resource, ResourceElement>
     {
-        public ResourceCollection(SampleEntryEndpoint parent) : base(parent, relativeUri: "resources")
+        public ResourceCollection(IEndpoint parent)
+            : base(parent, parent.Link("resources"))
         {
         }
 

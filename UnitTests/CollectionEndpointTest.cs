@@ -59,5 +59,22 @@ namespace TypedRest
             _endpoint[new MockEntity(1, "test")].Uri
                 .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
+
+        [Test, Ignore("Server mock not implemented yet")]
+        public async Task TestGetByEntityWithLinkHeader()
+        {
+            //stubFor(get(urlEqualTo("/endpoint/"))
+            //    .withHeader("Accept", equalTo(jsonMime))
+            //    .willReturn(aResponse()
+            //        .withStatus(SC_OK)
+            //        .withHeader("Content-Type", jsonMime)
+            //        .withHeader("Link", "<children/{id}>; rel=children")
+            //        .withBody("[]")));
+
+            await _endpoint.ReadAllAsync();
+
+            _endpoint[new MockEntity(1, "test")].Uri
+                .Should().Be(new Uri(_endpoint.Uri, "children/1"));
+        }
     }
 }

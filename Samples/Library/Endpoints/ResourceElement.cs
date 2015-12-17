@@ -8,6 +8,11 @@ namespace TypedRest.Samples.Library.Endpoints
     /// </summary>
     public class ResourceElement : ElementEndpoint<Resource>
     {
+        public ResourceElement(ResourceCollection parent, Uri relativeUri)
+            : base(parent, relativeUri)
+        {
+        }
+
         /// <summary>
         /// Represents the <see cref="ResourceRevision"/>s.
         /// </summary>
@@ -16,14 +21,6 @@ namespace TypedRest.Samples.Library.Endpoints
         /// <summary>
         /// Exposes all <see cref="LogEvent"/>s that relate to this resource.
         /// </summary>
-        public StreamEndpoint<LogEvent> Events => new StreamEndpoint<LogEvent>(this, relativeUri: "events");
-
-        public ResourceElement(IEndpoint parent, Uri relativeUri) : base(parent, relativeUri)
-        {
-        }
-
-        public ResourceElement(IEndpoint parent, string relativeUri) : base(parent, relativeUri)
-        {
-        }
+        public StreamEndpoint<LogEvent> Events => new StreamEndpoint<LogEvent>(this, Link("events"));
     }
 }
