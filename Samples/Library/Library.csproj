@@ -47,7 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Endpoints\PagedResourceCollection.cs" />
     <Compile Include="Endpoints\SampleEntryEndpoint.cs" />
     <Compile Include="Endpoints\ResourceCollection.cs" />
     <Compile Include="Endpoints\ResourceElement.cs" />

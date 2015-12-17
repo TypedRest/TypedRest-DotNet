@@ -10,7 +10,7 @@ namespace TypedRest.Samples.CommandLine
     {
         public static int Main(string[] args)
         {
-            var endpoint = new SampleEntryEndpoint(new Uri("http://localhost:8080/api/"));
+            var endpoint = new SampleEntryEndpoint(new Uri("http://localhost:8080/"));
             var command = new EntryCommand<SampleEntryEndpoint>(endpoint)
             {
                 {"resources", x => new ResourceCollectionCommand(x.Resources)},
