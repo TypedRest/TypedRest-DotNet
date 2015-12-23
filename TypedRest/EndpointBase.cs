@@ -40,7 +40,7 @@ namespace TypedRest
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         protected EndpointBase(IEndpoint parent, Uri relativeUri)
-            : this(parent.HttpClient, new Uri(parent.Uri.EnsureTrailingSlash(), relativeUri))
+            : this(parent.HttpClient, new Uri(parent.Uri, relativeUri))
         {
         }
 
