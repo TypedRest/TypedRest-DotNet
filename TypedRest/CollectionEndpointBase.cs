@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -45,33 +46,23 @@ namespace TypedRest
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
+        /// <summary>
+        /// The Link relation type used by the server to set the collection child element URI template.
+        /// </summary>
+        public string ChildTemplateRel { get; set; } = "child";
+
         public TElementEndpoint this[TEntity entity]
         {
             get
             {
-                var relativeUri = ChildTemplate.BindByName(Uri, new Dictionary<string, string>
-                {
-                    {"id", GetCollectionKey(entity)}
-                });
+                string id = GetCollectionKey(entity);
+                var template = LinkTemplate(ChildTemplateRel);
+
+                var relativeUri = (template == null)
+                    ? new Uri(Uri, new Uri(id, UriKind.Relative))
+                    : template.BindByName(Uri, new NameValueCollection {{"id", GetCollectionKey(entity)}});
                 return this[relativeUri];
             }
-        }
-
-        /// <summary>
-        /// The URI template used to construct URIs of child elements of thiscollection.
-        /// </summary>
-        protected UriTemplate ChildTemplate = new UriTemplate("{id}");
-
-        /// <summary>
-        /// The HTTP Link header relation type used by the server to set the collection child element URI template.
-        /// </summary>
-        public string ChildTemplateRel { get; set; } = "child-template";
-
-        protected override void HandleLink(string href, string rel = null, string title = null)
-        {
-            if (rel == ChildTemplateRel) ChildTemplate = new UriTemplate(href);
-
-            base.HandleLink(href, rel, title);
         }
 
         /// <summary>

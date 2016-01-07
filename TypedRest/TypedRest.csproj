@@ -76,6 +76,7 @@
     <Compile Include="CollectionEndpointBase.cs" />
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
+    <Compile Include="EndpointExtensions.cs" />
     <Compile Include="EntryEndpoint.cs" />
     <Compile Include="IBlobEndpoint.cs" />
     <Compile Include="ICollectionEndpoint.cs" />

@@ -46,7 +46,7 @@ namespace TypedRest
         }
 
         [Test]
-        public async Task TestNotifyTargets()
+        public async Task TestGetLinks()
         {
             //stubFor(get(urlEqualTo("/endpoint"))
             //    .willReturn(aResponse()
@@ -55,9 +55,23 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.NotifyTargets.Should().BeEquivalentTo(
+            _endpoint.GetLinks("notify").Should().BeEquivalentTo(
                 new Uri(_endpoint.Uri, "target1"),
                 new Uri(_endpoint.Uri, "target2"));
+        }
+
+        [Test]
+        public async Task TestLinkTemplate()
+        {
+            //stubFor(get(urlEqualTo("/endpoint"))
+            //    .willReturn(aResponse()
+            //        .withStatus(SC_NO_CONTENT)
+            //        .withHeader("Link", "<a>; rel=target1-template")));
+
+            await _endpoint.GetAsync();
+
+            _endpoint.LinkTemplate("target1").ToString().Should().Be("a");
+            _endpoint.LinkTemplate("target2").Should().BeNull();
         }
 
         private class CustomEndpoint : EndpointBase

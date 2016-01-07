@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -107,90 +106,92 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Handles HTTP Link headers.
+        /// Handles links embedded in an HTTP response.
         /// </summary>
         private void HandleLinks(HttpResponseMessage response)
         {
+            var links = new Dictionary<string, ISet<Uri>>();
+            var linkTemplates = new Dictionary<string, UriTemplate>();
+
             foreach (string element in response.Headers.FirstOrDefault(x => x.Key == "Link").Value)
             {
-                var properties = element.Split(new[] {"; "}, StringSplitOptions.None);
-                string href = properties[0].Substring(1, properties[0].Length - 2);
-                string rel = null, title = null;
-                for (int i = 1; i < properties.Length; i++)
+                var parameters = element.Split(new[] {"; "}, StringSplitOptions.None);
+                string href = parameters[0].Substring(1, parameters[0].Length - 2);
+
+                var relParameter = parameters.Select(x => x.Split('=')).FirstOrDefault(x => x[0] == "rel");
+                if (relParameter != null)
                 {
-                    var propertyParts = properties[i].Split('=');
-                    if (propertyParts.Length == 2)
+                    if (relParameter[1].EndsWith("-template"))
                     {
-                        switch (propertyParts[0])
-                        {
-                            case "rel":
-                                rel = propertyParts[1];
-                                break;
-                            case "title":
-                                title = propertyParts[1];
-                                break;
-                        }
+                        string rel = relParameter[1].Substring(0, relParameter[1].Length - "-template".Length);
+                        linkTemplates[rel] = new UriTemplate(href);
+                    }
+                    else {
+                        string rel = relParameter[1];
+                        var linkSet = links[rel];
+                        if (linkSet == null)
+                            links[rel] = linkSet = new HashSet<Uri>();
+                        linkSet.Add(new Uri(Uri, href));
                     }
                 }
-
-                HandleLink(href, rel, title);
             }
+
+            _links = links;
+            _linkTemplates = linkTemplates;
         }
 
-        /// <summary>
-        /// Hook for handling links included in a response as an HTTP header.
-        /// </summary>
-        /// <param name="href">The URI the link points to.</param>
-        /// <param name="rel">The relation type of the link; can be <see langword="null"/>.</param>
-        /// <param name="title">A human-readable description of the link; can be <see langword="null"/>.</param>
-        protected virtual void HandleLink(string href, string rel = null, string title = null)
+        private IDictionary<string, ISet<Uri>> _links = new Dictionary<string, ISet<Uri>>();
+
+        public IEnumerable<Uri> GetLinks(string rel)
         {
-            if (rel == null)
-            {
-            }
-            else if (rel == NotifyRel)
-            {
-                _notifyTargets.TryAdd(new Uri(Uri, href), true);
-            }
-            else if (rel.EndsWith("-template"))
-            {
-            }
-            else
-            {
-                _links.AddOrUpdate(rel, new Uri(Uri, href), (_, x) => x);
-            }
+            ISet<Uri> uris;
+            return _links.TryGetValue(rel, out uris) ? uris : Enumerable.Empty<Uri>();
         }
-
-        private readonly ConcurrentDictionary<string, Uri> _links = new ConcurrentDictionary<string, Uri>();
 
         public Uri Link(string rel)
         {
-            // Try to lazy-load missing link data
-            if (_links.Count == 0)
+            var uri = GetLinks(rel).FirstOrDefault();
+            if (uri == null)
             {
+                // Lazy loading
                 try
                 {
                     HandleLinks(HttpClient.GetAsync(Uri).Result);
                 }
                 catch (Exception ex)
                 {
-                    throw new KeyNotFoundException($"No link with rel={rel} found in endpoint {Uri}.", ex);
+                    throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", ex);
                 }
+
+                uri = GetLinks(rel).FirstOrDefault();
+                if (uri == null)
+                    throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.");
             }
 
-            Uri uri;
-            if (_links.TryGetValue(rel, out uri)) return uri;
-            throw new KeyNotFoundException($"No link with rel={rel} found in endpoint {Uri}.");
+            return uri;
         }
 
-        /// <summary>
-        /// The HTTP Link header relation type used by the server to set <see cref="IEndpoint.NotifyTargets"/>.
-        /// </summary>
-        public string NotifyRel { get; set; } = "notify";
+        private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
 
-        private readonly ConcurrentDictionary<Uri, bool> _notifyTargets = new ConcurrentDictionary<Uri, bool>();
+        public UriTemplate LinkTemplate(string rel)
+        {
+            UriTemplate template;
+            if (!_linkTemplates.TryGetValue(rel, out template))
+            {
+                // Lazy loading
+                try
+                {
+                    HandleLinks(HttpClient.GetAsync(Uri).Result);
+                }
+                catch (Exception)
+                {
+                }
 
-        public IReadOnlyCollection<Uri> NotifyTargets => _notifyTargets.Keys.ToList();
+                _linkTemplates.TryGetValue(rel, out template);
+            }
+
+            return template;
+        }
 
         /// <summary>
         /// The <see cref="MediaTypeFormatter"/> used to serialize entities for transmission.

@@ -107,10 +107,15 @@ namespace TypedRest.Wpf.ViewModels
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
+        /// <summary>
+        /// The Link relation type used by the server to send refresh notifications.
+        /// </summary>
+        public string NotifyRel { get; set; } = "notify";
+
         // Refresh when notifications are sent from the server
         public async void Handle(IEndpointEvent message)
         {
-            if (message.Endpoint.NotifyTargets.Contains(Endpoint.Uri))
+            if (message.Endpoint.GetLinks(NotifyRel).Contains(Endpoint.Uri))
                 await RefreshAsync();
         }
     }

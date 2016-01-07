@@ -20,7 +20,16 @@ namespace TypedRest
         Uri Uri { get; }
 
         /// <summary>
-        /// Retrieves a link from an HTTP Link header with a specific relation type. May be cached from a previous request or may be lazily requested.
+        /// Retrieves all links with a specific relation type cached from the last request.
+        /// </summary>
+        /// <param name="rel">The relation type of the links to look for.</param>
+        /// <returns>The hrefs of the links resolved relative to this endpoint's URI.</returns>
+        /// <exception cref="KeyNotFoundException">No link with the specified <paramref name="rel"/> could be found.</exception>
+        IEnumerable<Uri> GetLinks(string rel);
+
+        /// <summary>
+        /// Retrieves a single link with a specific relation type.
+        /// May be cached from the last request or may be lazily requested.
         /// </summary>
         /// <param name="rel">The relation type of the link to look for.</param>
         /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
@@ -28,8 +37,11 @@ namespace TypedRest
         Uri Link(string rel);
 
         /// <summary>
-        /// A set of <see cref="Uri"/>s of other <see cref="IEndpoint"/>s that may change to reflect operations performed on this endpoint.
+        /// Retrieves a link template with a specific relation type.
+        /// May be cached from the last request or may be lazily requested.
         /// </summary>
-        IReadOnlyCollection<Uri> NotifyTargets { get; }
+        /// <param name="rel">The relation type of the link template to look for. "-template" is appended implicitly for HTTP Link Headers.</param>
+        /// <returns>The href of the link resolved relative to this endpoint's URI; <see langword="null"/> if no link with the specified <paramref name="rel"/> could be found.</returns>
+        UriTemplate LinkTemplate(string rel);
     }
 }
