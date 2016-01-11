@@ -13,7 +13,7 @@ namespace TypedRest
         /// Creates a new REST interface.
         /// </summary>
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="credentials">The credentials used to authenticate against the REST interface. Can be <see langword="null"/> for no authentication.</param>
+        /// <param name="credentials">The credentials used to authenticate against the REST interface. Can be <c>null</c> for no authentication.</param>
         public EntryEndpoint(Uri uri, ICredentials credentials = null)
             : base(BuildHttpClient(credentials), uri)
         {

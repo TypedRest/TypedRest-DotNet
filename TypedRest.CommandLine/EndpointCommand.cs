@@ -38,7 +38,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a sub-<see cref="ICommand"/> based on the given <paramref name="name"/>.
         /// </summary>
-        /// <returns>The <see cref="ICommand"/> or <see langword="null"/> if the <paramref name="name"/> does not match.</returns>
+        /// <returns>The <see cref="ICommand"/> or <c>null</c> if the <paramref name="name"/> does not match.</returns>
         protected virtual ICommand GetSubCommand(string name)
         {
             return null;

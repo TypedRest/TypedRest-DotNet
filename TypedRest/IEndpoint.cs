@@ -41,7 +41,7 @@ namespace TypedRest
         /// May be cached from the last request or may be lazily requested.
         /// </summary>
         /// <param name="rel">The relation type of the link template to look for. "-template" is appended implicitly for HTTP Link Headers.</param>
-        /// <returns>The href of the link resolved relative to this endpoint's URI; <see langword="null"/> if no link with the specified <paramref name="rel"/> could be found.</returns>
+        /// <returns>The href of the link resolved relative to this endpoint's URI; <c>null</c> if no link with the specified <paramref name="rel"/> could be found.</returns>
         UriTemplate LinkTemplate(string rel);
     }
 }
