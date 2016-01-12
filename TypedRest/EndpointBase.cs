@@ -126,7 +126,8 @@ namespace TypedRest
                         string rel = relParameter[1].Substring(0, relParameter[1].Length - "-template".Length);
                         linkTemplates[rel] = new UriTemplate(href);
                     }
-                    else {
+                    else
+                    {
                         string rel = relParameter[1];
                         var linkSet = links[rel];
                         if (linkSet == null)
@@ -140,6 +141,7 @@ namespace TypedRest
             _linkTemplates = linkTemplates;
         }
 
+        // NOTE: Always replace entire dictionary rather than modifying it. This ensures thread-safety.
         private IDictionary<string, ISet<Uri>> _links = new Dictionary<string, ISet<Uri>>();
 
         public IEnumerable<Uri> GetLinks(string rel)
@@ -171,6 +173,7 @@ namespace TypedRest
             return uri;
         }
 
+        // NOTE: Always replace entire dictionary rather than modifying it. This ensures thread-safety.
         private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
 
         public UriTemplate LinkTemplate(string rel)
