@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Entry point for <see cref="ICommand"/> command-line execution.
+    /// Entry point for <see cref="IEndpointCommand"/> command-line execution.
     /// </summary>
     public static class Executor
     {
@@ -20,7 +20,7 @@ namespace TypedRest.CommandLine
         /// <param name="args">The command-line arguments to parse.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The exit code.</returns>
-        public static async Task<int> RunAsync(ICommand entryCommand, IReadOnlyList<string> args,
+        public static async Task<int> RunAsync(IEndpointCommand entryCommand, IReadOnlyList<string> args,
             CancellationToken cancellationToken)
         {
             try
@@ -100,7 +100,7 @@ namespace TypedRest.CommandLine
         /// <param name="entryCommand">The top-level command used to locate sub-commands.</param>
         /// <param name="args">The command-line arguments to parse.</param>
         /// <returns>The exit code.</returns>
-        public static Task<int> RunAsync(ICommand entryCommand, IReadOnlyList<string> args)
+        public static Task<int> RunAsync(IEndpointCommand entryCommand, IReadOnlyList<string> args)
         {
             return RunAsync(entryCommand, args, GetCancellationToken());
         }

@@ -10,7 +10,7 @@ namespace TypedRest.Samples.CommandLine
         {
         }
 
-        protected override ICommand GetElementCommand(ResourceElement element)
+        protected override IEndpointCommand GetElementCommand(ResourceElement element)
         {
             return new ResourceElementCommand(element);
         }

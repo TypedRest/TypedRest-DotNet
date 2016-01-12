@@ -29,7 +29,7 @@ namespace TypedRest.Samples.CommandLine
             else await base.ExecuteInnerAsync(args, cancellationToken);
         }
 
-        protected override ICommand GetSubCommand(string name)
+        protected override IEndpointCommand GetSubCommand(string name)
         {
             switch (name.ToLowerInvariant())
             {
@@ -40,7 +40,7 @@ namespace TypedRest.Samples.CommandLine
             }
         }
 
-        protected override ICommand GetElementCommand(ResourceRevisionElement element)
+        protected override IEndpointCommand GetElementCommand(ResourceRevisionElement element)
         {
             return new ResourceRevisionElementCommand(element);
         }

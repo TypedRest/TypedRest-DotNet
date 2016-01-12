@@ -40,15 +40,15 @@ namespace TypedRest.CommandLine
                 await base.ExecuteAsync(args, cancellationToken);
         }
 
-        protected override ICommand GetSubCommand(string name)
+        protected override IEndpointCommand GetSubCommand(string name)
         {
             return GetElementCommand(Endpoint[new Uri(name, UriKind.Relative)]);
         }
 
         /// <summary>
-        /// Creates a sub-<see cref="ICommand"/> for the given <paramref name="elementEndpoint"/>.
+        /// Creates a sub-<see cref="IEndpointCommand"/> for the given <paramref name="elementEndpoint"/>.
         /// </summary>
-        protected abstract ICommand GetElementCommand(TElementEndpoint elementEndpoint);
+        protected abstract IEndpointCommand GetElementCommand(TElementEndpoint elementEndpoint);
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.

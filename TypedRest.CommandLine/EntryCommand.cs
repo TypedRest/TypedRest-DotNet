@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// Command providing an entry point to a hierachy of <see cref="IEndpoint"/>s.
     /// </summary>
     /// <typeparamref name="TEndpoint">The specific type of <see cref="IEndpoint"/> the command starts with.</typeparamref>
-    public class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, ICommand>>>
+    public class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>>
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -21,11 +21,11 @@ namespace TypedRest.CommandLine
         {
         }
 
-        private readonly Dictionary<string, Func<TEndpoint, ICommand>> _commandProviders =
-            new Dictionary<string, Func<TEndpoint, ICommand>>(StringComparer.InvariantCultureIgnoreCase);
+        private readonly Dictionary<string, Func<TEndpoint, IEndpointCommand>> _commandProviders =
+            new Dictionary<string, Func<TEndpoint, IEndpointCommand>>(StringComparer.InvariantCultureIgnoreCase);
 
         #region Enumerable
-        public IEnumerator<KeyValuePair<string, Func<TEndpoint, ICommand>>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>> GetEnumerator()
         {
             return _commandProviders.GetEnumerator();
         }
@@ -36,14 +36,14 @@ namespace TypedRest.CommandLine
         }
         #endregion
 
-        public void Add(string name, Func<TEndpoint, ICommand> commandProvider)
+        public void Add(string name, Func<TEndpoint, IEndpointCommand> commandProvider)
         {
             _commandProviders.Add(name, commandProvider);
         }
 
-        protected override ICommand GetSubCommand(string name)
+        protected override IEndpointCommand GetSubCommand(string name)
         {
-            Func<TEndpoint, ICommand> commandProvider;
+            Func<TEndpoint, IEndpointCommand> commandProvider;
             return _commandProviders.TryGetValue(name, out commandProvider) ? commandProvider(Endpoint) : null;
         }
 

@@ -7,7 +7,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Command operating on an <see cref="IEndpoint"/>.
     /// </summary>
-    public interface ICommand
+    public interface IEndpointCommand
     {
         /// <summary>
         /// Parses command-line arguments and executes the resulting operation.

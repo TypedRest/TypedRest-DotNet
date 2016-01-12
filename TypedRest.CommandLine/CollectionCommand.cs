@@ -14,7 +14,7 @@
         {
         }
 
-        protected override ICommand GetElementCommand(ElementEndpoint<TEntity> elementEndpoint)
+        protected override IEndpointCommand GetElementCommand(ElementEndpoint<TEntity> elementEndpoint)
         {
             return new ElementCommand<TEntity>(elementEndpoint);
         }
