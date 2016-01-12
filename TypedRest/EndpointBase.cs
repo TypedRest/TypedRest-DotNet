@@ -129,9 +129,9 @@ namespace TypedRest
                     else
                     {
                         string rel = relParameter[1];
-                        var linkSet = links[rel];
-                        if (linkSet == null)
-                            links[rel] = linkSet = new HashSet<Uri>();
+                        ISet<Uri> linkSet;
+                        if (!links.TryGetValue(rel, out linkSet))
+                            links.Add(rel, linkSet = new HashSet<Uri>());
                         linkSet.Add(new Uri(Uri, href));
                     }
                 }
@@ -158,7 +158,8 @@ namespace TypedRest
                 // Lazy loading
                 try
                 {
-                    HandleLinks(HttpClient.GetAsync(Uri).Result);
+                    // NOTE: Synchronous execution so the method remains easy to use in constructors
+                    HandleLinks(Task.Run(() => HttpClient.GetAsync(Uri)).Result);
                 }
                 catch (Exception ex)
                 {
@@ -184,7 +185,8 @@ namespace TypedRest
                 // Lazy loading
                 try
                 {
-                    HandleLinks(HttpClient.GetAsync(Uri).Result);
+                    // NOTE: Synchronous execution so the method remains easy to use in constructors
+                    HandleLinks(Task.Run(() => HttpClient.GetAsync(Uri)).Result);
                 }
                 catch (Exception)
                 {
