@@ -21,7 +21,6 @@ namespace TypedRest.Wpf.ViewModels
             : base(endpoint, eventAggregator)
         {
             CanCreate = false;
-            CanDelete = false;
             CanOpenElement = false;
         }
     }

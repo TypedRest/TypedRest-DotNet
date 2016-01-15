@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
 
@@ -17,21 +15,6 @@ namespace TypedRest.Wpf.ViewModels
         where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
-        /// <summary>
-        /// Controls whether an update button is shown.
-        /// </summary>
-        public bool CanCreate { get; set; }
-
-        /// <summary>
-        /// Controls whether a delete button is shown.
-        /// </summary>
-        public bool CanDelete { get; set; }
-
-        /// <summary>
-        /// Controls whether selecting individual elements opens an edit view.
-        /// </summary>
-        public bool CanOpenElement { get; set; }
-
         /// <summary>
         /// Creates a new REST collection view model.
         /// </summary>
@@ -54,6 +37,11 @@ namespace TypedRest.Wpf.ViewModels
         }
 
         /// <summary>
+        /// Controls whether selecting individual elements opens an edit view.
+        /// </summary>
+        public bool CanOpenElement { get; set; }
+
+        /// <summary>
         /// Handler for opening an existing element in the collection.
         /// </summary>
         protected virtual void OnOpenElement(TEntity entity)
@@ -67,24 +55,9 @@ namespace TypedRest.Wpf.ViewModels
         protected abstract IScreen BuildElementScreen(TElementEndpoint elementEndpoint);
 
         /// <summary>
-        /// Delete all selected elements.
+        /// Controls whether a create button is shown.
         /// </summary>
-        public virtual async Task DeleteElements()
-        {
-            string message = "Are you sure you want to delete the following elements?" +
-                             SelectedElements.Select(x => x.ToString())
-                                 .Aggregate((workingSet, entity) => workingSet + "\n" + entity);
-
-            if (MessageBox.Show(message, "Delete elements", MessageBoxButton.YesNo, MessageBoxImage.Warning) ==
-                MessageBoxResult.Yes)
-            {
-                await WithErrorHandlingAsync(async () =>
-                {
-                    foreach (var entity in SelectedElements)
-                        await Endpoint[entity].DeleteAsync();
-                });
-            }
-        }
+        public bool CanCreate { get; set; }
 
         /// <summary>
         /// Opens a view for creating a new element in the collection.

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
 
@@ -36,6 +37,36 @@ namespace TypedRest.Wpf.ViewModels
         {
             await Endpoint.UpdateAsync(Entity, CancellationToken);
             EventAggregator.Publish(new ElementUpdatedEvent<TEntity>(Endpoint), null);
+        }
+
+        /// <summary>
+        /// Controls whether a delete button is shown.
+        /// </summary>
+        public bool CanDelete { get; set; }
+
+        /// <summary>
+        /// Delete all selected elements.
+        /// </summary>
+        public virtual async void Delete()
+        {
+            string question = $"Are you sure you want to delete {DisplayName}?";
+            if (MessageBox.Show(question, "Delete element", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                await WithErrorHandlingAsync(async () =>
+                {
+                    await OnDeleteAsync();
+                    TryClose();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handler for deleting the element.
+        /// </summary>
+        protected virtual async Task OnDeleteAsync()
+        {
+            await Endpoint.DeleteAsync(CancellationToken);
+            EventAggregator.Publish(new ElementDeletedEvent<TEntity>(Endpoint), null);
         }
     }
 }

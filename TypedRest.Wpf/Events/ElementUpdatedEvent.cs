@@ -1,15 +1,16 @@
 ﻿namespace TypedRest.Wpf.Events
 {
     /// <summary>
-    /// Indicates that <see cref="IElementEndpoint{TEntity}.UpdateAsync"/> was called.
+    /// Indicates that an existing element was updated.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    /// <typeparam name="TEntity">The type of entity that was updated.</typeparam>
+    /// <seealso cref="IElementEndpoint{TEntity}.UpdateAsync"/>
     public class ElementUpdatedEvent<TEntity> : ElementEvent<TEntity>
     {
         /// <summary>
-        /// Creates a new element updated event.
+        /// Creates a new element update event.
         /// </summary>
-        /// <param name="endpoint">The endpoint representing the newly updated entity.</param>
+        /// <param name="endpoint">The endpoint representing the updated entity.</param>
         public ElementUpdatedEvent(IElementEndpoint<TEntity> endpoint) : base(endpoint)
         {
         }
