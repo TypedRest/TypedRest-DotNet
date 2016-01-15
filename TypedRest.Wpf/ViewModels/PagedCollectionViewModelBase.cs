@@ -1,4 +1,6 @@
-﻿using Caliburn.Micro;
+﻿using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -20,6 +22,12 @@ namespace TypedRest.Wpf.ViewModels
         protected PagedCollectionViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {
+        }
+
+        protected override async Task OnLoadAsync()
+        {
+            // TODO
+            await Endpoint.ReadRangeAsync(new RangeItemHeaderValue(0, 0), CancellationToken);
         }
     }
 }

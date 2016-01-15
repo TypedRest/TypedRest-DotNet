@@ -67,9 +67,9 @@ namespace TypedRest.Wpf.ViewModels
         protected abstract IScreen BuildElementScreen(TElementEndpoint elementEndpoint);
 
         /// <summary>
-        /// Handler for deleting all selected elements.
+        /// Delete all selected elements.
         /// </summary>
-        public virtual async Task OnDeleteElements()
+        public virtual async Task DeleteElements()
         {
             string message = "Are you sure you want to delete the following elements?" +
                              SelectedElements.Select(x => x.ToString())
@@ -87,9 +87,9 @@ namespace TypedRest.Wpf.ViewModels
         }
 
         /// <summary>
-        /// Handler for creating a new element in the collection.
+        /// Opens a view for creating a new element in the collection.
         /// </summary>
-        public virtual void OnCreateElement()
+        public virtual void Create()
         {
             ((IConductor)Parent).ActivateItem(BuildCreateElementScreen());
         }

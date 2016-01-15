@@ -35,7 +35,7 @@ namespace TypedRest.Wpf.ViewModels
 
         private async Task OnTriggerAsync()
         {
-            await Endpoint.TriggerAsync();
+            await Endpoint.TriggerAsync(CancellationToken);
         }
     }
 

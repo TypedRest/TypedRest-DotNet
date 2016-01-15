@@ -27,6 +27,11 @@ namespace TypedRest.Wpf.ViewModels
             NotifyOfPropertyChange(() => Entity);
         }
 
+        /// <summary>
+        /// Controls whether a save button is shown and fields are editable.
+        /// </summary>
+        public bool CanSave { get; set; }
+
         protected override async Task OnSaveAsync()
         {
             await Endpoint.UpdateAsync(Entity, CancellationToken);

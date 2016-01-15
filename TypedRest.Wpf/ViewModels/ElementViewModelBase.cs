@@ -4,7 +4,7 @@ using Caliburn.Micro;
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// Common base class for view models operating on individual entities.
+    /// Common base class for components creating or updating elements.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the view model represents.</typeparam>
     /// <typeparam name="TEndpoint">The type of <see cref="IEndpoint"/> to operate on.</typeparam>
@@ -23,9 +23,7 @@ namespace TypedRest.Wpf.ViewModels
         {
         }
 
-        public bool CanSave { get; set; }
-
-        public async void Save()
+        public virtual async void Save()
         {
             await WithErrorHandlingAsync(async () =>
             {
