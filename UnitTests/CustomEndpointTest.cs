@@ -33,9 +33,21 @@ namespace TypedRest
         }
 
         [Test]
+        public void TestLinkLazy()
+        {
+            //stubFor(head(urlEqualTo("/endpoint"))
+            //    .willReturn(aResponse()
+            //        .withStatus(SC_NO_CONTENT)
+            //        .withHeader("Link", "<a>; rel=target1, <b>; rel=target2")));
+
+            _endpoint.Link("target1").Should().Be(new Uri(_endpoint.Uri, "a"));
+            _endpoint.Link("target2").Should().Be(new Uri(_endpoint.Uri, "b"));
+        }
+
+        [Test]
         public async Task TestLinkException()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
+            //stubFor(head(urlEqualTo("/endpoint"))
             //    .willReturn(aResponse()
             //        .withStatus(SC_NO_CONTENT)
             //        .withHeader("Link", "<a>; rel=target1")));

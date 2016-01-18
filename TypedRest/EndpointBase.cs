@@ -15,9 +15,9 @@ namespace TypedRest
     /// </summary>
     public abstract class EndpointBase : IEndpoint
     {
-        public HttpClient HttpClient { get; private set; }
+        public HttpClient HttpClient { get; }
 
-        public Uri Uri { get; private set; }
+        public Uri Uri { get; }
 
         /// <summary>
         /// Creates a new REST endpoint with an absolute URI.
@@ -113,7 +113,7 @@ namespace TypedRest
             var links = new Dictionary<string, ISet<Uri>>();
             var linkTemplates = new Dictionary<string, UriTemplate>();
 
-            foreach (string element in response.Headers.FirstOrDefault(x => x.Key == "Link").Value)
+            foreach (string element in response.Headers.Where(x => x.Key == "Link").SelectMany(x => x.Value))
             {
                 var parameters = element.Split(new[] {"; "}, StringSplitOptions.None);
                 string href = parameters[0].Substring(1, parameters[0].Length - 2);
@@ -155,11 +155,11 @@ namespace TypedRest
             var uri = GetLinks(rel).FirstOrDefault();
             if (uri == null)
             {
-                // Lazy loading
+                // Lazy lookup
                 try
                 {
-                    // NOTE: Synchronous execution so the method remains easy to use in constructors
-                    HandleLinks(Task.Run(() => HttpClient.GetAsync(Uri)).Result);
+                    // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri)));
                 }
                 catch (Exception ex)
                 {
@@ -182,14 +182,15 @@ namespace TypedRest
             UriTemplate template;
             if (!_linkTemplates.TryGetValue(rel, out template))
             {
-                // Lazy loading
+                // Lazy lookup
                 try
                 {
-                    // NOTE: Synchronous execution so the method remains easy to use in constructors
-                    HandleLinks(Task.Run(() => HttpClient.GetAsync(Uri)).Result);
+                    // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri)));
                 }
                 catch (Exception)
                 {
+                    // HTTP HEAD server-side implementation is optional
                 }
 
                 _linkTemplates.TryGetValue(rel, out template);
