@@ -39,6 +39,13 @@ namespace TypedRest
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="CreateAsync"/> is currently allowed.
+        /// If the server did not specify anything <c>null</c> is returned.
+        /// </summary>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        bool? CreateAllowed { get; }
+
+        /// <summary>
         /// Creates a new <typeparamref name="TEntity"/>.
         /// </summary>
         /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>

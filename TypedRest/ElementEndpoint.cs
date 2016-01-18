@@ -37,10 +37,14 @@ namespace TypedRest
             return await response.Content.ReadAsAsync<TEntity>(cancellationToken);
         }
 
+        public bool? UpdateAllowed => IsVerbAllowed("PUT");
+
         public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             await HandleResponseAsync(HttpClient.PutAsync(Uri, entity, Serializer, cancellationToken));
         }
+
+        public bool? DeleteAllowed => IsVerbAllowed("DELETE");
 
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

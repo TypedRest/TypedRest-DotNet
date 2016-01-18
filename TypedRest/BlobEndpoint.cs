@@ -30,12 +30,16 @@ namespace TypedRest
         {
         }
 
+        public bool? DownloadAllowed => IsVerbAllowed("GET");
+
         public async Task DownloadToAsync(Stream stream)
         {
             var response = await HandleResponseAsync(HttpClient.GetAsync(Uri));
 
             await response.Content.CopyToAsync(stream);
         }
+
+        public bool? UploadAllowed => IsVerbAllowed("PUT");
 
         public async Task UploadFromAsync(Stream stream)
         {

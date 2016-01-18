@@ -24,6 +24,13 @@ namespace TypedRest
         Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="UpdateAsync"/> is currently allowed.
+        /// If the server did not specify anything <c>null</c> is returned.
+        /// </summary>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        bool? UpdateAllowed { get; }
+
+        /// <summary>
         /// Updates the <typeparamref name="TEntity"/>.
         /// </summary>
         /// <param name="entity">The modified <typeparamref name="TEntity"/>.</param>
@@ -34,6 +41,13 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
+        /// If the server did not specify anything <c>null</c> is returned.
+        /// </summary>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        bool? DeleteAllowed { get; }
 
         /// <summary>
         /// Deletes the <typeparamref name="TEntity"/>.

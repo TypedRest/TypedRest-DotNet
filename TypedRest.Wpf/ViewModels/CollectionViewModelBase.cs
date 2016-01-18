@@ -34,6 +34,9 @@ namespace TypedRest.Wpf.ViewModels
         {
             Elements = await Endpoint.ReadAllAsync(CancellationToken);
             NotifyOfPropertyChange(() => Elements);
+
+            CanCreate = Endpoint.CreateAllowed.GetValueOrDefault(CanCreate);
+            NotifyOfPropertyChange(() => CanCreate);
         }
 
         /// <summary>

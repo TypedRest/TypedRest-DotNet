@@ -19,6 +19,34 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestAllowHeader()
+        {
+            //stubFor(get(urlEqualTo("/endpoint"))
+            //    .willReturn(aResponse()
+            //        .withStatus(SC_OK)
+            //        .withHeader("Allow", "PUT, POST")));
+
+            await _endpoint.GetAsync();
+
+            _endpoint.IsVerbAllowed("PUT").Should().BeTrue();
+            _endpoint.IsVerbAllowed("POST").Should().BeTrue();
+            _endpoint.IsVerbAllowed("DELETE").Should().BeFalse();
+        }
+
+        [Test]
+        public void TestAllowHeaderLazy()
+        {
+            //stubFor(options(urlEqualTo("/endpoint"))
+            //    .willReturn(aResponse()
+            //        .withStatus(SC_OK)
+            //        .withHeader("Allow", "PUT, POST")));
+
+            _endpoint.IsVerbAllowed("PUT").Should().BeTrue();
+            _endpoint.IsVerbAllowed("POST").Should().BeTrue();
+            _endpoint.IsVerbAllowed("DELETE").Should().BeFalse();
+        }
+
+        [Test]
         public async Task TestLink()
         {
             //stubFor(get(urlEqualTo("/endpoint"))
@@ -95,6 +123,11 @@ namespace TypedRest
             public async Task GetAsync()
             {
                 await HandleResponseAsync(HttpClient.GetAsync(Uri));
+            }
+
+            public new bool? IsVerbAllowed(string verb)
+            {
+                return base.IsVerbAllowed(verb);
             }
         }
     }

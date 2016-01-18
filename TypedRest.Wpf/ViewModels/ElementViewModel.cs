@@ -26,6 +26,12 @@ namespace TypedRest.Wpf.ViewModels
             Entity = await Endpoint.ReadAsync(CancellationToken);
             DisplayName = Entity.ToString();
             NotifyOfPropertyChange(() => Entity);
+
+            CanSave = Endpoint.UpdateAllowed.GetValueOrDefault(CanSave);
+            NotifyOfPropertyChange(() => CanSave);
+
+            CanDelete = Endpoint.DeleteAllowed.GetValueOrDefault(CanDelete);
+            NotifyOfPropertyChange(() => CanDelete);
         }
 
         /// <summary>

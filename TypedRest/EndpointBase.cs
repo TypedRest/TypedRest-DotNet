@@ -63,6 +63,7 @@ namespace TypedRest
             var response = await responseTask;
 
             HandleLinks(response);
+            HandleAllow(response);
             await HandleErrorsAsync(response);
 
             return response;
@@ -197,6 +198,43 @@ namespace TypedRest
             }
 
             return template;
+        }
+
+        /// <summary>
+        /// Handles allowed HTTP verbs reported by the server.
+        /// </summary>
+        private void HandleAllow(HttpResponseMessage response)
+        {
+            _allowedVerbs = new HashSet<string>(response.Content.Headers.Allow);
+        }
+
+        // NOTE: Always replace entire set rather than modifying it. This ensures thread-safety.
+        private ISet<string> _allowedVerbs;
+
+        /// <summary>
+        /// Returns whether the server has indicated that a specific HTTP verb is currently allowed.
+        /// </summary>
+        /// <param name="verb">The HTTP verb (e.g. GET, POST, ...) to check.</param>
+        /// <returns>An indicator whether the verb is allowed. If the server did not specify anything <c>null</c> is returned.</returns>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        protected bool? IsVerbAllowed(string verb)
+        {
+            if (_allowedVerbs == null)
+            {
+                // Lazy lookup
+                try
+                {
+                    // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                    Task.Run(() => HandleResponseAsync(HttpClient.OptionsAsync(Uri)));
+                }
+                catch (Exception)
+                {
+                    // HTTP OPTIONS server-side implementation is optional
+                }
+            }
+
+            if (_allowedVerbs == null || _allowedVerbs.Count == 0) return null;
+            return _allowedVerbs.Contains(verb);
         }
 
         /// <summary>

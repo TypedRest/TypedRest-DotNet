@@ -1,4 +1,6 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Threading.Tasks;
+using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -18,5 +20,26 @@ namespace TypedRest.Wpf.ViewModels
         {
             DisplayName = caption;
         }
+
+        protected override Task OnLoadAsync()
+        {
+            CanDownload = Endpoint.DownloadAllowed.GetValueOrDefault(CanDownload);
+            NotifyOfPropertyChange(() => CanDownload);
+
+            CanUpload = Endpoint.UploadAllowed.GetValueOrDefault(CanUpload);
+            NotifyOfPropertyChange(() => CanUpload);
+
+            return Task.FromResult(true);
+        }
+
+        /// <summary>
+        /// Controls whether a download button is shown.
+        /// </summary>
+        public bool CanDownload { get; set; }
+
+        /// <summary>
+        /// Controls whether an upload button is shown.
+        /// </summary>
+        public bool CanUpload { get; set; }
     }
 }

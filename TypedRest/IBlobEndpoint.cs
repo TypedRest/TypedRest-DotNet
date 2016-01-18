@@ -13,6 +13,13 @@ namespace TypedRest
     public interface IBlobEndpoint : IEndpoint
     {
         /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="DownloadToAsync"/> is currently allowed.
+        /// If the server did not specify anything <c>null</c> is returned.
+        /// </summary>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        bool? DownloadAllowed { get; }
+
+        /// <summary>
         /// Downloads the blob's content.
         /// </summary>
         /// <param name="stream">The stream to write the downloaded data to.</param>
@@ -22,6 +29,13 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task DownloadToAsync(Stream stream);
+
+        /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="UploadFromAsync"/> is currently allowed.
+        /// If the server did not specify anything <c>null</c> is returned.
+        /// </summary>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        bool? UploadAllowed { get; }
 
         /// <summary>
         /// Uploads content as the blob's content.

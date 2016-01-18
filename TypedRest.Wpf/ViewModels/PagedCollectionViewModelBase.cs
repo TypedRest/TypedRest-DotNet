@@ -28,6 +28,9 @@ namespace TypedRest.Wpf.ViewModels
         {
             // TODO
             await Endpoint.ReadRangeAsync(new RangeItemHeaderValue(0, 0), CancellationToken);
+
+            CanCreate = Endpoint.CreateAllowed.GetValueOrDefault(CanCreate);
+            NotifyOfPropertyChange(() => CanCreate);
         }
     }
 }
