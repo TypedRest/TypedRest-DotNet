@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net;
 using Nito.AsyncEx;
 using TypedRest.CommandLine;
@@ -11,7 +12,11 @@ namespace TypedRest.Samples.CommandLine
     {
         public static int Main(string[] args)
         {
-            var endpoint = new SampleEntryEndpoint(new Uri("http://localhost:5893/"), new NetworkCredential("CommandLine", "abc"));
+            var endpoint = new SampleEntryEndpoint(
+                uri: new Uri(ConfigurationManager.AppSettings["SampleUri"]),
+                credentials: new NetworkCredential(
+                    ConfigurationManager.AppSettings["SampleUsername"],
+                    ConfigurationManager.AppSettings["SamplePassword"]));
             var command = new EntryCommand<SampleEntryEndpoint>(endpoint)
             {
                 {"resources", x => new ResourceCollectionCommand(x.Resources)},
