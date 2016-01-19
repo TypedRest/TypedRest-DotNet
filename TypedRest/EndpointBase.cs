@@ -160,7 +160,7 @@ namespace TypedRest
                 try
                 {
                     // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri)));
+                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri))).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -187,7 +187,7 @@ namespace TypedRest
                 try
                 {
                     // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri)));
+                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri))).Wait();
                 }
                 catch (Exception)
                 {
