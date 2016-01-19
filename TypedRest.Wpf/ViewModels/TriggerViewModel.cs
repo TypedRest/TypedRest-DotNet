@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
@@ -21,6 +22,23 @@ namespace TypedRest.Wpf.ViewModels
             : base(endpoint, eventAggregator)
         {
             DisplayName = caption;
+        }
+
+        public bool CanTrigger { get; set; }
+
+        protected override async Task OnLoadAsync()
+        {
+            try
+            {
+                await Endpoint.ProbeAsync(CancellationToken);
+            }
+            catch (Exception)
+            {
+                // HTTP OPTIONS server-side implementation is optional
+            }
+
+            CanTrigger = Endpoint.TriggerAllowed.GetValueOrDefault(CanTrigger);
+            NotifyOfPropertyChange(() => CanTrigger);
         }
 
         public async void Trigger()

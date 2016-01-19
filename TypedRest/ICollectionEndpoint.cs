@@ -40,9 +40,9 @@ namespace TypedRest
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAsync"/> is currently allowed.
-        /// If the server did not specify anything <c>null</c> is returned.
         /// </summary>
-        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
         bool? CreateAllowed { get; }
 
         /// <summary>

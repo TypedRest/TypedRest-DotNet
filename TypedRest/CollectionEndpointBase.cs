@@ -82,7 +82,7 @@ namespace TypedRest
             return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken);
         }
 
-        public bool? CreateAllowed => IsVerbAllowed("POST");
+        public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);
 
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))

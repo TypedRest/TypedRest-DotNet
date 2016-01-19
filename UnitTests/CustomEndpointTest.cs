@@ -34,19 +34,6 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestAllowHeaderLazy()
-        {
-            //stubFor(options(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_OK)
-            //        .withHeader("Allow", "PUT, POST")));
-
-            _endpoint.IsVerbAllowed("PUT").Should().BeTrue();
-            _endpoint.IsVerbAllowed("POST").Should().BeTrue();
-            _endpoint.IsVerbAllowed("DELETE").Should().BeFalse();
-        }
-
-        [Test]
         public async Task TestLink()
         {
             //stubFor(get(urlEqualTo("/endpoint"))

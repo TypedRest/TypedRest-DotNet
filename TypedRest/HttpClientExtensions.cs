@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TypedRest
@@ -12,17 +13,17 @@ namespace TypedRest
         /// <summary>
         /// Send a HEAD request to the specified URI.
         /// </summary>
-        public static Task<HttpResponseMessage> HeadAsync(this HttpClient httpClient, Uri uri)
+        public static Task<HttpResponseMessage> HeadAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri));
+            return httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri), cancellationToken);
         }
 
         /// <summary>
         /// Send an OPTIONS request to the specified URI.
         /// </summary>
-        public static Task<HttpResponseMessage> OptionsAsync(this HttpClient httpClient, Uri uri)
+        public static Task<HttpResponseMessage> OptionsAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri));
+            return httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri), cancellationToken);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TypedRest
@@ -30,7 +31,12 @@ namespace TypedRest
         {
         }
 
-        public bool? DownloadAllowed => IsVerbAllowed("GET");
+        public async Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            await HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
+        }
+
+        public bool? DownloadAllowed => IsVerbAllowed(HttpMethod.Get.Method);
 
         public async Task DownloadToAsync(Stream stream)
         {
@@ -39,7 +45,7 @@ namespace TypedRest
             await response.Content.CopyToAsync(stream);
         }
 
-        public bool? UploadAllowed => IsVerbAllowed("PUT");
+        public bool? UploadAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
         public async Task UploadFromAsync(Stream stream)
         {

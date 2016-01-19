@@ -21,15 +21,22 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = caption;
         }
 
-        protected override Task OnLoadAsync()
+        protected override async Task OnLoadAsync()
         {
+            try
+            {
+                await Endpoint.ProbeAsync(CancellationToken);
+            }
+            catch (Exception)
+            {
+                // HTTP OPTIONS server-side implementation is optional
+            }
+
             CanDownload = Endpoint.DownloadAllowed.GetValueOrDefault(CanDownload);
             NotifyOfPropertyChange(() => CanDownload);
 
             CanUpload = Endpoint.UploadAllowed.GetValueOrDefault(CanUpload);
             NotifyOfPropertyChange(() => CanUpload);
-
-            return Task.FromResult(true);
         }
 
         /// <summary>

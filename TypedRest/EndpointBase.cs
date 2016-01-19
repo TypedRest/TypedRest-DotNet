@@ -142,7 +142,7 @@ namespace TypedRest
             _linkTemplates = linkTemplates;
         }
 
-        // NOTE: Always replace entire dictionary rather than modifying it. This ensures thread-safety.
+        // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
         private IDictionary<string, ISet<Uri>> _links = new Dictionary<string, ISet<Uri>>();
 
         public IEnumerable<Uri> GetLinks(string rel)
@@ -175,7 +175,7 @@ namespace TypedRest
             return uri;
         }
 
-        // NOTE: Always replace entire dictionary rather than modifying it. This ensures thread-safety.
+        // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
         private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
 
         public UriTemplate LinkTemplate(string rel)
@@ -208,32 +208,18 @@ namespace TypedRest
             _allowedVerbs = new HashSet<string>(response.Content.Headers.Allow);
         }
 
-        // NOTE: Always replace entire set rather than modifying it. This ensures thread-safety.
-        private ISet<string> _allowedVerbs;
+        // NOTE: Always replace entire set rather than modifying it to ensure thread-safety.
+        private ISet<string> _allowedVerbs = new HashSet<string>();
 
         /// <summary>
-        /// Returns whether the server has indicated that a specific HTTP verb is currently allowed.
+        /// Shows whether the server has indicated that a specific HTTP verb is currently allowed.
         /// </summary>
         /// <param name="verb">The HTTP verb (e.g. GET, POST, ...) to check.</param>
-        /// <returns>An indicator whether the verb is allowed. If the server did not specify anything <c>null</c> is returned.</returns>
-        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP OPTIONS if no requests have been performed yet.</remarks>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
         protected bool? IsVerbAllowed(string verb)
         {
-            if (_allowedVerbs == null)
-            {
-                // Lazy lookup
-                try
-                {
-                    // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                    Task.Run(() => HandleResponseAsync(HttpClient.OptionsAsync(Uri)));
-                }
-                catch (Exception)
-                {
-                    // HTTP OPTIONS server-side implementation is optional
-                }
-            }
-
-            if (_allowedVerbs == null || _allowedVerbs.Count == 0) return null;
+            if (_allowedVerbs.Count == 0) return null;
             return _allowedVerbs.Contains(verb);
         }
 

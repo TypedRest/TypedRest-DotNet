@@ -18,6 +18,20 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestProbe()
+        {
+            //stubFor(options(urlEqualTo("/endpoint"))
+            //    .willReturn(aResponse()
+            //        .withStatus(SC_OK)
+            //        .withHeader("Allow", "PUT")));
+
+            await _endpoint.ProbeAsync();
+
+            _endpoint.DownloadAllowed.Should().BeFalse();
+            _endpoint.UploadAllowed.Should().BeTrue();
+        }
+
+        [Test]
         public async Task TestDownload()
         {
             byte[] data = {1, 2, 3};
