@@ -107,7 +107,7 @@
     <Compile Include="ViewModels\StreamViewModelBase.cs" />
     <Compile Include="ViewModels\TriggerViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
-    <Compile Include="ViewModels\EndpointViewModel.cs" />
+    <Compile Include="ViewModels\EndpointViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Events\ClassDiagram.cd" />

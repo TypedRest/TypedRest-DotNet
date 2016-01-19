@@ -14,7 +14,7 @@ namespace TypedRest.Wpf.ViewModels
     /// Common base class for view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class EndpointViewModel<TEndpoint> : Screen, IHandle<IEndpointEvent>
+    public abstract class EndpointViewModelBase<TEndpoint> : Screen, IHandle<IEndpointEvent>
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace TypedRest.Wpf.ViewModels
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
-        protected EndpointViewModel(TEndpoint endpoint, IEventAggregator eventAggregator)
+        protected EndpointViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
         {
             Endpoint = endpoint;
             EventAggregator = eventAggregator;

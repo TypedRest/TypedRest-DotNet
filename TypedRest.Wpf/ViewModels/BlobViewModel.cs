@@ -7,7 +7,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <summary>
     /// View model operating on an <see cref="IBlobEndpoint"/>.
     /// </summary>
-    public class BlobViewModel : EndpointViewModel<IBlobEndpoint>
+    public class BlobViewModel : EndpointViewModelBase<IBlobEndpoint>
     {
         /// <summary>
         /// Creates a new REST blob view model.

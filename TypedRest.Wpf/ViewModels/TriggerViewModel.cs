@@ -9,7 +9,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <summary>
     /// View model operating on an <see cref="ITriggerEndpoint"/>.
     /// </summary>
-    public class TriggerViewModel<TEndpoint> : EndpointViewModel<TEndpoint>
+    public class TriggerViewModel<TEndpoint> : EndpointViewModelBase<TEndpoint>
         where TEndpoint : ITriggerEndpoint
     {
         /// <summary>

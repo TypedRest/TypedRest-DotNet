@@ -3,7 +3,7 @@
   <Class Name="TypedRest.Wpf.ViewModels.BlobViewModel" Collapsed="true">
     <Position X="11.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAAAABA=</HashCode>
       <FileName>ViewModels\BlobViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -17,7 +17,7 @@
   <Class Name="TypedRest.Wpf.ViewModels.CollectionViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
     <Position X="4.75" Y="1.75" Width="4" />
     <TypeIdentifier>
-      <HashCode>AACAAABAAAAAAAAIABAQAQCAAAAAABIAAAABAAAABgA=</HashCode>
+      <HashCode>AACAAABAAAAAAAAAABAQAQCAAAAAAFIAAAAAAAAAAgA=</HashCode>
       <FileName>ViewModels\CollectionViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -36,13 +36,6 @@
       <FileName>ViewModels\StreamViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.ViewModels.TriggerViewModel" Collapsed="true">
-    <Position X="13.5" Y="1.75" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\TriggerViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="TypedRest.Wpf.ViewModels.PagedCollectionViewModel&lt;TEntity&gt;" Collapsed="true">
     <Position X="8.25" Y="4.25" Width="4.5" />
     <TypeIdentifier>
@@ -53,7 +46,7 @@
   <Class Name="TypedRest.Wpf.ViewModels.PagedCollectionViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
     <Position X="8.25" Y="3" Width="4.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\PagedCollectionViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -67,23 +60,37 @@
   <Class Name="TypedRest.Wpf.ViewModels.ElementViewModelBase&lt;TEntity, TEndpoint&gt;" Collapsed="true">
     <Position X="1.5" Y="1.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>MAAAAIAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>MAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\ElementViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.ViewModels.EndpointViewModel&lt;TEndpoint&gt;" Collapsed="true">
+  <Class Name="TypedRest.Wpf.ViewModels.EndpointViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
     <Position X="7.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAACAAAAgAFAAAAAgAAAAAAMAAAAAAAECAAQ=</HashCode>
-      <FileName>ViewModels\EndpointViewModel.cs</FileName>
+      <HashCode>AAAAAIAAAACAAAAgAFAAAAAgAAAAAAMACAAAAAECAAQ=</HashCode>
+      <FileName>ViewModels\EndpointViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.ElementViewModel&lt;TEntity&gt;" Collapsed="true">
     <Position X="0.5" Y="3" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAQAAAABAAAAACAAEAAAAAAAABAAAAAAA=</HashCode>
       <FileName>ViewModels\ElementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.ViewModels.TriggerViewModel&lt;TEndpoint&gt;" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAABAAAAAAAAAAAAAQCAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TriggerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.ViewModels.TriggerViewModel" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TriggerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
