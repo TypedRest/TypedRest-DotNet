@@ -4,8 +4,8 @@
     <StackPanel Orientation="Vertical">
         <DataGrid x:Name="Entity" />
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="ListRevisions">Revisions</Button>
-            <Button x:Name="ListEvents">Events</Button>
+            <Button x:Name="OpenRevisions">Revisions</Button>
+            <Button x:Name="OpenEvents">Events</Button>
         </StackPanel>
     </StackPanel>
 </UserControl>

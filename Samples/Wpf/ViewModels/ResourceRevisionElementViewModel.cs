@@ -14,10 +14,5 @@ namespace TypedRest.Samples.Wpf.ViewModels
         {
             Endpoint = endpoint;
         }
-
-        public void DoPromote()
-        {
-            ((IConductor)Parent).ActivateItem(new TriggerViewModel(Endpoint.Promote, EventAggregator, caption: "Promote"));
-        }
     }
 }

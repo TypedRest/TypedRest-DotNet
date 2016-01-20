@@ -12,6 +12,8 @@ namespace TypedRest.Samples.Wpf.ViewModels
     {
         protected override void OnActivate()
         {
+            DisplayName = "TypedRest WPF Sample";
+
             base.OnActivate();
 
             var endpoint = new SampleEntryEndpoint(

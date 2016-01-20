@@ -15,12 +15,12 @@ namespace TypedRest.Samples.Wpf.ViewModels
             Endpoint = endpoint;
         }
 
-        public void ListRevisions()
+        public void OpenRevisions()
         {
             Open(new ResourceRevisionCollectionViewModel(Endpoint.Revisions, EventAggregator));
         }
 
-        public void ListEvents()
+        public void OpenEvents()
         {
             Open(new StreamViewModel<LogEvent>(Endpoint.Events, EventAggregator));
         }
