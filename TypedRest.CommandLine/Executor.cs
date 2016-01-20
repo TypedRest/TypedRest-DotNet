@@ -45,17 +45,17 @@ namespace TypedRest.CommandLine
             }
             catch (ArgumentException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex.GetFullMessage());
                 return 1;
             }
             catch (FormatException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex.GetFullMessage());
                 return 1;
             }
             catch (InvalidDataException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex.GetFullMessage());
                 return 2;
             }
             catch (UnauthorizedAccessException ex)
@@ -75,12 +75,12 @@ namespace TypedRest.CommandLine
             }
             catch (HttpRequestException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex.GetFullMessage());
                 return 6;
             }
             catch (JsonSerializationException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex.GetFullMessage());
                 return 7;
             }
             #endregion

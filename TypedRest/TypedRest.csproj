@@ -78,6 +78,7 @@
     <Compile Include="EndpointBase.cs" />
     <Compile Include="EndpointExtensions.cs" />
     <Compile Include="EntryEndpoint.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="IBlobEndpoint.cs" />
     <Compile Include="ICollectionEndpoint.cs" />

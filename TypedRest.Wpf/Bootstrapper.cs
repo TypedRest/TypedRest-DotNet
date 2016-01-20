@@ -27,10 +27,11 @@ namespace TypedRest.Wpf
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Trace.TraceError(e.Exception.ToString());
-            MessageBox.Show(e.Exception.Message, "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Stop);
-            e.Handled = true;
+            var ex = e.Exception;
+            Trace.TraceError(ex.ToString());
+            MessageBox.Show(ex.GetFullMessage(), "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Stop);
 
+            e.Handled = true;
             base.OnUnhandledException(sender, e);
         }
     }

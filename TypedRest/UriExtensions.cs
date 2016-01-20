@@ -2,6 +2,9 @@
 
 namespace TypedRest
 {
+    /// <summary>
+    /// Provides extension methods for <seealso cref="Uri"/>.
+    /// </summary>
     public static class UriExtensions
     {
         /// <summary>
