@@ -3,8 +3,6 @@ using System.Configuration;
 using System.Net;
 using Caliburn.Micro;
 using TypedRest.Samples.Library.Endpoints;
-using TypedRest.Samples.Library.Models;
-using TypedRest.Wpf.ViewModels;
 
 namespace TypedRest.Samples.Wpf.ViewModels
 {
@@ -16,16 +14,11 @@ namespace TypedRest.Samples.Wpf.ViewModels
 
             base.OnActivate();
 
-            var endpoint = new SampleEntryEndpoint(
+            EnsureItem(new SampleEntryViewModel(new SampleEntryEndpoint(
                 uri: new Uri(ConfigurationManager.AppSettings["SampleUri"]),
-                credentials:
-                    new NetworkCredential(
-                        ConfigurationManager.AppSettings["SampleUsername"],
-                        ConfigurationManager.AppSettings["SamplePassword"]));
-            var eventAggregator = new EventAggregator();
-
-            EnsureItem(new ResourceCollectionViewModel(endpoint.Resources, eventAggregator));
-            EnsureItem(new CollectionViewModel<Target>(endpoint.Targets, eventAggregator));
+                credentials: new NetworkCredential(
+                    ConfigurationManager.AppSettings["SampleUsername"],
+                    ConfigurationManager.AppSettings["SamplePassword"]))));
         }
     }
 }

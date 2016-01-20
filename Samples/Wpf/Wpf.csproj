@@ -86,6 +86,7 @@
     <Compile Include="ViewModels\CreateResourceElementViewModel.cs" />
     <Compile Include="ViewModels\ResourceRevisionCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreateResourceRevisionElementViewModel.cs" />
+    <Compile Include="ViewModels\SampleEntryViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ResourceElementViewModel.cs" />
     <Compile Include="ViewModels\ResourceRevisionElementViewModel.cs" />
@@ -130,6 +131,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreateResourceElementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SampleEntryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
