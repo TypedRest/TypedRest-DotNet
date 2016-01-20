@@ -46,6 +46,8 @@ namespace TypedRest
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
+        public TElementEndpoint this[string relativeUri] => this[new Uri(relativeUri, UriKind.Relative)];
+
         /// <summary>
         /// The Link relation type used by the server to set the collection child element URI template.
         /// </summary>

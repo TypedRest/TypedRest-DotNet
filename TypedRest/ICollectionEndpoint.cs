@@ -23,6 +23,12 @@ namespace TypedRest
         TElementEndpoint this[Uri relativeUri] { get; }
 
         /// <summary>
+        /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. Does not perform any network traffic yet.
+        /// </summary>
+        /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
+        TElementEndpoint this[string relativeUri] { get; }
+
+        /// <summary>
         /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="entity">A previously fetched instance of the entity to retrieve a new state for.</param>
