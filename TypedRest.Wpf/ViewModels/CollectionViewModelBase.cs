@@ -49,7 +49,7 @@ namespace TypedRest.Wpf.ViewModels
         /// </summary>
         protected virtual void OnOpenElement(TEntity entity)
         {
-            ((IConductor)Parent).ActivateItem(BuildElementScreen(Endpoint[entity]));
+            Open(BuildElementScreen(Endpoint[entity]));
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace TypedRest.Wpf.ViewModels
         /// </summary>
         public virtual void Create()
         {
-            ((IConductor)Parent).ActivateItem(BuildCreateElementScreen());
+            Open(BuildCreateElementScreen());
         }
 
         /// <summary>

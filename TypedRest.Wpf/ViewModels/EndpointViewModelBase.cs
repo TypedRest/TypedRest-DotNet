@@ -108,6 +108,14 @@ namespace TypedRest.Wpf.ViewModels
         }
 
         /// <summary>
+        /// Opens a child screen in the parent conductor.
+        /// </summary>
+        protected void Open(IScreen screen)
+        {
+            (Parent as IConductor)?.ActivateItem(screen);
+        }
+
+        /// <summary>
         /// The Link relation type used by the server to send refresh notifications.
         /// </summary>
         public string NotifyRel { get; set; } = "notify";

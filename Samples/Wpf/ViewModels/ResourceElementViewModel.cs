@@ -17,12 +17,12 @@ namespace TypedRest.Samples.Wpf.ViewModels
 
         public void ListRevisions()
         {
-            ((IConductor)Parent).ActivateItem(new ResourceRevisionCollectionViewModel(Endpoint.Revisions, EventAggregator));
+            Open(new ResourceRevisionCollectionViewModel(Endpoint.Revisions, EventAggregator));
         }
 
         public void ListEvents()
         {
-            ((IConductor)Parent).ActivateItem(new StreamViewModel<LogEvent>(Endpoint.Events, EventAggregator));
+            Open(new StreamViewModel<LogEvent>(Endpoint.Events, EventAggregator));
         }
     }
 }
