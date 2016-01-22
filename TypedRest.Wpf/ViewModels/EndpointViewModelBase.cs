@@ -11,7 +11,7 @@ using TypedRest.Wpf.Events;
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// Common base class for view models operating on an <see cref="IEndpoint"/>.
+    /// Base class for building view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
     public abstract class EndpointViewModelBase<TEndpoint> : Screen, IHandle<IEndpointEvent>
