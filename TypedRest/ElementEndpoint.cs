@@ -31,17 +31,28 @@ namespace TypedRest
         {
         }
 
+        /// <summary>
+        /// The last entity tag returned by the server. Used to avoid lost updates.
+        /// </summary>
+        private EntityTagHeaderValue _etag;
+
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
-            return await response.Content.ReadAsAsync<TEntity>(cancellationToken);
+            _etag = response.Headers.ETag;
+            return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(cancellationToken);
         }
 
         public bool? UpdateAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
         public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await HandleResponseAsync(HttpClient.PutAsync(Uri, entity, Serializer, cancellationToken));
+            var request = new HttpRequestMessage(HttpMethod.Put, Uri)
+            {
+                Content = new ObjectContent<TEntity>(entity, Serializer)
+            };
+            if (_etag != null) request.Headers.IfMatch.Add(_etag);
+            await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
         }
 
         public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);
