@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("1&1 Internet SE")]
 [assembly: AssemblyProduct("TypedRest")]
-[assembly: AssemblyCopyright("Copyright © 2015 1und1 Internet SE")]
+[assembly: AssemblyCopyright("Copyright © 1und1 Internet SE")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("0.13.0.0")]
