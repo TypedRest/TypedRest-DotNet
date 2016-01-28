@@ -39,12 +39,14 @@ namespace TypedRest
             //stubFor(get(urlEqualTo("/endpoint"))
             //        .willReturn(aResponse()
             //                .withStatus(SC_OK)
+            //                .withHeader("Content-Type", "mock/type")
             //                .withBody(data)));
 
             var stream = new MemoryStream();
-            await _endpoint.DownloadToAsync(stream);
+            string mimeType = await _endpoint.DownloadToAsync(stream);
 
             stream.ToArray().Should().Equal(data);
+            mimeType.Should().Be("mock/type");
         }
 
         [Test]

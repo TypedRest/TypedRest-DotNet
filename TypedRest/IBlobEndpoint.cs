@@ -36,12 +36,13 @@ namespace TypedRest
         /// Downloads the blob's content.
         /// </summary>
         /// <param name="stream">The stream to write the downloaded data to.</param>
+        /// <returns>The MIME type of the downloaded blob.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task DownloadToAsync(Stream stream);
+        Task<string> DownloadToAsync(Stream stream);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="UploadFromAsync"/> is currently allowed.

@@ -38,11 +38,12 @@ namespace TypedRest
 
         public bool? DownloadAllowed => IsVerbAllowed(HttpMethod.Get.Method);
 
-        public async Task DownloadToAsync(Stream stream)
+        public async Task<string> DownloadToAsync(Stream stream)
         {
             var response = await HandleResponseAsync(HttpClient.GetAsync(Uri));
 
             await response.Content.CopyToAsync(stream);
+            return response.Content.Headers.ContentType.MediaType;
         }
 
         public bool? UploadAllowed => IsVerbAllowed(HttpMethod.Put.Method);
