@@ -49,7 +49,7 @@ namespace TypedRest
                             : new RangeItemHeaderValue(null, -currentStartIndex);
                         response = await ReadRangeAsync(range, cancellationToken);
                     }
-                    catch (IndexOutOfRangeException)
+                    catch (InvalidOperationException)
                     {
                         // No new data available yet, keep polling
                         continue;

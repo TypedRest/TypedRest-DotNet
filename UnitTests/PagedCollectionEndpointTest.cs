@@ -98,7 +98,7 @@ namespace TypedRest
             {
                 await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 5, to: 10));
             }
-            catch (IndexOutOfRangeException ex)
+            catch (InvalidOperationException ex)
             {
                 exceptionMessage = ex.Message;
             }

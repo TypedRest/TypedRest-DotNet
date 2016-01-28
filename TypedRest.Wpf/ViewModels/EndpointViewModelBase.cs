@@ -93,10 +93,6 @@ namespace TypedRest.Wpf.ViewModels
             {
                 OnError(ex);
             }
-            catch (IndexOutOfRangeException ex)
-            {
-                OnError(ex);
-            }
         }
 
         /// <summary>

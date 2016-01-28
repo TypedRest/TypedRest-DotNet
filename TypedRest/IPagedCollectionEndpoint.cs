@@ -24,7 +24,7 @@ namespace TypedRest
         /// <returns>A subset of the <typeparamref name="TElementEndpoint"/>s and the range they come from. May not exactly match the request <paramref name="range"/>.</returns>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="IndexOutOfRangeException"><see cref="HttpStatusCode.RequestedRangeNotSatisfiable"/></exception>
+        /// <exception cref="InvalidOperationException">The requested range is not satisfiable.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
             CancellationToken cancellationToken = default(CancellationToken));
