@@ -120,6 +120,25 @@ namespace TypedRest
             _endpoint.LinkTemplate("target2").Should().BeNull();
         }
 
+        [Test]
+        public async Task TestLinkBody()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(JsonMime, "{\"links\": {"
+                                    + "  \"single\": {\"href\": \"a\"},"
+                                    + "  \"collection\": [{\"href\": \"b\"},{\"href\": \"c\"},true,{\"something\":false}],"
+                                    + "  \"template\": {\"href\": \"{id}\",\"templated\": true}"
+                                    + "}}");
+
+            await _endpoint.GetAsync();
+
+            _endpoint.Link("single").Should().Be(new Uri(_endpoint.Uri, "a"));
+            _endpoint.GetLinks("collection").Should().BeEquivalentTo(
+                new Uri(_endpoint.Uri, "b"),
+                new Uri(_endpoint.Uri, "c"));
+            _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
+        }
+
         private class CustomEndpoint : EndpointBase
         {
             public CustomEndpoint(IEndpoint parent, string relativeUri) : base(parent, relativeUri)

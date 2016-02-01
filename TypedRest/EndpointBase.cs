@@ -64,7 +64,7 @@ namespace TypedRest
         {
             var response = await responseTask;
 
-            HandleLinks(response);
+            await HandleLinksAsync(response);
             HandleAllow(response);
             await HandleErrorsAsync(response);
 
@@ -94,7 +94,6 @@ namespace TypedRest
                 {
                     var messageNode = JToken.Parse(body)["message"];
                     if (messageNode != null) message = messageNode.ToString();
-
                 }
             }
 
@@ -120,12 +119,24 @@ namespace TypedRest
         /// <summary>
         /// Handles links embedded in an HTTP response.
         /// </summary>
-        private void HandleLinks(HttpResponseMessage response)
+        private async Task HandleLinksAsync(HttpResponseMessage response)
         {
             var links = new Dictionary<string, ISet<Uri>>();
             var linkTemplates = new Dictionary<string, UriTemplate>();
 
             HandleHeaderLinks(response.Headers, links, linkTemplates);
+
+            if (response.Content?.Headers.ContentType?.MediaType == "application/json")
+            {
+                try
+                {
+                    HandleBodyLinks(JToken.Parse(await response.Content.ReadAsStringAsync()), links, linkTemplates);
+                }
+                catch (JsonReaderException)
+                {
+                    // Unparsable bodies are handled elsewhere
+                }
+            }
 
             _links = links;
             _linkTemplates = linkTemplates;
@@ -163,6 +174,58 @@ namespace TypedRest
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles links embedded in JSON response bodies.
+        /// </summary>
+        /// <param name="jsonBody">The body to check for links.</param>
+        /// <param name="links">A dictionary to add found links to.</param>
+        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
+        protected virtual void HandleBodyLinks(JToken jsonBody, IDictionary<string, ISet<Uri>> links, IDictionary<string, UriTemplate> linkTemplates)
+        {
+            if (jsonBody.Type != JTokenType.Object) return;
+            var linksNode = jsonBody["_links"] ?? jsonBody["links"];
+            if (linksNode == null) return;
+
+            foreach (var linkNode in linksNode.OfType<JProperty>())
+            {
+                string rel = linkNode.Name;
+
+                ISet<Uri> linkSet;
+                if (!links.TryGetValue(rel, out linkSet))
+                    links.Add(rel, linkSet = new HashSet<Uri>());
+
+                switch (linkNode.Value.Type)
+                {
+                    case JTokenType.Array:
+                        foreach (var subobj in linkNode.Value.OfType<JObject>())
+                            ParseLinkObject(rel, subobj, linkSet, linkTemplates);
+                        break;
+
+                    case JTokenType.Object:
+                        ParseLinkObject(rel, (JObject)linkNode.Value, linkSet, linkTemplates);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parses a JSON object for link information.
+        /// </summary>
+        /// <param name="rel">The relation type of the link.</param>
+        /// <param name="obj">The JSON object to parse for link information.</param>
+        /// <param name="linkSet">A set to add found links to.</param>
+        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
+        private void ParseLinkObject(string rel, JObject obj, ISet<Uri> linkSet, IDictionary<string, UriTemplate> linkTemplates)
+        {
+            var href = obj["href"];
+            if (href == null) return;
+
+            var templated = obj["templated"];
+            if (templated != null && templated.Type == JTokenType.Boolean && templated.Value<bool>())
+                linkTemplates.Add(rel, new UriTemplate(href.ToString()));
+            else linkSet.Add(new Uri(Uri, href.ToString()));
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
