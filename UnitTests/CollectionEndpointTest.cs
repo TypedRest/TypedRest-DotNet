@@ -68,7 +68,7 @@ namespace TypedRest
             //    .willReturn(aResponse()
             //        .withStatus(SC_OK)
             //        .withHeader("Content-Type", jsonMime)
-            //        .withHeader("Link", "<children/{id}>; rel=children")
+            //        .withHeader("Link", "<children/{id}>; rel=children; templated=true")
             //        .withBody("[]")));
 
             await _endpoint.ReadAllAsync();

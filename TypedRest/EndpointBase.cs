@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TypedRest
 {
@@ -81,10 +83,16 @@ namespace TypedRest
         {
             if (response.IsSuccessStatusCode) return;
 
+            string message = response.StatusCode + " " + response.ReasonPhrase;
+
             string body = await response.Content.ReadAsStringAsync();
-            string message = (response.Content.Headers.ContentType.MediaType == "application/json")
-                ? JsonConvert.DeserializeAnonymousType(body, new {Message = ""}).Message
-                : response.StatusCode + " " + response.ReasonPhrase;
+
+            if (response.Content.Headers.ContentType.MediaType == "application/json")
+            {
+                var messageNode = JToken.Parse(body)["message"];
+                if (messageNode != null) message = messageNode.ToString();
+
+            }
 
             switch (response.StatusCode)
             {
@@ -113,7 +121,21 @@ namespace TypedRest
             var links = new Dictionary<string, ISet<Uri>>();
             var linkTemplates = new Dictionary<string, UriTemplate>();
 
-            foreach (string element in response.Headers.Where(x => x.Key == "Link").SelectMany(x => x.Value))
+            HandleHeaderLinks(response.Headers, links, linkTemplates);
+
+            _links = links;
+            _linkTemplates = linkTemplates;
+        }
+
+        /// <summary>
+        /// Handles links embedded in HTTP response headers.
+        /// </summary>
+        /// <param name="headers">The headers to check for links.</param>
+        /// <param name="links">A dictionary to add found links to.</param>
+        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
+        protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, ISet<Uri>> links, IDictionary<string, UriTemplate> linkTemplates)
+        {
+            foreach (string element in headers.Where(x => x.Key == "Link").SelectMany(x => x.Value))
             {
                 var parameters = element.Split(new[] {"; "}, StringSplitOptions.None);
                 string href = parameters[0].Substring(1, parameters[0].Length - 2);
@@ -121,9 +143,10 @@ namespace TypedRest
                 var relParameter = parameters.Select(x => x.Split('=')).FirstOrDefault(x => x[0] == "rel");
                 if (relParameter != null)
                 {
-                    if (relParameter[1].EndsWith("-template"))
+                    var templatedParameter = parameters.Select(x => x.Split('=')).FirstOrDefault(x => x[0] == "templated");
+                    if (templatedParameter != null && templatedParameter[1] == "true")
                     {
-                        string rel = relParameter[1].Substring(0, relParameter[1].Length - "-template".Length);
+                        string rel = relParameter[1];
                         linkTemplates[rel] = new UriTemplate(href);
                     }
                     else
@@ -136,9 +159,6 @@ namespace TypedRest
                     }
                 }
             }
-
-            _links = links;
-            _linkTemplates = linkTemplates;
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.

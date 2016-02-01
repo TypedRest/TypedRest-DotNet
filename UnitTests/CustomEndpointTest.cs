@@ -93,7 +93,7 @@ namespace TypedRest
             //stubFor(get(urlEqualTo("/endpoint"))
             //    .willReturn(aResponse()
             //        .withStatus(SC_NO_CONTENT)
-            //        .withHeader("Link", "<a>; rel=target1-template")));
+            //        .withHeader("Link", "<a>; rel=target1; templated=true")));
 
             await _endpoint.GetAsync();
 
