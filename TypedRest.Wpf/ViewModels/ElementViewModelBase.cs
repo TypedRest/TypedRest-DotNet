@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
@@ -27,8 +29,18 @@ namespace TypedRest.Wpf.ViewModels
         {
             await WithErrorHandlingAsync(async () =>
             {
-                await OnSaveAsync();
-                TryClose();
+                try
+                {
+                    await OnSaveAsync();
+                    TryClose();
+                }
+                catch (InvalidOperationException ex)
+                {
+                    // This usually inidicates a "lost update"
+                    string question = ex.Message + "\nDo you want to refresh this page loosing any changes you have made?";
+                    if (MessageBox.Show(question, "Refresh element", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        await RefreshAsync();
+                }
             });
         }
 
