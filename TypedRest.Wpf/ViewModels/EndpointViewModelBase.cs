@@ -14,7 +14,7 @@ namespace TypedRest.Wpf.ViewModels
     /// Base class for building view models operating on an <see cref="IEndpoint"/>.
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-    public abstract class EndpointViewModelBase<TEndpoint> : Screen, IHandle<IEndpointEvent>
+    public abstract class EndpointViewModelBase<TEndpoint> : Screen, IHandleWithTask<IEndpointEvent>
         where TEndpoint : IEndpoint
     {
         /// <summary>
@@ -117,7 +117,7 @@ namespace TypedRest.Wpf.ViewModels
         public string NotifyRel { get; set; } = "notify";
 
         // Refresh when notifications are sent from the server
-        public async void Handle(IEndpointEvent message)
+        public async Task Handle(IEndpointEvent message)
         {
             if (message.Endpoint.GetLinks(NotifyRel).Contains(Endpoint.Uri))
                 await RefreshAsync();

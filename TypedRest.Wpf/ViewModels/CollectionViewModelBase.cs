@@ -11,7 +11,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint> : EndpointViewModelBase<TEndpoint>, IHandle<ElementEvent<TEntity>>
+    public abstract class CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint> : EndpointViewModelBase<TEndpoint>, IHandleWithTask<ElementEvent<TEntity>>
         where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
@@ -76,7 +76,7 @@ namespace TypedRest.Wpf.ViewModels
         protected abstract IScreen BuildCreateElementScreen();
 
         // Refresh when child elements are created or updated
-        public async void Handle(ElementEvent<TEntity> message)
+        public async Task Handle(ElementEvent<TEntity> message)
         {
             await RefreshAsync();
         }
