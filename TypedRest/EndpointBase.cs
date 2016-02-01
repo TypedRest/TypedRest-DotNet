@@ -85,13 +85,17 @@ namespace TypedRest
 
             string message = response.StatusCode + " " + response.ReasonPhrase;
 
-            string body = await response.Content.ReadAsStringAsync();
-
-            if (response.Content.Headers.ContentType.MediaType == "application/json")
+            string body = null;
+            if (response.Content != null)
             {
-                var messageNode = JToken.Parse(body)["message"];
-                if (messageNode != null) message = messageNode.ToString();
+                body = await response.Content.ReadAsStringAsync();
 
+                if (response.Content.Headers.ContentType.MediaType == "application/json")
+                {
+                    var messageNode = JToken.Parse(body)["message"];
+                    if (messageNode != null) message = messageNode.ToString();
+
+                }
             }
 
             switch (response.StatusCode)
@@ -224,7 +228,8 @@ namespace TypedRest
         /// </summary>
         private void HandleAllow(HttpResponseMessage response)
         {
-            _allowedVerbs = new HashSet<string>(response.Content.Headers.Allow);
+            if (response.Content != null)
+                _allowedVerbs = new HashSet<string>(response.Content.Headers.Allow);
         }
 
         // NOTE: Always replace entire set rather than modifying it to ensure thread-safety.
