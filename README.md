@@ -73,12 +73,16 @@ Install the [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/) NuGet
 You can then use the classes `CollectionViewModel`, `ElementViewModel`, `TriggerViewModel`, `PaginationViewModel`, `StreamViewModel` and `BlobViewModel` to operate on `CollectionEndpoint`s, `ElementEndpoint`s, `TriggerEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
 
 
-## Sample project
+## Sample projects
 
-The source code includes a sample projects.
+The source code includes sample projects.
 
-`Samples\Library` demonstrates how to create a client library for a REST interface using `TypedRest`.
+`Samples\Model` contains a simple JSON-serializable sample model.
 
-`Samples\CommandLine` demonstrates how to use such a client library and `TypedRest.CommmandLine` to create a command-line client for a REST interface.
+`Samples\Client` demonstrates how to create a client library for a REST interface using `TypedRest`.
 
-`Samples\Wpf` demonstrates how to use such a client library and `TypedRest.Wpf` to create a GUI client for a REST interface.
+`Samples\Client.CommandLine` demonstrates how to use such a client library and `TypedRest.CommmandLine` to create a command-line client for a REST interface.
+
+`Samples\Client.Wpf` demonstrates how to use such a client library and `TypedRest.Wpf` to create a GUI client for a REST interface.
+
+`Samples\Server` provides a simple REST API that the acutal TypedRest samples use to have something to communicate with. This does not mean that TypedRest requires a specific type of server! It can interoperate with anything provding a RESTful API.
