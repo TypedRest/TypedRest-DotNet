@@ -84,6 +84,13 @@ namespace TypedRest
             return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken);
         }
 
+        public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
+
+        public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
+        {
+            await HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
+        }
+
         public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);
 
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
