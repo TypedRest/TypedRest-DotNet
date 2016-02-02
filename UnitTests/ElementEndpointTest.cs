@@ -32,6 +32,25 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestReadCache()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                });
+            var result = await _endpoint.ReadAsync();
+            result.Should().Be(new MockEntity(5, "test"));
+
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .WithHeaders("If-None-Match", "\"123abc\"")
+                .Respond(HttpStatusCode.NotModified);
+            result = await _endpoint.ReadAsync();
+            result.Should().Be(new MockEntity(5, "test"));
+        }
+
+        [Test]
         public async Task TestUpdate()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")

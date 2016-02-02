@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,13 +34,25 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// The last entity tag returned by the server. Used to avoid lost updates.
+        /// The last entity tag returned by the server. Used for caching and to avoid lost updates.
         /// </summary>
         private EntityTagHeaderValue _etag;
 
+        /// <summary>
+        /// The last entity returned by the server. Used for caching.
+        /// </summary>
+        private TEntity _cachedResponse;
+
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
+            var request = new HttpRequestMessage(HttpMethod.Get, Uri);
+            if (_etag != null) request.Headers.IfNoneMatch.Add(_etag);
+
+            var response = await HttpClient.SendAsync(request, cancellationToken);
+            if (response.StatusCode == HttpStatusCode.NotModified && _cachedResponse != null)
+                return _cachedResponse;
+
+            await HandleResponseAsync(Task.FromResult(response));
             _etag = response.Headers.ETag;
             return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(cancellationToken);
         }
