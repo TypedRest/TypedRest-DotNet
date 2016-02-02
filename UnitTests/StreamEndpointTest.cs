@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reactive.Linq;
-using Microsoft.Reactive.Testing;
+using System.Text;
+using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class StreamEndpointTest : EndpointTestBase
     {
         private StreamEndpoint<MockEntity> _endpoint;
@@ -20,63 +24,57 @@ namespace TypedRest
         [Test]
         public void TestGetStream()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=0-"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 0-1/*")
-            //                .withBody("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=0-")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1) {Unit = "elements"}}
+                    });
 
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=2-"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 2-2/3")
-            //                .withBody("[{\"id\":7,\"name\":\"test3\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=2-")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                    });
 
             var stream = _endpoint.GetStream();
-            stream.AssertEqual(new List<MockEntity>
-            {
+            stream.ToEnumerable().Should().Equal(
                 new MockEntity(5, "test1"),
                 new MockEntity(6, "test2"),
-                new MockEntity(7, "test3")
-            }.ToObservable());
+                new MockEntity(7, "test3"));
         }
 
         [Test]
         public void TestGetStreamOffset()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=2-"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 2-2/3")
-            //                .withBody("[{\"id\":7,\"name\":\"test3\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=2-")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                    });
 
             var stream = _endpoint.GetStream(startIndex: 2);
-            stream.AssertEqual(new List<MockEntity> {new MockEntity(7, "test3")}.ToObservable());
+            stream.ToEnumerable().Should().Equal(new MockEntity(7, "test3"));
         }
 
         [Test]
-        public void TestGetStreamOffsetTail()
+        public void TestGetStreamTail()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=-1"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 2-2/3")
-            //                .withBody("[{\"id\":7,\"name\":\"test3\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=-1")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                    });
 
             var stream = _endpoint.GetStream(startIndex: -1);
-            stream.AssertEqual(new List<MockEntity> {new MockEntity(7, "test3")}.ToObservable());
+            stream.ToEnumerable().Should().Equal(new MockEntity(7, "test3"));
         }
     }
 }

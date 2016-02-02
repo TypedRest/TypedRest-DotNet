@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class PagedCollectionEndpointTest : EndpointTestBase
     {
         private PagedCollectionEndpoint<MockEntity> _endpoint;
@@ -21,12 +25,8 @@ namespace TypedRest
         [Test]
         public async Task TestReadAll()
         {
-            //stubFor(get(urlEqualTo("/endpoint/"))
-            //    .withHeader("Accept", equalTo(jsonMime))
-            //    .willReturn(aResponse()
-            //        .withStatus(200)
-            //        .withHeader("Content-Type", jsonMime)
-            //        .withBody("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .Respond(JsonMime, "[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]");
 
             var result = await _endpoint.ReadAllAsync();
             result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
@@ -35,63 +35,57 @@ namespace TypedRest
         [Test]
         public async Task TestReadRangeOffset()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=1-"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 1-1/2")
-            //                .withBody("[{\"id\":6,\"name\":\"test2\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=1-")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"}}
+                    });
 
             var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: null));
             response.Elements.Should().Equal(new MockEntity {Id = 6, Name = "test2"});
-            response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2));
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"});
         }
 
         [Test]
         public async Task TestReadRangeHead()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=0-1"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 0-1/2")
-            //                .withBody("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=0-1")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"}}
+                    });
 
-            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: 1));
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 0, to: 1));
             response.Elements.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
-            response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2));
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"});
         }
 
         [Test]
         public async Task TestReadRangeTail()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .withHeader("Range", equalTo("elements=-1"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_PARTIAL_CONTENT)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withHeader("Content-Range", "elements 2-2/*")
-            //                .withBody("[{\"id\":6,\"name\":\"test2\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=-1")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"}}
+                    });
 
             var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: null, to: 1));
             response.Elements.Should().Equal(new MockEntity(6, "test2"));
-            response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2));
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"});
         }
 
         [Test]
         public async Task TestException()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Range", equalTo("elements=5-10"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_REQUESTED_RANGE_NOT_SATISFIABLE)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withBody("{\"message\":\"test\"}")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=5-10")
+                .Respond(HttpStatusCode.RequestedRangeNotSatisfiable, JsonMime, "{\"message\":\"test\"}");
 
             string exceptionMessage = null;
             try

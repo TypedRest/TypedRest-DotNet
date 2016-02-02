@@ -1,16 +1,35 @@
 using System;
+using System.Net.Http;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
     public abstract class EndpointTestBase
     {
-        protected EntryEndpoint EntryEndpoint;
+        public const string JsonMime = "application/json";
+
+        protected IEndpoint EntryEndpoint;
+        protected MockHttpMessageHandler Mock;
 
         [SetUp]
         public virtual void SetUp()
         {
-            EntryEndpoint = new EntryEndpoint(new Uri("http://localhost:8089/"));
+            EntryEndpoint = new MockEntryEndpoint(Mock = new MockHttpMessageHandler());
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Mock.VerifyNoOutstandingExpectation();
+        }
+
+        private class MockEntryEndpoint : EndpointBase
+        {
+            public MockEntryEndpoint(MockHttpMessageHandler mockHttp)
+                : base(new HttpClient(mockHttp), new Uri("http://localhost/"))
+            {
+            }
         }
     }
 }

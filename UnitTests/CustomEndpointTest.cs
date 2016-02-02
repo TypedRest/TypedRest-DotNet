@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class CustomEndpointTest : EndpointTestBase
     {
         private CustomEndpoint _endpoint;
@@ -21,25 +24,28 @@ namespace TypedRest
         [Test]
         public async Task TestAllowHeader()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_OK)
-            //        .withHeader("Allow", "PUT, POST")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method, HttpMethod.Post.Method}}});
 
             await _endpoint.GetAsync();
 
-            _endpoint.IsVerbAllowed("PUT").Should().BeTrue();
-            _endpoint.IsVerbAllowed("POST").Should().BeTrue();
-            _endpoint.IsVerbAllowed("DELETE").Should().BeFalse();
+            _endpoint.IsVerbAllowed(HttpMethod.Put.Method).Should().BeTrue();
+            _endpoint.IsVerbAllowed(HttpMethod.Post.Method).Should().BeTrue();
+            _endpoint.IsVerbAllowed(HttpMethod.Delete.Method).Should().BeFalse();
         }
 
         [Test]
         public async Task TestLink()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_NO_CONTENT)
-            //        .withHeader("Link", "<a>; rel=target1, <b>; rel=target2")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<a>; rel=target1"},
+                        {"Link", "<b>; rel=target2"}
+                    }
+                });
 
             await _endpoint.GetAsync();
 
@@ -50,24 +56,28 @@ namespace TypedRest
         [Test]
         public void TestLinkLazy()
         {
-            //stubFor(head(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_NO_CONTENT)
-            //        .withHeader("Link", "<a>; rel=target1, <b>; rel=target2")));
+            Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<a>; rel=target1"},
+                        {"Link", "<b>; rel=target2"}
+                    }
+                });
 
             _endpoint.Link("target1").Should().Be(new Uri(_endpoint.Uri, "a"));
             _endpoint.Link("target2").Should().Be(new Uri(_endpoint.Uri, "b"));
         }
 
         [Test]
-        public async Task TestLinkException()
+        public void TestLinkException()
         {
-            //stubFor(head(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_NO_CONTENT)
-            //        .withHeader("Link", "<a>; rel=target1")));
-
-            await _endpoint.GetAsync();
+            Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers = {{"Link", "<a>; rel=target1"}}
+                });
 
             _endpoint.Invoking(x => x.Link("target2")).ShouldThrow<KeyNotFoundException>();
         }
@@ -75,10 +85,15 @@ namespace TypedRest
         [Test]
         public async Task TestGetLinks()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_NO_CONTENT)
-            //        .withHeader("Link", "<target1>; rel=notify, <target2>; rel=notify")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<target1>; rel=notify"},
+                        {"Link", "<target2>; rel=notify"}
+                    }
+                });
 
             await _endpoint.GetAsync();
 
@@ -90,10 +105,14 @@ namespace TypedRest
         [Test]
         public async Task TestLinkTemplate()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_NO_CONTENT)
-            //        .withHeader("Link", "<a>; rel=target1; templated=true")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<a>; rel=target1; templated=true"}
+                    }
+                });
 
             await _endpoint.GetAsync();
 

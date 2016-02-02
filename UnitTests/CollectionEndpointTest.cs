@@ -1,7 +1,11 @@
 using System;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
@@ -17,33 +21,29 @@ namespace TypedRest
             _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
-        [Test, Ignore("Server mock not implemented yet")]
+        [Test]
         public async Task TestReadAll()
         {
-            //stubFor(get(urlEqualTo("/endpoint/"))
-            //    .withHeader("Accept", equalTo(jsonMime))
-            //    .willReturn(aResponse()
-            //        .withStatus(200)
-            //        .withHeader("Content-Type", jsonMime)
-            //        .withBody("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .Respond(JsonMime, "[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]");
 
             var result = await _endpoint.ReadAllAsync();
             result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
         }
 
-        [Test, Ignore("Server mock not implemented yet")]
+        [Test]
         public async Task TestCreate()
         {
             var location = new Uri("/endpoint/new", UriKind.Relative);
-            //stubFor(post(
-            //    urlEqualTo("/endpoint/"))
-            //    .withRequestBody(equalToJson("{\"id\":5,\"name\":\"test\"}"))
-            //    .willReturn(aResponse()
-            //        .withStatus(201)
-            //        .withHeader("Location", location.toASCIIString())));
+            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint/")
+                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .Respond(new HttpResponseMessage(HttpStatusCode.Created)
+                {
+                    Headers = {Location = location}
+                });
 
             var element = await _endpoint.CreateAsync(new MockEntity(5, "test"));
-            element.Uri.Should().Be(location);
+            element.Uri.Should().Be(new Uri(EntryEndpoint.Uri, location));
         }
 
         [Test]
@@ -60,21 +60,20 @@ namespace TypedRest
                 .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
 
-        [Test, Ignore("Server mock not implemented yet")]
+        [Test]
         public async Task TestGetByEntityWithLinkHeader()
         {
-            //stubFor(get(urlEqualTo("/endpoint/"))
-            //    .withHeader("Accept", equalTo(jsonMime))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_OK)
-            //        .withHeader("Content-Type", jsonMime)
-            //        .withHeader("Link", "<children/{id}>; rel=children; templated=true")
-            //        .withBody("[]")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                    Headers = {{"Link", "<children/{id}>; rel=child; templated=true"}}
+                });
 
             await _endpoint.ReadAllAsync();
 
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri(_endpoint.Uri, "children/1"));
+            _endpoint[new MockEntity(1, "test")].Uri.PathAndQuery
+                .Should().Be("/endpoint/children/1");
         }
     }
 }

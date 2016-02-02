@@ -1,10 +1,15 @@
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class ElementEndpointTest : EndpointTestBase
     {
         private ElementEndpoint<MockEntity> _endpoint;
@@ -19,12 +24,8 @@ namespace TypedRest
         [Test]
         public async Task TestRead()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .withHeader("Accept", equalTo(jsonMime))
-            //        .willReturn(aResponse()
-            //                .withStatus(200)
-            //                .withHeader("Content-Type", jsonMime)
-            //                .withBody("{\"id\":5,\"name\":\"test\"}")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(JsonMime, "{\"Id\":5,\"Name\":\"test\"}");
 
             var result = await _endpoint.ReadAsync();
             result.Should().Be(new MockEntity(5, "test"));
@@ -33,10 +34,9 @@ namespace TypedRest
         [Test]
         public async Task TestUpdate()
         {
-            //stubFor(put(urlEqualTo("/endpoint"))
-            //        .withRequestBody(equalToJson("{\"id\":5,\"name\":\"test\"}"))
-            //        .willReturn(aResponse()
-            //                .withStatus(204)));
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .Respond(HttpStatusCode.NoContent);
 
             await _endpoint.UpdateAsync(new MockEntity(5, "test"));
         }
@@ -44,29 +44,26 @@ namespace TypedRest
         [Test]
         public async Task TestUpdateEtag()
         {
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //    .withHeader("Accept", equalTo(jsonMime))
-            //    .willReturn(aResponse()
-            //            .withStatus(SC_OK)
-            //            .withHeader("Content-Type", jsonMime)
-            //            .withHeader("ETag", "123abc")
-            //            .withBody("{\"id\":5,\"name\":\"test\"}")));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                });
             var result = await _endpoint.ReadAsync();
 
-            //stubFor(put(urlEqualTo("/endpoint"))
-            //        .withRequestBody(equalToJson("{\"id\":5,\"name\":\"test\"}"))
-            //        .withHeader("If-Match", matching("123abc"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_NO_CONTENT)));
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .WithHeaders("If-Match", "\"123abc\"")
+                .Respond(HttpStatusCode.NoContent);
             await _endpoint.UpdateAsync(result);
         }
 
         [Test]
         public async Task TestDelete()
         {
-            //stubFor(delete(urlEqualTo("/endpoint"))
-            //        .willReturn(aResponse()
-            //                .withStatus(204)));
+            Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
+                .Respond(HttpStatusCode.NoContent);
 
             await _endpoint.DeleteAsync();
         }

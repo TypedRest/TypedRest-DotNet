@@ -1,11 +1,16 @@
 ﻿using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class BlobEndpointTest : EndpointTestBase
     {
         private BlobEndpoint _endpoint;
@@ -20,10 +25,8 @@ namespace TypedRest
         [Test]
         public async Task TestProbe()
         {
-            //stubFor(options(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_OK)
-            //        .withHeader("Allow", "PUT")));
+            Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
+                .Respond(new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method}}});
 
             await _endpoint.ProbeAsync();
 
@@ -36,11 +39,11 @@ namespace TypedRest
         {
             byte[] data = {1, 2, 3};
 
-            //stubFor(get(urlEqualTo("/endpoint"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_OK)
-            //                .withHeader("Content-Type", "mock/type")
-            //                .withBody(data)));
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new ByteArrayContent(data)
+                {
+                    Headers = {ContentType = new MediaTypeHeaderValue("mock/type")}
+                });
 
             var stream = new MemoryStream();
             string mimeType = await _endpoint.DownloadToAsync(stream);
@@ -54,12 +57,27 @@ namespace TypedRest
         {
             byte[] data = {1, 2, 3};
 
-            //stubFor(put(urlEqualTo("/endpoint"))
-            //        .willReturn(aResponse()
-            //                .withStatus(SC_NO_CONTENT)));
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .With(new ByteContentMatcher(data))
+                .Respond(HttpStatusCode.NoContent);
 
             var stream = new MemoryStream(data);
             await _endpoint.UploadFromAsync(stream);
+        }
+
+        private class ByteContentMatcher : IMockedRequestMatcher
+        {
+            private readonly byte[] _data;
+
+            public ByteContentMatcher(byte[] data)
+            {
+                _data = data;
+            }
+
+            public bool Matches(HttpRequestMessage message)
+            {
+                return message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data);
+            }
         }
     }
 }

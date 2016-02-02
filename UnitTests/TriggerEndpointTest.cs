@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    [TestFixture, Ignore("Server mock not implemented yet")]
+    [TestFixture]
     public class TriggerEndpointTest : EndpointTestBase
     {
         private TriggerEndpoint _endpoint;
@@ -19,10 +22,8 @@ namespace TypedRest
         [Test]
         public async Task TestProbe()
         {
-            //stubFor(options(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse()
-            //        .withStatus(SC_OK)
-            //        .withHeader("Allow", "POST")));
+            Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
+                .Respond(new StringContent("") {Headers = {Allow = {"POST"}}});
 
             await _endpoint.ProbeAsync();
 
@@ -32,8 +33,8 @@ namespace TypedRest
         [Test]
         public async Task TestTrigger()
         {
-            //stubFor(post(urlEqualTo("/endpoint"))
-            //    .willReturn(aResponse().withStatus(SC_OK)));
+            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
+                .Respond(HttpStatusCode.NoContent);
 
             await _endpoint.TriggerAsync();
         }
