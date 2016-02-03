@@ -48,13 +48,13 @@ namespace TypedRest
             var request = new HttpRequestMessage(HttpMethod.Get, Uri);
             if (_etag != null) request.Headers.IfNoneMatch.Add(_etag);
 
-            var response = await HttpClient.SendAsync(request, cancellationToken);
+            var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
             if (response.StatusCode == HttpStatusCode.NotModified && _cachedResponse != null)
                 return _cachedResponse;
 
-            await HandleResponseAsync(Task.FromResult(response));
+            await HandleResponseAsync(Task.FromResult(response)).NoContext();
             _etag = response.Headers.ETag;
-            return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(cancellationToken);
+            return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(cancellationToken).NoContext();
         }
 
         public bool? UpdateAllowed => IsVerbAllowed(HttpMethod.Put.Method);
@@ -66,14 +66,14 @@ namespace TypedRest
                 Content = new ObjectContent<TEntity>(entity, Serializer)
             };
             if (_etag != null) request.Headers.IfMatch.Add(_etag);
-            await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
+            await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
         }
 
         public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);
 
-        public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await HandleResponseAsync(HttpClient.DeleteAsync(Uri, cancellationToken));
+            return HandleResponseAsync(HttpClient.DeleteAsync(Uri, cancellationToken));
         }
     }
 }

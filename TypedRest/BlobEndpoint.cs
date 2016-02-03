@@ -31,26 +31,26 @@ namespace TypedRest
         {
         }
 
-        public async Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
+            return HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
         }
 
         public bool? DownloadAllowed => IsVerbAllowed(HttpMethod.Get.Method);
 
         public async Task<string> DownloadToAsync(Stream stream)
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri));
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri)).NoContext();
 
-            await response.Content.CopyToAsync(stream);
+            await response.Content.CopyToAsync(stream).NoContext();
             return response.Content.Headers.ContentType.MediaType;
         }
 
         public bool? UploadAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
-        public async Task UploadFromAsync(Stream stream)
+        public Task UploadFromAsync(Stream stream)
         {
-            await HandleResponseAsync(HttpClient.PutAsync(Uri, new StreamContent(stream)));
+            return HandleResponseAsync(HttpClient.PutAsync(Uri, new StreamContent(stream)));
         }
     }
 }

@@ -94,6 +94,7 @@
     <Compile Include="PropertyExtensions.cs" />
     <Compile Include="StreamEndpoint.cs" />
     <Compile Include="StreamEndpointBase.cs" />
+    <Compile Include="TaskExtensions.cs" />
     <Compile Include="TriggerEndpoint.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>

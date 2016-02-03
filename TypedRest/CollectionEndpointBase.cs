@@ -80,15 +80,15 @@ namespace TypedRest
         public virtual async Task<ICollection<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
-            return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken);
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
+            return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken).NoContext();
         }
 
         public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
-        public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
+        public Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
         {
-            await HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
+            return HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
         }
 
         public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);
@@ -96,7 +96,7 @@ namespace TypedRest
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+            var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
             return (response.StatusCode == HttpStatusCode.Created)
                 ? this[response.Headers.Location]

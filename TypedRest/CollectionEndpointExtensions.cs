@@ -27,10 +27,10 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="IElementEndpoint{TEntity}.ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.UpdateAsync"/>.</remarks>
-        public static async Task UpdateAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
+        public static Task UpdateAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity>
         {
-            await endpoint[element].UpdateAsync(element, cancellationToken);
+            return endpoint[element].UpdateAsync(element, cancellationToken);
         }
 
         /// <summary>
@@ -47,10 +47,10 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>.</remarks>
-        public static async Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
+        public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity>
         {
-            await endpoint[element].DeleteAsync(cancellationToken);
+            return endpoint[element].DeleteAsync(cancellationToken);
         }
     }
 }

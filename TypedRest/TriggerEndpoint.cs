@@ -28,16 +28,16 @@ namespace TypedRest
         {
         }
 
-        public async Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
+            return HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
         }
 
         public bool? TriggerAllowed => IsVerbAllowed(HttpMethod.Post.Method);
 
-        public async Task TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await HandleResponseAsync(HttpClient.PostAsJsonAsync(Uri, new {}, cancellationToken));
+            return HandleResponseAsync(HttpClient.PostAsJsonAsync(Uri, new {}, cancellationToken));
         }
     }
 }

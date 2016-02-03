@@ -62,11 +62,11 @@ namespace TypedRest
         /// <returns>The resolved <paramref name="responseTask"/>.</returns>
         protected async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
         {
-            var response = await responseTask;
+            var response = await responseTask.NoContext();
 
-            await HandleLinksAsync(response);
+            await HandleLinksAsync(response).NoContext();
             HandleAllow(response);
-            await HandleErrorsAsync(response);
+            await HandleErrorsAsync(response).NoContext();
 
             return response;
         }
@@ -88,7 +88,7 @@ namespace TypedRest
             string body = null;
             if (response.Content != null)
             {
-                body = await response.Content.ReadAsStringAsync();
+                body = await response.Content.ReadAsStringAsync().NoContext();
 
                 if (response.Content.Headers.ContentType.MediaType == "application/json")
                 {
@@ -130,7 +130,7 @@ namespace TypedRest
             {
                 try
                 {
-                    HandleBodyLinks(JToken.Parse(await response.Content.ReadAsStringAsync()), links, linkTemplates);
+                    HandleBodyLinks(JToken.Parse(await response.Content.ReadAsStringAsync().NoContext()), links, linkTemplates);
                 }
                 catch (JsonReaderException)
                 {
@@ -243,15 +243,18 @@ namespace TypedRest
             if (uri == null)
             {
                 // Lazy lookup
-                try
+                // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                Task.Run(async () =>
                 {
-                    // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri))).Wait();
-                }
-                catch (Exception ex)
-                {
-                    throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", ex);
-                }
+                    try
+                    {
+                        await HandleResponseAsync(HttpClient.HeadAsync(Uri)).NoContext();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", ex);
+                    }
+                }).Wait();
 
                 uri = GetLinks(rel).FirstOrDefault();
                 if (uri == null)
@@ -270,15 +273,18 @@ namespace TypedRest
             if (!_linkTemplates.TryGetValue(rel, out template))
             {
                 // Lazy lookup
-                try
+                // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                Task.Run(async () =>
                 {
-                    // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                    Task.Run(() => HandleResponseAsync(HttpClient.HeadAsync(Uri))).Wait();
-                }
-                catch (Exception)
-                {
-                    // HTTP HEAD server-side implementation is optional
-                }
+                    try
+                    {
+                        await HandleResponseAsync(HttpClient.HeadAsync(Uri)).NoContext();
+                    }
+                    catch (Exception)
+                    {
+                        // HTTP HEAD server-side implementation is optional
+                    }
+                }).Wait();
 
                 _linkTemplates.TryGetValue(rel, out template);
             }
