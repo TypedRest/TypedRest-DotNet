@@ -89,6 +89,7 @@
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\BlobUploadEvent.cs" />
     <Compile Include="Events\ElementCreatedEvent.cs" />
     <Compile Include="Events\ElementDeletedEvent.cs" />
     <Compile Include="Events\ElementEvent.cs" />

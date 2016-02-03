@@ -46,7 +46,7 @@ namespace TypedRest.Wpf.ViewModels
             await WithErrorHandlingAsync(async () =>
             {
                 await OnTriggerAsync();
-                EventAggregator.Publish(new TriggerEvent<TEndpoint>(Endpoint), null);
+                EventAggregator.Publish(new TriggerEvent(Endpoint), null);
                 MessageBox.Show("Successful.", DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

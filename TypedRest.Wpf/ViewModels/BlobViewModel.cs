@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -37,6 +38,17 @@ namespace TypedRest.Wpf.ViewModels
 
             CanUpload = Endpoint.UploadAllowed.GetValueOrDefault(CanUpload);
             NotifyOfPropertyChange(() => CanUpload);
+        }
+
+        public virtual async void Upload()
+        {
+            // TODO
+
+            await WithErrorHandlingAsync(async () =>
+            {
+                await Endpoint.UploadFromAsync(null);
+                EventAggregator.Publish(new BlobUploadEvent(Endpoint), null);
+            });
         }
 
         /// <summary>
