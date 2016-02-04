@@ -37,7 +37,8 @@ namespace TypedRest
 
         public Task TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            return HandleResponseAsync(HttpClient.PostAsJsonAsync(Uri, new {}, cancellationToken));
+            return HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri),
+                cancellationToken));
         }
     }
 }
