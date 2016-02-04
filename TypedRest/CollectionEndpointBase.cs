@@ -98,7 +98,7 @@ namespace TypedRest
         {
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
-            return (response.StatusCode == HttpStatusCode.Created)
+            return (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.Accepted) && (response.Headers.Location != null)
                 ? this[response.Headers.Location]
                 : null;
         }
