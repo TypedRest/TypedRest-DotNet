@@ -102,5 +102,11 @@ namespace TypedRest
                 ? this[response.Headers.Location]
                 : null;
         }
+
+        public virtual Task CreateAsync(IEnumerable<TEntity> entities,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return HandleResponseAsync(HttpClient.PostAsync(Uri, entities, Serializer, cancellationToken));
+        }
     }
 }

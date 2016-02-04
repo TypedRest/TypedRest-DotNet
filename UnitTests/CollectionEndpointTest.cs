@@ -57,6 +57,16 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestCreateBluk()
+        {
+            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint/")
+                .WithContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]")
+                .Respond(new HttpResponseMessage(HttpStatusCode.Accepted));
+
+            await _endpoint.CreateAsync(new[] {new MockEntity(5, "test1"), new MockEntity(6, "test2")});
+        }
+
+        [Test]
         public void TestGetByRelativeUri()
         {
             _endpoint[new Uri("1", UriKind.Relative)].Uri
