@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,19 +39,19 @@ namespace TypedRest
 
         public bool? DownloadAllowed => IsVerbAllowed(HttpMethod.Get.Method);
 
-        public async Task<string> DownloadToAsync(Stream stream)
+        public async Task<Stream> DownloadAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri)).NoContext();
-
-            await response.Content.CopyToAsync(stream).NoContext();
-            return response.Content.Headers.ContentType.MediaType;
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
+            return await response.Content.ReadAsStreamAsync().NoContext();
         }
 
         public bool? UploadAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
-        public Task UploadFromAsync(Stream stream)
+        public Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = new CancellationToken())
         {
-            return HandleResponseAsync(HttpClient.PutAsync(Uri, new StreamContent(stream)));
+            var content = new StreamContent(stream);
+            if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
+            return HandleResponseAsync(HttpClient.PutAsync(Uri, content, cancellationToken));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace TypedRest
         Task ProbeAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="DownloadToAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <seealso cref="DownloadAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
@@ -34,14 +34,14 @@ namespace TypedRest
         /// <summary>
         /// Downloads the blob's content.
         /// </summary>
-        /// <param name="stream">The stream to write the downloaded data to.</param>
-        /// <returns>The MIME type of the downloaded blob.</returns>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>A stream with the blob's content.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<string> DownloadToAsync(Stream stream);
+        Task<Stream> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="UploadFromAsync"/> is currently allowed.
@@ -54,11 +54,13 @@ namespace TypedRest
         /// Uploads content as the blob's content.
         /// </summary>
         /// <param name="stream">The stream to read the upload data from.</param>
+        /// <param name="mimeType">The MIME type of the data to upload.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task UploadFromAsync(Stream stream);
+        Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

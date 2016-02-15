@@ -24,13 +24,14 @@ namespace TypedRest.CommandLine
             switch (args[0])
             {
                 case "download":
-                    using (var stream = File.Create(args[1]))
-                        await Endpoint.DownloadToAsync(stream);
+                    using (var downloadStream = await Endpoint.DownloadAsync(cancellationToken))
+                    using (var fileStream = File.Create(args[1]))
+                        await downloadStream.CopyToAsync(fileStream, 81920, cancellationToken);
                     break;
 
                 case "upload":
                     using (var stream = File.OpenRead(args[1]))
-                        await Endpoint.UploadFromAsync(stream);
+                        await Endpoint.UploadFromAsync(stream, cancellationToken: cancellationToken);
                     break;
 
                 default:

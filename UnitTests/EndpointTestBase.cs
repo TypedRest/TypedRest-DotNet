@@ -1,5 +1,7 @@
 using System;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 
@@ -15,7 +17,7 @@ namespace TypedRest
         [SetUp]
         public virtual void SetUp()
         {
-            EntryEndpoint = new MockEntryEndpoint(Mock = new MockHttpMessageHandler());
+            EntryEndpoint = new MockEntryEndpoint(Mock = new SubMockHttpMessageHandler());
         }
 
         [TearDown]
@@ -26,10 +28,18 @@ namespace TypedRest
 
         private class MockEntryEndpoint : EndpointBase
         {
-            public MockEntryEndpoint(MockHttpMessageHandler mockHttp)
-                : base(new HttpClient(mockHttp), new Uri("http://localhost/"))
+            public MockEntryEndpoint(HttpMessageHandler messageHandler)
+                : base(new HttpClient(messageHandler), new Uri("http://localhost/"))
             {
             }
+        }
+    }
+
+    public class SubMockHttpMessageHandler : MockHttpMessageHandler
+    {
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }

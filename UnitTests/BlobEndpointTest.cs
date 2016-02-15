@@ -40,16 +40,14 @@ namespace TypedRest
             byte[] data = {1, 2, 3};
 
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new ByteArrayContent(data)
-                {
-                    Headers = {ContentType = new MediaTypeHeaderValue("mock/type")}
-                });
+                .Respond(new ByteArrayContent(data));
 
-            var stream = new MemoryStream();
-            string mimeType = await _endpoint.DownloadToAsync(stream);
-
-            stream.ToArray().Should().Equal(data);
-            mimeType.Should().Be("mock/type");
+            using (var downloadStream = await _endpoint.DownloadAsync())
+            using (var memStream = new MemoryStream())
+            {
+                await downloadStream.CopyToAsync(memStream);
+                memStream.ToArray().Should().Equal(data);
+            }
         }
 
         [Test]
@@ -58,25 +56,29 @@ namespace TypedRest
             byte[] data = {1, 2, 3};
 
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .With(new ByteContentMatcher(data))
+                .With(new ByteContentMatcher(data, mimeType: "mock/type"))
                 .Respond(HttpStatusCode.NoContent);
 
-            var stream = new MemoryStream(data);
-            await _endpoint.UploadFromAsync(stream);
+            using (var stream = new MemoryStream(data))
+                await _endpoint.UploadFromAsync(stream, mimeType: "mock/type");
         }
 
         private class ByteContentMatcher : IMockedRequestMatcher
         {
             private readonly byte[] _data;
+            private readonly string _mimeType;
 
-            public ByteContentMatcher(byte[] data)
+            public ByteContentMatcher(byte[] data, string mimeType)
             {
                 _data = data;
+                _mimeType = mimeType;
             }
 
             public bool Matches(HttpRequestMessage message)
             {
-                return message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data);
+                return
+                    message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data) &&
+                    message.Content.Headers.ContentType.MediaType == _mimeType;
             }
         }
     }
