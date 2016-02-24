@@ -72,6 +72,8 @@
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BlobEndpoint.cs" />
+    <Compile Include="BulkCollectionEndpoint.cs" />
+    <Compile Include="BulkCollectionEndpointBase.cs" />
     <Compile Include="CollectionEndpoint.cs" />
     <Compile Include="CollectionEndpointBase.cs" />
     <Compile Include="CollectionEndpointExtensions.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="IBlobEndpoint.cs" />
+    <Compile Include="IBulkCollectionEndpoint.cs" />
     <Compile Include="ICollectionEndpoint.cs" />
     <Compile Include="IElementEndpoint.cs" />
     <Compile Include="IEndpoint.cs" />

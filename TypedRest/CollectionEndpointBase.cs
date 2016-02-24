@@ -84,13 +84,6 @@ namespace TypedRest
             return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken).NoContext();
         }
 
-        public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
-
-        public Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
-        {
-            return HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
-        }
-
         public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);
 
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
@@ -101,12 +94,6 @@ namespace TypedRest
             return (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.Accepted) && (response.Headers.Location != null)
                 ? this[response.Headers.Location]
                 : null;
-        }
-
-        public virtual Task CreateAsync(IEnumerable<TEntity> entities,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return HandleResponseAsync(HttpClient.PostAsync(Uri, entities, Serializer, cancellationToken));
         }
     }
 }
