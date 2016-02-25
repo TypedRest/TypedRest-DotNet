@@ -1,8 +1,12 @@
 @echo off
-cd /d "%~dp0"
+pushd "%~dp0"
 
 ::Visual Studio 2015 build environment
-if not defined VS140COMNTOOLS goto err_no_vs
+if not defined VS140COMNTOOLS (
+  echo ERROR: No Visual Studio 2015 installation found. >&2
+  popd
+  exit /b 1
+)
 call "%VS140COMNTOOLS%vsvars32.bat"
 
 ::Compile Visual Studio solution
@@ -19,12 +23,8 @@ if errorlevel 1 pause
 nuget pack TypedRest.Wpf\TypedRest.Wpf.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
 if errorlevel 1 pause
 
-goto end
-rem Error messages
+pushd templates
+call build.cmd
+popd
 
-:err_no_vs
-echo ERROR: No Visual Studio 2015 installation found. >&2
-pause
-goto end
-
-:end
+popd
