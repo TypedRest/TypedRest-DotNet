@@ -121,7 +121,7 @@ namespace TypedRest
         /// </summary>
         private async Task HandleLinksAsync(HttpResponseMessage response)
         {
-            var links = new Dictionary<string, ISet<Uri>>();
+            var links = new Dictionary<string, IDictionary<Uri, string>>();
             var linkTemplates = new Dictionary<string, UriTemplate>();
 
             HandleHeaderLinks(response.Headers, links, linkTemplates);
@@ -148,29 +148,30 @@ namespace TypedRest
         /// <param name="headers">The headers to check for links.</param>
         /// <param name="links">A dictionary to add found links to.</param>
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, ISet<Uri>> links, IDictionary<string, UriTemplate> linkTemplates)
+        protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, IDictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
             foreach (string element in headers.Where(x => x.Key == "Link").SelectMany(x => x.Value))
             {
-                var parameters = element.Split(new[] {"; "}, StringSplitOptions.None);
-                string href = parameters[0].Substring(1, parameters[0].Length - 2);
+                var components = element.Split(new[] {"; "}, StringSplitOptions.None);
+                string href = components[0].Substring(1, components[0].Length - 2);
 
-                var relParameter = parameters.Select(x => x.Split('=')).FirstOrDefault(x => x[0] == "rel");
-                if (relParameter != null)
+                var parameters = components.Skip(1).Select(x => x.Split('=')).ToLookup(x => x[0], x => x[1]);
+
+                string rel = parameters["rel"].FirstOrDefault();
+                if (rel != null)
                 {
-                    var templatedParameter = parameters.Select(x => x.Split('=')).FirstOrDefault(x => x[0] == "templated");
-                    if (templatedParameter != null && templatedParameter[1] == "true")
-                    {
-                        string rel = relParameter[1];
+                    string templated = parameters["templated"].FirstOrDefault();
+                    if (templated == "true")
                         linkTemplates[rel] = new UriTemplate(href);
-                    }
                     else
                     {
-                        string rel = relParameter[1];
-                        ISet<Uri> linkSet;
-                        if (!links.TryGetValue(rel, out linkSet))
-                            links.Add(rel, linkSet = new HashSet<Uri>());
-                        linkSet.Add(new Uri(Uri, href));
+                        IDictionary<Uri, string> linksForRel;
+                        if (!links.TryGetValue(rel, out linksForRel))
+                            links.Add(rel, linksForRel = new Dictionary<Uri, string>());
+
+                        string title = parameters["title"].FirstOrDefault();
+
+                        linksForRel.Add(new Uri(Uri, href), title);
                     }
                 }
             }
@@ -182,7 +183,7 @@ namespace TypedRest
         /// <param name="jsonBody">The body to check for links.</param>
         /// <param name="links">A dictionary to add found links to.</param>
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        protected virtual void HandleBodyLinks(JToken jsonBody, IDictionary<string, ISet<Uri>> links, IDictionary<string, UriTemplate> linkTemplates)
+        protected virtual void HandleBodyLinks(JToken jsonBody, IDictionary<string, IDictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
             if (jsonBody.Type != JTokenType.Object) return;
             var linksNode = jsonBody["_links"] ?? jsonBody["links"];
@@ -192,19 +193,19 @@ namespace TypedRest
             {
                 string rel = linkNode.Name;
 
-                ISet<Uri> linkSet;
-                if (!links.TryGetValue(rel, out linkSet))
-                    links.Add(rel, linkSet = new HashSet<Uri>());
+                IDictionary<Uri, string> linksForRel;
+                if (!links.TryGetValue(rel, out linksForRel))
+                    links.Add(rel, linksForRel = new Dictionary<Uri, string>());
 
                 switch (linkNode.Value.Type)
                 {
                     case JTokenType.Array:
                         foreach (var subobj in linkNode.Value.OfType<JObject>())
-                            ParseLinkObject(rel, subobj, linkSet, linkTemplates);
+                            ParseLinkObject(rel, subobj, linksForRel, linkTemplates);
                         break;
 
                     case JTokenType.Object:
-                        ParseLinkObject(rel, (JObject)linkNode.Value, linkSet, linkTemplates);
+                        ParseLinkObject(rel, (JObject)linkNode.Value, linksForRel, linkTemplates);
                         break;
                 }
             }
@@ -215,9 +216,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="rel">The relation type of the link.</param>
         /// <param name="obj">The JSON object to parse for link information.</param>
-        /// <param name="linkSet">A set to add found links to.</param>
-        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        private void ParseLinkObject(string rel, JObject obj, ISet<Uri> linkSet, IDictionary<string, UriTemplate> linkTemplates)
+        /// <param name="linksForRel">A dictionary to add found links to. Maps hrefs to titles.</param>
+        /// <param name="linkTemplates">A dictionary to add found link templates to. Maps rels to templated hrefs.</param>
+        private void ParseLinkObject(string rel, JObject obj, IDictionary<Uri, string> linksForRel, IDictionary<string, UriTemplate> linkTemplates)
         {
             var href = obj["href"];
             if (href == null) return;
@@ -225,16 +226,27 @@ namespace TypedRest
             var templated = obj["templated"];
             if (templated != null && templated.Type == JTokenType.Boolean && templated.Value<bool>())
                 linkTemplates.Add(rel, new UriTemplate(href.ToString()));
-            else linkSet.Add(new Uri(Uri, href.ToString()));
+            else
+            {
+                var title = obj["title"];
+                linksForRel.Add(
+                    new Uri(Uri, href.ToString()),
+                    (title != null && title.Type == JTokenType.String) ? title.Value<string>() : null);
+            }
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, ISet<Uri>> _links = new Dictionary<string, ISet<Uri>>();
+        private IDictionary<string, IDictionary<Uri, string>> _links = new Dictionary<string, IDictionary<Uri, string>>();
 
         public IEnumerable<Uri> GetLinks(string rel)
         {
-            ISet<Uri> uris;
-            return _links.TryGetValue(rel, out uris) ? uris : Enumerable.Empty<Uri>();
+            return GetLinksWithTitles(rel).Keys;
+        }
+
+        public IDictionary<Uri, string> GetLinksWithTitles(string rel)
+        {
+            IDictionary<Uri, string> linksForRel;
+            return _links.TryGetValue(rel, out linksForRel) ? linksForRel : new Dictionary<Uri, string>();
         }
 
         public Uri Link(string rel)

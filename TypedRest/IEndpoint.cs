@@ -28,6 +28,14 @@ namespace TypedRest
         IEnumerable<Uri> GetLinks(string rel);
 
         /// <summary>
+        /// Retrieves all links (with titles) with a specific relation type cached from the last request.
+        /// </summary>
+        /// <param name="rel">The relation type of the links to look for.</param>
+        /// <returns>A map of hrefs (resolved relative to this endpoint's URI) to titles (may be <c>null</c>).</returns>
+        /// <exception cref="KeyNotFoundException">No link with the specified <paramref name="rel"/> could be found.</exception>
+        IDictionary<Uri, string> GetLinksWithTitles(string rel);
+
+        /// <summary>
         /// Retrieves a single link with a specific relation type.
         /// </summary>
         /// <param name="rel">The relation type of the link to look for.</param>

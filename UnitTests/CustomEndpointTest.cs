@@ -103,6 +103,50 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestGetLinksWithTitles()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<target1>; rel=child; title=Title"},
+                        {"Link", "<target2>; rel=child"}
+                    }
+                });
+
+            await _endpoint.GetAsync();
+
+            _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
+            {
+                {new Uri(_endpoint.Uri, "target1"), "Title"},
+                {new Uri(_endpoint.Uri, "target2"), null},
+            });
+        }
+
+        [Test, Ignore("Escaping in Link headers is not implemented yet.")]
+        public async Task TestGetLinksWithTitlesEscaping()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<target1>; rel=child; title=\"Title 1\""},
+                        {"Link", "<target2>; rel=child"}
+                    }
+                });
+
+            await _endpoint.GetAsync();
+
+            _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
+            {
+                {new Uri(_endpoint.Uri, "target1"), "Title 1"},
+                {new Uri(_endpoint.Uri, "target2"), null},
+            });
+        }
+
+        [Test]
         public async Task TestLinkTemplate()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -125,10 +169,11 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(JsonMime, "{\"links\": {"
-                                    + "  \"single\": {\"href\": \"a\"},"
-                                    + "  \"collection\": [{\"href\": \"b\"},{\"href\": \"c\"},true,{\"something\":false}],"
-                                    + "  \"template\": {\"href\": \"{id}\",\"templated\": true}"
-                                    + "}}");
+                                   + "  \"single\": {\"href\": \"a\"},"
+                                   +
+                                   "  \"collection\": [{\"href\": \"b\", \"title\": \"Title 1\"},{\"href\": \"c\"},true,{\"something\":false}],"
+                                   + "  \"template\": {\"href\": \"{id}\",\"templated\": true}"
+                                   + "}}");
 
             await _endpoint.GetAsync();
 
@@ -136,6 +181,11 @@ namespace TypedRest
             _endpoint.GetLinks("collection").Should().BeEquivalentTo(
                 new Uri(_endpoint.Uri, "b"),
                 new Uri(_endpoint.Uri, "c"));
+            _endpoint.GetLinksWithTitles("collection").Should().Equal(new Dictionary<Uri, string>
+            {
+                {new Uri(_endpoint.Uri, "b"), "Title 1"},
+                {new Uri(_endpoint.Uri, "c"), null},
+            });
             _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
         }
 
