@@ -7,5 +7,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © 1und1 Internet SE")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("0.14.0.0")]
+[assembly: AssemblyVersion("0.15.0.0")]
 [assembly: ComVisible(false)]
