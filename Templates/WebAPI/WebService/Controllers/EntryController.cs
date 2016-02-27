@@ -8,7 +8,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// <summary>
         /// Displays the name of the API and provides HTTP Link headers for further navigation.
         /// </summary>
-        [HttpGet, HttpHead, Route("")]
+        [HttpGet, Route("")]
         [LinkHeader("entities/", Rel = "entities")]
         public string Read()
         {

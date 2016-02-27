@@ -9,17 +9,21 @@ $ScriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 mkdir $TargetDir | Out-Null
 
 $templateDir = "$ScriptDir\$TemplateName"
-$sourceFiles = ls -Recurse $templateDir -Exclude ("build","packges",".vs","ReSharper.Caches") | Where-Object {$_.Extension -ne ".suo"}
-foreach ($x in $sourceFiles)
+foreach ($x in (ls -Recurse $templateDir))
 {
+    if (($x.Name -eq "ConnectionStrings.config") -or ((".suo",".user") -contains $x.Extension) -or `
+        $x.FullName.Contains("\build\") -or $x.FullName.Contains("\packages\") -or $x.FullName.Contains("\.vs\") -or $x.FullName.Contains("\_ReSharper.Caches\") -or $x.FullName.Contains("\obj\") -or $x.FullName.Contains("\bin\") )
+    { continue }
+
     $sourcePath = $x.FullName
-    $targetPath = $sourcePath.Replace($templateDir, $TargetDir).Replace("XProjectNamespaceX", $ProjectNamespace)
+    $targetPath = $sourcePath.Replace($templateDir, $TargetDir).Replace("XProjectNamespaceX", $ProjectNamespace).Replace(".nuspec.template", ".nuspec")
 
     if ($x.PSIsContainer) {
         # Directory
         mkdir $targetPath | Out-Null
     } else {
         # File
-        (Get-Content $sourcePath -Encoding UTF8).Replace("XProjectNameX", $ProjectName).Replace("XProjectNamespaceX", $ProjectNamespace) | Out-File $targetPath -Encoding UTF8
+        $encoding = @{$true="Ascii";$false="UTF8"}[$x.Extension -eq '.cmd']  
+        (Get-Content $sourcePath -Encoding $encoding).Replace("XProjectNameX", $ProjectName).Replace("XProjectNamespaceX", $ProjectNamespace) | Out-File $targetPath -Encoding $encoding
     }
 }

@@ -19,6 +19,7 @@ namespace XProjectNamespaceX.WebService
             config.ConfigureJson();
             config.EnableBasicAuth();
             config.EnableHttpOptions();
+            config.EnableHttpHead();
             config.EnableSwagger();
         }
     }

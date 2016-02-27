@@ -4,17 +4,26 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi.LinkHeader;
+using XProjectNamespaceX.BusinessLogic;
 using XProjectNamespaceX.Model;
 
 namespace XProjectNamespaceX.WebService.Controllers
 {
     [RoutePrefix("entities")]
+    [Authorize(Roles = "MyRole")]
     public class EntitiesController : ApiController
     {
+        private readonly IMyService _myService;
+
+        public EntitiesController(IMyService myService)
+        {
+            _myService = myService;
+        }
+
         /// <summary>
         /// Returns all <see cref="MyEntity"/>s.
         /// </summary>
-        [HttpGet, HttpHead, Route("")]
+        [HttpGet, Route("")]
         public virtual IEnumerable<MyEntity> ReadAll()
         {
             // TODO: Read
@@ -25,7 +34,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// Returns a specific <see cref="MyEntity"/>.
         /// </summary>
         /// <param name="id">The <see cref="MyEntity.Id"/> to look for.</param>
-        [HttpGet, HttpHead, Route("{id}")]
+        [HttpGet, Route("{id}")]
         public virtual async Task<MyEntity> Read(long id)
         {
             // TODO: Read

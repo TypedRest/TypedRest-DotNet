@@ -34,13 +34,13 @@ namespace XProjectNamespaceX.Client
             {
             }
         }
-    }
 
-    public class SubMockHttpMessageHandler : MockHttpMessageHandler
-    {
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        private class SubMockHttpMessageHandler : MockHttpMessageHandler
         {
-            return await base.SendAsync(request, cancellationToken);
+            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return await base.SendAsync(request, cancellationToken);
+            }
         }
     }
 }

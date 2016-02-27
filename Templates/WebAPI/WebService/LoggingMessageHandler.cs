@@ -23,7 +23,7 @@ namespace XProjectNamespaceX.WebService
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // NOTE: Must read body before calling base method because stream becomes read-once
-            string requestBody = (request.Content?.Headers.ContentType != null && request.Content.Headers.ContentType.MediaType.StartsWith("application/json"))
+            string requestBody = (request.Content != null && request.Content.Headers.ContentType != null && request.Content.Headers.ContentType.MediaType.StartsWith("application/json"))
                 ? await request.Content.ReadAsStringAsync()
                 : null;
 
