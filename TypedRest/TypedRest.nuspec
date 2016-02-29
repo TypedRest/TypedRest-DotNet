@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>TypedRest</id>
-		<version>$version$</version>
+		<version>$version$$VersionSuffix$</version>
 		<authors>Bastian Eicher</authors>
 		<copyright>1&amp;1 Internet SE</copyright>
 		<projectUrl>https://github.com/1and1/TypedRest-DotNet</projectUrl>

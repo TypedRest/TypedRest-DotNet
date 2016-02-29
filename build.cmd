@@ -1,6 +1,9 @@
 @echo off
 pushd "%~dp0"
 
+if "%1" == "" set BuildConfiguration=Release
+if not "%1" == "" set BuildConfiguration=%1
+
 ::Visual Studio 2015 build environment
 if not defined VS140COMNTOOLS (
   echo ERROR: No Visual Studio 2015 installation found. >&2
@@ -11,16 +14,16 @@ call "%VS140COMNTOOLS%vsvars32.bat"
 
 ::Compile Visual Studio solution
 nuget restore TypedRest.sln
-msbuild TypedRest.sln /nologo /t:Rebuild /p:Configuration=Release
+msbuild TypedRest.sln /nologo /t:Rebuild /p:Configuration=%BuildConfiguration%;VersionSuffix=""
 if errorlevel 1 pause
 
 ::Create NuGet packages
-mkdir build\Packages
-nuget pack TypedRest\TypedRest.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
+mkdir build\%BuildConfiguration%\Packages
+nuget pack TypedRest\TypedRest.csproj -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
 if errorlevel 1 pause
-nuget pack TypedRest.CommandLine\TypedRest.CommandLine.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
+nuget pack TypedRest.CommandLine\TypedRest.CommandLine.csproj -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
 if errorlevel 1 pause
-nuget pack TypedRest.Wpf\TypedRest.Wpf.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -OutputDirectory build\Packages
+nuget pack TypedRest.Wpf\TypedRest.Wpf.csproj -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
 if errorlevel 1 pause
 
 pushd templates

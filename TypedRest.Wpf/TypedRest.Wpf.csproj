@@ -17,23 +17,23 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\build\Debug\</OutputPath>
+    <OutputPath>..\build\Debug\Libs\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Debug\TypedRest.Wpf.xml</DocumentationFile>
+    <DocumentationFile>..\build\Debug\Libs\TypedRest.Wpf.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\build\Release\</OutputPath>
+    <OutputPath>..\build\Release\Libs\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Release\TypedRest.Wpf.xml</DocumentationFile>
+    <DocumentationFile>..\build\Release\Libs\TypedRest.Wpf.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -85,7 +85,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfo.Global.cs" />
+    <Compile Include="..\GlobalAssemblyInfo.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Events\BlobUploadEvent.cs" />
