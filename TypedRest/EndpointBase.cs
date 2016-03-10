@@ -150,7 +150,8 @@ namespace TypedRest
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
         protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, IDictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
-            foreach (string element in headers.Where(x => x.Key == "Link").SelectMany(x => x.Value))
+            foreach (string element in headers.Where(x => x.Key == "Link").SelectMany(x => x.Value)
+                .SelectMany(x => x.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)).Select(x => x.Trim()))
             {
                 var components = element.Split(new[] {"; "}, StringSplitOptions.None);
                 string href = components[0].Substring(1, components[0].Length - 2);

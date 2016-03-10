@@ -42,8 +42,7 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<a>; rel=target1"},
-                        {"Link", "<b>; rel=target2"}
+                        {"Link", "<a>; rel=target1, <b>; rel=target2"}
                     }
                 });
 
@@ -61,8 +60,7 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<a>; rel=target1"},
-                        {"Link", "<b>; rel=target2"}
+                        {"Link", "<a>; rel=target1, <b>; rel=target2"}
                     }
                 });
 
@@ -90,8 +88,8 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<target1>; rel=notify"},
-                        {"Link", "<target2>; rel=notify"}
+                        {"Link", "<target1>; rel=notify, <target2>; rel=notify"},
+                        {"Link", "<target3>; rel=notify"}
                     }
                 });
 
@@ -99,7 +97,8 @@ namespace TypedRest
 
             _endpoint.GetLinks("notify").Should().BeEquivalentTo(
                 new Uri(_endpoint.Uri, "target1"),
-                new Uri(_endpoint.Uri, "target2"));
+                new Uri(_endpoint.Uri, "target2"),
+                new Uri(_endpoint.Uri, "target3"));
         }
 
         [Test]
@@ -132,8 +131,7 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<target1>; rel=child; title=\"Title 1\""},
-                        {"Link", "<target2>; rel=child"}
+                        {"Link", "<target1>; rel=child; title=\"Title 1\", <target2>; rel=child"}
                     }
                 });
 
