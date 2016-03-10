@@ -337,5 +337,10 @@ namespace TypedRest
         /// </summary>
         protected virtual MediaTypeFormatter Serializer =>
             new JsonMediaTypeFormatter {SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}};
+
+        public override string ToString()
+        {
+            return GetType().Name + ": " + Uri;
+        }
     }
 }
