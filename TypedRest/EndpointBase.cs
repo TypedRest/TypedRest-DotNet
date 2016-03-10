@@ -256,6 +256,7 @@ namespace TypedRest
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                Exception error = null;
                 Task.Run(async () =>
                 {
                     try
@@ -264,9 +265,11 @@ namespace TypedRest
                     }
                     catch (Exception ex)
                     {
-                        throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", ex);
+                        error = ex;
                     }
                 }).Wait();
+                if (error != null)
+                    throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", error);
 
                 uri = GetLinks(rel).FirstOrDefault();
                 if (uri == null)
