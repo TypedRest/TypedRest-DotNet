@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SampleEntryEndpoint.cs" />
-    <Compile Include="ResourceCollection.cs" />
-    <Compile Include="ResourceElement.cs" />
-    <Compile Include="ResourceRevisionCollection.cs" />
-    <Compile Include="ResourceRevisionElement.cs" />
+    <Compile Include="ResourceCollectionEndpoint.cs" />
+    <Compile Include="ResourceEndpoint.cs" />
+    <Compile Include="ResourceRevisionCollectionEndpoint.cs" />
+    <Compile Include="ResourceRevisionEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

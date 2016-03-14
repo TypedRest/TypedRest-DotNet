@@ -4,22 +4,22 @@ using TypedRest.Wpf.ViewModels;
 
 namespace TypedRest.Samples.Client.Wpf.ViewModels
 {
-    public class ResourceCollectionViewModel : CollectionViewModelBase<Resource, ResourceCollection, ResourceElement>
+    public class ResourceCollectionViewModel : CollectionViewModelBase<Resource, ResourceCollectionEndpoint, ResourceEndpoint>
     {
-        public ResourceCollectionViewModel(ResourceCollection endpoint, IEventAggregator eventAggregator)
+        public ResourceCollectionViewModel(ResourceCollectionEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {
             DisplayName = "Resources";
         }
 
-        protected override IScreen BuildElementScreen(ResourceElement elementEndpoint)
+        protected override IScreen BuildElementScreen(ResourceEndpoint elementEndpoint)
         {
-            return new ResourceElementViewModel(elementEndpoint, EventAggregator);
+            return new ResourceViewModel(elementEndpoint, EventAggregator);
         }
 
         protected override IScreen BuildCreateElementScreen()
         {
-            return new CreateResourceElementViewModel(Endpoint, EventAggregator);
+            return new CreateResourceViewModel(Endpoint, EventAggregator);
         }
     }
 }

@@ -52,9 +52,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="ResourceCollectionCommand.cs" />
-    <Compile Include="ResourceElementCommand.cs" />
+    <Compile Include="ResourceCommand.cs" />
     <Compile Include="ResourceRevisionCollectionCommand.cs" />
-    <Compile Include="ResourceRevisionElementCommand.cs" />
+    <Compile Include="ResourceRevisionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

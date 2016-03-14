@@ -13,7 +13,7 @@ namespace TypedRest.Samples.Client
         {
         }
 
-        public ResourceCollection Resources => new ResourceCollection(this);
+        public ResourceCollectionEndpoint Resources => new ResourceCollectionEndpoint(this);
 
         public CollectionEndpoint<Target> Targets => new CollectionEndpoint<Target>(this, Link("targets"));
     }

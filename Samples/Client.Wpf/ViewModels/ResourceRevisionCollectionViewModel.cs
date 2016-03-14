@@ -4,22 +4,22 @@ using TypedRest.Wpf.ViewModels;
 
 namespace TypedRest.Samples.Client.Wpf.ViewModels
 {
-    public class ResourceRevisionCollectionViewModel : CollectionViewModelBase<ResourceRevision, ResourceRevisionCollection, ResourceRevisionElement>
+    public class ResourceRevisionCollectionViewModel : CollectionViewModelBase<ResourceRevision, ResourceRevisionCollectionEndpoint, ResourceRevisionEndpoint>
     {
-        public ResourceRevisionCollectionViewModel(ResourceRevisionCollection endpoint, IEventAggregator eventAggregator)
+        public ResourceRevisionCollectionViewModel(ResourceRevisionCollectionEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {
             DisplayName = "Revisions";
         }
 
-        protected override IScreen BuildElementScreen(ResourceRevisionElement elementEndpoint)
+        protected override IScreen BuildElementScreen(ResourceRevisionEndpoint elementEndpoint)
         {
-            return new ResourceRevisionElementViewModel(elementEndpoint, EventAggregator);
+            return new ResourceRevisionViewModel(elementEndpoint, EventAggregator);
         }
 
         protected override IScreen BuildCreateElementScreen()
         {
-            return new CreateResourceRevisionElementViewModel(Endpoint, EventAggregator);
+            return new CreateResourceRevisionViewModel(Endpoint, EventAggregator);
         }
     }
 }

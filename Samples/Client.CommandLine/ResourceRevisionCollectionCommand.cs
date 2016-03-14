@@ -8,9 +8,9 @@ using TypedRest.Samples.Model;
 
 namespace TypedRest.Samples.Client.CommandLine
 {
-    public class ResourceRevisionCollectionCommand : CollectionCommandBase<ResourceRevision, ResourceRevisionCollection, ResourceRevisionElement>
+    public class ResourceRevisionCollectionCommand : CollectionCommandBase<ResourceRevision, ResourceRevisionCollectionEndpoint, ResourceRevisionEndpoint>
     {
-        public ResourceRevisionCollectionCommand(ResourceRevisionCollection endpoint) : base(endpoint)
+        public ResourceRevisionCollectionCommand(ResourceRevisionCollectionEndpoint endpoint) : base(endpoint)
         {
         }
 
@@ -39,9 +39,9 @@ namespace TypedRest.Samples.Client.CommandLine
             }
         }
 
-        protected override IEndpointCommand GetElementCommand(ResourceRevisionElement element)
+        protected override IEndpointCommand GetElementCommand(ResourceRevisionEndpoint element)
         {
-            return new ResourceRevisionElementCommand(element);
+            return new ResourceRevisionCommand(element);
         }
     }
 }

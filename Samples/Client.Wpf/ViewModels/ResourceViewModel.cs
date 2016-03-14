@@ -4,11 +4,11 @@ using TypedRest.Wpf.ViewModels;
 
 namespace TypedRest.Samples.Client.Wpf.ViewModels
 {
-    public class ResourceElementViewModel : ElementViewModel<Resource>
+    public class ResourceViewModel : ElementViewModel<Resource>
     {
-        protected new readonly ResourceElement Endpoint;
+        protected new readonly ResourceEndpoint Endpoint;
 
-        public ResourceElementViewModel(ResourceElement endpoint, IEventAggregator eventAggregator)
+        public ResourceViewModel(ResourceEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {
             Endpoint = endpoint;

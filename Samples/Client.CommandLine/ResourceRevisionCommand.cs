@@ -3,11 +3,11 @@ using TypedRest.Samples.Model;
 
 namespace TypedRest.Samples.Client.CommandLine
 {
-    public class ResourceRevisionElementCommand : ElementCommand<ResourceRevision>
+    public class ResourceRevisionCommand : ElementCommand<ResourceRevision>
     {
-        protected new readonly ResourceRevisionElement Endpoint;
+        protected new readonly ResourceRevisionEndpoint Endpoint;
 
-        public ResourceRevisionElementCommand(ResourceRevisionElement endpoint) : base(endpoint)
+        public ResourceRevisionCommand(ResourceRevisionEndpoint endpoint) : base(endpoint)
         {
             Endpoint = endpoint;
         }

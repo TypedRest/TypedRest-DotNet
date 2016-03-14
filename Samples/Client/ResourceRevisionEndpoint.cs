@@ -6,9 +6,9 @@ namespace TypedRest.Samples.Client
     /// <summary>
     /// REST endpoint that represents a <see cref="ResourceRevision"/>.
     /// </summary>
-    public class ResourceRevisionElement : ElementEndpoint<ResourceRevision>
+    public class ResourceRevisionEndpoint : ElementEndpoint<ResourceRevision>
     {
-        public ResourceRevisionElement(ResourceRevisionCollection parent, Uri relativeUri)
+        public ResourceRevisionEndpoint(ResourceRevisionCollectionEndpoint parent, Uri relativeUri)
             : base(parent, relativeUri)
         {
         }

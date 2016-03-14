@@ -6,13 +6,13 @@ namespace TypedRest.Samples.Client
     /// <summary>
     /// REST endpoint that represents the set of <see cref="Resource"/>s.
     /// </summary>
-    public class ResourceCollection : CollectionEndpointBase<Resource, ResourceElement>
+    public class ResourceCollectionEndpoint : CollectionEndpointBase<Resource, ResourceEndpoint>
     {
-        public ResourceCollection(IEndpoint parent)
+        public ResourceCollectionEndpoint(IEndpoint parent)
             : base(parent, parent.Link("resources"))
         {
         }
 
-        public override ResourceElement this[Uri relativeUri] => new ResourceElement(this, relativeUri);
+        public override ResourceEndpoint this[Uri relativeUri] => new ResourceEndpoint(this, relativeUri);
     }
 }

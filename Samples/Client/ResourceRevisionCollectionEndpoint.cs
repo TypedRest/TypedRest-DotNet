@@ -6,14 +6,14 @@ namespace TypedRest.Samples.Client
     /// <summary>
     /// REST endpoint that represents the <see cref="ResourceRevision"/>s of a <see cref="Resource"/>.
     /// </summary>
-    public class ResourceRevisionCollection : CollectionEndpointBase<ResourceRevision, ResourceRevisionElement>
+    public class ResourceRevisionCollectionEndpoint : CollectionEndpointBase<ResourceRevision, ResourceRevisionEndpoint>
     {
-        public ResourceRevisionCollection(IEndpoint parent)
+        public ResourceRevisionCollectionEndpoint(IEndpoint parent)
             : base(parent, parent.Link("revisions"))
         {
         }
 
-        public override ResourceRevisionElement this[Uri relativeUri] => new ResourceRevisionElement(this, relativeUri);
+        public override ResourceRevisionEndpoint this[Uri relativeUri] => new ResourceRevisionEndpoint(this, relativeUri);
 
         /// <summary>
         /// Represents the latest <see cref="ResourceRevision"/> for the <see cref="Resource"/>.

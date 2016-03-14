@@ -3,15 +3,15 @@ using TypedRest.Samples.Model;
 
 namespace TypedRest.Samples.Client.CommandLine
 {
-    public class ResourceCollectionCommand : CollectionCommandBase<Resource, ResourceCollection, ResourceElement>
+    public class ResourceCollectionCommand : CollectionCommandBase<Resource, ResourceCollectionEndpoint, ResourceEndpoint>
     {
-        public ResourceCollectionCommand(ResourceCollection endpoint) : base(endpoint)
+        public ResourceCollectionCommand(ResourceCollectionEndpoint endpoint) : base(endpoint)
         {
         }
 
-        protected override IEndpointCommand GetElementCommand(ResourceElement element)
+        protected override IEndpointCommand GetElementCommand(ResourceEndpoint element)
         {
-            return new ResourceElementCommand(element);
+            return new ResourceCommand(element);
         }
     }
 }

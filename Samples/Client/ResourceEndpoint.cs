@@ -6,9 +6,9 @@ namespace TypedRest.Samples.Client
     /// <summary>
     /// REST endpoint that represents a <see cref="Resource"/>.
     /// </summary>
-    public class ResourceElement : ElementEndpoint<Resource>
+    public class ResourceEndpoint : ElementEndpoint<Resource>
     {
-        public ResourceElement(ResourceCollection parent, Uri relativeUri)
+        public ResourceEndpoint(ResourceCollectionEndpoint parent, Uri relativeUri)
             : base(parent, relativeUri)
         {
         }
@@ -16,7 +16,7 @@ namespace TypedRest.Samples.Client
         /// <summary>
         /// Represents the <see cref="ResourceRevision"/>s.
         /// </summary>
-        public ResourceRevisionCollection Revisions => new ResourceRevisionCollection(this);
+        public ResourceRevisionCollectionEndpoint Revisions => new ResourceRevisionCollectionEndpoint(this);
 
         /// <summary>
         /// Exposes all <see cref="LogEvent"/>s that relate to this resource.
