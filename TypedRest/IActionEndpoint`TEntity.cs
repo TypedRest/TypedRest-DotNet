@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single triggerable action.
+    /// REST endpoint that represents a single triggerable action with <typeparamref name="TEntity"/> as input.
     /// </summary>
-    public interface ITriggerEndpoint : IEndpoint
+    public interface IActionEndpoint<in TEntity> : IEndpoint
     {
         /// <summary>
         /// Queries the server about capabilities of the endpoint without performing any action.
@@ -34,11 +34,12 @@ namespace TypedRest
         /// <summary>
         /// Triggers the action.
         /// </summary>
+        /// <param name="entity">The <typeparamref name="TEntity"/> to post.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task TriggerAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task TriggerAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

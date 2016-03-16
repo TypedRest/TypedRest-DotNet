@@ -21,6 +21,6 @@ namespace TypedRest.Samples.Client
         /// <summary>
         /// Promotes the <see cref="ResourceRevision"/> to the next stage.
         /// </summary>
-        public ITriggerEndpoint Promote => new TriggerEndpoint(this, Link("promote"));
+        public IActionEndpoint Promote => new ActionEndpoint(this, Link("promote"));
     }
 }

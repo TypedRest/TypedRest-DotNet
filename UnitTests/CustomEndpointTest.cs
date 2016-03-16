@@ -190,8 +190,8 @@ namespace TypedRest
         [Test]
         public void TestEnsureTrailingSlashOnParentUri()
         {
-            new TriggerEndpoint(_endpoint, "subresource").Uri.Should().Be(new Uri("http://localhost/subresource"));
-            new TriggerEndpoint(_endpoint, "subresource", ensureTrailingSlashOnParentUri: true).Uri.Should().Be(new Uri("http://localhost/endpoint/subresource"));
+            new ActionEndpoint(_endpoint, "subresource").Uri.Should().Be(new Uri("http://localhost/subresource"));
+            new ActionEndpoint(_endpoint, "subresource", ensureTrailingSlashOnParentUri: true).Uri.Should().Be(new Uri("http://localhost/endpoint/subresource"));
         }
 
         private class CustomEndpoint : EndpointBase
