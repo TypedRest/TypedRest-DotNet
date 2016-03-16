@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,6 +41,31 @@ namespace TypedRest
         {
             return HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri),
                 cancellationToken));
+        }
+
+        public Task TriggerAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        {
+            return HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+        }
+
+        public async Task<TResult> TriggerAsync<TEntity, TResult>(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        {
+            HttpResponseMessage response =
+                await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+
+            return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
+                ? await response.Content.ReadAsAsync<TResult>(cancellationToken)
+                : default(TResult);
+        }
+
+        public async Task<TResult> TriggerAsync<TResult>(CancellationToken cancellationToken = new CancellationToken())
+        {
+            HttpResponseMessage response =
+                await HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
+
+            return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
+                ? await response.Content.ReadAsAsync<TResult>(cancellationToken)
+                : default(TResult);
         }
     }
 }
