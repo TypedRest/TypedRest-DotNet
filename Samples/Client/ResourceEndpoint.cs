@@ -21,6 +21,6 @@ namespace TypedRest.Samples.Client
         /// <summary>
         /// Exposes all <see cref="LogEvent"/>s that relate to this resource.
         /// </summary>
-        public StreamEndpoint<LogEvent> Events => new StreamEndpoint<LogEvent>(this, Link("events"));
+        public IStreamEndpoint<LogEvent> Events => new StreamEndpoint<LogEvent>(this, Link("events"));
     }
 }

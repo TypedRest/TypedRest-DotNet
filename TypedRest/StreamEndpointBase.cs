@@ -5,7 +5,7 @@ using System.Reactive.Linq;
 namespace TypedRest
 {
     /// <summary>
-    /// Base class for building REST endpoints that represents a stream of <typeparamref name="TEntity"/>s. Uses the HTTP Range header.
+    /// Base class for building REST endpoints that represents a stream of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s. Uses the HTTP Range header.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>

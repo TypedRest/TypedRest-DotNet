@@ -4,7 +4,7 @@
     /// Command operating on a <see cref="BulkCollectionEndpoint{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <see cref="BulkCollectionEndpoint{TEntity}"/> represents.</typeparam>
-    public class BulkCollectionCommand<TEntity> : BulkCollectionCommandBase<TEntity, BulkCollectionEndpoint<TEntity>, ElementEndpoint<TEntity>>
+    public class BulkCollectionCommand<TEntity> : BulkCollectionCommandBase<TEntity, BulkCollectionEndpoint<TEntity>, IElementEndpoint<TEntity>>
     {
         /// <summary>
         /// Creates a new REST Bulk collection command.
@@ -14,7 +14,7 @@
         {
         }
 
-        protected override IEndpointCommand GetElementCommand(ElementEndpoint<TEntity> elementEndpoint)
+        protected override IEndpointCommand GetElementCommand(IElementEndpoint<TEntity> elementEndpoint)
         {
             return new ElementCommand<TEntity>(elementEndpoint);
         }

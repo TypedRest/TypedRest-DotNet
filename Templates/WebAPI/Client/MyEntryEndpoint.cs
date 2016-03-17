@@ -11,7 +11,7 @@ namespace XProjectNamespaceX.Client
         {
         }
 
-        public CollectionEndpoint<MyEntity> Entities
+        public ICollectionEndpoint<MyEntity> Entities
         {
             get { return new CollectionEndpoint<MyEntity>(this, "entities"); }
         }

@@ -3,10 +3,10 @@
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s. Uses the HTTP Range header.
+    /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s as <see cref="IElementEndpoint{TEntity}"/>s. Uses the HTTP Range header.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class StreamEndpoint<TEntity> : StreamEndpointBase<TEntity, ElementEndpoint<TEntity>>
+    public class StreamEndpoint<TEntity> : StreamEndpointBase<TEntity, IElementEndpoint<TEntity>>, IStreamEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new stream endpoint.
@@ -26,6 +26,6 @@ namespace TypedRest
         {
         }
 
-        public override ElementEndpoint<TEntity> this[Uri relativeUri] => new ElementEndpoint<TEntity>(this, relativeUri);
+        public override IElementEndpoint<TEntity> this[Uri relativeUri] => new ElementEndpoint<TEntity>(this, relativeUri);
     }
 }

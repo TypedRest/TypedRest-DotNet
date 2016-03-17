@@ -12,7 +12,7 @@ namespace TypedRest
     [TestFixture]
     public class StreamEndpointTest : EndpointTestBase
     {
-        private StreamEndpoint<MockEntity> _endpoint;
+        private IStreamEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

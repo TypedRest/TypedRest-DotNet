@@ -3,29 +3,29 @@
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// View model operating on a <see cref="CollectionEndpoint{TEntity}"/>.
+    /// View model operating on a <see cref="ICollectionEndpoint{TEntity}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the <see cref="CollectionEndpoint{TEntity}"/> represents.</typeparam>
-    public class CollectionViewModel<TEntity> : CollectionViewModelBase<TEntity, CollectionEndpoint<TEntity>, ElementEndpoint<TEntity>>
+    /// <typeparam name="TEntity">The type of entity the <see cref="ICollectionEndpoint{TEntity}"/> represents.</typeparam>
+    public class CollectionViewModel<TEntity> : CollectionViewModelBase<TEntity, ICollectionEndpoint<TEntity>, IElementEndpoint<TEntity>>
     {
         /// <summary>
         /// Creates a new REST collection view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
-        public CollectionViewModel(CollectionEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
+        public CollectionViewModel(ICollectionEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {
         }
 
-        protected override IScreen BuildElementScreen(ElementEndpoint<TEntity> elementEndpoint)
+        protected override IScreen BuildElementScreen(IElementEndpoint<TEntity> elementEndpoint)
         {
             return new ElementViewModel<TEntity>(elementEndpoint, EventAggregator);
         }
 
         protected override IScreen BuildCreateElementScreen()
         {
-            return new CreateElementViewModel<TEntity, ElementEndpoint<TEntity>>(Endpoint, EventAggregator);
+            return new CreateElementViewModel<TEntity>(Endpoint, EventAggregator);
         }
     }
 }

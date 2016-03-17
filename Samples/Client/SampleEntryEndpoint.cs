@@ -15,6 +15,6 @@ namespace TypedRest.Samples.Client
 
         public ResourceCollectionEndpoint Resources => new ResourceCollectionEndpoint(this);
 
-        public CollectionEndpoint<Target> Targets => new CollectionEndpoint<Target>(this, Link("targets"));
+        public ICollectionEndpoint<Target> Targets => new CollectionEndpoint<Target>(this, Link("targets"));
     }
 }

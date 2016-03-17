@@ -11,6 +11,7 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
+    /// <remarks>Use the more constrained <see cref="ICollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface ICollectionEndpoint<TEntity, TElementEndpoint> : IEndpoint
@@ -63,5 +64,13 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken));
+    }
+
+    /// <summary>
+    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <see cref="IElementEndpoint{TEntity}"/>s.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    public interface ICollectionEndpoint<TEntity> : ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>
+    {
     }
 }

@@ -3,10 +3,10 @@ using System;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <see cref="ElementEndpoint{TEntity}"/>s with bulk create and replace support.
+    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <see cref="IElementEndpoint{TEntity}"/>s with bulk create and replace support.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class BulkCollectionEndpoint<TEntity> : BulkCollectionEndpointBase<TEntity, ElementEndpoint<TEntity>>
+    public class BulkCollectionEndpoint<TEntity> : BulkCollectionEndpointBase<TEntity, IElementEndpoint<TEntity>>, IBulkCollectionEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new bulk collection endpoint.
@@ -26,6 +26,6 @@ namespace TypedRest
         {
         }
 
-        public override ElementEndpoint<TEntity> this[Uri relativeUri] => new ElementEndpoint<TEntity>(this, relativeUri);
+        public override IElementEndpoint<TEntity> this[Uri relativeUri] => new ElementEndpoint<TEntity>(this, relativeUri);
     }
 }

@@ -3,8 +3,9 @@
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s.
+    /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
+    /// <remarks>Use the more constrained <see cref="IStreamEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface IStreamEndpoint<TEntity, TElementEndpoint> : IPagedCollectionEndpoint<TEntity, TElementEndpoint>
@@ -15,5 +16,14 @@ namespace TypedRest
         /// </summary>
         /// <param name="startIndex">The index of the first element to return in the stream. Use negative values to start counting from the end of the stream.</param>
         IObservable<TEntity> GetStream(long startIndex = 0);
+    }
+
+    /// <summary>
+    /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s as <see cref="IElementEndpoint{TEntity}"/>s.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    public interface IStreamEndpoint<TEntity> : IStreamEndpoint<TEntity, IElementEndpoint<TEntity>>,
+        IPagedCollectionEndpoint<TEntity>
+    {
     }
 }

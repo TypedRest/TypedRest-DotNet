@@ -11,6 +11,7 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s with bulk create and replace support.
     /// </summary>
+    /// <remarks>Use the more constrained <see cref="IBulkCollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface IBulkCollectionEndpoint<TEntity, TElementEndpoint> : ICollectionEndpoint<TEntity, TElementEndpoint>
@@ -47,5 +48,14 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task CreateAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken));
+    }
+
+    /// <summary>
+    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <see cref="IElementEndpoint{TEntity}"/>s with bulk create and replace support.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    public interface IBulkCollectionEndpoint<TEntity> : IBulkCollectionEndpoint<TEntity, IElementEndpoint<TEntity>>,
+        ICollectionEndpoint<TEntity>
+    {
     }
 }

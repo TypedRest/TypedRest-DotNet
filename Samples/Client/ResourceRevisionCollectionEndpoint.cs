@@ -18,6 +18,6 @@ namespace TypedRest.Samples.Client
         /// <summary>
         /// Represents the latest <see cref="ResourceRevision"/> for the <see cref="Resource"/>.
         /// </summary>
-        public ElementEndpoint<ResourceRevision> Latest => new ElementEndpoint<ResourceRevision>(this, Link("latest"));
+        public IElementEndpoint<ResourceRevision> Latest => new ElementEndpoint<ResourceRevision>(this, Link("latest"));
     }
 }

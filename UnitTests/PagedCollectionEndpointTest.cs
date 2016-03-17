@@ -13,7 +13,7 @@ namespace TypedRest
     [TestFixture]
     public class PagedCollectionEndpointTest : EndpointTestBase
     {
-        private PagedCollectionEndpoint<MockEntity> _endpoint;
+        private IPagedCollectionEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

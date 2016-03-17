@@ -10,7 +10,7 @@ namespace TypedRest
     [TestFixture]
     public class TriggerEndpointTest : EndpointTestBase
     {
-        private TriggerEndpoint _endpoint;
+        private ITriggerEndpoint _endpoint;
 
         [SetUp]
         public override void SetUp()

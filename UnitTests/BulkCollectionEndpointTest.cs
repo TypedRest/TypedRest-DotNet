@@ -9,7 +9,7 @@ namespace TypedRest
     [TestFixture]
     public class BulkCollectionEndpointTest : EndpointTestBase
     {
-        private BulkCollectionEndpoint<MockEntity> _endpoint;
+        private IBulkCollectionEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

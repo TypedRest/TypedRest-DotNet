@@ -6,7 +6,7 @@ namespace TypedRest
     /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <see cref="ElementEndpoint{TEntity}"/>s with pagination support using the HTTP Range header.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class PagedCollectionEndpoint<TEntity> : PagedCollectionEndpointBase<TEntity, ElementEndpoint<TEntity>>
+    public class PagedCollectionEndpoint<TEntity> : PagedCollectionEndpointBase<TEntity, IElementEndpoint<TEntity>>, IPagedCollectionEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new paged collection endpoint.
@@ -26,6 +26,6 @@ namespace TypedRest
         {
         }
 
-        public override ElementEndpoint<TEntity> this[Uri relativeUri] => new ElementEndpoint<TEntity>(this, relativeUri);
+        public override IElementEndpoint<TEntity> this[Uri relativeUri] => new ElementEndpoint<TEntity>(this, relativeUri);
     }
 }

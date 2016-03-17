@@ -41,12 +41,10 @@ You can then use the classes `EntryEndpoint`, `CollectionEndpoint`, `ElementEndp
 ```cs
 class SampleEntryEndpoint : EntryEndpoint
 {
-  public CollectionEndpoint<Package> Packages { get; }
-
   public SampleEntryEndpoint(Uri uri) : base(uri)
-  {
-    Packages = new CollectionEndpoint<Package>(this, relativeUri: "packages");
-  }
+  {}
+
+  public ICollectionEndpoint<Package> Packages => new CollectionEndpoint<Package>(this, relativeUri: "packages");
 }
 ```
 

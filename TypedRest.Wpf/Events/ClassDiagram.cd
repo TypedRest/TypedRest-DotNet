@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.Events.EndpointEvent&lt;TEndpoint&gt;">
-    <Position X="4.75" Y="0.5" Width="2.25" />
+    <Position X="5" Y="0.5" Width="2.25" />
     <Members>
       <Method Name="EndpointEvent" Hidden="true" />
       <Property Name="IEndpointEvent.Endpoint" Hidden="true" />
@@ -25,13 +25,6 @@
       <FileName>Events\EndpointEvent.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TypedRest.Wpf.Events.TriggerEvent&lt;TEndpoint&gt;" Collapsed="true">
-    <Position X="6" Y="2.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Events\TriggerEvent.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.Events.ElementUpdatedEvent&lt;TEntity&gt;" Collapsed="true">
     <Position X="3.25" Y="4" Width="2.5" />
@@ -47,8 +40,22 @@
       <FileName>Events\ElementDeletedEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="TypedRest.Wpf.Events.BlobUploadEvent" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\BlobUploadEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.Events.TriggerEvent" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\TriggerEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="TypedRest.Wpf.Events.IEndpointEvent">
-    <Position X="7.25" Y="0.5" Width="1.5" />
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\IEndpointEvent.cs</FileName>

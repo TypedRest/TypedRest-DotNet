@@ -12,7 +12,7 @@ namespace TypedRest
     [TestFixture]
     public class CollectionEndpointTest : EndpointTestBase
     {
-        private CollectionEndpoint<MockEntity> _endpoint;
+        private ICollectionEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()

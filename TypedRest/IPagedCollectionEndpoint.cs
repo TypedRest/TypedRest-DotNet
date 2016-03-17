@@ -11,9 +11,11 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s with pagination support.
     /// </summary>
+    /// <remarks>Use the more constrained <see cref="IPagedCollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public interface IPagedCollectionEndpoint<TEntity, TElementEndpoint> : ICollectionEndpoint<TEntity, TElementEndpoint>
+    public interface IPagedCollectionEndpoint<TEntity, TElementEndpoint> :
+        ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
@@ -28,5 +30,15 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
             CancellationToken cancellationToken = default(CancellationToken));
+    }
+
+    /// <summary>
+    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <see cref="IElementEndpoint{TEntity}"/>s with pagination support.
+    /// Use the more constrained <see cref="IPagedCollectionEndpoint{TEntity}"/> when possible.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    public interface IPagedCollectionEndpoint<TEntity> : IPagedCollectionEndpoint<TEntity, IElementEndpoint<TEntity>>,
+        ICollectionEndpoint<TEntity>
+    {
     }
 }
