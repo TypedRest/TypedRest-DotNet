@@ -109,6 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FunctionEndpointTEntityTResultTest.cs" />
     <Compile Include="FunctionEndpointTResultTest.cs" />
     <Compile Include="MockEntity.cs" />
     <Compile Include="CollectionEndpointTest.cs" />

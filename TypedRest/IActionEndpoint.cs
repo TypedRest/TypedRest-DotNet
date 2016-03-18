@@ -40,38 +40,5 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task TriggerAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Triggers the action.
-        /// </summary>
-        /// <param name="entity">The <typeparamref name="TEntity"/> to post.</param>
-        /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
-        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
-        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task TriggerAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
-        
-        /// <summary>
-        /// Triggers the action.
-        /// </summary>
-        /// <param name="entity">The <typeparamref name="TEntity"/> to post.</param>
-        /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
-        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
-        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TResult> TriggerAsync<TEntity, TResult>(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Triggers the action.
-        /// </summary>
-        /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
-        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
-        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TResult> TriggerAsync<TResult>(CancellationToken cancellationToken = default(CancellationToken));
     }
 }
