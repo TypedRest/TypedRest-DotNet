@@ -102,13 +102,15 @@
     <Compile Include="ViewModels\CreateElementViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModelBase.cs" />
     <Compile Include="ViewModels\EntryViewModelBase.cs" />
+    <Compile Include="ViewModels\FunctionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModelBase.cs" />
     <Compile Include="ViewModels\StreamViewModel.cs" />
     <Compile Include="ViewModels\StreamViewModelBase.cs" />
-    <Compile Include="ViewModels\TriggerViewModel.cs" />
+    <Compile Include="ViewModels\ActionViewModel.cs" />
     <Compile Include="ViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\EndpointViewModelBase.cs" />
+    <Compile Include="ViewModels\TriggerViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Events\ClassDiagram.cd" />
@@ -123,6 +125,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ActionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BlobView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,15 +141,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FunctionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PagedCollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StreamView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TriggerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

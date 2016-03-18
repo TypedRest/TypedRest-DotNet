@@ -37,7 +37,7 @@ class Package
 
 Install the [TypedRest](https://www.nuget.org/packages/TypedRest/) NuGet package in your REST client project.
 
-You can then use the classes `EntryEndpoint`, `CollectionEndpoint`, `ElementEndpoint`, `TriggerEndpoint`, `PaginationEndpoint`, `StreamEndpoint` and `BlobEndpoint` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
+You can then use the classes `EntryEndpoint`, `CollectionEndpoint`, `ElementEndpoint`, `ActionEndpoint`, `PaginationEndpoint`, `StreamEndpoint` and `BlobEndpoint` to build a local representation of a remote REST service. Based on our usecase sample this could look like this:
 ```cs
 class SampleEntryEndpoint : EntryEndpoint
 {
@@ -61,14 +61,14 @@ await server.Packages[1].DeleteAsync();
 
 ## Build command-line clients
 
-Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/) NuGet package in your command-line project. You can then use the classes ``CollectionCommand`, `ElementCommand`, `TriggerCommand`, `PaginationCommand`, `StreamCommand` and `BlobCommand` to build command objects that parse arguments and operate on `CollectionEndpoint`s, `ElementEndpoint`s, `TriggerEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
+Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/) NuGet package in your command-line project. You can then use the classes ``CollectionCommand`, `ElementCommand`, `ActionCommand`, `PaginationCommand`, `StreamCommand` and `BlobCommand` to build command objects that parse arguments and operate on `CollectionEndpoint`s, `ElementEndpoint`s, `ActionEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
 
 
 ## Build GUI clients
 
 Install the [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/) NuGet package to build GUIs with WPF and [Caliburn.Micro](http://caliburnmicro.com/). Derive from `Bootstrapper<TRootView>` and add this class to your `<Application.Resources>` in `App.xaml`.
 
-You can then use the classes `CollectionViewModel`, `ElementViewModel`, `TriggerViewModel`, `PaginationViewModel`, `StreamViewModel` and `BlobViewModel` to operate on `CollectionEndpoint`s, `ElementEndpoint`s, `TriggerEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
+You can then use the classes `CollectionViewModel`, `ElementViewModel`, `ActionViewModel`, `PaginationViewModel`, `StreamViewModel` and `BlobViewModel` to operate on `CollectionEndpoint`s, `ElementEndpoint`s, `ActionEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
 
 
 ## Sample projects

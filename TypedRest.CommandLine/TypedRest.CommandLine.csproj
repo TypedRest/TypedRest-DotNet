@@ -64,6 +64,7 @@
     <Compile Include="EndpointCommand.cs" />
     <Compile Include="EntryCommand.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="FunctionCommand.cs" />
     <Compile Include="IEndpointCommand.cs" />
     <Compile Include="CollectionCommand.cs" />
     <Compile Include="CollectionCommandBase.cs" />
@@ -71,7 +72,7 @@
     <Compile Include="PagedCollectionCommandBase.cs" />
     <Compile Include="StreamCommand.cs" />
     <Compile Include="StreamCommandBase.cs" />
-    <Compile Include="TriggerCommand.cs" />
+    <Compile Include="ActionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

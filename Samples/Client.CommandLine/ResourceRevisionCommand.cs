@@ -19,7 +19,7 @@ namespace TypedRest.Samples.Client.CommandLine
                 case "blob":
                     return new BlobCommand(Endpoint.Blob);
                 case "promote":
-                    return new TriggerCommand(Endpoint.Promote);
+                    return new ActionCommand(Endpoint.Promote);
                 default:
                     return base.GetSubCommand(name);
             }

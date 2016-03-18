@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single triggerable action with <typeparamref name="TEntity"/> as input.
+    /// An RPC-like trigger endpoint.
     /// </summary>
-    public interface IActionEndpoint<in TEntity> : IEndpoint
+    public interface ITriggerEndpoint : IEndpoint
     {
         /// <summary>
         /// Queries the server about capabilities of the endpoint without performing any action.
@@ -25,21 +25,10 @@ namespace TypedRest
         Task ProbeAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="TriggerAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that the trigger method is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
         bool? TriggerAllowed { get; }
-
-        /// <summary>
-        /// Triggers the action.
-        /// </summary>
-        /// <param name="entity">The <typeparamref name="TEntity"/> to post.</param>
-        /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
-        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
-        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task TriggerAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
