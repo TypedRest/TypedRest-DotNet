@@ -95,6 +95,7 @@
     <Compile Include="BulkCollectionEndpointTest.cs" />
     <Compile Include="CustomEndpointTest.cs" />
     <Compile Include="ElementEndpointTest.cs" />
+    <Compile Include="EndpointBaseTest.cs" />
     <Compile Include="EndpointTestBase.cs" />
   </ItemGroup>
   <ItemGroup>

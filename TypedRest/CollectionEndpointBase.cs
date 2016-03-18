@@ -26,8 +26,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected CollectionEndpointBase(IEndpoint parent, Uri relativeUri)
-            : base(parent, relativeUri.EnsureTrailingSlash())
+        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
+        protected CollectionEndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
+            : base(parent, relativeUri.EnsureTrailingSlash(), ensureTrailingSlashOnParentUri)
         {
             var keyProperty = typeof(TEntity).GetPublicProperties().FirstOrDefault(x => x.HasAttribute<KeyAttribute>());
             if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
@@ -38,9 +39,10 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected CollectionEndpointBase(IEndpoint parent, string relativeUri)
+        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
+        protected CollectionEndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
             // Use this instead of base to ensure trailing slash gets appended for REST collection URIs
-            : this(parent, new Uri(relativeUri, UriKind.Relative))
+            : this(parent, new Uri(relativeUri, UriKind.Relative), ensureTrailingSlashOnParentUri)
         {
         }
 

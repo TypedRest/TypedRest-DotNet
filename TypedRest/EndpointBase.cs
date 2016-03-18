@@ -40,8 +40,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected EndpointBase(IEndpoint parent, Uri relativeUri)
-            : this(parent.HttpClient, new Uri(parent.Uri, relativeUri))
+        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
+        protected EndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
+            : this(parent.HttpClient, new Uri(ensureTrailingSlashOnParentUri ? parent.Uri.EnsureTrailingSlash() : parent.Uri, relativeUri))
         {
         }
 
@@ -50,8 +51,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected EndpointBase(IEndpoint parent, string relativeUri)
-            : this(parent, new Uri(relativeUri, UriKind.Relative))
+        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
+        protected EndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
+            : this(parent, new Uri(relativeUri, UriKind.Relative), ensureTrailingSlashOnParentUri)
         {
         }
 

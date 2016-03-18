@@ -17,8 +17,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected StreamEndpointBase(IEndpoint parent, Uri relativeUri)
-            : base(parent, relativeUri)
+        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
+        protected StreamEndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
+            : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
         }
 
@@ -27,8 +28,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected StreamEndpointBase(IEndpoint parent, string relativeUri)
-            : base(parent, relativeUri)
+        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
+        protected StreamEndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
+            : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
         }
 
