@@ -34,7 +34,7 @@ namespace TypedRest
         public async Task TestTrigger()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-                .Respond(HttpStatusCode.NoContent);
+                .Respond(HttpStatusCode.Accepted);
 
             await _endpoint.TriggerAsync();
         }

@@ -95,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Compile Include="ActionEndpointTEntityTest.cs" />
+    <Compile Include="ActionEndpointWithInputTest.cs" />
     <Compile Include="BlobEndpointTest.cs" />
     <Compile Include="BulkCollectionEndpointTest.cs" />
     <Compile Include="CustomEndpointTest.cs" />
@@ -109,8 +109,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionEndpointTEntityTResultTest.cs" />
-    <Compile Include="FunctionEndpointTResultTest.cs" />
+    <Compile Include="FunctionEndpointWithInputTest.cs" />
+    <Compile Include="FunctionEndpointTest.cs" />
     <Compile Include="MockEntity.cs" />
     <Compile Include="CollectionEndpointTest.cs" />
   </ItemGroup>
