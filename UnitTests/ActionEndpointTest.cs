@@ -8,15 +8,15 @@ using RichardSzalay.MockHttp;
 namespace TypedRest
 {
     [TestFixture]
-    public class TriggerEndpointTest : EndpointTestBase
+    public class ActionEndpointTest : EndpointTestBase
     {
-        private ITriggerEndpoint _endpoint;
+        private IActionEndpoint _endpoint;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
-            _endpoint = new TriggerEndpoint(EntryEndpoint, "endpoint");
+            _endpoint = new ActionEndpoint(EntryEndpoint, "endpoint");
         }
 
         [Test]
