@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="LogEvent.cs" />
     <Compile Include="NamedEntity.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ResourceRevision.cs" />
     <Compile Include="Target.cs" />
