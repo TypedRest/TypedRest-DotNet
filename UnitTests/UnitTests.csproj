@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="ActionEndpointTEntityTest.cs" />
     <Compile Include="BlobEndpointTest.cs" />
     <Compile Include="BulkCollectionEndpointTest.cs" />
     <Compile Include="CustomEndpointTest.cs" />
@@ -108,13 +109,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FunctionEndpointTResultTest.cs" />
     <Compile Include="MockEntity.cs" />
     <Compile Include="CollectionEndpointTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PagedCollectionEndpointTest.cs" />
     <Compile Include="StreamEndpointTest.cs" />
-    <Compile Include="TriggerEndpointTest.cs" />
+    <Compile Include="ActionEndpointTest.cs" />
     <Compile Include="UriUtilsTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

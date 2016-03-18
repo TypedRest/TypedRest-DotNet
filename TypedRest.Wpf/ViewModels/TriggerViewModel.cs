@@ -7,10 +7,10 @@ using TypedRest.Wpf.Events;
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// View model operating on an <see cref="ITriggerEndpoint"/>.
+    /// View model operating on an <see cref="IActionEndpoint"/>.
     /// </summary>
     public class TriggerViewModel<TEndpoint> : EndpointViewModelBase<TEndpoint>
-        where TEndpoint : ITriggerEndpoint
+        where TEndpoint : IActionEndpoint
     {
         /// <summary>
         /// Creates a new REST trigger view model.
@@ -58,9 +58,9 @@ namespace TypedRest.Wpf.ViewModels
     }
 
     /// <summary>
-    /// View model operating on an <see cref="ITriggerEndpoint"/>.
+    /// View model operating on an <see cref="IActionEndpoint"/>.
     /// </summary>
-    public class TriggerViewModel : TriggerViewModel<ITriggerEndpoint>
+    public class TriggerViewModel : TriggerViewModel<IActionEndpoint>
     {
         /// <summary>
         /// Creates a new REST trigger view model.
@@ -68,7 +68,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         /// <param name="caption">A caption for the triggerable action.</param>
-        public TriggerViewModel(ITriggerEndpoint endpoint, IEventAggregator eventAggregator, string caption)
+        public TriggerViewModel(IActionEndpoint endpoint, IEventAggregator eventAggregator, string caption)
             : base(endpoint, eventAggregator, caption)
         {
         }

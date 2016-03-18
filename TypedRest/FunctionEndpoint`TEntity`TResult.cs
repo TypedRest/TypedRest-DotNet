@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -8,28 +7,28 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single triggerable action.
+    /// REST endpoint that represents a single triggerable function which returns <typeparamref name="TResult"/> and accepts <typeparamref name="TEntity"/> as input.
     /// </summary>
-    public class TriggerEndpoint : EndpointBase, ITriggerEndpoint
+    public class FunctionEndpoint<TEntity, TResult> : EndpointBase, IFunctionEndpoint<TEntity, TResult>
     {
         /// <summary>
-        /// Creates a new trigger endpoint.
+        /// Creates a new REST endpoint with a relative URI.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        public TriggerEndpoint(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
+        public FunctionEndpoint(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
         }
 
         /// <summary>
-        /// Creates a new trigger endpoint.
+        /// Creates a new REST endpoint with a relative URI.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        public TriggerEndpoint(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
+        public FunctionEndpoint(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
         }
@@ -41,31 +40,11 @@ namespace TypedRest
 
         public bool? TriggerAllowed => IsVerbAllowed(HttpMethod.Post.Method);
 
-        public Task TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            return HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri),
-                cancellationToken));
-        }
-
-        public Task TriggerAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
-        {
-            return HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
-        }
-
-        public async Task<TResult> TriggerAsync<TEntity, TResult>(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<TResult> TriggerAsync(TEntity entity,
+            CancellationToken cancellationToken = new CancellationToken())
         {
             HttpResponseMessage response =
                 await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
-
-            return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
-                ? await response.Content.ReadAsAsync<TResult>(cancellationToken)
-                : default(TResult);
-        }
-
-        public async Task<TResult> TriggerAsync<TResult>(CancellationToken cancellationToken = new CancellationToken())
-        {
-            HttpResponseMessage response =
-                await HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                 ? await response.Content.ReadAsAsync<TResult>(cancellationToken)

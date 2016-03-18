@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" />
+    <Compile Include="ActionEndpoint`TEntity.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BlobEndpoint.cs" />
     <Compile Include="BulkCollectionEndpoint.cs" />
@@ -82,15 +83,20 @@
     <Compile Include="EndpointExtensions.cs" />
     <Compile Include="EntryEndpoint.cs" />
     <Compile Include="ExceptionExtensions.cs" />
+    <Compile Include="FunctionEndpoint`TEntity`TResult.cs" />
+    <Compile Include="FunctionEndpoint`TResult.cs" />
     <Compile Include="HttpClientExtensions.cs" />
+    <Compile Include="IActionEndpoint`TEntity.cs" />
     <Compile Include="IBlobEndpoint.cs" />
     <Compile Include="IBulkCollectionEndpoint.cs" />
     <Compile Include="ICollectionEndpoint.cs" />
     <Compile Include="IElementEndpoint.cs" />
     <Compile Include="IEndpoint.cs" />
+    <Compile Include="IFunctionEndpoint`TEntity`TResult.cs" />
+    <Compile Include="IFunctionEndpoint`TResult.cs" />
     <Compile Include="IPagedCollectionEndpoint.cs" />
     <Compile Include="IStreamEndpoint.cs" />
-    <Compile Include="ITriggerEndpoint.cs" />
+    <Compile Include="IActionEndpoint.cs" />
     <Compile Include="PagedCollectionEndpoint.cs" />
     <Compile Include="PagedCollectionEndpointBase.cs" />
     <Compile Include="PartialResponse.cs" />
@@ -98,7 +104,7 @@
     <Compile Include="StreamEndpoint.cs" />
     <Compile Include="StreamEndpointBase.cs" />
     <Compile Include="TaskExtensions.cs" />
-    <Compile Include="TriggerEndpoint.cs" />
+    <Compile Include="ActionEndpoint.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
