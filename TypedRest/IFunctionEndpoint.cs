@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single RPC-like function which returns <typeparamref name="TResult"/>.
+    /// REST endpoint that represents an RPC-like function which returns <typeparamref name="TResult"/> as output.
     /// </summary>
-    /// <typeparam name="TResult">The type of entity the endpoint returns as a result.</typeparam>
+    /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
     public interface IFunctionEndpoint<TResult> : ITriggerEndpoint
     {
         /// <summary>
         /// Triggers the function.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>The result returned by the server.</returns>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
@@ -25,17 +26,18 @@ namespace TypedRest
     }
 
     /// <summary>
-    /// REST endpoint that represents a single RPC-like function which returns <typeparamref name="TResult"/> and accepts <typeparamref name="TEntity"/> as input.
+    /// REST endpoint that represents an RPC-like function which takes <typeparamref name="TEntity"/> as input and returns <typeparamref name="TResult"/> as output.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
-    /// <typeparam name="TResult">The type of entity the endpoint returns as a result.</typeparam>
+    /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
     public interface IFunctionEndpoint<in TEntity, TResult> : ITriggerEndpoint
     {
         /// <summary>
         /// Triggers the function.
         /// </summary>
-        /// <param name="entity">The <typeparamref name="TEntity"/> to post.</param>
+        /// <param name="entity">The <typeparamref name="TEntity"/> to post as input.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>The result returned by the server.</returns>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>

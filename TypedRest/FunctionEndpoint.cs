@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single RPC-like function which returns <typeparamref name="TResult"/>.
+    /// REST endpoint that represents an RPC-like function which returns <typeparamref name="TResult"/> as output.
     /// </summary>
+    /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
     public class FunctionEndpoint<TResult> : TriggerEndpointBase, IFunctionEndpoint<TResult>
     {
         /// <summary>
@@ -47,8 +48,10 @@ namespace TypedRest
     }
 
     /// <summary>
-    /// REST endpoint that represents a single RPC-like function which returns <typeparamref name="TResult"/> and accepts <typeparamref name="TEntity"/> as input.
+    /// REST endpoint that represents an RPC-like function which takes <typeparamref name="TEntity"/> as input and returns <typeparamref name="TResult"/> as output.
     /// </summary>
+    /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
+    /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
     public class FunctionEndpoint<TEntity, TResult> : TriggerEndpointBase, IFunctionEndpoint<TEntity, TResult>
     {
         /// <summary>

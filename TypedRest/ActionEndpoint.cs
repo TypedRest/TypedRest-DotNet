@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single RPC-like action.
+    /// REST endpoint that represents an RPC-like action.
     /// </summary>
     public class ActionEndpoint : TriggerEndpointBase, IActionEndpoint
     {
@@ -40,8 +40,9 @@ namespace TypedRest
     }
 
     /// <summary>
-    /// REST endpoint that represents a single RPC-like action with <typeparamref name="TEntity"/> as input.
+    /// REST endpoint that represents an RPC-like action which takes <typeparamref name="TEntity"/> as input.
     /// </summary>
+    /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
     public class ActionEndpoint<TEntity> : TriggerEndpointBase, IActionEndpoint<TEntity>
     {
         /// <summary>
