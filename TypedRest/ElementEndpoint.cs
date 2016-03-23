@@ -61,14 +61,18 @@ namespace TypedRest
 
         public bool? UpdateAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
-        public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             var request = new HttpRequestMessage(HttpMethod.Put, Uri)
             {
                 Content = new ObjectContent<TEntity>(entity, Serializer)
             };
             if (_etag != null) request.Headers.IfMatch.Add(_etag);
-            await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
+            var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
+
+            return response.Content == null
+                ? default(TEntity)
+                : await response.Content.ReadAsAsync<TEntity>(cancellationToken);
         }
 
         public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);

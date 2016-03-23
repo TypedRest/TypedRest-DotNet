@@ -51,7 +51,18 @@ namespace TypedRest
         }
 
         [Test]
-        public async Task TestUpdate()
+        public async Task TestUpdateResult()
+        {
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .Respond(JsonMime, "{\"Id\":5,\"Name\":\"testXXX\"}");
+
+            var result = await _endpoint.UpdateAsync(new MockEntity(5, "test"));
+            result.Should().Be(new MockEntity(5, "testXXX"));
+        }
+
+        [Test]
+        public async Task TestUpdateNoResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"Id\":5,\"Name\":\"test\"}")

@@ -34,7 +34,8 @@ namespace TypedRest.CommandLine
             {
                 case "update":
                     var updatedEntity = InputEntity(args.Skip(1).ToList());
-                    await Endpoint.UpdateAsync(updatedEntity, cancellationToken);
+                    var result = await Endpoint.UpdateAsync(updatedEntity, cancellationToken);
+                    if (result != null) OutputEntity(result);
                     break;
 
                 case "delete":
