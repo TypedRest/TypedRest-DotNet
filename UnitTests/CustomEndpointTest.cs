@@ -210,5 +210,24 @@ namespace TypedRest
                 return base.IsVerbAllowed(verb);
             }
         }
+
+        [Test]
+        public async Task TestErrorHandling()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.Conflict));
+
+            bool thrown = false;
+            try
+            {
+                await _endpoint.GetAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                ex.Message.Should().Be("http://localhost/endpoint responded with 409 Conflict");
+                thrown = true;
+            }
+            thrown.Should().BeTrue(because: $"{nameof(InvalidOperationException)} should be thrown");
+        }
     }
 }

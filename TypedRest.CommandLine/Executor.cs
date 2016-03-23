@@ -78,7 +78,7 @@ namespace TypedRest.CommandLine
                 PrintError(ex.GetFullMessage());
                 return 6;
             }
-            catch (JsonSerializationException ex)
+            catch (JsonException ex)
             {
                 PrintError(ex.GetFullMessage());
                 return 7;
