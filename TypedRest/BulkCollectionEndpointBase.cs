@@ -43,10 +43,16 @@ namespace TypedRest
             return HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
         }
 
+        /// <summary>
+        /// A relative URI that gets appended to <see cref="IEndpoint.Uri"/> for <see cref="CreateAsync"/> calls.
+        /// </summary>
+        public Uri BulkCreateSuffix { get; set; } = new Uri("bulk", UriKind.Relative);
+
         public virtual Task CreateAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return HandleResponseAsync(HttpClient.PostAsync(Uri, entities, Serializer, cancellationToken));
+            var bulkUri = (BulkCreateSuffix == null) ? Uri : new Uri(Uri, BulkCreateSuffix);
+            return HandleResponseAsync(HttpClient.PostAsync(bulkUri, entities, Serializer, cancellationToken));
         }
     }
 }

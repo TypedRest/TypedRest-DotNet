@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace TypedRest
         public override void SetUp()
         {
             base.SetUp();
-            _endpoint = new BulkCollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new BulkCollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint") {BulkCreateSuffix = new Uri("my-bulk", UriKind.Relative) };
         }
 
         [Test]
@@ -31,7 +32,7 @@ namespace TypedRest
         [Test]
         public async Task TestCreate()
         {
-            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint/")
+            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint/my-bulk")
                 .WithContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]")
                 .Respond(new HttpResponseMessage(HttpStatusCode.Accepted));
 
