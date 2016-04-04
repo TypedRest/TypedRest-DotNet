@@ -153,18 +153,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AppSettings.dist.config">
+    <Content Include="AppSettings.dist.config">
       <DependentUpon>AppSettings.config</DependentUpon>
-    </None>
-    <None Include="BasicAuth.dist.config">
+    </Content>
+    <Content Include="BasicAuth.dist.config">
       <DependentUpon>BasicAuth.config</DependentUpon>
-    </None>
-    <None Include="ConnectionStrings.dist.config">
+    </Content>
+    <Content Include="ConnectionStrings.dist.config">
       <DependentUpon>ConnectionStrings.config</DependentUpon>
-    </None>
-    <None Include="NLog.dist.config">
+    </Content>
+    <Content Include="NLog.dist.config">
       <DependentUpon>NLog.config</DependentUpon>
-    </None>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -217,10 +217,16 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(ProjectDir)\AppSettings.config" copy "$(ProjectDir)\AppSettings.dist.config" "$(ProjectDir)\AppSettings.config"
-if not exist "$(ProjectDir)\BasicAuth.config" copy "$(ProjectDir)\BasicAuth.dist.config" "$(ProjectDir)\BasicAuth.config"
-if not exist "$(ProjectDir)\ConnectionStrings.config" copy "$(ProjectDir)\ConnectionStrings.dist.config" "$(ProjectDir)\ConnectionStrings.config"
-if not exist "$(ProjectDir)\NLog.config" copy "$(ProjectDir)\NLog.dist.config" "$(ProjectDir)\NLog.config"</PreBuildEvent>
+    <PreBuildEvent>pushd "$(ProjectDir)"
+
+rem Init missing configs from dist defaults as a convenience for developers
+if not exist AppSettings.config copy AppSettings.dist.config AppSettings.config
+if not exist BasicAuth.config copy BasicAuth.dist.config BasicAuth.config
+if not exist ConnectionStrings.config copy ConnectionStrings.dist.config ConnectionStrings.config
+if not exist NLog.config copy NLog.dist.config NLog.config
+ver > NUL
+
+popd</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
