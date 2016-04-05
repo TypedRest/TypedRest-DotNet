@@ -32,7 +32,7 @@ namespace XProjectNamespaceX.WebService
             bool safeMethod = (request.Method == HttpMethod.Get || request.Method == HttpMethod.Head ||
                                request.Method == HttpMethod.Options || request.Method == HttpMethod.Trace);
             _logger.Log(
-                level: safeMethod ? LogLevel.Debug : LogLevel.Info,
+                level: safeMethod ? LogLevel.Debug : (response.IsSuccessStatusCode ? LogLevel.Info : LogLevel.Warn),
                 messageFunc: () =>
                 {
                     var builder = new StringBuilder();
