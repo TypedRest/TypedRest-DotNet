@@ -6,7 +6,7 @@ namespace XProjectNamespaceX.BusinessLogic
     {
         public string MySetting { get; private set; }
 
-        // NOTE: Must be internal to prevent Unity from considering this constructor as a candidate for dependency injection
+        // NOTE: Internal to hide from dependency injection
         internal MyServiceConfiguration(string mySetting)
         {
             MySetting = mySetting;
