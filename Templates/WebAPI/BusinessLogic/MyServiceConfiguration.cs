@@ -2,19 +2,32 @@
 
 namespace XProjectNamespaceX.BusinessLogic
 {
+    /// <summary>
+    /// Configuration for <see cref="MyService"/>.
+    /// </summary>
     public class MyServiceConfiguration
     {
+        /// <summary>
+        /// A setting.
+        /// </summary>
         public string MySetting { get; private set; }
 
-        // NOTE: Internal to hide from dependency injection
-        internal MyServiceConfiguration(string mySetting)
+        /// <summary>
+        /// Creates a custom configuration.
+        /// </summary>
+        /// <param name="mySetting">A setting.</param>
+        public MyServiceConfiguration(string mySetting)
         {
             MySetting = mySetting;
         }
 
-        public MyServiceConfiguration()
-            : this(ConfigurationManager.AppSettings["MyServiceMySetting"])
+        /// <summary>
+        /// Loads configuration from <see cref="ConfigurationManager.AppSettings"/>.
+        /// </summary>
+        public static MyServiceConfiguration FromAppSettings()
         {
+            return new MyServiceConfiguration(
+                mySetting: ConfigurationManager.AppSettings["MyServiceMySetting"]);
         }
     }
 }

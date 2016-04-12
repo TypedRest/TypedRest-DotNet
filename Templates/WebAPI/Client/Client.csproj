@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Client.nuspec.template" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

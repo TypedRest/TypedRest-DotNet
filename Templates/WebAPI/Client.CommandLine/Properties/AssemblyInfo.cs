@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("XProjectNamespaceX.Client.CommandLine")]
+[assembly: AssemblyTitle("XProjectNamespaceX Command-line client")]
 [assembly: AssemblyDescription("Command-line client for XProjectNameX")]

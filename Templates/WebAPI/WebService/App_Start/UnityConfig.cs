@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security;
 using Microsoft.Practices.Unity;
+using XProjectNamespaceX.BusinessLogic;
 
 namespace XProjectNamespaceX.WebService
 {
@@ -14,6 +16,7 @@ namespace XProjectNamespaceX.WebService
         {
             return new UnityContainer()
                 .RegisterByConvention()
+                .RegisterConfig()
                 .RegisterSingletons();
         }
 
@@ -23,6 +26,15 @@ namespace XProjectNamespaceX.WebService
         private static IUnityContainer RegisterByConvention(this IUnityContainer container)
         {
             return container.RegisterTypes(FromAssembliesInSearchPath(), WithMappings.FromMatchingInterface, WithName.Default, _ => Scope.Session);
+        }
+
+        /// <summary>
+        /// Loads configuration from <see cref="ConfigurationManager.AppSettings"/>.
+        /// </summary>
+        private static IUnityContainer RegisterConfig(this IUnityContainer container)
+        {
+            return container
+                .RegisterInstance(MyServiceConfiguration.FromAppSettings());
         }
 
         private static IUnityContainer RegisterSingletons(this IUnityContainer container)
