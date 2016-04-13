@@ -34,7 +34,8 @@ namespace TypedRest.CommandLine
             {
                 var newEntity = InputEntity(args.Skip(1).ToList());
                 var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
-                Console.WriteLine(newEndpoint.Uri);
+                if (newEndpoint != null)
+                    await GetElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
             }
             else
                 await base.ExecuteAsync(args, cancellationToken);
