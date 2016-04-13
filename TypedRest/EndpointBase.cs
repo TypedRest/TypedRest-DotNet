@@ -92,7 +92,7 @@ namespace TypedRest
             {
                 body = await response.Content.ReadAsStringAsync().NoContext();
 
-                if (response.Content.Headers.ContentType.MediaType == "application/json")
+                if (response.Content.Headers.ContentType?.MediaType == "application/json")
                 {
                     var messageNode = JToken.Parse(body)["message"];
                     if (messageNode != null) message = messageNode.ToString();

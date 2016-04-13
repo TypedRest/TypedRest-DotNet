@@ -229,5 +229,24 @@ namespace TypedRest
             }
             thrown.Should().BeTrue(because: $"{nameof(InvalidOperationException)} should be thrown");
         }
+
+        [Test]
+        public async Task TestErrorHandlingNoContentType()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
+
+            bool thrown = false;
+            try
+            {
+                await _endpoint.GetAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                ex.Message.Should().Be("http://localhost/endpoint responded with 409 Conflict");
+                thrown = true;
+            }
+            thrown.Should().BeTrue(because: $"{nameof(InvalidOperationException)} should be thrown");
+        }
     }
 }
