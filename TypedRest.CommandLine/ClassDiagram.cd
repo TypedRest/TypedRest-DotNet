@@ -37,7 +37,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="6.5" Y="6.5" Width="2.75" />
+    <Position X="10.75" Y="6.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>StreamCommand.cs</FileName>
@@ -51,35 +51,35 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.PagedCollectionCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="6.5" Y="5.25" Width="2.75" />
+    <Position X="10.75" Y="5.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>PagedCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.PagedCollectionCommandBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="1.75" Y="5.25" Width="4.5" />
+    <Position X="6" Y="5.25" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAEA=</HashCode>
       <FileName>PagedCollectionCommandBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.StreamCommandBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="1.75" Y="6.5" Width="4.5" />
+    <Position X="6" Y="6.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAEA=</HashCode>
       <FileName>StreamCommandBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.BulkCollectionCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="13.75" Y="5.25" Width="2.75" />
+    <Position X="18" Y="5.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>BulkCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.BulkCollectionCommandBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="9.75" Y="5.25" Width="3.75" />
+    <Position X="14" Y="5.25" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>BulkCollectionCommandBase.cs</FileName>
@@ -120,6 +120,21 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAgIAAA=</HashCode>
       <FileName>FunctionCommand.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.CommandLine.PollingCommand&lt;TEntity&gt;" Collapsed="true">
+    <Position X="3.25" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAABAAAAAIAAA=</HashCode>
+      <FileName>PollingCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.CommandLine.StreamPrinter&lt;TEntity&gt;" Collapsed="true">
+    <Position X="3.25" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAACACAAAIAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>StreamPrinter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="TypedRest.CommandLine.IEndpointCommand" Collapsed="true">
     <Position X="3.75" Y="0.5" Width="2.5" />

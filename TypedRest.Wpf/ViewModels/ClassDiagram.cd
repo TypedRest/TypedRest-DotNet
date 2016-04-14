@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TypedRest.Wpf.ViewModels.BlobViewModel" Collapsed="true">
-    <Position X="20" Y="2.25" Width="1.75" />
+    <Position X="22" Y="2.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAgAAAAAAAAIAAAAAAAAABA=</HashCode>
       <FileName>ViewModels\BlobViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.CollectionViewModel&lt;TEntity&gt;" Collapsed="true">
-    <Position X="15.25" Y="2.25" Width="2.5" />
+    <Position X="17.25" Y="2.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>ViewModels\CollectionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.CollectionViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="10.5" Y="2.25" Width="4.5" />
+    <Position X="12.5" Y="2.25" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AACAAABAAAAAAAAAABAQAQCAAAAAAFIAAAAAAAAAAgA=</HashCode>
       <FileName>ViewModels\CollectionViewModelBase.cs</FileName>
@@ -23,35 +23,35 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.CreateElementViewModel&lt;TEntity, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="0.75" Y="3.5" Width="3.75" />
+    <Position X="0.5" Y="3.5" Width="3.75" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CreateElementViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.StreamViewModel&lt;TEntity&gt;" Collapsed="true">
-    <Position X="20.25" Y="3.5" Width="2.25" />
+    <Position X="22.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>ViewModels\StreamViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.PagedCollectionViewModel&lt;TEntity&gt;" Collapsed="true">
-    <Position X="12.75" Y="3.5" Width="2.75" />
+    <Position X="14.75" Y="3.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>ViewModels\PagedCollectionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.PagedCollectionViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="8" Y="3.5" Width="4.5" />
+    <Position X="10" Y="3.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\PagedCollectionViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.StreamViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="16" Y="3.5" Width="4" />
+    <Position X="18" Y="3.5" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\StreamViewModelBase.cs</FileName>
@@ -65,7 +65,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.EndpointViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
-    <Position X="13" Y="0.5" Width="2.5" />
+    <Position X="13.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAACAIAAgAFAAAAAgAAAAAAMACAAAAAECAAQ=</HashCode>
       <FileName>ViewModels\EndpointViewModelBase.cs</FileName>
@@ -88,31 +88,38 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.CreateElementViewModel&lt;TEntity&gt;" Collapsed="true">
-    <Position X="4.75" Y="3.5" Width="2.75" />
+    <Position X="4.5" Y="3.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CreateElementViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.ActionViewModel&lt;TEndpoint&gt;" Collapsed="true">
-    <Position X="22.75" Y="3.5" Width="2.5" />
+    <Position X="24.75" Y="3.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\ActionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.FunctionViewModel&lt;TEndpoint, TResult&gt;" Collapsed="true">
-    <Position X="25.5" Y="3.5" Width="3" />
+    <Position X="27.5" Y="3.5" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\FunctionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.TriggerViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
-    <Position X="24.25" Y="2.25" Width="2.5" />
+    <Position X="26.25" Y="2.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAABAAABAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\TriggerViewModelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TypedRest.Wpf.ViewModels.PollingViewModel&lt;TEntity&gt;" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAABAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PollingViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

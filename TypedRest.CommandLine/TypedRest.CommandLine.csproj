@@ -70,9 +70,11 @@
     <Compile Include="CollectionCommandBase.cs" />
     <Compile Include="PagedCollectionCommand.cs" />
     <Compile Include="PagedCollectionCommandBase.cs" />
+    <Compile Include="PollingCommand.cs" />
     <Compile Include="StreamCommand.cs" />
     <Compile Include="StreamCommandBase.cs" />
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="StreamPrinter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

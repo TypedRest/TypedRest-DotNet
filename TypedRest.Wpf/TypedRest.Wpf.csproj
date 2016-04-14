@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\FunctionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModel.cs" />
     <Compile Include="ViewModels\PagedCollectionViewModelBase.cs" />
+    <Compile Include="ViewModels\PollingViewModel.cs" />
     <Compile Include="ViewModels\StreamViewModel.cs" />
     <Compile Include="ViewModels\StreamViewModelBase.cs" />
     <Compile Include="ViewModels\ActionViewModel.cs" />

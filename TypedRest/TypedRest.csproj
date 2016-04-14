@@ -91,12 +91,14 @@
     <Compile Include="IEndpoint.cs" />
     <Compile Include="IFunctionEndpoint.cs" />
     <Compile Include="IPagedCollectionEndpoint.cs" />
+    <Compile Include="IPollingEndpoint.cs" />
     <Compile Include="IStreamEndpoint.cs" />
     <Compile Include="IActionEndpoint.cs" />
     <Compile Include="ITriggerEndpoint.cs" />
     <Compile Include="PagedCollectionEndpoint.cs" />
     <Compile Include="PagedCollectionEndpointBase.cs" />
     <Compile Include="PartialResponse.cs" />
+    <Compile Include="PollingEndpoint.cs" />
     <Compile Include="PropertyExtensions.cs" />
     <Compile Include="StreamEndpoint.cs" />
     <Compile Include="StreamEndpointBase.cs" />

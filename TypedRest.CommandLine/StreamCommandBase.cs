@@ -64,36 +64,8 @@ namespace TypedRest.CommandLine
         protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var printer = new StreamPrinter();
+            var printer = new StreamPrinter<TEntity>();
             await printer.PrintAsync(observable, cancellationToken);
-        }
-
-        private class StreamPrinter : IObserver<TEntity>
-        {
-            private readonly TaskCompletionSource<bool> _quitEvent = new TaskCompletionSource<bool>();
-
-            public async Task PrintAsync(IObservable<TEntity> observable, CancellationToken cancellationToken)
-            {
-                using (cancellationToken.Register(() => _quitEvent.SetResult(true)))
-                using (observable.Subscribe(this))
-                    await _quitEvent.Task;
-            }
-
-            public void OnNext(TEntity value)
-            {
-                Console.WriteLine(value.ToString());
-            }
-
-            public void OnError(Exception error)
-            {
-                Console.Error.WriteLine(error.Message);
-                _quitEvent.SetResult(true);
-            }
-
-            public void OnCompleted()
-            {
-                _quitEvent.SetResult(true);
-            }
         }
     }
 }
