@@ -12,7 +12,7 @@ namespace XProjectNamespaceX.WebService
         {
             config.MapHttpAttributeRoutes();
 
-            config.MessageHandlers.Add(new LoggingMessageHandler(LogManager.GetLogger("RequestLogger")));
+            config.MessageHandlers.Add(new LoggingHandler());
 
             config.DependencyResolver = new UnityDependencyResolver(UnityConfig.InitContainer());
 

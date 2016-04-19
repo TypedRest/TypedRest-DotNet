@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 
 namespace XProjectNamespaceX.BusinessLogic
@@ -58,6 +59,8 @@ namespace XProjectNamespaceX.BusinessLogic
         [TearDown]
         public override void TearDown()
         {
+            (Target as IDisposable)?.Dispose();
+
             base.TearDown();
         }
     }

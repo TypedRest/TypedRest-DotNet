@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 
 namespace XProjectNamespaceX.BusinessLogic
@@ -29,6 +30,17 @@ namespace XProjectNamespaceX.BusinessLogic
         [TearDown]
         public virtual void TearDown()
         {
+            // Prevent Mock verify failures from hiding underlying test failures
+            try
+            {
+                if (TestContext.CurrentContext.Result.State != TestState.Success)
+                    return;
+            }
+            catch (NullReferenceException)
+            {
+                // Bug in NUnit prevents some test contexts from being detected
+            }
+
             MockRepository.VerifyAll();
         }
     }

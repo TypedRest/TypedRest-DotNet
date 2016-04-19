@@ -8,22 +8,17 @@ using NLog;
 namespace XProjectNamespaceX.WebService
 {
     /// <summary>
-    /// Logs HTTP requests.
+    /// Logs HTTP requests to a log file.
     /// </summary>
-    public class LoggingMessageHandler : DelegatingHandler
+    public class LoggingHandler : DelegatingHandler
     {
-        private readonly ILogger _logger;
-
-        public LoggingMessageHandler(ILogger logger)
-        {
-            _logger = logger;
-        }
+        private readonly ILogger _logger = LogManager.GetLogger("ApiRequest");
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // NOTE: Must read body before calling base method because stream becomes read-once
-            string requestBody = (request.Content != null && request.Content.Headers.ContentType != null && request.Content.Headers.ContentType.MediaType.StartsWith("application/json"))
+            string requestBody = (request.Content?.Headers.ContentType != null && request.Content.Headers.ContentType.MediaType.StartsWith("application/json"))
                 ? await request.Content.ReadAsStringAsync()
                 : null;
 
@@ -32,7 +27,9 @@ namespace XProjectNamespaceX.WebService
             bool safeMethod = (request.Method == HttpMethod.Get || request.Method == HttpMethod.Head ||
                                request.Method == HttpMethod.Options || request.Method == HttpMethod.Trace);
             _logger.Log(
-                level: safeMethod ? LogLevel.Debug : (response.IsSuccessStatusCode ? LogLevel.Info : LogLevel.Warn),
+                level: response.IsSuccessStatusCode
+                    ? (safeMethod ? LogLevel.Debug : LogLevel.Info)
+                    : LogLevel.Warn,
                 messageFunc: () =>
                 {
                     var builder = new StringBuilder();
