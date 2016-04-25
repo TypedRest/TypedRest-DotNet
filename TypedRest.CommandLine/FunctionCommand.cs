@@ -28,11 +28,11 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Outputs a <typeparamref name="TResult"/> to the user, e.g. via JSON on the command-line.
+        /// Outputs a <typeparamref name="TResult"/> to the user via the command-line.
         /// </summary>
         protected virtual void OutputEntity(TResult entity)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(entity));
+            Console.WriteLine(entity.ToString());
         }
     }
 
@@ -66,11 +66,11 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Outputs a <typeparamref name="TResult"/> to the user, e.g. via JSON on the command-line.
+        /// Outputs a <typeparamref name="TResult"/> to the user via the command-line.
         /// </summary>
         protected virtual void OutputEntity(TResult entity)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(entity));
+            Console.WriteLine(entity.ToString());
         }
     }
 }

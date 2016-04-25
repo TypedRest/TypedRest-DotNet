@@ -23,12 +23,18 @@ namespace TypedRest.CommandLine
                 await _quitEvent.Task;
         }
 
-        public void OnNext(TEntity value)
+        /// <summary>
+        /// Outputs a <typeparamref name="TEntity"/> to the user via the command-line.
+        /// </summary>
+        public virtual void OnNext(TEntity value)
         {
             Console.WriteLine(value.ToString());
         }
 
-        public void OnError(Exception error)
+        /// <summary>
+        /// Reprots an <paramref name="error"/> to the user via the command-line.
+        /// </summary>
+        public virtual void OnError(Exception error)
         {
             Console.Error.WriteLine(error.Message);
             _quitEvent.SetResult(true);

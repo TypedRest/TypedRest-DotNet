@@ -57,11 +57,11 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Outputs a <typeparamref name="TEntity"/> to the user, e.g. via JSON on the command-line.
+        /// Outputs a <typeparamref name="TEntity"/> to the user via the command-line.
         /// </summary>
         protected virtual void OutputEntity(TEntity entity)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(entity));
+            Console.WriteLine(entity.ToString());
         }
     }
 }
