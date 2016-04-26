@@ -63,6 +63,8 @@ namespace TypedRest
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
             var request = new HttpRequestMessage(HttpMethod.Put, Uri)
             {
                 Content = new ObjectContent<TEntity>(entity, Serializer)

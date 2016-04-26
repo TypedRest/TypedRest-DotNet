@@ -24,6 +24,8 @@ namespace TypedRest.CommandLine
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         protected EndpointCommand(TEndpoint endpoint)
         {
+            if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
+
             Endpoint = endpoint;
         }
 

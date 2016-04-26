@@ -59,6 +59,8 @@ namespace TypedRest
         {
             get
             {
+                if (entity == null) throw new ArgumentNullException(nameof(entity));
+
                 string id = GetCollectionKey(entity);
                 var template = LinkTemplate(ChildTemplateRel);
 
@@ -91,6 +93,8 @@ namespace TypedRest
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
             return (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.Accepted) && (response.Headers.Location != null)

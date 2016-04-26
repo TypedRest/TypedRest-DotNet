@@ -40,6 +40,8 @@ namespace TypedRest
 
         public Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
         {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+
             return HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
         }
 
@@ -51,6 +53,8 @@ namespace TypedRest
         public virtual Task CreateAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+
             var bulkUri = (BulkCreateSuffix == null) ? Uri : new Uri(Uri, BulkCreateSuffix);
             return HandleResponseAsync(HttpClient.PostAsync(bulkUri, entities, Serializer, cancellationToken));
         }

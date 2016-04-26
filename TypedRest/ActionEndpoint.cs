@@ -69,6 +69,8 @@ namespace TypedRest
 
         public Task TriggerAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
         {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
             return HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
         }
     }
