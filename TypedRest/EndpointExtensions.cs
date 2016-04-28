@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace TypedRest
 {
@@ -25,7 +24,7 @@ namespace TypedRest
             if (template == null)
                 throw new KeyNotFoundException($"No template with rel={rel} provided by endpoint {endpoint.Uri}.");
 
-            return template.BindByName(endpoint.Uri, new NameValueCollection {{variableName, value.ToString()}});
+            return new Uri(endpoint.Uri, template.Resolve(new Dictionary<string, object> {{variableName, value}}));
         }
     }
 }

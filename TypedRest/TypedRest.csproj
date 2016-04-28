@@ -66,7 +66,6 @@
       <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" />
@@ -106,6 +105,21 @@
     <Compile Include="ActionEndpoint.cs" />
     <Compile Include="TriggerEndpointBase.cs" />
     <Compile Include="UriExtensions.cs" />
+    <Compile Include="UriTemplates\CharSpec.cs" />
+    <Compile Include="UriTemplates\Expression.cs" />
+    <Compile Include="UriTemplates\ExtensionAttribute.cs" />
+    <Compile Include="UriTemplates\Extensions.cs" />
+    <Compile Include="UriTemplates\IUriComponent.cs" />
+    <Compile Include="UriTemplates\Literal.cs" />
+    <Compile Include="UriTemplates\Operator.cs" />
+    <Compile Include="UriTemplates\PctEncoding.cs" />
+    <Compile Include="UriTemplates\UriTemplate.cs" />
+    <Compile Include="UriTemplates\UriTemplateBuilder.cs" />
+    <Compile Include="UriTemplates\UriTemplateException.cs" />
+    <Compile Include="UriTemplates\UriTemplateParseException.cs" />
+    <Compile Include="UriTemplates\UriTemplateParser.cs" />
+    <Compile Include="UriTemplates\UriTemplateResolver.cs" />
+    <Compile Include="UriTemplates\VarSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -66,7 +66,7 @@ namespace TypedRest
 
                 var relativeUri = (template == null)
                     ? new Uri(Uri, new Uri(id, UriKind.Relative))
-                    : template.BindByName(Uri, new NameValueCollection {{"id", GetCollectionKey(entity)}});
+                    : new Uri(Uri, template.Resolve(new Dictionary<string, object> {{"id", GetCollectionKey(entity)}}));
                 return this[relativeUri];
             }
         }
