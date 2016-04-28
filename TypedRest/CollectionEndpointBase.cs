@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -48,31 +47,29 @@ namespace TypedRest
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
-        public TElementEndpoint this[string relativeUri] => this[new Uri(relativeUri, UriKind.Relative)];
-
         /// <summary>
         /// The Link relation type used by the server to set the collection child element URI template.
+        /// <c>null</c> to use a simple relative URI rather than a URI template.
         /// </summary>
-        public string ChildTemplateRel { get; set; } = "child";
+        /// <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>
+        public string ChildTemplateRel { get; set; }
 
-        public TElementEndpoint this[TEntity entity]
+        public TElementEndpoint this[string key]
         {
             get
             {
-                if (entity == null) throw new ArgumentNullException(nameof(entity));
+                if (key == null) throw new ArgumentNullException(nameof(key));
 
-                string id = GetCollectionKey(entity);
-                var template = LinkTemplate(ChildTemplateRel);
-
-                var relativeUri = (template == null)
-                    ? new Uri(Uri, new Uri(id, UriKind.Relative))
-                    : new Uri(Uri, template.Resolve(new Dictionary<string, object> {{"id", GetCollectionKey(entity)}}));
-                return this[relativeUri];
+                return this[(ChildTemplateRel == null)
+                    ? new Uri(Uri, key)
+                    : this.LinkTemplateExpanded(ChildTemplateRel, "id", key)];
             }
         }
 
+        public TElementEndpoint this[TEntity entity] => this[GetCollectionKey(entity)];
+
         /// <summary>
-        /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[Uri]"/>.
+        /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
         /// </summary>
         protected virtual string GetCollectionKey(TEntity entity)
         {

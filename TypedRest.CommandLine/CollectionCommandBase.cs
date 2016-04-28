@@ -43,7 +43,7 @@ namespace TypedRest.CommandLine
 
         protected override IEndpointCommand GetSubCommand(string name)
         {
-            return GetElementCommand(Endpoint[new Uri(name, UriKind.Relative)]);
+            return GetElementCommand(Endpoint[name]);
         }
 
         /// <summary>

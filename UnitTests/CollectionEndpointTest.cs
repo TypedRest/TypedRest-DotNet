@@ -12,7 +12,7 @@ namespace TypedRest
     [TestFixture]
     public class CollectionEndpointTest : EndpointTestBase
     {
-        private ICollectionEndpoint<MockEntity> _endpoint;
+        private CollectionEndpoint<MockEntity> _endpoint;
 
         [SetUp]
         public override void SetUp()
@@ -63,15 +63,6 @@ namespace TypedRest
         [Test]
         public void TestGetByEntityTemplate()
         {
-            Mock.Expect(HttpMethod.Head, "http://localhost/endpoint/")
-                .Respond(new HttpResponseMessage
-                {
-                    Headers =
-                    {
-                        {"Link", "<http://localhost/endpoint/{id}>; rel=child; templated=true"}
-                    }
-                });
-
             _endpoint[new MockEntity(1, "test")].Uri
                 .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
@@ -79,6 +70,8 @@ namespace TypedRest
         [Test]
         public async Task TestGetByEntityWithLinkHeaderRelative()
         {
+            _endpoint.ChildTemplateRel = "child";
+
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
                 .Respond(new HttpResponseMessage
                 {
@@ -95,6 +88,8 @@ namespace TypedRest
         [Test]
         public async Task TestGetByEntityWithLinkHeaderAbsolute()
         {
+            _endpoint.ChildTemplateRel = "child";
+
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
                 .Respond(new HttpResponseMessage
                 {
