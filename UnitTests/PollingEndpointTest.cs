@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Reactive.Linq;
 using FluentAssertions;
@@ -29,8 +30,8 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(JsonMime, "{\"Id\":3,\"Name\":\"test\"}");
 
-            var endpoint = _endpoint.GetStream(TimeSpan.Zero, endCondition: x => x.Id == 3);
-            endpoint.ToEnumerable().Should().Equal(
+            var stream = _endpoint.GetStream(TimeSpan.Zero, endCondition: x => x.Id == 3);
+            stream.ToEnumerable().ToList().Should().Equal(
                 new MockEntity(1, "test"),
                 new MockEntity(2, "test"),
                 new MockEntity(3, "test"));

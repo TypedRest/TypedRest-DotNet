@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reactive.Linq;
@@ -41,7 +42,7 @@ namespace TypedRest
                     });
 
             var stream = _endpoint.GetStream();
-            stream.ToEnumerable().Should().Equal(
+            stream.ToEnumerable().ToList().Should().Equal(
                 new MockEntity(5, "test1"),
                 new MockEntity(6, "test2"),
                 new MockEntity(7, "test3"));
@@ -59,7 +60,7 @@ namespace TypedRest
                     });
 
             var stream = _endpoint.GetStream(startIndex: 2);
-            stream.ToEnumerable().Should().Equal(new MockEntity(7, "test3"));
+            stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
         }
 
         [Test]
@@ -74,7 +75,7 @@ namespace TypedRest
                     });
 
             var stream = _endpoint.GetStream(startIndex: -1);
-            stream.ToEnumerable().Should().Equal(new MockEntity(7, "test3"));
+            stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
         }
     }
 }
