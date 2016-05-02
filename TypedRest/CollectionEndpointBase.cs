@@ -29,7 +29,8 @@ namespace TypedRest
         protected CollectionEndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri.EnsureTrailingSlash(), ensureTrailingSlashOnParentUri)
         {
-            var keyProperty = typeof(TEntity).GetPublicProperties().FirstOrDefault(x => x.HasAttribute<KeyAttribute>());
+            var keyProperty = typeof(TEntity).GetRuntimeProperties()
+                .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
             if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
         }
 
