@@ -95,8 +95,14 @@ namespace TypedRest
 
                 if (response.Content.Headers.ContentType?.MediaType == "application/json")
                 {
-                    var messageNode = JToken.Parse(body)["message"];
-                    if (messageNode != null) message = messageNode.ToString();
+                    try
+                    {
+                        var messageNode = JToken.Parse(body)["message"];
+                        if (messageNode != null) message = messageNode.ToString();
+                    }
+                    catch (JsonException)
+                    {
+                    }
                 }
             }
 
