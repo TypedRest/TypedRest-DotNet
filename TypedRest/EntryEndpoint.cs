@@ -41,7 +41,7 @@ namespace TypedRest
                     Authorization = new AuthenticationHeaderValue(
                         "Basic",
                         Convert.ToBase64String(
-                            Encoding.ASCII.GetBytes(basicCredentials.UserName + ":" + basicCredentials.Password)))
+                            Encoding.GetEncoding("iso-8859-1").GetBytes(basicCredentials.UserName + ":" + basicCredentials.Password)))
                 }
             };
         }
