@@ -14,6 +14,40 @@ namespace TypedRest
     public static class CollectionEndpointExtensions
     {
         /// <summary>
+        /// Determines whether the collection contains a specific entity.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <param name="endpoint">The collection endpoint containing the element.</param>
+        /// <param name="key">The key identifying the entity in the collection.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
+        public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string key, CancellationToken cancellationToken = default(CancellationToken))
+            where TElementEndpoint : class, IElementEndpoint<TEntity>
+        {
+            return endpoint[key].ExistsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Determines whether the collection contains a specific entity.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <param name="endpoint">The collection endpoint containing the element.</param>
+        /// <param name="element">The element to be checked.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
+        public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
+            where TElementEndpoint : class, IElementEndpoint<TEntity>
+        {
+            return endpoint[element].ExistsAsync(cancellationToken);
+        }
+
+        /// <summary>
         /// Updates an existing element in the collection.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>

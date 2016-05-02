@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -57,6 +58,19 @@ namespace TypedRest
             await HandleResponseAsync(Task.FromResult(response)).NoContext();
             _etag = response.Headers.ETag;
             return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(cancellationToken).NoContext();
+        }
+
+        public async Task<bool> ExistsAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            try
+            {
+                await HandleResponseAsync(HttpClient.HeadAsync(Uri, CancellationToken.None)).NoContext();
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool? UpdateAllowed => IsVerbAllowed(HttpMethod.Put.Method);

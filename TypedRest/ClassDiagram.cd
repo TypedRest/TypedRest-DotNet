@@ -3,7 +3,7 @@
   <Class Name="TypedRest.ElementEndpoint&lt;TEntity&gt;" Collapsed="true">
     <Position X="2.5" Y="12.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAgAAgAAEAAAAAAgAAACAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAgAIgAAEAAAAAAgAAACAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>ElementEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -100,7 +100,7 @@
   <Class Name="TypedRest.CollectionEndpointExtensions">
     <Position X="8.75" Y="4.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>CollectionEndpointExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -163,7 +163,7 @@
   <Interface Name="TypedRest.IElementEndpoint&lt;TEntity&gt;">
     <Position X="0.5" Y="3.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAgAAgAAAAAAAAAgAAAAAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAgAIgAAAAAAAAAgAAAAAAAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>IElementEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>

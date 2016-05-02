@@ -51,6 +51,26 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestExistsTrue()
+        {
+            Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
+                .Respond(HttpStatusCode.OK);
+
+            var result = await _endpoint.ExistsAsync();
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task TestExistsFalse()
+        {
+            Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
+                .Respond(HttpStatusCode.NotFound);
+
+            var result = await _endpoint.ExistsAsync();
+            result.Should().BeFalse();
+        }
+
+        [Test]
         public async Task TestUpdateResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")

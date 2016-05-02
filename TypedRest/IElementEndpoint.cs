@@ -24,6 +24,14 @@ namespace TypedRest
         Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Determines whether the entity currently exists.
+        /// </summary>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task<bool> ExistsAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Shows whether the server has indicated that <seealso cref="UpdateAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
