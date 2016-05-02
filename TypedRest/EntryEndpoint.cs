@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,15 +20,30 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
         /// <param name="credentials">The credentials used to authenticate against the REST interface. Can be <c>null</c> for no authentication.</param>
         public EntryEndpoint(Uri uri, ICredentials credentials = null)
-            : base(BuildHttpClient(credentials), uri.EnsureTrailingSlash())
+            : base(BuildHttpClient(uri, credentials), uri.EnsureTrailingSlash())
         {
         }
 
-        private static HttpClient BuildHttpClient(ICredentials credentials)
+        private static HttpClient BuildHttpClient(Uri uri, ICredentials credentials)
         {
-            return new HttpClient((credentials == null)
-                ? new HttpClientHandler()
-                : new HttpClientHandler {PreAuthenticate = true, Credentials = credentials});
+            if (credentials == null) return new HttpClient();
+
+            var handler = new HttpClientHandler {PreAuthenticate = true, Credentials = credentials};
+
+            var basicCredentials = credentials.GetCredential(uri, "Basic");
+            if (basicCredentials == null) return new HttpClient(handler);
+
+            return new HttpClient(handler)
+            {
+                DefaultRequestHeaders =
+                {
+                    // Preemptively set HTTP Basic Auth header when appropriate
+                    Authorization = new AuthenticationHeaderValue(
+                        "Basic",
+                        Convert.ToBase64String(
+                            Encoding.ASCII.GetBytes(basicCredentials.UserName + ":" + basicCredentials.Password)))
+                }
+            };
         }
 
         /// <summary>
