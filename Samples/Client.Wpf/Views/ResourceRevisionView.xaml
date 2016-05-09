@@ -1,7 +1,0 @@
-﻿<UserControl x:Class="TypedRest.Samples.Client.Wpf.Views.ResourceRevisionView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <StackPanel Orientation="Vertical">
-        <DataGrid x:Name="Entity" />
-    </StackPanel>
-</UserControl>

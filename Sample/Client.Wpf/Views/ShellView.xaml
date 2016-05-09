@@ -1,0 +1,17 @@
+﻿<Window x:Class="TypedRestSample.Client.Wpf.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cal="http://www.caliburnproject.org"
+        Width="640" Height="480"
+        Title="TypedRest WPF Sample">
+    <TabControl x:Name="Items">
+        <TabControl.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding DisplayName}" />
+                    <Button Content="X" cal:Message.Attach="DeactivateItem($dataContext, 'true')" />
+                </StackPanel>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+    </TabControl>
+</Window>

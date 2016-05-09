@@ -13,15 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypedRest.Wpf", "TypedRest.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{9291B0D7-747B-4654-95F5-6DD316BDDEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Samples\Client\Client.csproj", "{E511630A-3358-4779-B1FE-CDDE99E72694}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Sample\Client\Client.csproj", "{E511630A-3358-4779-B1FE-CDDE99E72694}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.CommandLine", "Samples\Client.CommandLine\Client.CommandLine.csproj", "{78C1F6DF-7531-4C31-B149-EB8D815EEF45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.CommandLine", "Sample\Client.CommandLine\Client.CommandLine.csproj", "{78C1F6DF-7531-4C31-B149-EB8D815EEF45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Wpf", "Samples\Client.Wpf\Client.Wpf.csproj", "{A4F538EE-E3A9-44CA-88F6-751D5EE7A4FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Wpf", "Sample\Client.Wpf\Client.Wpf.csproj", "{A4F538EE-E3A9-44CA-88F6-751D5EE7A4FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Samples\Server\Server.csproj", "{A2D4CDB5-87D6-487D-B2F3-D73B724A7DCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Sample\Server\Server.csproj", "{A2D4CDB5-87D6-487D-B2F3-D73B724A7DCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Samples\Model\Model.csproj", "{093CFB54-4D27-4728-9955-FFB010555FA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Sample\Model\Model.csproj", "{093CFB54-4D27-4728-9955-FFB010555FA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
