@@ -18,7 +18,7 @@ namespace TypedRest
         /// <returns>The href of the resolved template.</returns>
         /// <exception cref="KeyNotFoundException">No link template with the specified relation type could be found.</exception>
         /// <seealso cref="IEndpoint.LinkTemplate"/>
-        public static Uri LinkTemplateExpanded(this IEndpoint endpoint, string rel, string variableName, object value)
+        public static Uri LinkTemplateExpanded(this IEndpoint endpoint, string rel, string variableName, string value)
         {
             var template = endpoint.LinkTemplate(rel);
             if (template == null)
