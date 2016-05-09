@@ -59,8 +59,8 @@
       <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="TypedRest, Version=0.21.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\TypedRest.0.21.0.0\lib\net45\TypedRest.dll</HintPath>
+    <Reference Include="TypedRest, Version=0.22.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\packages\TypedRest.0.22.0.0\lib\net45\TypedRest.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
