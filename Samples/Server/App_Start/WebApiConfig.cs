@@ -7,6 +7,8 @@ namespace TypedRest.Samples.Server
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
+
+            config.EnsureInitialized();
         }
     }
 }

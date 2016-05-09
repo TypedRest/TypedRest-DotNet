@@ -21,6 +21,8 @@ namespace XProjectNamespaceX.WebService
             config.EnableHttpOptions();
             config.EnableHttpHead();
             config.EnableSwagger();
+
+            config.EnsureInitialized();
         }
     }
 }
