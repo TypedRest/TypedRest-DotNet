@@ -7,5 +7,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("TypedRest")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("0.21.0.0")]
+[assembly: AssemblyVersion("0.22.0.0")]
 [assembly: ComVisible(false)]
