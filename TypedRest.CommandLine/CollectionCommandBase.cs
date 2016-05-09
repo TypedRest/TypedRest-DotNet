@@ -29,16 +29,22 @@ namespace TypedRest.CommandLine
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count == 0)
-                OutputEntities(await Endpoint.ReadAllAsync(cancellationToken));
-            else if (args[0].ToLowerInvariant() == "create")
             {
-                var newEntity = InputEntity(args.Skip(1).ToList());
-                var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
-                if (newEndpoint != null)
-                    await GetElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
+                OutputEntities(await Endpoint.ReadAllAsync(cancellationToken));
+                return;
             }
-            else
-                await base.ExecuteAsync(args, cancellationToken);
+
+            switch (args[0].ToLowerInvariant())
+            {
+                case "create":
+                    var newEntity = InputEntity(args.Skip(1).ToList());
+                    var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
+                    if (newEndpoint != null)
+                        await GetElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
+                    return;
+            }
+
+            await base.ExecuteAsync(args, cancellationToken);
         }
 
         protected override IEndpointCommand GetSubCommand(string name)

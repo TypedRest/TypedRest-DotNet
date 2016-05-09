@@ -29,13 +29,21 @@ namespace TypedRest.CommandLine
         public override async Task ExecuteAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (args.Count != 0 && args[0].ToLowerInvariant() == "create-bulk")
+            if (args.Count != 0)
             {
-                var newEntity = InputEntities(args.Skip(1).ToList());
-                await Endpoint.CreateAsync(newEntity, cancellationToken);
+                switch (args[0].ToLowerInvariant())
+                {
+                    case "set-bulk":
+                        await Endpoint.SetAllAsync(InputEntities(args.Skip(1).ToList()), cancellationToken);
+                        return;
+
+                    case "create-bulk":
+                        await Endpoint.CreateAsync(InputEntities(args.Skip(1).ToList()), cancellationToken);
+                        return;
+                }
             }
-            else
-                await base.ExecuteAsync(args, cancellationToken);
+
+            await base.ExecuteAsync(args, cancellationToken);
         }
 
         /// <summary>
