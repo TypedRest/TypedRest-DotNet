@@ -17,7 +17,7 @@ namespace TypedRest
         public override void SetUp()
         {
             base.SetUp();
-            _endpoint = new PollingEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new PollingEndpoint<MockEntity>(EntryEndpoint, "endpoint", endCondition: x => x.Id == 3);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(JsonMime, "{\"Id\":3,\"Name\":\"test\"}");
 
-            var stream = _endpoint.GetStream(TimeSpan.Zero, endCondition: x => x.Id == 3);
+            var stream = _endpoint.GetStream(TimeSpan.Zero);
             stream.ToEnumerable().ToList().Should().Equal(
                 new MockEntity(1, "test"),
                 new MockEntity(2, "test"),

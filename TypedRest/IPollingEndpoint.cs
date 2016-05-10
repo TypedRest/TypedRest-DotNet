@@ -12,7 +12,6 @@ namespace TypedRest
         /// Provides an observable stream of element states. Compares entities using <see cref="object.Equals(object)"/> to detect changes.
         /// </summary>
         /// <param name="pollingInterval">The interval in which to send requests to the server.</param>
-        /// <param name="endCondition">An optional predicate determining which entity state ends the polling process.</param>
-        IObservable<TEntity> GetStream(TimeSpan pollingInterval, Predicate<TEntity> endCondition = null);
+        IObservable<TEntity> GetStream(TimeSpan pollingInterval);
     }
 }

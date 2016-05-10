@@ -12,18 +12,15 @@ namespace TypedRest.CommandLine
     public class PollingCommand<TEntity> : ElementCommand<TEntity>
     {
         protected new readonly IPollingEndpoint<TEntity> Endpoint;
-        private readonly Predicate<TEntity> _endCondition;
 
         /// <summary>
         /// Creates a new REST polling command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        /// <param name="endCondition">An optional predicate determining which entity state ends the polling process.</param>
-        public PollingCommand(IPollingEndpoint<TEntity> endpoint, Predicate<TEntity> endCondition = null)
+        public PollingCommand(IPollingEndpoint<TEntity> endpoint)
             : base(endpoint)
         {
             Endpoint = endpoint;
-            _endCondition = endCondition;
         }
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
@@ -32,7 +29,7 @@ namespace TypedRest.CommandLine
             if (args.Count >= 1 && args[0].ToLowerInvariant() == "poll")
             {
                 var interval = (args.Count >= 2) ? TimeSpan.Parse(args[1]) : TimeSpan.FromSeconds(2);
-                var stream = Endpoint.GetStream(interval, _endCondition);
+                var stream = Endpoint.GetStream(interval);
                 await OutputEntitiesAsync(stream, cancellationToken);
                 return;
             }

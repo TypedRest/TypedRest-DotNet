@@ -10,15 +10,19 @@ namespace TypedRest
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class PollingEndpoint<TEntity> : ElementEndpoint<TEntity>, IPollingEndpoint<TEntity>
     {
+        private readonly Predicate<TEntity> _endCondition;
+
         /// <summary>
         /// Creates a new polling endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        public PollingEndpoint(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
+        /// <param name="endCondition">An optional predicate determining which entity state ends the polling process.</param>
+        public PollingEndpoint(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false, Predicate<TEntity> endCondition = null)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
+            _endCondition = endCondition;
         }
 
         /// <summary>
@@ -27,12 +31,14 @@ namespace TypedRest
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        public PollingEndpoint(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
+        /// <param name="endCondition">An optional predicate determining which entity state ends the polling process.</param>
+        public PollingEndpoint(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false, Predicate<TEntity> endCondition = null)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
+            _endCondition = endCondition;
         }
 
-        public IObservable<TEntity> GetStream(TimeSpan pollingInterval, Predicate<TEntity> endCondition = null)
+        public IObservable<TEntity> GetStream(TimeSpan pollingInterval)
         {
             return Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
@@ -48,7 +54,7 @@ namespace TypedRest
                 }
                 observer.OnNext(previousEntity);
 
-                while (endCondition == null || !endCondition(previousEntity))
+                while (_endCondition == null || !_endCondition(previousEntity))
                 {
                     try
                     {
