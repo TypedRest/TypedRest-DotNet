@@ -83,6 +83,11 @@ namespace TypedRest.CommandLine
                 PrintError(ex.GetFullMessage());
                 return 7;
             }
+            catch (IOException ex)
+            {
+                PrintError(ex.GetFullMessage());
+                return 6;
+            }
             #endregion
         }
 
