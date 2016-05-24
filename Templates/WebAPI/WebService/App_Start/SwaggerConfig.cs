@@ -5,9 +5,15 @@ using Swashbuckle.Application;
 
 namespace XProjectNamespaceX.WebService
 {
+    /// <summary>
+    /// Configuration for Swagger API documentation.
+    /// </summary>
     public static class SwaggerConfig
     {
-        public static void EnableSwagger(this HttpConfiguration config)
+        /// <summary>
+        /// Enables and configures Swagger API documentation.
+        /// </summary>
+        public static void ConfigureSwagger(this HttpConfiguration config)
         {
             config.EnableSwagger(c =>
             {
