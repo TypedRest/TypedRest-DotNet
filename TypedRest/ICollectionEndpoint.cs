@@ -38,11 +38,38 @@ namespace TypedRest
         /// <summary>
         /// Returns all <typeparamref name="TEntity"/>s.
         /// </summary>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task<ICollection<TEntity>> ReadAllAsync();
+
+        /// <summary>
+        /// Returns all <typeparamref name="TEntity"/>s.
+        /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<ICollection<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<ICollection<TEntity>> ReadAllAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns all <typeparamref name="TEntity"/>s.
+        /// </summary>
+        /// <param name="queryParams">Query parameters used for the request. Can be of type <see cref="T:IDictionary{string,string}"/> or anonymous.</param>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task<ICollection<TEntity>> ReadAllAsync(object queryParams);
+
+        /// <summary>
+        /// Returns all <typeparamref name="TEntity"/>s.
+        /// </summary>
+        /// <param name="queryParams">Query parameters used for the request. Can be of type <see cref="T:IDictionary{string,string}"/> or anonymous.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task<ICollection<TEntity>> ReadAllAsync(object queryParams, CancellationToken cancellationToken);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.

@@ -66,6 +66,7 @@
       <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="PagedCollectionEndpointBase.cs" />
     <Compile Include="PartialResponse.cs" />
     <Compile Include="PollingEndpoint.cs" />
+    <Compile Include="PropertyHelper.cs" />
     <Compile Include="StreamEndpoint.cs" />
     <Compile Include="StreamEndpointBase.cs" />
     <Compile Include="TaskExtensions.cs" />

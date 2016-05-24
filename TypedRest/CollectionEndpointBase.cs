@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace TypedRest
 {
@@ -79,10 +81,24 @@ namespace TypedRest
             return _keyGetMethod.Invoke(entity, null).ToString();
         }
 
-        public virtual async Task<ICollection<TEntity>> ReadAllAsync(
-            CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task<ICollection<TEntity>> ReadAllAsync()
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
+            return ReadAllAsync(queryParams: null, cancellationToken: default(CancellationToken));
+        }
+
+        public virtual Task<ICollection<TEntity>> ReadAllAsync(CancellationToken cancellationToken)
+        {
+            return ReadAllAsync(queryParams: null, cancellationToken: cancellationToken);
+        }
+
+        public virtual Task<ICollection<TEntity>> ReadAllAsync(object queryParams)
+        {
+            return ReadAllAsync(null, default(CancellationToken));
+        }
+
+        public virtual async Task<ICollection<TEntity>> ReadAllAsync(object queryParams, CancellationToken cancellationToken)
+        {
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri.WithQueryParameters(queryParams), cancellationToken)).NoContext();
             return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken).NoContext();
         }
 
