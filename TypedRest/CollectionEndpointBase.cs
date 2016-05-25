@@ -63,7 +63,8 @@ namespace TypedRest
 
                 return this[(ChildTemplateRel == null)
                     ? new Uri(Uri, key)
-                    : this.LinkTemplateExpanded(ChildTemplateRel, "id", key)];
+                    : new Uri(Uri, LinkTemplate(ChildTemplateRel).Resolve(new Dictionary<string, object> {["id"] = key}))
+                    ];
             }
         }
 

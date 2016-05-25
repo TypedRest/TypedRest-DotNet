@@ -79,7 +79,6 @@
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
-    <Compile Include="EndpointExtensions.cs" />
     <Compile Include="EntryEndpoint.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FunctionEndpoint.cs" />
