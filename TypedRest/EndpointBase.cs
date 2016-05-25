@@ -130,7 +130,7 @@ namespace TypedRest
         /// </summary>
         private async Task HandleLinksAsync(HttpResponseMessage response)
         {
-            var links = new Dictionary<string, IDictionary<Uri, string>>();
+            var links = new Dictionary<string, Dictionary<Uri, string>>();
             var linkTemplates = new Dictionary<string, UriTemplate>();
 
             HandleHeaderLinks(response.Headers, links, linkTemplates);
@@ -157,7 +157,7 @@ namespace TypedRest
         /// <param name="headers">The headers to check for links.</param>
         /// <param name="links">A dictionary to add found links to.</param>
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, IDictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
+        protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
             foreach (string element in headers.Where(x => x.Key == "Link").SelectMany(x => x.Value)
                 .SelectMany(x => x.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)).Select(x => x.Trim()))
@@ -175,13 +175,8 @@ namespace TypedRest
                         linkTemplates[rel] = new UriTemplate(href);
                     else
                     {
-                        IDictionary<Uri, string> linksForRel;
-                        if (!links.TryGetValue(rel, out linksForRel))
-                            links.Add(rel, linksForRel = new Dictionary<Uri, string>());
-
                         string title = parameters["title"].FirstOrDefault();
-
-                        linksForRel.Add(new Uri(Uri, href), title);
+                        links.GetOrAdd(rel)[new Uri(Uri, href)] = title;
                     }
                 }
             }
@@ -193,7 +188,7 @@ namespace TypedRest
         /// <param name="jsonBody">The body to check for links.</param>
         /// <param name="links">A dictionary to add found links to.</param>
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        protected virtual void HandleBodyLinks(JToken jsonBody, IDictionary<string, IDictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
+        protected virtual void HandleBodyLinks(JToken jsonBody, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
             if (jsonBody.Type != JTokenType.Object) return;
             var linksNode = jsonBody["_links"] ?? jsonBody["links"];
@@ -202,10 +197,7 @@ namespace TypedRest
             foreach (var linkNode in linksNode.OfType<JProperty>())
             {
                 string rel = linkNode.Name;
-
-                IDictionary<Uri, string> linksForRel;
-                if (!links.TryGetValue(rel, out linksForRel))
-                    links.Add(rel, linksForRel = new Dictionary<Uri, string>());
+                var linksForRel = links.GetOrAdd(rel);
 
                 switch (linkNode.Value.Type)
                 {
@@ -235,18 +227,17 @@ namespace TypedRest
 
             var templated = obj["templated"];
             if (templated != null && templated.Type == JTokenType.Boolean && templated.Value<bool>())
-                linkTemplates.Add(rel, new UriTemplate(href.ToString()));
+                linkTemplates[rel] = new UriTemplate(href.ToString());
             else
             {
                 var title = obj["title"];
-                linksForRel.Add(
-                    new Uri(Uri, href.ToString()),
-                    (title != null && title.Type == JTokenType.String) ? title.Value<string>() : null);
+                linksForRel[new Uri(Uri, href.ToString())] =
+                    (title != null && title.Type == JTokenType.String) ? title.Value<string>() : null;
             }
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, IDictionary<Uri, string>> _links = new Dictionary<string, IDictionary<Uri, string>>();
+        private IDictionary<string, Dictionary<Uri, string>> _links = new Dictionary<string, Dictionary<Uri, string>>();
 
         public IEnumerable<Uri> GetLinks(string rel)
         {
@@ -255,7 +246,7 @@ namespace TypedRest
 
         public IDictionary<Uri, string> GetLinksWithTitles(string rel)
         {
-            IDictionary<Uri, string> linksForRel;
+            Dictionary<Uri, string> linksForRel;
             return _links.TryGetValue(rel, out linksForRel) ? linksForRel : new Dictionary<Uri, string>();
         }
 

@@ -140,7 +140,7 @@ namespace TypedRest
             _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
             {
                 {new Uri(_endpoint.Uri, "target1"), "Title 1"},
-                {new Uri(_endpoint.Uri, "target2"), null},
+                {new Uri(_endpoint.Uri, "target2"), null}
             });
         }
 
@@ -152,13 +152,13 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<a>; rel=target1; templated=true"}
+                        {"Link", "<a>; rel=child; templated=true"}
                     }
                 });
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("target1").ToString().Should().Be("a");
+            _endpoint.LinkTemplate("child").ToString().Should().Be("a");
         }
 
         [Test]
@@ -169,11 +169,11 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<a>; rel=target1; templated=true"}
+                        {"Link", "<a>; rel=child; templated=true"}
                     }
                 });
 
-            _endpoint.Invoking(x => x.LinkTemplate("target2")).ShouldThrow<KeyNotFoundException>();
+            _endpoint.Invoking(x => x.LinkTemplate("child2")).ShouldThrow<KeyNotFoundException>();
         }
 
         [Test]

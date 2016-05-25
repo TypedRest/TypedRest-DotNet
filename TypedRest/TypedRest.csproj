@@ -76,6 +76,7 @@
     <Compile Include="CollectionEndpoint.cs" />
     <Compile Include="CollectionEndpointBase.cs" />
     <Compile Include="CollectionEndpointExtensions.cs" />
+    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
     <Compile Include="EndpointExtensions.cs" />
