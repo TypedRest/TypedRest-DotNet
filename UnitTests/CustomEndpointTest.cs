@@ -159,7 +159,21 @@ namespace TypedRest
             await _endpoint.GetAsync();
 
             _endpoint.LinkTemplate("target1").ToString().Should().Be("a");
-            _endpoint.LinkTemplate("target2").Should().BeNull();
+        }
+
+        [Test]
+        public void TestLinkTemplateException()
+        {
+            Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<a>; rel=target1; templated=true"}
+                    }
+                });
+
+            _endpoint.Invoking(x => x.LinkTemplate("target2")).ShouldThrow<KeyNotFoundException>();
         }
 
         [Test]

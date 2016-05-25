@@ -16,14 +16,11 @@ namespace TypedRest
         /// <param name="variableName">The name of the variable to insert.</param>
         /// <param name="value">The value to insert for the variable.</param>
         /// <returns>The href of the resolved template.</returns>
-        /// <exception cref="KeyNotFoundException">No link template with the specified relation type could be found.</exception>
+        /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
         /// <seealso cref="IEndpoint.LinkTemplate"/>
         public static Uri LinkTemplateExpanded(this IEndpoint endpoint, string rel, string variableName, string value)
         {
             var template = endpoint.LinkTemplate(rel);
-            if (template == null)
-                throw new KeyNotFoundException($"No template with rel={rel} provided by endpoint {endpoint.Uri}.");
-
             return new Uri(endpoint.Uri, template.Resolve(new Dictionary<string, object> {{variableName, value}}));
         }
     }

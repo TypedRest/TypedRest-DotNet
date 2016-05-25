@@ -299,19 +299,23 @@ namespace TypedRest
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
+                Exception error = null;
                 Task.Run(async () =>
                 {
                     try
                     {
                         await HandleResponseAsync(HttpClient.HeadAsync(Uri)).NoContext();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        // HTTP HEAD server-side implementation is optional
+                        error = ex;
                     }
                 }).Wait();
+                if (error != null)
+                    throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.", error);
 
-                _linkTemplates.TryGetValue(rel, out template);
+                if (!_linkTemplates.TryGetValue(rel, out template))
+                    throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.");
             }
 
             return template;
