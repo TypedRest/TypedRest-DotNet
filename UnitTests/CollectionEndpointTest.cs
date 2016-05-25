@@ -70,8 +70,6 @@ namespace TypedRest
         [Test]
         public async Task TestGetByEntityWithLinkHeaderRelative()
         {
-            _endpoint.ChildTemplateRel = "child";
-
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
                 .Respond(new HttpResponseMessage
                 {
@@ -88,8 +86,6 @@ namespace TypedRest
         [Test]
         public async Task TestGetByEntityWithLinkHeaderAbsolute()
         {
-            _endpoint.ChildTemplateRel = "child";
-
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
                 .Respond(new HttpResponseMessage
                 {

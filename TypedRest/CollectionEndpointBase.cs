@@ -32,6 +32,8 @@ namespace TypedRest
             var keyProperty = typeof(TEntity).GetRuntimeProperties()
                 .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
             if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
+
+            AddDefaultLinkTemplate("{id}", rel: "child");
         }
 
         /// <summary>
@@ -48,23 +50,13 @@ namespace TypedRest
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
-        /// <summary>
-        /// The Link relation type used by the server to set the collection child element URI template.
-        /// <c>null</c> to use a simple relative URI rather than a URI template.
-        /// </summary>
-        /// <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>
-        public string ChildTemplateRel { get; set; }
-
         public TElementEndpoint this[string key]
         {
             get
             {
                 if (key == null) throw new ArgumentNullException(nameof(key));
 
-                return this[(ChildTemplateRel == null)
-                    ? new Uri(Uri, key)
-                    : new Uri(Uri, LinkTemplate(ChildTemplateRel).Resolve(new Dictionary<string, object> {["id"] = key}))
-                    ];
+                return this[new Uri(Uri, LinkTemplate("child").Resolve(new {id = key}))];
             }
         }
 
