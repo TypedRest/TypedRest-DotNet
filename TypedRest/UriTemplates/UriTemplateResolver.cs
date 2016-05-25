@@ -24,11 +24,6 @@ namespace TypedRest.UriTemplates
             return template.Resolve(variables);
         }
 
-        public Uri ResolveUri()
-        {
-            return template.ResolveUri(variables);
-        }
-
         public UriTemplate ResolveTemplate()
         {
             return template.ResolveTemplate(variables);
