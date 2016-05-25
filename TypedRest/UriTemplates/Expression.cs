@@ -186,10 +186,7 @@ namespace TypedRest.UriTemplates
 
                     if (dictionaryValue == null)
                     {
-                        throw new UriTemplateException(
-                            string.Format(
-                                "Invalid value type of variable \"{0}\". Expected: string or IEnumerable<string> or IDictionary<string, string>.",
-                                value.GetType()));
+                        stringValue = value.ToString();
                     }
                     else if (dictionaryValue.Count == 0)
                     {
