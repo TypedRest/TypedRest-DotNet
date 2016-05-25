@@ -52,6 +52,7 @@ You can then perform CRUD operations like this:
 ```cs
 var server = new SampleEntryEndpoint(new Uri("http://myservice/api/"));
 var packages = server.Packages.ReadAllAsync();
+var packagesWithQueryParams = server.Packages.ReadAllAsync(new { email = "john@contoso.com" });
 var element = await server.Packages.CreateAsync(new Package {...});
 var package = await server.Packages[1].ReadAsync();
 await server.Packages[1].UpdateAsync(package);
