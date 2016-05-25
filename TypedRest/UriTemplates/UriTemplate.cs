@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace TypedRest.UriTemplates
@@ -96,7 +98,22 @@ namespace TypedRest.UriTemplates
             return builder.ToString();
         }
 
+        public string Resolve(object variables)
+        {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
+            return Resolve(variables.GetType().GetRuntimeProperties().Where(property => property.GetMethod != null).ToDictionary(x => x.Name, x => x.GetValue(variables)));
+        }
+
         public Uri ResolveUri(IDictionary<string, object> variables)
+        {
+            return new Uri(Resolve(variables));
+        }
+
+        public Uri ResolveUri(object variables)
         {
             return new Uri(Resolve(variables));
         }
