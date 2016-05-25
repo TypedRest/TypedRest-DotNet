@@ -44,7 +44,7 @@ namespace TypedRest
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
         protected CollectionEndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
             // Use this instead of base to ensure trailing slash gets appended for REST collection URIs
-            : this(parent, new Uri(relativeUri, UriKind.Relative), ensureTrailingSlashOnParentUri)
+            : this(parent, new Uri(relativeUri, UriKind.RelativeOrAbsolute), ensureTrailingSlashOnParentUri)
         {
         }
 

@@ -54,7 +54,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
         protected EndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : this(parent, new Uri(relativeUri, UriKind.Relative), ensureTrailingSlashOnParentUri)
+            : this(parent, new Uri(relativeUri, UriKind.RelativeOrAbsolute), ensureTrailingSlashOnParentUri)
         {
         }
 
