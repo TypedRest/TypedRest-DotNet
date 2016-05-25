@@ -56,7 +56,7 @@ namespace TypedRest
             {
                 if (key == null) throw new ArgumentNullException(nameof(key));
 
-                return this[new Uri(Uri, LinkTemplate("child").Resolve(new {id = key}))];
+                return this[LinkTemplate("child", new {id = key})];
             }
         }
 
