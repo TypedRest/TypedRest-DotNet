@@ -58,6 +58,38 @@ namespace TypedRest
         {
         }
 
+        private readonly Dictionary<string, Dictionary<Uri, string>> _defaultLinks = new Dictionary<string, Dictionary<Uri, string>>();
+
+        /// <summary>
+        /// Adds a link to the list of links provided by the server.
+        /// </summary>
+        /// <param name="href">The href of the link relative to this endpoint's URI.</param>
+        /// <param name="rel">The relation type of the link to add.</param>
+        /// <param name="title">The title of the link. May be <c>null</c>.</param>
+        /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
+        /// <seealso cref="IEndpoint.GetLinks"/>
+        /// <seealso cref="IEndpoint.GetLinksWithTitles"/>
+        /// <seealso cref="IEndpoint.Link"/>
+        public void AddDefaultLink(string href, string rel, string title = null)
+        {
+            _defaultLinks.GetOrAdd(rel)[new Uri(Uri, href)] = title;
+        }
+
+        private readonly Dictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
+
+        /// <summary>
+        /// Adds a link template to the list of link templates provided by the server.
+        /// </summary>
+        /// <param name="href">The href of the link template relative to this endpoint's URI.</param>
+        /// <param name="rel">The relation type of the link template to add.</param>
+        /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
+        /// <seealso cref="IEndpoint.LinkTemplate"/>
+        /// <seealso cref="IEndpoint.LinkTemplate"/>
+        public void AddDefaultLinkTemplate(string href, string rel)
+        {
+            _defaultLinkTemplates[rel] = new UriTemplate(href);
+        }
+
         /// <summary>
         /// Handles the response of a REST request and wraps HTTP status codes in appropriate <see cref="Exception"/> types.
         /// </summary>
@@ -130,8 +162,8 @@ namespace TypedRest
         /// </summary>
         private async Task HandleLinksAsync(HttpResponseMessage response)
         {
-            var links = new Dictionary<string, Dictionary<Uri, string>>();
-            var linkTemplates = new Dictionary<string, UriTemplate>();
+            var links = new Dictionary<string, Dictionary<Uri, string>>(_defaultLinks);
+            var linkTemplates = new Dictionary<string, UriTemplate>(_defaultLinkTemplates);
 
             HandleHeaderLinks(response.Headers, links, linkTemplates);
 
@@ -237,7 +269,7 @@ namespace TypedRest
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, Dictionary<Uri, string>> _links = new Dictionary<string, Dictionary<Uri, string>>();
+        private IDictionary<string, Dictionary<Uri, string>> _links;
 
         public IEnumerable<Uri> GetLinks(string rel)
         {
@@ -247,7 +279,7 @@ namespace TypedRest
         public IDictionary<Uri, string> GetLinksWithTitles(string rel)
         {
             Dictionary<Uri, string> linksForRel;
-            return _links.TryGetValue(rel, out linksForRel) ? linksForRel : new Dictionary<Uri, string>();
+            return (_links ?? _defaultLinks).TryGetValue(rel, out linksForRel) ? linksForRel : new Dictionary<Uri, string>();
         }
 
         public Uri Link(string rel)
@@ -281,12 +313,12 @@ namespace TypedRest
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
+        private IDictionary<string, UriTemplate> _linkTemplates;
 
         public UriTemplate LinkTemplate(string rel)
         {
             UriTemplate template;
-            if (!_linkTemplates.TryGetValue(rel, out template))
+            if (!(_linkTemplates ?? _defaultLinkTemplates).TryGetValue(rel, out template))
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
@@ -305,7 +337,7 @@ namespace TypedRest
                 if (error != null)
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.", error);
 
-                if (!_linkTemplates.TryGetValue(rel, out template))
+                if (_linkTemplates == null || !_linkTemplates.TryGetValue(rel, out template))
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.");
             }
 

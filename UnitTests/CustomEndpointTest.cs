@@ -145,6 +145,19 @@ namespace TypedRest
         }
 
         [Test]
+        public void TestDefaultLink()
+        {
+            _endpoint.AddDefaultLink("target1", rel: "child", title: "Title 1");
+            _endpoint.AddDefaultLink("target2", rel: "child");
+
+            _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
+            {
+                {new Uri(_endpoint.Uri, "target1"), "Title 1"},
+                {new Uri(_endpoint.Uri, "target2"), null}
+            });
+        }
+
+        [Test]
         public async Task TestLinkTemplate()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -199,6 +212,14 @@ namespace TypedRest
                 {new Uri(_endpoint.Uri, "c"), null},
             });
             _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
+        }
+
+        [Test]
+        public void TestDefaultLinkTemplate()
+        {
+            _endpoint.AddDefaultLinkTemplate("a", rel: "child");
+
+            _endpoint.LinkTemplate("child").ToString().Should().Be("a");
         }
 
         [Test]
