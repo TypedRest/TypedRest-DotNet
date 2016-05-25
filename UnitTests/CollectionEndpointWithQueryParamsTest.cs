@@ -20,7 +20,7 @@ namespace TypedRest
             _endpoint = new SearchableMockEntityCollectionEndpoint(EntryEndpoint, "endpoint");
         }
 
-        [Test(Description = "Proves the bug described in https://github.com/1and1/TypedRest-DotNet/issues/9")]
+        [Test(Description = "Proves fix for the bug described in https://github.com/1and1/TypedRest-DotNet/issues/9")]
         public async Task TestGetByEntityWithLinkHeaderAndQueryParamsAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
