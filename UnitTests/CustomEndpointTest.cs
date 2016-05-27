@@ -140,7 +140,7 @@ namespace TypedRest
             });
         }
 
-        [Test, Ignore("Escaping in Link headers is not implemented yet.")]
+        [Test]
         public async Task TestGetLinksWithTitlesEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
