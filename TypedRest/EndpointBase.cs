@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,6 +19,9 @@ namespace TypedRest
     /// </summary>
     public abstract class EndpointBase : IEndpoint
     {
+        private static readonly Regex _regexHeaderLinks = new Regex("(<[^>]+>;[^,]+)", RegexOptions.Compiled);
+        private static readonly Regex _regexHeaderLinkFields = new Regex("(?=^<(?'href'[^>]*)>)|(?'field'[a-z]+)=\"?(?'value'[^\",;]*)\"?", RegexOptions.Compiled);
+
         public HttpClient HttpClient { get; }
 
         public Uri Uri { get; }
@@ -191,25 +195,56 @@ namespace TypedRest
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
         protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
-            foreach (string element in headers.Where(x => x.Key == "Link").SelectMany(x => x.Value)
-                .SelectMany(x => x.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)).Select(x => x.Trim()))
+            var headerLinks =
+              headers.Where(x => x.Key.Equals("Link"))
+                  .SelectMany(x => x.Value)
+                  .SelectMany(x => _regexHeaderLinks.Matches(x).Cast<Match>())
+                  .Where(x => x.Success)
+                  .Select(x => x.Groups.Cast<Group>().Skip(1).Single().Value);
+
+            foreach (string headerLink in headerLinks)
             {
-                var components = element.Split(new[] {"; "}, StringSplitOptions.None);
-                string href = components[0].Substring(1, components[0].Length - 2);
+                string href;
+                string rel;
+                string title;
+                bool templated;
 
-                var parameters = components.Skip(1).Select(x => x.Split('=')).ToLookup(x => x[0], x => x[1]);
+                ParseHeaderLink(headerLink, out href, out rel, out title, out templated);
 
-                string rel = parameters["rel"].FirstOrDefault();
                 if (rel != null)
                 {
-                    string templated = parameters["templated"].FirstOrDefault();
-                    if (templated == "true")
+                    if (templated)
                         linkTemplates[rel] = new UriTemplate(href);
                     else
                     {
-                        string title = parameters["title"].FirstOrDefault();
                         links.GetOrAdd(rel)[new Uri(Uri, href)] = title;
                     }
+                }
+            }
+        }
+
+        private static void ParseHeaderLink(string link, out string href, out string rel, out string title, out bool templated)
+        {
+            href = rel = title = null;
+            templated = false;
+
+            IEnumerable<Match> matchCollection = _regexHeaderLinkFields.Matches(link).Cast<Match>();
+
+            foreach (Match match in matchCollection)
+            {
+                if (href == null)
+                    href = match.Groups["href"].Value;
+
+                if (match.Groups["field"].Success)
+                {
+                    if (rel == null && match.Groups["field"].Value.Equals("rel", StringComparison.OrdinalIgnoreCase))
+                        rel = match.Groups["value"].Value;
+
+                    if (match.Groups["field"].Value.Equals("templated", StringComparison.OrdinalIgnoreCase))
+                        templated = match.Groups["value"].Value.Equals("true", StringComparison.OrdinalIgnoreCase);
+
+                    if (title == null && match.Groups["field"].Value.Equals("title", StringComparison.OrdinalIgnoreCase))
+                        title = match.Groups["value"].Value;
                 }
             }
         }
@@ -377,7 +412,7 @@ namespace TypedRest
         /// The <see cref="MediaTypeFormatter"/> used to serialize entities for transmission.
         /// </summary>
         protected virtual MediaTypeFormatter Serializer =>
-            new JsonMediaTypeFormatter {SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}};
+            new JsonMediaTypeFormatter { SerializerSettings = { DefaultValueHandling = DefaultValueHandling.Ignore } };
 
         public override string ToString()
         {

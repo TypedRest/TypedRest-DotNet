@@ -140,7 +140,7 @@ namespace TypedRest
             });
         }
 
-        [Test, Ignore("Escaping in Link headers is not implemented yet.")]
+        [Test]
         public async Task TestGetLinksWithTitlesEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -223,6 +223,23 @@ namespace TypedRest
             await _endpoint.GetAsync();
 
             _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri("http://localhost/b?x=1"));
+        }
+
+        [Test(Description = "Proves bugfix for issue: https://github.com/1and1/TypedRest-DotNet/issues/9")]
+        public async Task GetLinkTemplateWithQueryParams()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<http://localhost/b{?x,y}>; rel=search; templated=true"}
+                    }
+                });
+
+            await _endpoint.GetAsync();
+
+            _endpoint.LinkTemplate("search", new {x = 1, y = 2}).Should().Be(new Uri("http://localhost/b?x=1&y=2"));
         }
 
         [Test]
