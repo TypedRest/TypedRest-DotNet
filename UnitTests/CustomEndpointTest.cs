@@ -69,6 +69,23 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestLinkAbsolute()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<http://localhost/b>; rel=target1"}
+                    }
+                });
+
+            await _endpoint.GetAsync();
+
+            _endpoint.Link("target1").Should().Be(new Uri("http://localhost/b"));
+        }
+
+        [Test]
         public void TestLinkException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
@@ -165,13 +182,47 @@ namespace TypedRest
                 {
                     Headers =
                     {
-                        {"Link", "<a>; rel=child; templated=true"}
+                        {"Link", "<a{?x}>; rel=child; templated=true"}
                     }
                 });
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("child").ToString().Should().Be("a");
+            _endpoint.LinkTemplate("child").ToString().Should().Be("a{?x}");
+        }
+
+        [Test]
+        public async Task TestLinkTemplateResolve()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<a{?x}>; rel=child; templated=true"}
+                    }
+                });
+
+            await _endpoint.GetAsync();
+
+            _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri(_endpoint.Uri, "a?x=1"));
+        }
+
+        [Test]
+        public async Task TestLinkTemplateResolveAbsolute()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Headers =
+                    {
+                        {"Link", "<http://localhost/b{?x}>; rel=child; templated=true"}
+                    }
+                });
+
+            await _endpoint.GetAsync();
+
+            _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri("http://localhost/b?x=1"));
         }
 
         [Test]

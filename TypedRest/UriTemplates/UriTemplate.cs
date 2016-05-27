@@ -108,16 +108,6 @@ namespace TypedRest.UriTemplates
             return Resolve(variables.GetType().GetRuntimeProperties().Where(property => property.GetMethod != null).ToDictionary(x => x.Name, x => x.GetValue(variables)));
         }
 
-        public Uri ResolveUri(IDictionary<string, object> variables)
-        {
-            return new Uri(Resolve(variables));
-        }
-
-        public Uri ResolveUri(object variables)
-        {
-            return new Uri(Resolve(variables));
-        }
-
         public UriTemplate ResolveTemplate(IDictionary<string, object> variables)
         {
             if (variables == null)

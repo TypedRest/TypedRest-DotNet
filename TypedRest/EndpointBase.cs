@@ -54,7 +54,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
         protected EndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : this(parent, new Uri(relativeUri, UriKind.Relative), ensureTrailingSlashOnParentUri)
+            : this(parent, new Uri(relativeUri, UriKind.RelativeOrAbsolute), ensureTrailingSlashOnParentUri)
         {
         }
 
@@ -83,8 +83,8 @@ namespace TypedRest
         /// <param name="href">The href of the link template relative to this endpoint's URI.</param>
         /// <param name="rel">The relation type of the link template to add.</param>
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
-        /// <seealso cref="IEndpoint.LinkTemplate"/>
-        /// <seealso cref="IEndpoint.LinkTemplate"/>
+        /// <seealso cref="IEndpoint.LinkTemplate(string)"/>
+        /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
         public void AddDefaultLinkTemplate(string href, string rel)
         {
             _defaultLinkTemplates[rel] = new UriTemplate(href);
@@ -342,6 +342,11 @@ namespace TypedRest
             }
 
             return template;
+        }
+
+        public Uri LinkTemplate(string rel, object variables)
+        {
+            return new Uri(Uri, LinkTemplate(rel).Resolve(variables));
         }
 
         /// <summary>
