@@ -37,7 +37,7 @@ namespace TypedRest
         Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Creates multiple new <typeparamref name="TEntity"/>s. Warning: Not all endpoints support this!
+        /// Creates multiple new <typeparamref name="TEntity"/>s.
         /// </summary>
         /// <param name="entities">The new <typeparamref name="TEntity"/>s.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
@@ -46,6 +46,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        /// <remarks>Uses a link with the relation type <c>bulk</c> to determine the URI to POST to. Defaults to the relative URI <c>bulk</c>.</remarks>
         Task CreateAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken));
     }
