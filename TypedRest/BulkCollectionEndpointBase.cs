@@ -23,7 +23,7 @@ namespace TypedRest
         protected BulkCollectionEndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
-            AddDefaultLink("bulk", rel: "bulk");
+            SetDefaultLink(rel: "bulk", hrefs: "bulk");
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace TypedRest
         protected BulkCollectionEndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
-            AddDefaultLink("bulk", rel: "bulk");
+            SetDefaultLink(rel: "bulk", hrefs: "bulk");
         }
 
         public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);

@@ -162,14 +162,13 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestDefaultLink()
+        public void TestSetDefaultLink()
         {
-            _endpoint.AddDefaultLink("target1", rel: "child", title: "Title 1");
-            _endpoint.AddDefaultLink("target2", rel: "child");
+            _endpoint.SetDefaultLink(rel: "child", hrefs: new[] {"target1", "target2"});
 
             _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
             {
-                {new Uri(_endpoint.Uri, "target1"), "Title 1"},
+                {new Uri(_endpoint.Uri, "target1"), null},
                 {new Uri(_endpoint.Uri, "target2"), null}
             });
         }
@@ -283,9 +282,9 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestDefaultLinkTemplate()
+        public void TestSetDefaultLinkTemplate()
         {
-            _endpoint.AddDefaultLinkTemplate("a", rel: "child");
+            _endpoint.SetDefaultLinkTemplate(rel: "child", href: "a");
 
             _endpoint.LinkTemplate("child").ToString().Should().Be("a");
         }

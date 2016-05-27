@@ -33,7 +33,7 @@ namespace TypedRest
                 .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
             if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
 
-            AddDefaultLinkTemplate("{id}", rel: "child");
+            SetDefaultLinkTemplate(rel: "child", href: "{id}");
         }
 
         /// <summary>

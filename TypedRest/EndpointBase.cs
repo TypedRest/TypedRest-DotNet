@@ -62,33 +62,34 @@ namespace TypedRest
         private readonly Dictionary<string, Dictionary<Uri, string>> _defaultLinks = new Dictionary<string, Dictionary<Uri, string>>();
 
         /// <summary>
-        /// Adds a link to the list of links provided by the server.
+        /// Registers one or more default links for a specific relation type. These links are used when no matching link has been provided by the server (yet).
         /// </summary>
-        /// <param name="href">The href of the link relative to this endpoint's URI.</param>
         /// <param name="rel">The relation type of the link to add.</param>
-        /// <param name="title">The title of the link. May be <c>null</c>.</param>
+        /// <param name="hrefs">The hrefs of links relative to this endpoint's URI. Use <c>null</c> or an empty list to remove all previous entries for the relation type.</param>
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
         /// <seealso cref="IEndpoint.GetLinks"/>
         /// <seealso cref="IEndpoint.GetLinksWithTitles"/>
         /// <seealso cref="IEndpoint.Link"/>
-        public void AddDefaultLink(string href, string rel, string title = null)
+        public void SetDefaultLink(string rel, params string[] hrefs)
         {
-            _defaultLinks.GetOrAdd(rel)[new Uri(Uri, href)] = title;
+            if (hrefs == null || hrefs.Length == 0) _defaultLinks.Remove(rel);
+            else  _defaultLinks[rel] = hrefs.ToDictionary(x => new Uri(Uri, x), _ => (string)null);
         }
 
         private readonly Dictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
 
         /// <summary>
-        /// Adds a link template to the list of link templates provided by the server.
+        /// Registers a default link template for a specific relation type. This template is used when no matching template has been provided by the server (yet).
         /// </summary>
-        /// <param name="href">The href of the link template relative to this endpoint's URI.</param>
         /// <param name="rel">The relation type of the link template to add.</param>
+        /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
         /// <seealso cref="IEndpoint.LinkTemplate(string)"/>
         /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
-        public void AddDefaultLinkTemplate(string href, string rel)
+        public void SetDefaultLinkTemplate(string rel, string href)
         {
-            _defaultLinkTemplates[rel] = new UriTemplate(href);
+            if (href == null) _defaultLinkTemplates.Remove(rel);
+            else _defaultLinkTemplates[rel] = new UriTemplate(href);
         }
 
         /// <summary>
