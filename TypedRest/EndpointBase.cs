@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -185,9 +184,6 @@ namespace TypedRest
             _linkTemplates = linkTemplates;
         }
 
-        private static readonly Regex RegexHeaderLinks = new Regex("(<[^>]+>;[^,]+)", RegexOptions.Compiled);
-        private static readonly Regex RegexHeaderLinkFields = new Regex("(?=^<(?'href'[^>]*)>)|(?'field'[a-z]+)=\"?(?'value'[^\",;]*)\"?", RegexOptions.Compiled);
-
         /// <summary>
         /// Handles links embedded in HTTP response headers.
         /// </summary>
@@ -196,48 +192,12 @@ namespace TypedRest
         /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
         protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
         {
-            foreach (string headerLink in headers.Where(x => x.Key.Equals("Link"))
-                .SelectMany(x => x.Value)
-                .SelectMany(x => RegexHeaderLinks.Matches(x).Cast<Match>())
-                .Where(x => x.Success)
-                .Select(x => x.Groups.Cast<Group>().Skip(1).Single().Value))
+            foreach (var header in headers.GetLinkHeaders().Where(x => x.Rel != null))
             {
-                string href;
-                string rel;
-                string title;
-                bool templated;
-                ParseHeaderLink(headerLink, out href, out rel, out title, out templated);
-
-                if (rel != null)
-                {
-                    if (templated)
-                        linkTemplates[rel] = new UriTemplate(href);
-                    else
-                        links.GetOrAdd(rel)[new Uri(Uri, href)] = title;
-                }
-            }
-        }
-
-        private static void ParseHeaderLink(string link, out string href, out string rel, out string title, out bool templated)
-        {
-            href = rel = title = null;
-            templated = false;
-            foreach (var match in RegexHeaderLinkFields.Matches(link).Cast<Match>())
-            {
-                if (href == null)
-                    href = match.Groups["href"].Value;
-
-                if (match.Groups["field"].Success)
-                {
-                    if (rel == null && match.Groups["field"].Value.Equals("rel", StringComparison.OrdinalIgnoreCase))
-                        rel = match.Groups["value"].Value;
-
-                    if (match.Groups["field"].Value.Equals("templated", StringComparison.OrdinalIgnoreCase))
-                        templated = match.Groups["value"].Value.Equals("true", StringComparison.OrdinalIgnoreCase);
-
-                    if (title == null && match.Groups["field"].Value.Equals("title", StringComparison.OrdinalIgnoreCase))
-                        title = match.Groups["value"].Value;
-                }
+                if (header.Templated)
+                    linkTemplates[header.Rel] = new UriTemplate(header.Href);
+                else
+                    links.GetOrAdd(header.Rel)[new Uri(Uri, header.Href)] = header.Title;
             }
         }
 
