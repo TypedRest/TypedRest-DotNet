@@ -23,6 +23,7 @@ namespace TypedRest
         protected BulkCollectionEndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
+            AddDefaultLink("bulk", rel: "bulk");
         }
 
         /// <summary>
@@ -34,6 +35,7 @@ namespace TypedRest
         protected BulkCollectionEndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
             : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
         {
+            AddDefaultLink("bulk", rel: "bulk");
         }
 
         public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
@@ -45,18 +47,12 @@ namespace TypedRest
             return HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
         }
 
-        /// <summary>
-        /// A relative URI that gets appended to <see cref="IEndpoint.Uri"/> for <see cref="CreateAsync"/> calls.
-        /// </summary>
-        public Uri BulkCreateSuffix { get; set; } = new Uri("bulk", UriKind.Relative);
-
         public virtual Task CreateAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-            var bulkUri = (BulkCreateSuffix == null) ? Uri : new Uri(Uri, BulkCreateSuffix);
-            return HandleResponseAsync(HttpClient.PostAsync(bulkUri, entities, Serializer, cancellationToken));
+            return HandleResponseAsync(HttpClient.PostAsync(Link("bulk"), entities, Serializer, cancellationToken));
         }
     }
 }
