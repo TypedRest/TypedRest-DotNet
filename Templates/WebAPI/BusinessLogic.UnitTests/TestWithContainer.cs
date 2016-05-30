@@ -33,7 +33,7 @@ namespace XProjectNamespaceX.BusinessLogic
         /// Creates or retrieves a <see cref="Mock"/> for a specific type. Multiple requests for the same type return the same mock instance.
         /// These are the same mocks that are injected into the <see cref="Target"/>.
         /// </summary>
-        /// <remarks>All created <see cref="Mock"/>s are automatically <see cref="Mock.Verify"/>d after the test completes.</remarks>
+        /// <remarks>All created <see cref="Mock"/>s are automatically <see cref="Mock.Verify()"/>d after the test completes.</remarks>
         protected Mock<T> GetMock<T>()
             where T : class
         {

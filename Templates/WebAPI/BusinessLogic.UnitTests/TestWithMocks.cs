@@ -14,7 +14,7 @@ namespace XProjectNamespaceX.BusinessLogic
         /// <summary>
         /// Creates a new <see cref="Mock"/> for a specific type. Multiple requests for the same type return new mock instances each time.
         /// </summary>
-        /// <remarks>All created <see cref="Mock"/>s are automatically <see cref="Mock.Verify"/>d after the test completes.</remarks>
+        /// <remarks>All created <see cref="Mock"/>s are automatically <see cref="Mock.Verify()"/>d after the test completes.</remarks>
         protected Mock<T> CreateMock<T>()
             where T : class
         {
