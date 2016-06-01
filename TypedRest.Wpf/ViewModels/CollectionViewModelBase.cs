@@ -26,9 +26,9 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = typeof (TEntity).Name;
         }
 
-        public ICollection<TEntity> Elements { get; private set; }
+        public List<TEntity> Elements { get; private set; }
 
-        public ICollection<TEntity> SelectedElements { get; set; }
+        public List<TEntity> SelectedElements { get; set; }
 
         protected override async Task OnLoadAsync()
         {

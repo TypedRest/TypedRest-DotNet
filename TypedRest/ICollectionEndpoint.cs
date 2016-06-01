@@ -44,7 +44,7 @@ namespace TypedRest
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<ICollection<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.

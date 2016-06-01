@@ -72,7 +72,7 @@ namespace TypedRest
             return _keyGetMethod.Invoke(entity, null).ToString();
         }
 
-        public virtual async Task<ICollection<TEntity>> ReadAllAsync(
+        public virtual async Task<List<TEntity>> ReadAllAsync(
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
