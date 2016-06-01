@@ -108,7 +108,6 @@
     <Compile Include="UriExtensions.cs" />
     <Compile Include="UriTemplates\CharSpec.cs" />
     <Compile Include="UriTemplates\Expression.cs" />
-    <Compile Include="UriTemplates\Extensions.cs" />
     <Compile Include="UriTemplates\IUriComponent.cs" />
     <Compile Include="UriTemplates\Literal.cs" />
     <Compile Include="UriTemplates\Operator.cs" />

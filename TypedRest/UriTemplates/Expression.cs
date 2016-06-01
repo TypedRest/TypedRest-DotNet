@@ -193,7 +193,7 @@ namespace TypedRest.UriTemplates
                         return false;
                     }
                 }
-                else if (collectionValue.Count() == 0)
+                else if (!collectionValue.Any())
                 {
                     return false;
                 }
