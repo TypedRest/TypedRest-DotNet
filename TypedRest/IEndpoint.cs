@@ -25,7 +25,6 @@ namespace TypedRest
         /// </summary>
         /// <param name="rel">The relation type of the links to look for.</param>
         /// <returns>The hrefs of the links resolved relative to this endpoint's URI.</returns>
-        /// <exception cref="KeyNotFoundException">No link with the specified <paramref name="rel"/> could be found.</exception>
         IEnumerable<Uri> GetLinks(string rel);
 
         /// <summary>
@@ -33,7 +32,6 @@ namespace TypedRest
         /// </summary>
         /// <param name="rel">The relation type of the links to look for.</param>
         /// <returns>A map of hrefs (resolved relative to this endpoint's URI) to titles (may be <c>null</c>).</returns>
-        /// <exception cref="KeyNotFoundException">No link with the specified <paramref name="rel"/> could be found.</exception>
         IDictionary<Uri, string> GetLinksWithTitles(string rel);
 
         /// <summary>

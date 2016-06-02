@@ -58,10 +58,9 @@ namespace TypedRest
         {
         }
 
-        private readonly Dictionary<string, Dictionary<Uri, string>> _defaultLinks = new Dictionary<string, Dictionary<Uri, string>>();
-
         /// <summary>
-        /// Registers one or more default links for a specific relation type. These links are used when no matching link has been provided by the server (yet).
+        /// Registers one or more default links for a specific relation type.
+        /// These links are used when no links with this relation type are provided by the server.
         /// </summary>
         /// <param name="rel">The relation type of the link to add.</param>
         /// <param name="hrefs">The hrefs of links relative to this endpoint's URI. Use <c>null</c> or an empty list to remove all previous entries for the relation type.</param>
@@ -72,13 +71,12 @@ namespace TypedRest
         public void SetDefaultLink(string rel, params string[] hrefs)
         {
             if (hrefs == null || hrefs.Length == 0) _defaultLinks.Remove(rel);
-            else  _defaultLinks[rel] = hrefs.ToDictionary(x => new Uri(Uri, x), _ => (string)null);
+            else  _defaultLinks[rel] = new HashSet<Uri>(hrefs.Select(x => new Uri(Uri, x)));
         }
 
-        private readonly Dictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
-
         /// <summary>
-        /// Registers a default link template for a specific relation type. This template is used when no matching template has been provided by the server (yet).
+        /// Registers a default link template for a specific relation type.
+        /// This template is used when no template with this relation type is provided by the server.
         /// </summary>
         /// <param name="rel">The relation type of the link template to add.</param>
         /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
@@ -163,8 +161,8 @@ namespace TypedRest
         /// </summary>
         private async Task HandleLinksAsync(HttpResponseMessage response)
         {
-            var links = new Dictionary<string, Dictionary<Uri, string>>(_defaultLinks);
-            var linkTemplates = new Dictionary<string, UriTemplate>(_defaultLinkTemplates);
+            var links = new Dictionary<string, Dictionary<Uri, string>>();
+            var linkTemplates = new Dictionary<string, UriTemplate>();
 
             HandleHeaderLinks(response.Headers, links, linkTemplates);
 
@@ -256,17 +254,35 @@ namespace TypedRest
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, Dictionary<Uri, string>> _links;
+        private Dictionary<string, Dictionary<Uri, string>> _links = new Dictionary<string, Dictionary<Uri, string>>();
+
+        // NOTE: Only modify during initial setup
+        private readonly Dictionary<string, HashSet<Uri>> _defaultLinks = new Dictionary<string, HashSet<Uri>>();
 
         public IEnumerable<Uri> GetLinks(string rel)
         {
-            return GetLinksWithTitles(rel).Keys;
+            Dictionary<Uri, string> linksForRel;
+            if (_links.TryGetValue(rel, out linksForRel))
+                return linksForRel.Keys;
+
+            HashSet<Uri> defaultLinksForRel;
+            if (_defaultLinks.TryGetValue(rel, out defaultLinksForRel))
+                return defaultLinksForRel;
+
+            return new HashSet<Uri>();
         }
 
         public IDictionary<Uri, string> GetLinksWithTitles(string rel)
         {
             Dictionary<Uri, string> linksForRel;
-            return (_links ?? _defaultLinks).TryGetValue(rel, out linksForRel) ? linksForRel : new Dictionary<Uri, string>();
+            if (_links.TryGetValue(rel, out linksForRel))
+                return linksForRel;
+
+            HashSet<Uri> defaultLinksForRel;
+            if (_defaultLinks.TryGetValue(rel, out defaultLinksForRel))
+                return defaultLinksForRel.ToDictionary(x => x, x => (string)null);
+
+            return new Dictionary<Uri, string>();
         }
 
         public Uri Link(string rel)
@@ -300,12 +316,15 @@ namespace TypedRest
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, UriTemplate> _linkTemplates;
+        private Dictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
+
+        // NOTE: Only modify during initial setup
+        private readonly Dictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
 
         public UriTemplate LinkTemplate(string rel)
         {
             UriTemplate template;
-            if (!(_linkTemplates ?? _defaultLinkTemplates).TryGetValue(rel, out template))
+            if (!_linkTemplates.TryGetValue(rel, out template) && !_defaultLinkTemplates.TryGetValue(rel, out template))
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
