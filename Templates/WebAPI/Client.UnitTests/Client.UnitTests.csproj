@@ -84,8 +84,8 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TypedRest, Version=0.25.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\TypedRest.0.25.0.0\lib\net45\TypedRest.dll</HintPath>
+    <Reference Include="TypedRest, Version=0.26.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\packages\TypedRest.0.26.0.0\lib\net45\TypedRest.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
