@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Swashbuckle.Swagger.Annotations;
 using WebApi.LinkHeader;
 using XProjectNamespaceX.BusinessLogic;
 using XProjectNamespaceX.Model;
@@ -35,6 +36,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// </summary>
         /// <param name="id">The <see cref="MyEntity.Id"/> to look for.</param>
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Specified entity not found.")]
         public virtual async Task<MyEntity> Read(long id)
         {
             // TODO: Read
@@ -46,6 +48,10 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// </summary>
         /// <param name="entity">The new <see cref="MyEntity"/>.</param>
         [HttpPost, Route("")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(HttpStatusCode.Created)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Missing or invalid request body.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Specified entity not found.")]
         public virtual async Task<IHttpActionResult> Create(MyEntity entity)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -65,6 +71,8 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// <param name="id">The <see cref="MyEntity.Id"/> of the entity to update.</param>
         /// <param name="entity">The modified <see cref="MyEntity"/>.</param>
         [HttpPut, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Missing or invalid request body.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Specified entity not found.")]
         public virtual async Task<IHttpActionResult> Update(long id, MyEntity entity)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -81,6 +89,9 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// </summary>
         /// <param name="id">The <see cref="MyEntity.Id"/> of the entity to delete.</param>
         [HttpDelete, Route("{id}")]
+        [SwaggerResponseRemoveDefaults]
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Specified entity not found.")]
         public virtual async Task Delete(long id)
         {
             // TODO: Delete

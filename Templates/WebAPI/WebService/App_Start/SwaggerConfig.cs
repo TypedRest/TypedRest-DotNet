@@ -18,7 +18,7 @@ namespace XProjectNamespaceX.WebService
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "XProjectNameX API");
-                c.IncludeXmlCommentsDir(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin"));
+                c.IncludeXmlCommentsDir(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.RelativeSearchPath));
                 c.DescribeAllEnumsAsStrings();
             }).EnableSwaggerUi(c => { c.DisableValidator(); });
         }
