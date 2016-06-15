@@ -15,35 +15,55 @@ namespace TypedRest
     public class EntryEndpoint : EndpointBase
     {
         /// <summary>
-        /// Creates a new REST interface.
+        /// Configures a connection to a REST interface.
         /// </summary>
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="credentials">The credentials used to authenticate against the REST interface. Can be <c>null</c> for no authentication.</param>
-        public EntryEndpoint(Uri uri, ICredentials credentials = null)
+        /// <param name="credentials">The credentials used to authenticate against the REST interface.</param>
+        public EntryEndpoint(Uri uri, ICredentials credentials)
             : base(BuildHttpClient(uri, credentials), uri.EnsureTrailingSlash())
         {
         }
 
         private static HttpClient BuildHttpClient(Uri uri, ICredentials credentials)
         {
-            if (credentials == null) return new HttpClient();
+            var handler = new HttpClientHandler();
+            var client = new HttpClient(handler);
 
-            var handler = new HttpClientHandler {PreAuthenticate = true, Credentials = credentials};
-
-            var basicCredentials = credentials.GetCredential(uri, "Basic");
-            if (basicCredentials == null) return new HttpClient(handler);
-
-            return new HttpClient(handler)
+            if (credentials != null)
             {
-                DefaultRequestHeaders =
-                {
-                    // Preemptively set HTTP Basic Auth header when appropriate
-                    Authorization = new AuthenticationHeaderValue(
-                        "Basic",
-                        Convert.ToBase64String(
-                            Encoding.GetEncoding("iso-8859-1").GetBytes(basicCredentials.UserName + ":" + basicCredentials.Password)))
-                }
-            };
+                handler.PreAuthenticate = true;
+                handler.Credentials = credentials;
+
+                var basicCredentials = credentials.GetCredential(uri, authType: "Basic");
+                if (basicCredentials != null)
+                    SetBasicAuthHeader(client, basicCredentials);
+            }
+
+            return client;
+        }
+
+        private static void SetBasicAuthHeader(HttpClient client, NetworkCredential basicCredentials)
+        {
+            string encodedCredentials = Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1")
+                .GetBytes(basicCredentials.UserName + ":" + basicCredentials.Password));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
+        }
+
+        /// <summary>
+        /// Configures a connection to a REST interface.
+        /// </summary>
+        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically. Extracts credentials if present.</param>
+        public EntryEndpoint(Uri uri)
+            : this(uri, ExtractCredentials(uri))
+        {
+        }
+
+        private static ICredentials ExtractCredentials(Uri uri)
+        {
+            var builder = new UriBuilder(uri);
+            return string.IsNullOrEmpty(builder.UserName)
+                ? null
+                : new NetworkCredential(builder.UserName, builder.Password);
         }
 
         /// <summary>
