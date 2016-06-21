@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using TypedRest.UriTemplates;
 
 namespace TypedRest
@@ -11,14 +12,19 @@ namespace TypedRest
     public interface IEndpoint
     {
         /// <summary>
+        /// The HTTP URI of the remote resource.
+        /// </summary>
+        Uri Uri { get; }
+
+        /// <summary>
         /// The HTTP client used to communicate with the remote resource.
         /// </summary>
         HttpClient HttpClient { get; }
 
         /// <summary>
-        /// The HTTP URI of the remote resource.
+        /// Controls the serialization of entities sent to and received from the server.
         /// </summary>
-        Uri Uri { get; }
+        MediaTypeFormatter Serializer { get; }
 
         /// <summary>
         /// Retrieves all links with a specific relation type cached from the last request.

@@ -18,22 +18,27 @@ namespace TypedRest
     /// </summary>
     public abstract class EndpointBase : IEndpoint
     {
+        public Uri Uri { get; }
+
         public HttpClient HttpClient { get; }
 
-        public Uri Uri { get; }
+        public MediaTypeFormatter Serializer { get; }
 
         /// <summary>
         /// Creates a new REST endpoint with an absolute URI.
         /// </summary>
-        /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="uri">The HTTP URI of the remote element.</param>
-        protected EndpointBase(HttpClient httpClient, Uri uri)
+        /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
+        /// <param name="serializer">Controls the serialization of entities sent to and received from the server.</param>
+        protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer)
         {
-            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
             if (uri == null) throw new ArgumentNullException(nameof(uri));
+            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
+            if (serializer == null) throw new ArgumentNullException(nameof(serializer));
 
-            HttpClient = httpClient;
             Uri = uri;
+            HttpClient = httpClient;
+            Serializer = serializer;
         }
 
         /// <summary>
@@ -42,8 +47,10 @@ namespace TypedRest
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
         /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        protected EndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : this(parent.HttpClient, new Uri(ensureTrailingSlashOnParentUri ? parent.Uri.EnsureTrailingSlash() : parent.Uri, relativeUri))
+        protected EndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false) : this(
+            uri: new Uri(ensureTrailingSlashOnParentUri ? parent.Uri.EnsureTrailingSlash() : parent.Uri, relativeUri),
+            httpClient: parent.HttpClient,
+            serializer: parent.Serializer)
         {
         }
 
@@ -71,7 +78,7 @@ namespace TypedRest
         public void SetDefaultLink(string rel, params string[] hrefs)
         {
             if (hrefs == null || hrefs.Length == 0) _defaultLinks.Remove(rel);
-            else  _defaultLinks[rel] = new HashSet<Uri>(hrefs.Select(x => new Uri(Uri, x)));
+            else _defaultLinks[rel] = new HashSet<Uri>(hrefs.Select(x => new Uri(Uri, x)));
         }
 
         /// <summary>
@@ -378,12 +385,6 @@ namespace TypedRest
             if (_allowedVerbs.Count == 0) return null;
             return _allowedVerbs.Contains(verb);
         }
-
-        /// <summary>
-        /// The <see cref="MediaTypeFormatter"/> used to serialize entities for transmission.
-        /// </summary>
-        protected virtual MediaTypeFormatter Serializer =>
-            new JsonMediaTypeFormatter {SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}};
 
         public override string ToString()
         {

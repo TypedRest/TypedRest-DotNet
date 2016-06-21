@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TypedRest
 {
@@ -18,9 +20,12 @@ namespace TypedRest
         /// Configures a connection to a REST interface.
         /// </summary>
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="credentials">The credentials used to authenticate against the REST interface.</param>
-        public EntryEndpoint(Uri uri, ICredentials credentials)
-            : base(BuildHttpClient(uri, credentials), uri.EnsureTrailingSlash())
+        /// <param name="credentials">The credentials used to authenticate against the REST interface. Extracts credentials from <paramref name="uri"/> is unset.</param>
+        /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
+        public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null) : base(
+            uri: uri.EnsureTrailingSlash(),
+            httpClient: BuildHttpClient(uri, credentials ?? ExtractCredentials(uri)),
+            serializer: serializer ?? BuildSerializer())
         {
         }
 
@@ -49,21 +54,20 @@ namespace TypedRest
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
         }
 
-        /// <summary>
-        /// Configures a connection to a REST interface.
-        /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically. Extracts credentials if present.</param>
-        public EntryEndpoint(Uri uri)
-            : this(uri, ExtractCredentials(uri))
-        {
-        }
-
         private static ICredentials ExtractCredentials(Uri uri)
         {
             var builder = new UriBuilder(uri);
             return string.IsNullOrEmpty(builder.UserName)
                 ? null
                 : new NetworkCredential(builder.UserName, builder.Password);
+        }
+
+        private static MediaTypeFormatter BuildSerializer()
+        {
+            return new JsonMediaTypeFormatter
+            {
+                SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}
+            };
         }
 
         /// <summary>

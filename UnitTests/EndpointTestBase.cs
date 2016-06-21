@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -37,7 +38,7 @@ namespace TypedRest
         private class MockEntryEndpoint : EndpointBase
         {
             public MockEntryEndpoint(HttpMessageHandler messageHandler)
-                : base(new HttpClient(messageHandler), new Uri("http://localhost/"))
+                : base(new Uri("http://localhost/"), new HttpClient(messageHandler), new JsonMediaTypeFormatter())
             {
             }
         }
