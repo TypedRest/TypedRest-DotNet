@@ -52,7 +52,7 @@ namespace TypedRest
 
             var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
             return new PartialResponse<TEntity>(
-                elements: await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken).NoContext(),
+                elements: await response.Content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext(),
                 range: response.Content.Headers.ContentRange);
         }
     }

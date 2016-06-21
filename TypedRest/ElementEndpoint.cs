@@ -57,7 +57,7 @@ namespace TypedRest
 
             await HandleResponseAsync(Task.FromResult(response)).NoContext();
             _etag = response.Headers.ETag;
-            return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(cancellationToken).NoContext();
+            return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(new[] { Serializer }, cancellationToken).NoContext();
         }
 
         public async Task<bool> ExistsAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -88,7 +88,7 @@ namespace TypedRest
 
             return response.Content == null
                 ? default(TEntity)
-                : await response.Content.ReadAsAsync<TEntity>(cancellationToken);
+                : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
         }
 
         public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);

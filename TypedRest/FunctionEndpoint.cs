@@ -42,7 +42,7 @@ namespace TypedRest
                         cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
-                ? await response.Content.ReadAsAsync<TResult>(cancellationToken)
+                ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)
                 : default(TResult);
         }
     }
@@ -85,7 +85,7 @@ namespace TypedRest
                 await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
-                ? await response.Content.ReadAsAsync<TResult>(cancellationToken)
+                ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)
                 : default(TResult);
         }
     }

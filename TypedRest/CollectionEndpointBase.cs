@@ -76,7 +76,7 @@ namespace TypedRest
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
-            return await response.Content.ReadAsAsync<List<TEntity>>(cancellationToken).NoContext();
+            return await response.Content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
         }
 
         public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);
