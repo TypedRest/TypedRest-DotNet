@@ -21,14 +21,6 @@ namespace TypedRest
             EntryEndpoint = new MockEntryEndpoint(Mock = new SubMockHttpMessageHandler());
         }
 
-        private class SubMockHttpMessageHandler : MockHttpMessageHandler
-        {
-            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                return await base.SendAsync(request, cancellationToken);
-            }
-        }
-
         [TearDown]
         public void TearDown()
         {
@@ -40,6 +32,14 @@ namespace TypedRest
             public MockEntryEndpoint(HttpMessageHandler messageHandler)
                 : base(new Uri("http://localhost/"), new HttpClient(messageHandler), new JsonMediaTypeFormatter())
             {
+            }
+        }
+
+        private class SubMockHttpMessageHandler : MockHttpMessageHandler
+        {
+            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return await base.SendAsync(request, cancellationToken);
             }
         }
     }

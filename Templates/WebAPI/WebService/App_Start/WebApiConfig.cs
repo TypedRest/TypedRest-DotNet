@@ -27,11 +27,11 @@ namespace XProjectNamespaceX.WebService
             config.Filters.Add(new ExceptionHandlingAttribute());
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            config.EnableHttpOptions();
-            config.EnableHttpHead();
             config.EnableVersionHeader();
             config.EnableBasicAuth();
             config.EnableRequestLogging();
+            config.EnableHttpOptions();
+            config.EnableHttpHead();
 
             config.EnsureInitialized();
         }
