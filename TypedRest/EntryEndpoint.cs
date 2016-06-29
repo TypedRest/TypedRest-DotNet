@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace TypedRest
 {
@@ -66,7 +68,13 @@ namespace TypedRest
         {
             return new JsonMediaTypeFormatter
             {
-                SerializerSettings = {DefaultValueHandling = DefaultValueHandling.Ignore}
+                SerializerSettings =
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    Converters = {new StringEnumConverter {CamelCaseText = true}},
+                    NullValueHandling = NullValueHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Auto
+                }
             };
         }
 
