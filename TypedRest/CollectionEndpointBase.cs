@@ -40,39 +40,39 @@ namespace TypedRest
             SetupChildHandling();
         }
 
-        private MethodInfo _keyGetMethod;
+        private MethodInfo _getIdMethod;
 
         private void SetupChildHandling()
         {
-            var keyProperty = typeof(TEntity).GetRuntimeProperties()
+            var idProperty = typeof(TEntity).GetRuntimeProperties()
                 .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
-            if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
+            if (idProperty != null) _getIdMethod = idProperty.GetMethod;
 
             SetDefaultLinkTemplate(rel: "child", href: "{id}");
         }
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }
 
-        public TElementEndpoint this[string key]
+        public TElementEndpoint this[string id]
         {
             get
             {
-                if (key == null) throw new ArgumentNullException(nameof(key));
+                if (id == null) throw new ArgumentNullException(nameof(id));
 
-                return this[LinkTemplate("child", new {id = key})];
+                return this[LinkTemplate("child", new {id = id})];
             }
         }
 
-        public TElementEndpoint this[TEntity entity] => this[GetCollectionKey(entity)];
+        public TElementEndpoint this[TEntity entity] => this[GetCollectionId(entity)];
 
         /// <summary>
-        /// Maps the <paramref name="entity"/> to an key usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
+        /// Maps the <paramref name="entity"/> to an ID usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
         /// </summary>
-        protected virtual string GetCollectionKey(TEntity entity)
+        protected virtual string GetCollectionId(TEntity entity)
         {
-            if (_keyGetMethod == null)
+            if (_getIdMethod == null)
                 throw new InvalidOperationException(typeof (TElementEndpoint).Name + " has no property marked with [Key] attribute.");
-            return _keyGetMethod.Invoke(entity, null).ToString();
+            return _getIdMethod.Invoke(entity, null).ToString();
         }
 
         public virtual async Task<List<TEntity>> ReadAllAsync(

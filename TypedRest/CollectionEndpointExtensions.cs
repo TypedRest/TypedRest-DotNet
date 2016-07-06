@@ -19,15 +19,15 @@ namespace TypedRest
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
         /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
-        /// <param name="key">The key identifying the entity in the collection.</param>
+        /// <param name="id">The ID identifying the entity in the collection.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
-        public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string key, CancellationToken cancellationToken = default(CancellationToken))
+        public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity>
         {
-            return endpoint[key].ExistsAsync(cancellationToken);
+            return endpoint[id].ExistsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace TypedRest
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
         /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
-        /// <param name="key">The key identifying the entity in the collection.</param>
+        /// <param name="id">The ID identifying the entity in the collection.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
@@ -82,10 +82,10 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>.</remarks>
-        public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string key, CancellationToken cancellationToken = default(CancellationToken))
+        public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity>
         {
-            return endpoint[key].DeleteAsync(cancellationToken);
+            return endpoint[id].DeleteAsync(cancellationToken);
         }
 
         /// <summary>

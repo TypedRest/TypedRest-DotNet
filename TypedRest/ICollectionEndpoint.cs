@@ -26,9 +26,9 @@ namespace TypedRest
         /// <summary>
         /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. May perform network traffic to look up an URI template.
         /// </summary>
-        /// <param name="key">The key identifying the entity in the collection.</param>
+        /// <param name="id">The ID identifying the entity in the collection.</param>
         /// <remarks>Uses a link template with the relation type <c>child</c> to determine the URIs of child elements. Defaults to <c>{id}</c>.</remarks>
-        TElementEndpoint this[string key] { get; }
+        TElementEndpoint this[string id] { get; }
 
         /// <summary>
         /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection. May perform network traffic to look up an URI template.
