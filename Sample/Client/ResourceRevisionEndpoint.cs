@@ -9,8 +9,8 @@ namespace TypedRestSample.Client
     /// </summary>
     public class ResourceRevisionEndpoint : ElementEndpoint<ResourceRevision>
     {
-        public ResourceRevisionEndpoint(ResourceRevisionCollectionEndpoint parent, Uri relativeUri)
-            : base(parent, relativeUri)
+        public ResourceRevisionEndpoint(ResourceRevisionCollectionEndpoint referrer, Uri relativeUri)
+            : base(referrer, relativeUri)
         {
         }
 

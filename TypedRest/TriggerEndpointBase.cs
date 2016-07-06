@@ -13,20 +13,20 @@ namespace TypedRest
         /// <summary>
         /// Creates a new trigger endpoint with a relative URI.
         /// </summary>
-        /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        protected TriggerEndpointBase(IEndpoint parent, Uri relativeUri)
-            : base(parent, relativeUri)
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
+        protected TriggerEndpointBase(IEndpoint referrer, Uri relativeUri)
+            : base(referrer, relativeUri)
         {
         }
 
         /// <summary>
         /// Creates a new trigger endpoint with a relative URI.
         /// </summary>
-        /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
-        protected TriggerEndpointBase(IEndpoint parent, string relativeUri)
-            : base(parent, relativeUri)
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        protected TriggerEndpointBase(IEndpoint referrer, string relativeUri)
+            : base(referrer, relativeUri)
         {
         }
 

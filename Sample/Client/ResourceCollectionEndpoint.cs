@@ -9,8 +9,8 @@ namespace TypedRestSample.Client
     /// </summary>
     public class ResourceCollectionEndpoint : CollectionEndpointBase<Resource, ResourceEndpoint>
     {
-        public ResourceCollectionEndpoint(IEndpoint parent)
-            : base(parent, parent.Link("resources"))
+        public ResourceCollectionEndpoint(IEndpoint referrer)
+            : base(referrer, referrer.Link("resources"))
         {
         }
 

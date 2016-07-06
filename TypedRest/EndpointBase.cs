@@ -44,24 +44,24 @@ namespace TypedRest
         /// <summary>
         /// Creates a new REST endpoint with a relative URI.
         /// </summary>
-        /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
-        protected EndpointBase(IEndpoint parent, Uri relativeUri) : this(
-            uri: new Uri(parent.Uri, relativeUri),
-            httpClient: parent.HttpClient,
-            serializer: parent.Serializer)
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        protected EndpointBase(IEndpoint referrer, Uri relativeUri) : this(
+            uri: new Uri(referrer.Uri, relativeUri),
+            httpClient: referrer.HttpClient,
+            serializer: referrer.Serializer)
         {
         }
 
         /// <summary>
         /// Creates a new REST endpoint with a relative URI.
         /// </summary>
-        /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
-        protected EndpointBase(IEndpoint parent, string relativeUri) : this(
-            uri: new Uri(relativeUri.StartsWith("./") ? parent.Uri.EnsureTrailingSlash() : parent.Uri, relativeUri),
-            httpClient: parent.HttpClient,
-            serializer: parent.Serializer)
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        protected EndpointBase(IEndpoint referrer, string relativeUri) : this(
+            uri: new Uri(relativeUri.StartsWith("./") ? referrer.Uri.EnsureTrailingSlash() : referrer.Uri, relativeUri),
+            httpClient: referrer.HttpClient,
+            serializer: referrer.Serializer)
         {
         }
 

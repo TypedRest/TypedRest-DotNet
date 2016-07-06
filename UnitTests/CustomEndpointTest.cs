@@ -290,7 +290,7 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestEnsureTrailingSlashOnParentUri()
+        public void TestEnsureTrailingSlashOnReferrerUri()
         {
             new ActionEndpoint(_endpoint, "subresource").Uri.Should().Be(new Uri("http://localhost/subresource"));
             new ActionEndpoint(_endpoint, "./subresource").Uri.Should().Be(new Uri("http://localhost/endpoint/subresource"));
@@ -298,7 +298,7 @@ namespace TypedRest
 
         private class CustomEndpoint : EndpointBase
         {
-            public CustomEndpoint(IEndpoint parent, string relativeUri) : base(parent, relativeUri)
+            public CustomEndpoint(IEndpoint referrer, string relativeUri) : base(referrer, relativeUri)
             {
             }
 

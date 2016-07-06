@@ -17,10 +17,10 @@ namespace TypedRest
         /// <summary>
         /// Creates a new bulk collection endpoint.
         /// </summary>
-        /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        protected BulkCollectionEndpointBase(IEndpoint parent, Uri relativeUri)
-            : base(parent, relativeUri)
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
+        protected BulkCollectionEndpointBase(IEndpoint referrer, Uri relativeUri)
+            : base(referrer, relativeUri)
         {
             SetDefaultLink(rel: "bulk", hrefs: "bulk");
         }
@@ -28,10 +28,10 @@ namespace TypedRest
         /// <summary>
         /// Creates a new bulk collection endpoint.
         /// </summary>
-        /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
-        protected BulkCollectionEndpointBase(IEndpoint parent, string relativeUri)
-            : base(parent, relativeUri)
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        protected BulkCollectionEndpointBase(IEndpoint referrer, string relativeUri)
+            : base(referrer, relativeUri)
         {
             SetDefaultLink(rel: "bulk", hrefs: "bulk");
         }

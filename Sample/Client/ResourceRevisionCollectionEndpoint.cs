@@ -9,8 +9,8 @@ namespace TypedRestSample.Client
     /// </summary>
     public class ResourceRevisionCollectionEndpoint : CollectionEndpointBase<ResourceRevision, ResourceRevisionEndpoint>
     {
-        public ResourceRevisionCollectionEndpoint(IEndpoint parent)
-            : base(parent, parent.Link("revisions"))
+        public ResourceRevisionCollectionEndpoint(IEndpoint referrer)
+            : base(referrer, referrer.Link("revisions"))
         {
         }
 
