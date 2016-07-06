@@ -18,34 +18,37 @@ namespace TypedRest
     public abstract class CollectionEndpointBase<TEntity, TElementEndpoint> : EndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
-        private readonly MethodInfo _keyGetMethod;
-
         /// <summary>
         /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        protected CollectionEndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : base(parent, relativeUri.EnsureTrailingSlash(), ensureTrailingSlashOnParentUri)
+        protected CollectionEndpointBase(IEndpoint parent, Uri relativeUri)
+            : base(parent, relativeUri.EnsureTrailingSlash())
         {
-            var keyProperty = typeof(TEntity).GetRuntimeProperties()
-                .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
-            if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
-
-            SetDefaultLinkTemplate(rel: "child", href: "{id}");
+            SetupChildHandling();
         }
 
         /// <summary>
         /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        protected CollectionEndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            // Use this instead of base to ensure trailing slash gets appended for REST collection URIs
-            : this(parent, new Uri(relativeUri, UriKind.RelativeOrAbsolute), ensureTrailingSlashOnParentUri)
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
+        protected CollectionEndpointBase(IEndpoint parent, string relativeUri)
+            : base(parent, relativeUri.EndsWith("/") ? relativeUri : relativeUri + "/")
         {
+            SetupChildHandling();
+        }
+
+        private MethodInfo _keyGetMethod;
+
+        private void SetupChildHandling()
+        {
+            var keyProperty = typeof(TEntity).GetRuntimeProperties()
+                .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
+            if (keyProperty != null) _keyGetMethod = keyProperty.GetMethod;
+
+            SetDefaultLinkTemplate(rel: "child", href: "{id}");
         }
 
         public abstract TElementEndpoint this[Uri relativeUri] { get; }

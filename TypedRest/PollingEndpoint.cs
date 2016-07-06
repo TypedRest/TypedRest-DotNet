@@ -17,10 +17,9 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        /// <param name="endCondition">An optional predicate determining which entity state ends the polling process.</param>
-        public PollingEndpoint(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false, Predicate<TEntity> endCondition = null)
-            : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
+        /// <param name="endCondition">A check to determine whether the entity has reached its final state an no further polling is required.</param>
+        public PollingEndpoint(IEndpoint parent, Uri relativeUri, Predicate<TEntity> endCondition = null)
+            : base(parent, relativeUri)
         {
             _endCondition = endCondition;
         }
@@ -29,11 +28,10 @@ namespace TypedRest
         /// Creates a new polling endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        /// <param name="endCondition">An optional predicate determining which entity state ends the polling process.</param>
-        public PollingEndpoint(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false, Predicate<TEntity> endCondition = null)
-            : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
+        /// <param name="endCondition">A check to determine whether the entity has reached its final state an no further polling is required.</param>
+        public PollingEndpoint(IEndpoint parent, string relativeUri, Predicate<TEntity> endCondition = null)
+            : base(parent, relativeUri)
         {
             _endCondition = endCondition;
         }

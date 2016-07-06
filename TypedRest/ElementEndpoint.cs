@@ -19,9 +19,8 @@ namespace TypedRest
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        public ElementEndpoint(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
+        public ElementEndpoint(IEndpoint parent, Uri relativeUri)
+            : base(parent, relativeUri)
         {
         }
 
@@ -29,10 +28,9 @@ namespace TypedRest
         /// Creates a new element endpoint.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        public ElementEndpoint(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : base(parent, relativeUri, ensureTrailingSlashOnParentUri)
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
+        public ElementEndpoint(IEndpoint parent, string relativeUri)
+            : base(parent, relativeUri)
         {
         }
 

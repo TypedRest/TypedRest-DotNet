@@ -45,10 +45,9 @@ namespace TypedRest
         /// Creates a new REST endpoint with a relative URI.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        protected EndpointBase(IEndpoint parent, Uri relativeUri, bool ensureTrailingSlashOnParentUri = false) : this(
-            uri: new Uri(ensureTrailingSlashOnParentUri ? parent.Uri.EnsureTrailingSlash() : parent.Uri, relativeUri),
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
+        protected EndpointBase(IEndpoint parent, Uri relativeUri) : this(
+            uri: new Uri(parent.Uri, relativeUri),
             httpClient: parent.HttpClient,
             serializer: parent.Serializer)
         {
@@ -58,10 +57,11 @@ namespace TypedRest
         /// Creates a new REST endpoint with a relative URI.
         /// </summary>
         /// <param name="parent">The parent endpoint containing this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s.</param>
-        /// <param name="ensureTrailingSlashOnParentUri">If true, ensures a trailing slash on the parent uri.</param>
-        protected EndpointBase(IEndpoint parent, string relativeUri, bool ensureTrailingSlashOnParentUri = false)
-            : this(parent, new Uri(relativeUri, UriKind.RelativeOrAbsolute), ensureTrailingSlashOnParentUri)
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="parent"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="parent"/> URI if missing.</param>
+        protected EndpointBase(IEndpoint parent, string relativeUri) : this(
+            uri: new Uri(relativeUri.StartsWith("./") ? parent.Uri.EnsureTrailingSlash() : parent.Uri, relativeUri),
+            httpClient: parent.HttpClient,
+            serializer: parent.Serializer)
         {
         }
 
