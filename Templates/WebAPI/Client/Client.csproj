@@ -61,7 +61,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="TypedRest, Version=0.28.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\TypedRest.0.28.0.0\lib\net45\TypedRest.dll</HintPath>
+      <HintPath>..\packages\TypedRest.0.28.0\lib\net45\TypedRest.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
