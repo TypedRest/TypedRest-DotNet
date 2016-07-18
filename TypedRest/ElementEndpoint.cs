@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,7 +10,7 @@ namespace TypedRest
     /// REST endpoint that represents a single <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class ElementEndpoint<TEntity> : EndpointBase, IElementEndpoint<TEntity>
+    public class ElementEndpoint<TEntity> : ETagEndpointBase, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new element endpoint.
@@ -34,28 +32,10 @@ namespace TypedRest
         {
         }
 
-        /// <summary>
-        /// The last entity tag returned by the server. Used for caching and to avoid lost updates.
-        /// </summary>
-        private EntityTagHeaderValue _etag;
-
-        /// <summary>
-        /// The last entity returned by the server. Used for caching.
-        /// </summary>
-        private TEntity _cachedResponse;
-
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, Uri);
-            if (_etag != null) request.Headers.IfNoneMatch.Add(_etag);
-
-            var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
-            if (response.StatusCode == HttpStatusCode.NotModified && _cachedResponse != null)
-                return _cachedResponse;
-
-            await HandleResponseAsync(Task.FromResult(response)).NoContext();
-            _etag = response.Headers.ETag;
-            return _cachedResponse = await response.Content.ReadAsAsync<TEntity>(new[] { Serializer }, cancellationToken).NoContext();
+            var content = await GetContentAsync(cancellationToken);
+            return await content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken).NoContext();
         }
 
         public async Task<bool> ExistsAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -77,13 +57,8 @@ namespace TypedRest
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var request = new HttpRequestMessage(HttpMethod.Put, Uri)
-            {
-                Content = new ObjectContent<TEntity>(entity, Serializer)
-            };
-            if (_etag != null) request.Headers.IfMatch.Add(_etag);
-            var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
-
+            var content = new ObjectContent<TEntity>(entity, Serializer);
+            var response = await PutContentAsync(content, cancellationToken);
             return response.Content == null
                 ? default(TEntity)
                 : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
@@ -91,9 +66,9 @@ namespace TypedRest
 
         public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);
 
-        public virtual Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return HandleResponseAsync(HttpClient.DeleteAsync(Uri, cancellationToken));
+            await DeleteContentAsync(cancellationToken);
         }
     }
 }

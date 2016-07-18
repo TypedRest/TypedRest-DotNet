@@ -65,7 +65,7 @@ namespace TypedRest
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
+        /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your delete call was rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
     }

@@ -38,11 +38,12 @@ namespace TypedRest
 
         public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
 
-        public Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
+        public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-            return HandleResponseAsync(HttpClient.PutAsync(Uri, entities, Serializer, cancellationToken));
+            var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializer);
+            await PutContentAsync(content, cancellationToken);
         }
 
         public virtual Task CreateAsync(IEnumerable<TEntity> entities,

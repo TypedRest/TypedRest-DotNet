@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace TypedRest
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public abstract class CollectionEndpointBase<TEntity, TElementEndpoint> : EndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
+    public abstract class CollectionEndpointBase<TEntity, TElementEndpoint> : ETagEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
@@ -75,11 +76,10 @@ namespace TypedRest
             return _getIdMethod.Invoke(entity, null).ToString();
         }
 
-        public virtual async Task<List<TEntity>> ReadAllAsync(
-            CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
-            return await response.Content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
+            var content = await GetContentAsync(cancellationToken);
+            return await content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
         }
 
         public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);

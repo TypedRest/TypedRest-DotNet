@@ -80,6 +80,7 @@
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
     <Compile Include="EntryEndpoint.cs" />
+    <Compile Include="EtagEndpointBase.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FunctionEndpoint.cs" />
     <Compile Include="HttpClientExtensions.cs" />

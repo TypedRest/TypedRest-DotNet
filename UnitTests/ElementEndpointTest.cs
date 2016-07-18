@@ -40,14 +40,17 @@ namespace TypedRest
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
                 });
-            var result = await _endpoint.ReadAsync();
-            result.Should().Be(new MockEntity(5, "test"));
+            var result1 = await _endpoint.ReadAsync();
+            result1.Should().Be(new MockEntity(5, "test"));
 
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("If-None-Match", "\"123abc\"")
                 .Respond(HttpStatusCode.NotModified);
-            result = await _endpoint.ReadAsync();
-            result.Should().Be(new MockEntity(5, "test"));
+            var result2 = await _endpoint.ReadAsync();
+            result2.Should().Be(new MockEntity(5, "test"));
+
+            result2.Should().NotBeSameAs(result1,
+                because: "Cache responses, not deserialized objects");
         }
 
         [Test]
@@ -92,7 +95,7 @@ namespace TypedRest
         }
 
         [Test]
-        public async Task TestUpdateEtag()
+        public async Task TestUpdateETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(new HttpResponseMessage
@@ -113,6 +116,24 @@ namespace TypedRest
         public async Task TestDelete()
         {
             Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
+                .Respond(HttpStatusCode.NoContent);
+
+            await _endpoint.DeleteAsync();
+        }
+
+        [Test]
+        public async Task TestDeleteETag()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Headers = { ETag = new EntityTagHeaderValue("\"123abc\"") }
+                });
+            await _endpoint.ReadAsync();
+
+            Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
+                .WithHeaders("If-Match", "\"123abc\"")
                 .Respond(HttpStatusCode.NoContent);
 
             await _endpoint.DeleteAsync();
