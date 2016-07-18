@@ -133,8 +133,8 @@
       <HintPath>..\packages\WebApi.Pagination.0.4.0.0\lib\net45\WebApi.Pagination.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebApi.RequestLogging, Version=0.8.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebApi.RequestLogging.0.8.0.0\lib\net45\WebApi.RequestLogging.dll</HintPath>
+    <Reference Include="WebApi.RequestLogging, Version=0.9.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApi.RequestLogging.0.9.0\lib\net45\WebApi.RequestLogging.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
