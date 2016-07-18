@@ -15,8 +15,8 @@ namespace XProjectNamespaceX.Client
         /// Configures a connection to the XProjectNameX API.
         /// </summary>
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="credentials">The credentials used to authenticate against the REST interface.</param>
-        public MyEntryEndpoint(Uri uri, ICredentials credentials)
+        /// <param name="credentials">The credentials used to authenticate against the REST interface. Extracts credentials from <paramref name="uri"/> is unset.</param>
+        public MyEntryEndpoint(Uri uri, ICredentials credentials = null)
             : base(uri, credentials)
         {
         }
@@ -25,7 +25,7 @@ namespace XProjectNamespaceX.Client
         /// Configures a connection to the XProjectNameX API using credentials from ConnectionStrings.
         /// </summary>
         public MyEntryEndpoint()
-            : base(new Uri(ConfigurationManager.ConnectionStrings["XProjectNamespaceX"].ConnectionString))
+            : this(new Uri(ConfigurationManager.ConnectionStrings["XProjectNamespaceX"].ConnectionString))
         {
         }
 

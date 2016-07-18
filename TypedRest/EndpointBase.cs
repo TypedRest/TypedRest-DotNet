@@ -45,7 +45,7 @@ namespace TypedRest
         /// Creates a new REST endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         protected EndpointBase(IEndpoint referrer, Uri relativeUri) : this(
             uri: new Uri(referrer.Uri, relativeUri),
             httpClient: referrer.HttpClient,
