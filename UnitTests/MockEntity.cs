@@ -1,11 +1,9 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace TypedRest
 {
-    public class MockEntity
+    public class MockEntity : MockEntityBase
     {
-        [Key]
-        public long Id { get; set; }
+        // NOTE: [Key] is inherited
+        public override long Id { get; set; }
 
         public string Name { get; set; }
 

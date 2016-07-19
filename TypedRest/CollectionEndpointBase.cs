@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,8 +44,8 @@ namespace TypedRest
 
         private void SetupChildHandling()
         {
-            var idProperty = typeof(TEntity).GetRuntimeProperties()
-                .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttributes(typeof(KeyAttribute), inherit: true).Any());
+            var idProperty = typeof(TEntity).GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .FirstOrDefault(x => x.GetMethod != null && Attribute.GetCustomAttribute(x, typeof(KeyAttribute), inherit: true) != null);
             if (idProperty != null) _getIdMethod = idProperty.GetMethod;
 
             SetDefaultLinkTemplate(rel: "child", href: "{id}");
@@ -72,7 +71,7 @@ namespace TypedRest
         protected virtual string GetCollectionId(TEntity entity)
         {
             if (_getIdMethod == null)
-                throw new InvalidOperationException(typeof (TElementEndpoint).Name + " has no property marked with [Key] attribute.");
+                throw new InvalidOperationException(typeof (TEntity).Name + " has no property marked with [Key] attribute.");
             return _getIdMethod.Invoke(entity, null).ToString();
         }
 
