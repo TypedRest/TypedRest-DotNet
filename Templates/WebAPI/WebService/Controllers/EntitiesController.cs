@@ -11,7 +11,7 @@ using XProjectNamespaceX.Model;
 namespace XProjectNamespaceX.WebService.Controllers
 {
     [RoutePrefix("entities")]
-    [Authorize(Roles = "MyRole")]
+    [Authorize]
     public class EntitiesController : ApiController
     {
         private readonly IMyService _myService;
@@ -48,6 +48,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// </summary>
         /// <param name="entity">The new <see cref="MyEntity"/>.</param>
         [HttpPost, Route("")]
+        [Authorize(Roles = "MyRole")]
         [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(HttpStatusCode.Created)]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Missing or invalid request body.")]
@@ -71,6 +72,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// <param name="id">The <see cref="MyEntity.Id"/> of the entity to update.</param>
         /// <param name="entity">The modified <see cref="MyEntity"/>.</param>
         [HttpPut, Route("{id}")]
+        [Authorize(Roles = "MyRole")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Missing or invalid request body.")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Specified entity not found.")]
         public virtual async Task<IHttpActionResult> Update(long id, MyEntity entity)
@@ -89,6 +91,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// </summary>
         /// <param name="id">The <see cref="MyEntity.Id"/> of the entity to delete.</param>
         [HttpDelete, Route("{id}")]
+        [Authorize(Roles = "MyRole")]
         [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound, "Specified entity not found.")]
