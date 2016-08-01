@@ -12,7 +12,9 @@ namespace XProjectNamespaceX.WebService
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseWebApi(WebApiConfig.Build(UnityConfig.InitContainer()));
+            app
+                .UseJwtAuthentication()
+                .UseWebApi(WebApiConfig.Build(UnityConfig.InitContainer()));
         }
     }
 }
