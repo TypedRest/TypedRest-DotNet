@@ -47,14 +47,14 @@ namespace TypedRest.CommandLine
             return _commandProviders.TryGetValue(name, out commandProvider) ? commandProvider(Endpoint) : null;
         }
 
-        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
+        protected override Task ExecuteInnerAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = new CancellationToken())
         {
             Console.Error.WriteLine("Known commands:");
             foreach (string name in _commandProviders.Keys)
                 Console.Error.WriteLine(name);
 
-            await base.ExecuteInnerAsync(args, cancellationToken);
+            return base.ExecuteInnerAsync(args, cancellationToken);
         }
     }
 }

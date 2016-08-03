@@ -22,7 +22,7 @@ namespace TypedRestSample.Client.CommandLine
                 var newEntity = new ResourceRevision {Name = args[1]};
                 var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
                 using (var stream = File.OpenRead(args[2]))
-                    await newEndpoint.Blob.UploadFromAsync(stream);
+                    await newEndpoint.Blob.UploadFromAsync(stream, cancellationToken: cancellationToken);
                 Console.WriteLine(newEndpoint.Uri);
             }
             else await base.ExecuteInnerAsync(args, cancellationToken);
