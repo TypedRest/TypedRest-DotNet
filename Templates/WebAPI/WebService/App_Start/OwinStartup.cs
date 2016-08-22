@@ -13,7 +13,6 @@ namespace XProjectNamespaceX.WebService
         public void Configuration(IAppBuilder app)
         {
             app
-                .UseJwtAuthentication()
                 .UseWebApi(WebApiConfig.Build(UnityConfig.InitContainer()));
         }
     }
