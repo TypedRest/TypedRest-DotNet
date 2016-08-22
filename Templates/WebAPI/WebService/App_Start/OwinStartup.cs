@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using NLog.Owin.Logging;
 using Owin;
 
 [assembly: OwinStartup(typeof(XProjectNamespaceX.WebService.OwinStartup))]
@@ -13,6 +14,7 @@ namespace XProjectNamespaceX.WebService
         public void Configuration(IAppBuilder app)
         {
             app
+                .UseNLog()
                 .UseWebApi(WebApiConfig.Build(UnityConfig.InitContainer()));
         }
     }
