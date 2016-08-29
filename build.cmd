@@ -12,18 +12,18 @@ if not defined VS140COMNTOOLS (
 )
 call "%VS140COMNTOOLS%vsvars32.bat"
 
-::Compile Visual Studio solution
+echo Compiling Visual Studio solution...
 nuget restore TypedRest.sln
-msbuild TypedRest.sln /nologo /t:Rebuild /p:Configuration=%BuildConfiguration%;VersionSuffix=""
+msbuild TypedRest.sln /nologo /v:q /m /t:Rebuild /p:Configuration=%BuildConfiguration%;VersionSuffix=""
 if errorlevel 1 pause
 
-::Create NuGet packages
+echo Creating NuGet packages...
 mkdir build\%BuildConfiguration%\Packages
-nuget pack TypedRest\TypedRest.csproj -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
+nuget pack TypedRest\TypedRest.csproj -Verbosity quiet -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
 if errorlevel 1 pause
-nuget pack TypedRest.CommandLine\TypedRest.CommandLine.csproj -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
+nuget pack TypedRest.CommandLine\TypedRest.CommandLine.csproj -Verbosity quiet -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
 if errorlevel 1 pause
-nuget pack TypedRest.Wpf\TypedRest.Wpf.csproj -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
+nuget pack TypedRest.Wpf\TypedRest.Wpf.csproj -Verbosity quiet -Properties Configuration=%BuildConfiguration%;VersionSuffix="" -Symbols -OutputDirectory build\%BuildConfiguration%\Packages
 if errorlevel 1 pause
 
 pushd templates
