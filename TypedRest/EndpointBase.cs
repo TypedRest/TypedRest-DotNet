@@ -158,6 +158,10 @@ namespace TypedRest
                 case HttpStatusCode.PreconditionFailed:
                 case HttpStatusCode.RequestedRangeNotSatisfiable:
                     throw new InvalidOperationException(message, new HttpRequestException(body));
+                //case HttpStatusCode.RequestedRangeNotSatisfiable:
+                //    throw new VersionNotFoundException(message, new HttpRequestException(body));
+                case HttpStatusCode.RequestTimeout:
+                    throw new TimeoutException(message, new HttpRequestException(body));
                 default:
                     throw new HttpRequestException(message, new HttpRequestException(body));
             }

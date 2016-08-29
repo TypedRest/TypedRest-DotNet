@@ -94,6 +94,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd /d "$(OutDir)"
-"$(SolutionDir)packages\ILRepack.2.0.10\tools\ILRepack.exe" /ndebug /wildcards /out:"$(SolutionDir)build\$(Configuration)\Client\$(AssemblyName).exe" "$(TargetPath)" *.dll</PostBuildEvent>
+"$(SolutionDir)packages\ILRepack.2.0.11\tools\ILRepack.exe" /ndebug /wildcards /out:"$(SolutionDir)build\$(Configuration)\Client\$(AssemblyName).exe" "$(TargetPath)" *.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>
