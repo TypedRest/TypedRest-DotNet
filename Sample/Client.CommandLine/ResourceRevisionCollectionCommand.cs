@@ -8,7 +8,7 @@ using TypedRestSample.Model;
 
 namespace TypedRestSample.Client.CommandLine
 {
-    public class ResourceRevisionCollectionCommand : CollectionCommandBase<ResourceRevision, ResourceRevisionCollectionEndpoint, ResourceRevisionEndpoint>
+    public class ResourceRevisionCollectionCommand : CollectionCommand<ResourceRevision, ResourceRevisionCollectionEndpoint, ResourceRevisionEndpoint, ResourceRevisionCommand>
     {
         public ResourceRevisionCollectionCommand(ResourceRevisionCollectionEndpoint endpoint) : base(endpoint)
         {
@@ -38,7 +38,5 @@ namespace TypedRestSample.Client.CommandLine
                     return base.GetSubCommand(name);
             }
         }
-
-        protected override IEndpointCommand GetElementCommand(ResourceRevisionEndpoint element) => new ResourceRevisionCommand(element);
     }
 }

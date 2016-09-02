@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="ResourceCollectionCommand.cs" />
     <Compile Include="ResourceCommand.cs" />
     <Compile Include="ResourceRevisionCollectionCommand.cs" />
     <Compile Include="ResourceRevisionCommand.cs" />

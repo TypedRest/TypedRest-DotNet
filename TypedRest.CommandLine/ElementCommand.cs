@@ -10,7 +10,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Command operating on an <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the <see cref="IElementEndpoint{TEntity}"/> represents.</typeparam>
+    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
     {
         /// <summary>

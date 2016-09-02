@@ -8,7 +8,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Command operating on an <see cref="IPollingEndpoint{TEntity}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the <see cref="IPollingEndpoint{TEntity}"/> represents.</typeparam>
+    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class PollingCommand<TEntity> : ElementCommand<TEntity>
     {
         protected new readonly IPollingEndpoint<TEntity> Endpoint;

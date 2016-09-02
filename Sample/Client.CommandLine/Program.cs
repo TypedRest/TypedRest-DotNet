@@ -18,7 +18,7 @@ namespace TypedRestSample.Client.CommandLine
                     ConfigurationManager.AppSettings["SamplePassword"]));
             var command = new EntryCommand<SampleEntryEndpoint>(endpoint)
             {
-                {"resources", x => new ResourceCollectionCommand(x.Resources)},
+                {"resources", x => new CollectionCommand<Resource, ResourceEndpoint, ResourceCommand>(x.Resources)},
                 {"targets", x => new CollectionCommand<Target>(x.Targets)}
             };
 
