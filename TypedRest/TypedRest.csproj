@@ -72,9 +72,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BlobEndpoint.cs" />
     <Compile Include="BulkCollectionEndpoint.cs" />
-    <Compile Include="BulkCollectionEndpointBase.cs" />
     <Compile Include="CollectionEndpoint.cs" />
-    <Compile Include="CollectionEndpointBase.cs" />
     <Compile Include="CollectionEndpointExtensions.cs" />
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="ElementEndpoint.cs" />
@@ -98,11 +96,9 @@
     <Compile Include="ITriggerEndpoint.cs" />
     <Compile Include="LinkHeader.cs" />
     <Compile Include="PagedCollectionEndpoint.cs" />
-    <Compile Include="PagedCollectionEndpointBase.cs" />
     <Compile Include="PartialResponse.cs" />
     <Compile Include="PollingEndpoint.cs" />
     <Compile Include="StreamEndpoint.cs" />
-    <Compile Include="StreamEndpointBase.cs" />
     <Compile Include="TaskExtensions.cs" />
     <Compile Include="ActionEndpoint.cs" />
     <Compile Include="TriggerEndpointBase.cs" />

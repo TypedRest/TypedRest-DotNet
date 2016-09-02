@@ -15,7 +15,7 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public abstract class CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> : EndpointCommand<TEndpoint>
         where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
         /// Creates a new REST collection command.

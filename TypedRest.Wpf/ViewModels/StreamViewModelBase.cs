@@ -10,7 +10,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public abstract class StreamViewModelBase<TEntity, TEndpoint, TElementEndpoint> : CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint>
         where TEndpoint : IStreamEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
         /// Creates a new REST paged collection view model.

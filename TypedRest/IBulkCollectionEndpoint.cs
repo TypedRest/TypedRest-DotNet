@@ -13,9 +13,9 @@ namespace TypedRest
     /// </summary>
     /// <remarks>Use the more constrained <see cref="IBulkCollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+    /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface IBulkCollectionEndpoint<TEntity, TElementEndpoint> : ICollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="SetAllAllowed"/> is currently allowed.

@@ -70,13 +70,6 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestGetByRelativeUri()
-        {
-            _endpoint[new Uri("1", UriKind.Relative)].Uri
-                .Should().Be(new Uri(_endpoint.Uri, "1"));
-        }
-
-        [Test]
         public void TestGetByEntity()
         {
             _endpoint[new MockEntity(1, "test")].Uri

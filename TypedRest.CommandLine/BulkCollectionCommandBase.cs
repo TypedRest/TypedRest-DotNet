@@ -16,7 +16,7 @@ namespace TypedRest.CommandLine
     public abstract class BulkCollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> :
         CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint>
         where TEndpoint : IBulkCollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
         /// Creates a new REST Bulk collection command.

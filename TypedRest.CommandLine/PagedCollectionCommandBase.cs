@@ -14,7 +14,7 @@ namespace TypedRest.CommandLine
     public abstract class PagedCollectionCommandBase<TEntity, TEndpoint, TElementEndpoint> :
         CollectionCommandBase<TEntity, TEndpoint, TElementEndpoint>
         where TEndpoint : IPagedCollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
         /// Creates a new REST paged collection command.

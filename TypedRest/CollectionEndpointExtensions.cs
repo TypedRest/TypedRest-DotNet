@@ -17,7 +17,7 @@ namespace TypedRest
         /// Determines whether the collection contains a specific entity.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
         /// <param name="id">The ID identifying the entity in the collection.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
@@ -34,7 +34,7 @@ namespace TypedRest
         /// Determines whether the collection contains a specific entity.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
         /// <param name="element">The element to be checked.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
@@ -51,7 +51,7 @@ namespace TypedRest
         /// Updates an existing element in the collection.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
         /// <param name="element">The element to be updated.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
@@ -72,7 +72,7 @@ namespace TypedRest
         /// Deletes an existing element from the collection.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
         /// <param name="id">The ID identifying the entity in the collection.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
@@ -92,7 +92,7 @@ namespace TypedRest
         /// Deletes an existing element from the collection.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-        /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
         /// <param name="element">The element to be deleted.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
