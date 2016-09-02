@@ -39,9 +39,6 @@ namespace TypedRestSample.Client.CommandLine
             }
         }
 
-        protected override IEndpointCommand GetElementCommand(ResourceRevisionEndpoint element)
-        {
-            return new ResourceRevisionCommand(element);
-        }
+        protected override IEndpointCommand GetElementCommand(ResourceRevisionEndpoint element) => new ResourceRevisionCommand(element);
     }
 }

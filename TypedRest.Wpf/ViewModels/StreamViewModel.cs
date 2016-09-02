@@ -18,14 +18,8 @@ namespace TypedRest.Wpf.ViewModels
         {
         }
 
-        protected override IScreen BuildElementScreen(IElementEndpoint<TEntity> elementEndpoint)
-        {
-            return new ElementViewModel<TEntity>(elementEndpoint, EventAggregator);
-        }
+        protected override IScreen BuildElementScreen(IElementEndpoint<TEntity> elementEndpoint) =>new ElementViewModel<TEntity>(elementEndpoint, EventAggregator);
 
-        protected override IScreen BuildCreateElementScreen()
-        {
-            return new CreateElementViewModel<TEntity>(Endpoint, EventAggregator);
-        }
+        protected override IScreen BuildCreateElementScreen() => new CreateElementViewModel<TEntity>(Endpoint, EventAggregator);
     }
 }

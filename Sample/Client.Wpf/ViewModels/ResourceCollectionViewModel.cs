@@ -12,14 +12,8 @@ namespace TypedRestSample.Client.Wpf.ViewModels
             DisplayName = "Resources";
         }
 
-        protected override IScreen BuildElementScreen(ResourceEndpoint elementEndpoint)
-        {
-            return new ResourceViewModel(elementEndpoint, EventAggregator);
-        }
+        protected override IScreen BuildElementScreen(ResourceEndpoint elementEndpoint) => new ResourceViewModel(elementEndpoint, EventAggregator);
 
-        protected override IScreen BuildCreateElementScreen()
-        {
-            return new CreateResourceViewModel(Endpoint, EventAggregator);
-        }
+        protected override IScreen BuildCreateElementScreen() => new CreateResourceViewModel(Endpoint, EventAggregator);
     }
 }

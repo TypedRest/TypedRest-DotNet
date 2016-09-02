@@ -12,14 +12,8 @@ namespace TypedRestSample.Client.Wpf.ViewModels
             DisplayName = "Revisions";
         }
 
-        protected override IScreen BuildElementScreen(ResourceRevisionEndpoint elementEndpoint)
-        {
-            return new ResourceRevisionViewModel(elementEndpoint, EventAggregator);
-        }
+        protected override IScreen BuildElementScreen(ResourceRevisionEndpoint elementEndpoint) => new ResourceRevisionViewModel(elementEndpoint, EventAggregator);
 
-        protected override IScreen BuildCreateElementScreen()
-        {
-            return new CreateResourceRevisionViewModel(Endpoint, EventAggregator);
-        }
+        protected override IScreen BuildCreateElementScreen() => new CreateResourceRevisionViewModel(Endpoint, EventAggregator);
     }
 }

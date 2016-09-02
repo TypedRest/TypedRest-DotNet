@@ -9,9 +9,6 @@ namespace TypedRestSample.Client.CommandLine
         {
         }
 
-        protected override IEndpointCommand GetElementCommand(ResourceEndpoint element)
-        {
-            return new ResourceCommand(element);
-        }
+        protected override IEndpointCommand GetElementCommand(ResourceEndpoint element) => new ResourceCommand(element);
     }
 }
