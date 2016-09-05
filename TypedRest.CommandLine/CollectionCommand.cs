@@ -57,7 +57,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Builds an <see cref="IEndpointCommand"/> for the given <paramref name="elementEndpoint"/>.
         /// </summary>
-        protected virtual TElementCommand BuildElementCommand(TElementEndpoint elementEndpoint) => (TElementCommand)Activator.CreateInstance(typeof(TElementEndpoint), elementEndpoint);
+        protected virtual TElementCommand BuildElementCommand(TElementEndpoint elementEndpoint) => (TElementCommand)Activator.CreateInstance(typeof(TElementCommand), elementEndpoint);
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
