@@ -12,7 +12,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public abstract class CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint> : EndpointViewModelBase<TEndpoint>, IHandleWithTask<ElementEvent<TEntity>>
-        where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
+        where TEndpoint : class, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>

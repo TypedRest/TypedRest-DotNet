@@ -11,7 +11,7 @@ namespace TypedRest.CommandLine
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
     public abstract class EndpointCommand<TEndpoint> : IEndpointCommand
-        where TEndpoint : IEndpoint
+        where TEndpoint : class, IEndpoint
     {
         /// <summary>
         /// The REST endpoint this command operates on.

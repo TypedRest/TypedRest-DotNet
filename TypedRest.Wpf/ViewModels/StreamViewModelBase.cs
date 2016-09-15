@@ -9,7 +9,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <typeparam name="TEndpoint">The specific type of <see cref="IStreamEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public abstract class StreamViewModelBase<TEntity, TEndpoint, TElementEndpoint> : CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint>
-        where TEndpoint : IStreamEndpoint<TEntity, TElementEndpoint>
+        where TEndpoint : class, IStreamEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>

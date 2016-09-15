@@ -7,7 +7,7 @@ namespace TypedRest.Wpf.Events
     /// </summary>
     /// <typeparam name="TEndpoint">The type of endpoint that raised the event.</typeparam>
     public abstract class EndpointEvent<TEndpoint> : IEndpointEvent
-        where TEndpoint : IEndpoint
+        where TEndpoint : class, IEndpoint
     {
         /// <summary>
         /// The endpoint that raised the event.

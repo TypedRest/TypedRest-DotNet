@@ -15,7 +15,7 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <see cref="BuildElementCommand"/>.</typeparam>
     public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : EndpointCommand<TEndpoint>
-        where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
+        where TEndpoint : class, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
         where TElementCommand : class, IEndpointCommand
     {

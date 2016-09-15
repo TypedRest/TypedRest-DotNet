@@ -9,7 +9,7 @@ namespace TypedRest.Wpf.ViewModels
     /// View model operating on an <see cref="IFunctionEndpoint{TResult}"/>.
     /// </summary>
     public class FunctionViewModel<TEndpoint, TResult> : TriggerViewModelBase<TEndpoint>
-        where TEndpoint : IFunctionEndpoint<TResult>
+        where TEndpoint : class, IFunctionEndpoint<TResult>
     {
         /// <summary>
         /// Creates a new REST function view model.

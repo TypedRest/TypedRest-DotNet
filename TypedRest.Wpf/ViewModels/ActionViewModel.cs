@@ -9,7 +9,7 @@ namespace TypedRest.Wpf.ViewModels
     /// View model operating on an <see cref="IActionEndpoint"/>.
     /// </summary>
     public class ActionViewModel<TEndpoint> : TriggerViewModelBase<TEndpoint>
-        where TEndpoint : IActionEndpoint
+        where TEndpoint : class, IActionEndpoint
     {
         /// <summary>
         /// Creates a new REST action view model.

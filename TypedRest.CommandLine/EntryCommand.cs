@@ -11,7 +11,7 @@ namespace TypedRest.CommandLine
     /// </summary>
     /// <typeparamref name="TEndpoint">The specific type of <see cref="IEndpoint"/> the command starts with.</typeparamref>
     public class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>>
-        where TEndpoint : IEndpoint
+        where TEndpoint : class, IEndpoint
     {
         /// <summary>
         /// Creates a new REST entry command.

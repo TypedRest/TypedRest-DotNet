@@ -15,7 +15,7 @@ namespace TypedRest.Wpf.ViewModels
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
     public abstract class EndpointViewModelBase<TEndpoint> : Screen, IHandleWithTask<IEndpointEvent>
-        where TEndpoint : IEndpoint
+        where TEndpoint : class, IEndpoint
     {
         /// <summary>
         /// The REST endpoint this view model operates on.

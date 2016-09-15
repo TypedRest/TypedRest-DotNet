@@ -9,7 +9,7 @@ namespace TypedRest.Wpf.ViewModels
     /// </summary>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ITriggerEndpoint"/> to operate on.</typeparam>
     public abstract class TriggerViewModelBase<TEndpoint> : EndpointViewModelBase<TEndpoint>
-        where TEndpoint : ITriggerEndpoint
+        where TEndpoint : class, ITriggerEndpoint
     {
         /// <summary>
         /// Creates a new REST trigger view model.
