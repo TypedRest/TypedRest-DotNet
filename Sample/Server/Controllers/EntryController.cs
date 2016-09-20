@@ -8,9 +8,6 @@ namespace TypedRestSample.Server.Controllers
         /// Displays the name of the API and provides HTTP Link headers for further navigation.
         /// </summary>
         [HttpGet, HttpHead, Route("")]
-        public string Read()
-        {
-            return "Sample API";
-        }
+        public string Read() => "Sample API";
     }
 }

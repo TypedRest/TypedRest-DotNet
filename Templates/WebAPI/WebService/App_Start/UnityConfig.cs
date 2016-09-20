@@ -22,9 +22,7 @@ namespace XProjectNamespaceX.WebService
         public static IUnityContainer InitContainer()
         {
             return new UnityContainer()
-                .RegisterByConvention(new LifetimeMap()
-                //   .Add<MySingleton>(WithLifetime.ContainerControlled)
-                )
+                .RegisterByConvention()
                 .RegisterInstance(MyServiceConfiguration.FromAppSettings());
         }
     }

@@ -48,11 +48,8 @@ namespace XProjectNamespaceX.WebService
         /// </summary>
         private class InheritanceRouteProvider : DefaultDirectRouteProvider
         {
-            protected override IReadOnlyList<IDirectRouteFactory> GetActionRouteFactories(
-                HttpActionDescriptor actionDescriptor)
-            {
-                return actionDescriptor.GetCustomAttributes<IDirectRouteFactory>(inherit: true);
-            }
+            protected override IReadOnlyList<IDirectRouteFactory> GetActionRouteFactories(HttpActionDescriptor actionDescriptor) =>
+                actionDescriptor.GetCustomAttributes<IDirectRouteFactory>(inherit: true);
         }
     }
 }

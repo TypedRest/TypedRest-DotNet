@@ -49,6 +49,6 @@ namespace XProjectNamespaceX.Client
         {
         }
 
-        public ICollectionEndpoint<MyEntity> Entities => new CollectionEndpoint<MyEntity>(this, "entities");
+        public ICollectionEndpoint<MyEntity> Entities => new CollectionEndpoint<MyEntity>(this, Link("entities"));
     }
 }
