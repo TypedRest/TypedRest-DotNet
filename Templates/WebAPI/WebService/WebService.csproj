@@ -85,11 +85,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.9\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog.Owin.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Owin.Logging.1.0.2\lib\net45\NLog.Owin.Logging.dll</HintPath>
+      <HintPath>..\packages\NLog.Owin.Logging.1.1.0\lib\net45\NLog.Owin.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -133,20 +133,20 @@
       <HintPath>..\packages\WebApi.BasicAuth.0.3.0\lib\net45\WebApi.BasicAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebApi.HttpOptions, Version=0.3.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebApi.HttpOptions.0.3.0.0\lib\net45\WebApi.HttpOptions.dll</HintPath>
+    <Reference Include="WebApi.HttpOptions, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApi.HttpOptions.0.4.0\lib\net45\WebApi.HttpOptions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebApi.LinkHeader, Version=0.7.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
       <HintPath>..\packages\WebApi.LinkHeader.0.7.0.0\lib\net45\WebApi.LinkHeader.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebApi.Pagination, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebApi.Pagination.0.4.0.0\lib\net45\WebApi.Pagination.dll</HintPath>
+    <Reference Include="WebApi.Pagination, Version=0.5.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApi.Pagination.0.5.0\lib\net45\WebApi.Pagination.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebApi.RequestLogging, Version=0.10.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebApi.RequestLogging.0.10.0\lib\net45\WebApi.RequestLogging.dll</HintPath>
+    <Reference Include="WebApi.RequestLogging, Version=0.12.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApi.RequestLogging.0.12.0\lib\net45\WebApi.RequestLogging.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -53,16 +53,16 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
-    <Reference Include="WebApi.HttpOptions, Version=0.3.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\WebApi.HttpOptions.0.3.0.0\lib\net45\WebApi.HttpOptions.dll</HintPath>
+    <Reference Include="WebApi.HttpOptions, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebApi.HttpOptions.0.4.0\lib\net45\WebApi.HttpOptions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebApi.LinkHeader, Version=0.7.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WebApi.LinkHeader.0.7.0.0\lib\net45\WebApi.LinkHeader.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebApi.Pagination, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\WebApi.Pagination.0.4.0.0\lib\net45\WebApi.Pagination.dll</HintPath>
+    <Reference Include="WebApi.Pagination, Version=0.5.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebApi.Pagination.0.5.0\lib\net45\WebApi.Pagination.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
