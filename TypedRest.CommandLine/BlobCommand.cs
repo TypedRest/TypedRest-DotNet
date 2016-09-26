@@ -34,6 +34,10 @@ namespace TypedRest.CommandLine
                         await Endpoint.UploadFromAsync(stream, cancellationToken: cancellationToken);
                     break;
 
+                case "delete":
+                    await Endpoint.DeleteAsync(cancellationToken);
+                    break;
+
                 default:
                     await base.ExecuteInnerAsync(args, cancellationToken);
                     break;

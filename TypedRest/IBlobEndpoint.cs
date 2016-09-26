@@ -62,5 +62,23 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
+        /// </summary>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
+        bool? DeleteAllowed { get; }
+
+        /// <summary>
+        /// Deletes the blob from the server.
+        /// </summary>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

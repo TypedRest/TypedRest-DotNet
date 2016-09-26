@@ -53,5 +53,9 @@ namespace TypedRest
             if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
             return HandleResponseAsync(HttpClient.PutAsync(Uri, content, cancellationToken));
         }
+
+        public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);
+
+        public Task DeleteAsync(CancellationToken cancellationToken = new CancellationToken()) => HandleResponseAsync(HttpClient.DeleteAsync(Uri, cancellationToken));
     }
 }
