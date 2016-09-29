@@ -18,17 +18,15 @@ namespace TypedRest
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
-        /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. May perform network traffic to look up an URI template.
+        /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection.
         /// </summary>
         /// <param name="id">The ID identifying the entity in the collection.</param>
-        /// <remarks>Uses a link template with the relation type <c>child</c> to determine the URIs of child elements. Defaults to <c>{id}</c>.</remarks>
         TElementEndpoint this[string id] { get; }
 
         /// <summary>
-        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection. May perform network traffic to look up an URI template.
+        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection.
         /// </summary>
-        /// <param name="entity">A previously fetched instance of the entity to retrieve a new state for.</param>
-        /// <remarks>Uses a link template with the relation type <c>child</c> to determine the URIs of child elements. Defaults to <c>{id}</c>.</remarks>
+        /// <param name="entity">An existing entity to extract the ID from.</param>
         TElementEndpoint this[TEntity entity] { get; }
 
         /// <summary>

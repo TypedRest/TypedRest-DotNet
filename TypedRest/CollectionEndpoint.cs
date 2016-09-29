@@ -57,7 +57,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
         protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(typeof(TElementEndpoint), this, relativeUri);
 
-        public TElementEndpoint this[string id]
+        public virtual TElementEndpoint this[string id]
         {
             get
             {
@@ -67,16 +67,15 @@ namespace TypedRest
             }
         }
 
-        public TElementEndpoint this[TEntity entity] => this[GetCollectionId(entity)];
-
-        /// <summary>
-        /// Maps the <paramref name="entity"/> to an ID usable by <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/>.
-        /// </summary>
-        protected virtual string GetCollectionId(TEntity entity)
+        public virtual TElementEndpoint this[TEntity entity]
         {
-            if (_getIdMethod == null)
-                throw new InvalidOperationException(typeof (TEntity).Name + " has no property marked with [Key] attribute.");
-            return _getIdMethod.Invoke(entity, null).ToString();
+            get
+            {
+                if (_getIdMethod == null)
+                    throw new InvalidOperationException($"{typeof(TEntity).Name} has no property marked with [Key] attribute.");
+                string id = _getIdMethod.Invoke(entity, null).ToString();
+                return this[id];
+            }
         }
 
         public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken))
