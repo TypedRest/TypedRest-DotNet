@@ -29,17 +29,11 @@ namespace XProjectNamespaceX.WebService
         /// <summary>
         /// Serializes an object to JSON using the same configuration applied to Web API models.
         /// </summary>
-        public static string ToJson<T>(this T obj)
-        {
-            return JsonConvert.SerializeObject(obj, Settings);
-        }
+        public static string ToJson<T>(this T obj) => JsonConvert.SerializeObject(obj, Settings);
 
         /// <summary>
         /// Deserializes an object from JSON using the same configuration applied to Web API models.
         /// </summary>
-        public static T ParseJson<T>(this string json)
-        {
-            return JsonConvert.DeserializeObject<T>(json, Settings);
-        }
+        public static T ParseJson<T>(this string json) => JsonConvert.DeserializeObject<T>(json, Settings);
     }
 }

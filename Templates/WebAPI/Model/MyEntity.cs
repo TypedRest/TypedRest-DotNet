@@ -5,6 +5,6 @@ namespace XProjectNamespaceX.Model
     public class MyEntity
     {
         [Key]
-        public string Id { get; set; }
+        public long Id { get; set; }
     }
 }

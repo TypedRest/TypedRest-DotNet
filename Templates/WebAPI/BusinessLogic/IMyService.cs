@@ -1,7 +1,14 @@
-﻿namespace XProjectNamespaceX.BusinessLogic
+﻿using System.Collections.Generic;
+using XProjectNamespaceX.Model;
+
+namespace XProjectNamespaceX.BusinessLogic
 {
     public interface IMyService
     {
-        void Action();
+        IEnumerable<MyEntity> GetAll();
+        MyEntity Get(long id);
+        void Add(MyEntity entity);
+        void Update(MyEntity entity);
+        void Remove(long id);
     }
 }

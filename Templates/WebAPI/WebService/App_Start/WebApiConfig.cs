@@ -39,7 +39,6 @@ namespace XProjectNamespaceX.WebService
             config.EnableHttpHead();
 
             config.EnsureInitialized();
-
             return config;
         }
 
@@ -48,8 +47,8 @@ namespace XProjectNamespaceX.WebService
         /// </summary>
         private class InheritanceRouteProvider : DefaultDirectRouteProvider
         {
-            protected override IReadOnlyList<IDirectRouteFactory> GetActionRouteFactories(HttpActionDescriptor actionDescriptor) =>
-                actionDescriptor.GetCustomAttributes<IDirectRouteFactory>(inherit: true);
+            protected override IReadOnlyList<IDirectRouteFactory> GetActionRouteFactories(HttpActionDescriptor actionDescriptor)
+                => actionDescriptor.GetCustomAttributes<IDirectRouteFactory>(inherit: true);
         }
     }
 }

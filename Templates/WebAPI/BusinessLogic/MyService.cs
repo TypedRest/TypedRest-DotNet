@@ -1,4 +1,6 @@
-﻿using NLog;
+﻿using System.Collections.Generic;
+using NLog;
+using XProjectNamespaceX.Model;
 
 namespace XProjectNamespaceX.BusinessLogic
 {
@@ -13,7 +15,26 @@ namespace XProjectNamespaceX.BusinessLogic
             _configuration = configuration;
         }
 
-        public void Action()
+        public IEnumerable<MyEntity> GetAll()
+        {
+            return new[] {new MyEntity {Id = 1}};
+        }
+
+        public MyEntity Get(long id)
+        {
+            if (id != 1) throw new KeyNotFoundException($"Entity with ID {id} not found.");
+            return new MyEntity {Id = 1};
+        }
+
+        public void Add(MyEntity entity)
+        {
+        }
+
+        public void Update(MyEntity entity)
+        {
+        }
+
+        public void Remove(long id)
         {
         }
     }
