@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ConnectionFactory.cs" />
     <Compile Include="Events\BlobUploadEvent.cs" />
     <Compile Include="Events\ElementCreatedEvent.cs" />
     <Compile Include="Events\ElementDeletedEvent.cs" />

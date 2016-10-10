@@ -74,6 +74,7 @@
     <Compile Include="BulkCollectionEndpoint.cs" />
     <Compile Include="CollectionEndpoint.cs" />
     <Compile Include="CollectionEndpointExtensions.cs" />
+    <Compile Include="ConnectionFactoryBase.cs" />
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
