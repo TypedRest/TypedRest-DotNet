@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Text;
 
 namespace TypedRest
@@ -18,7 +19,7 @@ namespace TypedRest
             {
                 builder.AppendLine(ex.Message);
                 ex = ex.InnerException;
-            } while (ex != null);
+            } while (ex != null && !(ex is HttpRequestException));
             return builder.ToString();
         }
     }

@@ -45,47 +45,47 @@ namespace TypedRest.CommandLine
             }
             catch (ArgumentException ex)
             {
-                PrintError(ex.GetFullMessage());
+                PrintError(ex);
                 return 1;
             }
             catch (FormatException ex)
             {
-                PrintError(ex.GetFullMessage());
+                PrintError(ex);
                 return 1;
             }
             catch (InvalidDataException ex)
             {
-                PrintError(ex.GetFullMessage());
+                PrintError(ex);
                 return 2;
             }
             catch (UnauthorizedAccessException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex);
                 return 3;
             }
             catch (KeyNotFoundException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex);
                 return 4;
             }
             catch (InvalidOperationException ex)
             {
-                PrintError(ex.Message);
+                PrintError(ex);
                 return 5;
             }
             catch (HttpRequestException ex)
             {
-                PrintError(ex.GetFullMessage());
+                PrintError(ex);
                 return 6;
             }
             catch (JsonException ex)
             {
-                PrintError(ex.GetFullMessage());
+                PrintError(ex);
                 return 7;
             }
             catch (IOException ex)
             {
-                PrintError(ex.GetFullMessage());
+                PrintError(ex);
                 return 6;
             }
             #endregion
@@ -98,6 +98,8 @@ namespace TypedRest.CommandLine
             Console.Error.WriteLine(message);
             Console.ForegroundColor = color;
         }
+
+        private static void PrintError(Exception ex) => PrintError(ex.GetFullMessage());
 
         /// <summary>
         /// Executes commands based in command-line arguments. Performs error handling and reporting and cancels on Ctrl+C.
