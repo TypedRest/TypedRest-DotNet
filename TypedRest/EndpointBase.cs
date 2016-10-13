@@ -176,18 +176,7 @@ namespace TypedRest
             var linkTemplates = new Dictionary<string, UriTemplate>();
 
             HandleHeaderLinks(response.Headers, links, linkTemplates);
-
-            if (response.Content?.Headers.ContentType?.MediaType == "application/json")
-            {
-                try
-                {
-                    HandleBodyLinks(JToken.Parse(await response.Content.ReadAsStringAsync().NoContext()), links, linkTemplates);
-                }
-                catch (JsonReaderException)
-                {
-                    // Unparsable bodies are handled elsewhere
-                }
-            }
+            await HandleBodyLinksAsync(response.Content, links, linkTemplates);
 
             _links = links;
             _linkTemplates = linkTemplates;
@@ -207,6 +196,31 @@ namespace TypedRest
                     linkTemplates[header.Rel] = new UriTemplate(header.Href);
                 else
                     links.GetOrAdd(header.Rel)[new Uri(Uri, header.Href)] = header.Title;
+            }
+        }
+
+        /// <summary>
+        /// Handles links embedded in JSON response bodies.
+        /// </summary>
+        /// <param name="content">The body to check for links.</param>
+        /// <param name="links">A dictionary to add found links to.</param>
+        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
+        private async Task HandleBodyLinksAsync(HttpContent content, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
+        {
+            if (content?.Headers.ContentType?.MediaType == "application/json")
+            {
+                string json = await content.ReadAsStringAsync().NoContext();
+                if (!string.IsNullOrEmpty(json))
+                {
+                    try
+                    {
+                        HandleBodyLinks(JToken.Parse(json), links, linkTemplates);
+                    }
+                    catch (JsonReaderException)
+                    {
+                        // Unparsable bodies are handled elsewhere
+                    }
+                }
             }
         }
 
