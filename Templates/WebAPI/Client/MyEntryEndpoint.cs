@@ -7,7 +7,7 @@ using TypedRest;
 namespace XProjectNamespaceX.Client
 {
     /// <summary>
-    /// Entry point for XProjectNameX API.
+    /// Entry point for the XProjectNameX API.
     /// </summary>
     public class MyEntryEndpoint : EntryEndpoint
     {
@@ -15,17 +15,17 @@ namespace XProjectNamespaceX.Client
         /// Creates a new XProjectNameX entry point.
         /// </summary>
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="credentials">The credentials used to authenticate against the REST interface. Extracts credentials from <paramref name="uri"/> is unset.</param>
-        public MyEntryEndpoint(Uri uri, ICredentials credentials = null)
+        /// <param name="credentials">HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
+        public MyEntryEndpoint(Uri uri, ICredentials credentials)
             : base(uri, credentials)
         {
         }
 
         /// <summary>
-        /// Creates a new XProjectNameX entry point using an OAuth token for authentication.
+        /// Creates a new XProjectNameX entry point using an OAuth token.
         /// </summary>
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="token">The OAuth token used to authenticate against the REST interface.</param>
+        /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
         public MyEntryEndpoint(Uri uri, string token)
             : base(uri)
         {

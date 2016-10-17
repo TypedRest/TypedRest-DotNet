@@ -9,23 +9,83 @@ using Newtonsoft.Json;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Entry point for <see cref="IEndpointCommand"/> command-line execution.
+    /// Executes <see cref="IEndpointCommand"/>s based on command-line arguments.
     /// </summary>
-    public static class Executor
+    /// <typeparam name="TEndpoint">The type of entry endpoint to use for <see cref="EndpointProvider{T}"/>. Must have suitable constructors.</typeparam>
+    /// <typeparam name="TCommand">The type of entry command to use. Must have a constructor that takes a single <typeparamref name="TEndpoint"/>.</typeparam>
+    public class Executor<TEndpoint, TCommand>
+        where TEndpoint : EntryEndpoint
+        where TCommand : IEndpointCommand
     {
+        private readonly IEndpointProvider<TEndpoint> _endpointProvider;
+
         /// <summary>
-        /// Executes commands based in command-line arguments. Performs error handling and reporting.
+        /// Creates an executor using the default <see cref="EndpointProvider{T}"/>.
         /// </summary>
-        /// <param name="entryCommand">The top-level command used to locate sub-commands.</param>
+        public Executor()
+        {
+            _endpointProvider = new EndpointProvider<TEndpoint>();
+        }
+
+        /// <summary>
+        /// Creates an executor using a custom <paramref name="endpointProvider"/>.
+        /// </summary>
+        public Executor(IEndpointProvider<TEndpoint> endpointProvider)
+        {
+            _endpointProvider = endpointProvider;
+        }
+
+        /// <summary>
+        /// Creates a new endpoint and command and executes it using the specified command-line arguments.
+        /// </summary>
         /// <param name="args">The command-line arguments to parse.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The exit code.</returns>
-        public static async Task<int> RunAsync(IEndpointCommand entryCommand, IReadOnlyList<string> args,
-            CancellationToken cancellationToken)
+        public async Task<int> RunAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                await entryCommand.ExecuteAsync(args, cancellationToken);
+                int exitCode = await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
+                switch (exitCode)
+                {
+                    case 3:
+                        _endpointProvider.ResetAuthentication();
+                        return await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
+
+                    case 4:
+                        _endpointProvider.ResetUri();
+                        return await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
+
+                    default:
+                        return exitCode;
+                }
+            }
+                #region Error handling
+            catch (InvalidOperationException ex)
+            {
+                PrintError(ex);
+                return 5;
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// Instantiates a <typeparamref name="TCommand"/>.
+        /// </summary>
+        protected virtual TCommand NewCommand(TEndpoint endpoint) => (TCommand)Activator.CreateInstance(typeof(TCommand), endpoint);
+
+        /// <summary>
+        /// Executes a command and performs error handling.
+        /// </summary>
+        /// <param name="command">The command used to execute.</param>
+        /// <param name="args">The command-line arguments to parse.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>The exit code.</returns>
+        protected virtual async Task<int> ExecuteAsync(TCommand command, IReadOnlyList<string> args, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await command.ExecuteAsync(args, cancellationToken);
                 return 0;
             }
                 #region Error handling
@@ -91,38 +151,20 @@ namespace TypedRest.CommandLine
             #endregion
         }
 
-        private static void PrintError(string message)
+        /// <summary>
+        /// Prints an <paramref name="exception"/> to the console.
+        /// </summary>
+        protected virtual void PrintError(Exception exception) => PrintError(exception.GetFullMessage());
+
+        /// <summary>
+        /// Prints an error <paramref name="message"/> to the console.
+        /// </summary>
+        protected virtual void PrintError(string message)
         {
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Error.WriteLine(message);
             Console.ForegroundColor = color;
-        }
-
-        private static void PrintError(Exception ex) => PrintError(ex.GetFullMessage());
-
-        /// <summary>
-        /// Executes commands based in command-line arguments. Performs error handling and reporting and cancels on Ctrl+C.
-        /// </summary>
-        /// <param name="entryCommand">The top-level command used to locate sub-commands.</param>
-        /// <param name="args">The command-line arguments to parse.</param>
-        /// <returns>The exit code.</returns>
-        public static Task<int> RunAsync(IEndpointCommand entryCommand, IReadOnlyList<string> args)
-        {
-            return RunAsync(entryCommand, args, GetCancellationToken());
-        }
-
-        private static CancellationToken GetCancellationToken()
-        {
-            var cancellationTokenSource = new CancellationTokenSource();
-            Console.CancelKeyPress += (sender, e) =>
-            {
-                cancellationTokenSource.Cancel();
-
-                // Allow the application to finish cleanup rather than terminating immediately
-                e.Cancel = true;
-            };
-            return cancellationTokenSource.Token;
         }
     }
 }

@@ -1,25 +1,28 @@
 ﻿using System;
-using System.Configuration;
-using System.Threading.Tasks;
-using XProjectNamespaceX.Model;
+using System.Threading;
 using Nito.AsyncEx;
 using TypedRest.CommandLine;
+using XProjectNamespaceX.Client.CommandLine.Commands;
 
 namespace XProjectNamespaceX.Client.CommandLine
 {
     public static class Program
     {
-        public static int Main(string[] args) => AsyncContext.Run(() => MainAsync(args));
-
-        private static async Task<int> MainAsync(string[] args)
+        public static int Main(string[] args) => AsyncContext.Run(() =>
         {
-            var endpoint = new MyEntryEndpoint(
-                new Uri(ConfigurationManager.ConnectionStrings["XProjectNamespaceX"].ConnectionString));
-            var command = new EntryCommand<MyEntryEndpoint>(endpoint)
+            var executor = new Executor<MyEntryEndpoint, MyEntryCommand>();
+            return executor.RunAsync(args, GetCancellationToken());
+        });
+
+        private static CancellationToken GetCancellationToken()
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+            Console.CancelKeyPress += (sender, e) =>
             {
-                {"entities", x => new CollectionCommand<MyEntity>(x.Entities)}
+                cancellationTokenSource.Cancel();
+                e.Cancel = true;
             };
-            return await Executor.RunAsync(command, args);
+            return cancellationTokenSource.Token;
         }
     }
 }
