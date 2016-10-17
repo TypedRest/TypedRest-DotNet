@@ -74,7 +74,7 @@
     <Compile Include="BulkCollectionEndpoint.cs" />
     <Compile Include="CollectionEndpoint.cs" />
     <Compile Include="CollectionEndpointExtensions.cs" />
-    <Compile Include="ConnectionFactoryBase.cs" />
+    <Compile Include="EndpointProviderBase.cs" />
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="ElementEndpoint.cs" />
     <Compile Include="EndpointBase.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="ICollectionEndpoint.cs" />
     <Compile Include="IElementEndpoint.cs" />
     <Compile Include="IEndpoint.cs" />
+    <Compile Include="IEndpointProvider.cs" />
     <Compile Include="IFunctionEndpoint.cs" />
     <Compile Include="IPagedCollectionEndpoint.cs" />
     <Compile Include="IPollingEndpoint.cs" />
