@@ -15,9 +15,7 @@ namespace XProjectNamespaceX.WebService.Controllers
         /// </summary>
         [HttpGet, Route("")]
         [LinkHeader("entities/", Rel = "entities")]
-        public string Read()
-        {
-            return "XProjectNameX API";
-        }
+        public IHttpActionResult Read() => Ok("XProjectNameX API")
+            .WithLink("entities/", rel: "entities");
     }
 }

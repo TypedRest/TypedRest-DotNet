@@ -1,10 +1,8 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Swashbuckle.Application;
-using Swashbuckle.Swagger;
 
 namespace XProjectNamespaceX.Service
 {
@@ -21,11 +19,11 @@ namespace XProjectNamespaceX.Service
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "XProjectNameX API");
+                c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetRequestContext().VirtualPathRoot);
                 c.IncludeXmlCommentsDir(AppDomain.CurrentDomain.BaseDirectory);
                 c.DescribeAllEnumsAsStrings();
                 c.IgnoreObsoleteActions();
                 c.IgnoreObsoleteProperties();
-                c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetRequestContext().VirtualPathRoot);
             }).EnableSwaggerUi(c => { c.DisableValidator(); });
         }
 
