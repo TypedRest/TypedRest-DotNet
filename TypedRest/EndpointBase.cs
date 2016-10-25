@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -116,7 +117,8 @@ namespace TypedRest
         /// Wraps HTTP status codes in appropriate <see cref="Exception"/> types.
         /// </summary>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Unauthorized"/> or <see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/>, <seealso cref="HttpStatusCode.PreconditionFailed"/> or <see cref="HttpStatusCode.RequestedRangeNotSatisfiable"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
@@ -149,17 +151,20 @@ namespace TypedRest
                 case HttpStatusCode.BadRequest:
                     throw new InvalidDataException(message, new HttpRequestException(body));
                 case HttpStatusCode.Unauthorized:
+                    throw new InvalidCredentialException(message, new HttpRequestException(body));
                 case HttpStatusCode.Forbidden:
                     throw new UnauthorizedAccessException(message, new HttpRequestException(body));
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.Gone:
                     throw new KeyNotFoundException(message, new HttpRequestException(body));
                 case HttpStatusCode.Conflict:
-                case HttpStatusCode.PreconditionFailed:
-                case HttpStatusCode.RequestedRangeNotSatisfiable:
                     throw new InvalidOperationException(message, new HttpRequestException(body));
-                //case HttpStatusCode.RequestedRangeNotSatisfiable:
-                //    throw new VersionNotFoundException(message, new HttpRequestException(body));
+                case HttpStatusCode.PreconditionFailed:
+                    //throw new VersionNotFoundException(message, new HttpRequestException(body));
+                    throw new InvalidOperationException(message, new HttpRequestException(body));
+                case HttpStatusCode.RequestedRangeNotSatisfiable:
+                    //throw new IndexOutOfRangeException(message, new HttpRequestException(body));
+                    throw new InvalidOperationException(message, new HttpRequestException(body));
                 case HttpStatusCode.RequestTimeout:
                     throw new TimeoutException(message, new HttpRequestException(body));
                 default:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -48,11 +49,11 @@ namespace TypedRest.CommandLine
                 int exitCode = await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
                 switch (exitCode)
                 {
-                    case 3:
+                    case 4:
                         _endpointProvider.ResetAuthentication();
                         return await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
 
-                    case 4:
+                    case 5:
                         _endpointProvider.ResetUri();
                         return await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
 
@@ -123,30 +124,35 @@ namespace TypedRest.CommandLine
                 PrintError(ex);
                 return 3;
             }
-            catch (KeyNotFoundException ex)
+            catch (InvalidCredentialException ex)
             {
                 PrintError(ex);
                 return 4;
             }
-            catch (InvalidOperationException ex)
+            catch (KeyNotFoundException ex)
             {
                 PrintError(ex);
                 return 5;
             }
-            catch (HttpRequestException ex)
+            catch (InvalidOperationException ex)
             {
                 PrintError(ex);
                 return 6;
+            }
+            catch (HttpRequestException ex)
+            {
+                PrintError(ex);
+                return 10;
             }
             catch (JsonException ex)
             {
                 PrintError(ex);
-                return 7;
+                return 11;
             }
             catch (IOException ex)
             {
                 PrintError(ex);
-                return 6;
+                return 12;
             }
             #endregion
         }
