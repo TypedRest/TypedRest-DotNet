@@ -95,7 +95,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Swashbuckle.Core.5.4.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+      <HintPath>..\packages\Swashbuckle.Core.5.5.1\lib\net40\Swashbuckle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -137,10 +137,6 @@
     </Reference>
     <Reference Include="WebApi.LinkHeader, Version=0.7.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
       <HintPath>..\packages\WebApi.LinkHeader.0.7.0.0\lib\net45\WebApi.LinkHeader.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="WebApi.Pagination, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebApi.Pagination.0.6.0\lib\net45\WebApi.Pagination.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebApi.RequestLogging, Version=0.12.0.0, Culture=neutral, PublicKeyToken=0cf429762e0a2a39, processorArchitecture=MSIL">
