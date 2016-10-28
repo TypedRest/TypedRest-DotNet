@@ -172,6 +172,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\build\$(Configuration)\Client\XProjectNamespaceX-Client.exe">
+      <Link>Controllers\XProjectNamespaceX-Client.exe</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="AppSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -209,6 +214,11 @@
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{4b062778-beb1-45d2-b193-0a1281e37762}</Project>
       <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Client.CommandLine\Client.CommandLine.csproj">
+      <Project>{1c251e27-50bb-4247-9add-83fe2b2dcee7}</Project>
+      <Name>Client.CommandLine</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ba4fe533-bfc3-48c5-93d1-4dc230b9bc9c}</Project>
