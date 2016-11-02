@@ -90,10 +90,21 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="uri">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>cd /d "$(OutDir)"
-"$(SolutionDir)packages\ILRepack.2.0.12\tools\ILRepack.exe" /ndebug /wildcards /out:"$(SolutionDir)build\$(Configuration)\Client\$(AssemblyName).exe" "$(TargetPath)" *.dll</PostBuildEvent>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PostBuildEvent>pushd "$(OutDir)"
+"$(SolutionDir)packages\ILRepack.2.0.12\tools\ILRepack.exe" /ndebug /wildcards /out:"$(SolutionDir)build\$(Configuration)\Client\$(AssemblyName).exe" "$(TargetPath)" *.dll
+copy /y uri "$(SolutionDir)build\$(Configuration)\Client\"
+popd</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <PostBuildEvent>cd "$(OutDir)"
+/usr/bin/cli "$(SolutionDir)packages/ILRepack.2.0.12/tools/ILRepack.exe" /lib:/usr/lib/mono/4.5/Facades /ndebug /wildcards /out:"$(SolutionDir)build/$(Configuration)/Client/$(AssemblyName).exe" "$(TargetPath)" *.dll
+cp -f uri "$(SolutionDir)build/$(Configuration)/Client/"</PostBuildEvent>
   </PropertyGroup>
 </Project>
