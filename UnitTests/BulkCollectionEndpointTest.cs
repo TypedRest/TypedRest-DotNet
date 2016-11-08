@@ -50,9 +50,9 @@ namespace TypedRest
         }
 
         [Test]
-        public async Task TestCreate()
+        public async Task TestCreateBulk()
         {
-            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint/bulk")
+            Mock.Expect(new HttpMethod("PATCH"), "http://localhost/endpoint/")
                 .WithContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]")
                 .Respond(new HttpResponseMessage(HttpStatusCode.Accepted));
 

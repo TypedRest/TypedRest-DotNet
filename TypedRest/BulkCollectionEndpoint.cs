@@ -22,7 +22,6 @@ namespace TypedRest
         public BulkCollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {
-            SetDefaultLink(rel: "bulk", hrefs: "bulk");
         }
 
         /// <summary>
@@ -33,7 +32,6 @@ namespace TypedRest
         public BulkCollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {
-            SetDefaultLink(rel: "bulk", hrefs: "bulk");
         }
 
         public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
@@ -46,12 +44,11 @@ namespace TypedRest
             await PutContentAsync(content, cancellationToken);
         }
 
-        public virtual Task CreateAsync(IEnumerable<TEntity> entities,
-            CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task CreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-            return HandleResponseAsync(HttpClient.PostAsync(Link("bulk"), entities, Serializer, cancellationToken));
+            return HandleResponseAsync(HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken));
         }
     }
 
