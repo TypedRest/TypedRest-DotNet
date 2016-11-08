@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -36,7 +37,19 @@ namespace TypedRest
             _endCondition = endCondition;
         }
 
-        public IObservable<TEntity> GetStream(TimeSpan pollingInterval)
+        protected override async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
+        {
+            var response = await base.HandleResponseAsync(responseTask);
+            PollingInterval =
+                response.Headers.RetryAfter?.Delta ??
+                (response.Headers.RetryAfter?.Date - DateTime.UtcNow) ??
+                PollingInterval;
+            return response;
+        }
+
+        public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
+
+        public IObservable<TEntity> GetStream()
         {
             return Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
@@ -56,7 +69,7 @@ namespace TypedRest
                 {
                     try
                     {
-                        await Task.Delay(pollingInterval, cancellationToken);
+                        await Task.Delay( PollingInterval, cancellationToken);
                     }
                     catch (OperationCanceledException)
                     {

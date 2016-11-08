@@ -102,7 +102,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="responseTask">A response promise for a request that has started executing.</param>
         /// <returns>The resolved <paramref name="responseTask"/>.</returns>
-        protected async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected virtual async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             var response = await responseTask.NoContext();
 

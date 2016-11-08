@@ -9,9 +9,14 @@ namespace TypedRest
     public interface IPollingEndpoint<TEntity> : IElementEndpoint<TEntity>
     {
         /// <summary>
+        /// The interval in which to send requests to the server.
+        /// The server can modify this value using the "Retry-After" header.
+        /// </summary>
+        TimeSpan PollingInterval { get; set; }
+
+        /// <summary>
         /// Provides an observable stream of element states. Compares entities using <see cref="object.Equals(object)"/> to detect changes.
         /// </summary>
-        /// <param name="pollingInterval">The interval in which to send requests to the server.</param>
-        IObservable<TEntity> GetStream(TimeSpan pollingInterval);
+        IObservable<TEntity> GetStream();
     }
 }

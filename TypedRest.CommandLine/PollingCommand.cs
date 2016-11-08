@@ -28,8 +28,7 @@ namespace TypedRest.CommandLine
         {
             if (args.Count >= 1 && args[0].ToLowerInvariant() == "poll")
             {
-                var interval = (args.Count >= 2) ? TimeSpan.Parse(args[1]) : TimeSpan.FromSeconds(2);
-                var stream = Endpoint.GetStream(interval);
+                var stream = Endpoint.GetStream();
                 await OutputEntitiesAsync(stream, cancellationToken);
                 return;
             }
