@@ -23,6 +23,52 @@ namespace TypedRest
         }
 
         [Test]
+        public void TestGetByEntity()
+        {
+            _endpoint[new MockEntity(1, "test")].Uri
+                .Should().Be(new Uri(_endpoint.Uri, "1"));
+        }
+
+        [Test]
+        public void TestGetByEntityTemplate()
+        {
+            _endpoint[new MockEntity(1, "test")].Uri
+                .Should().Be(new Uri(_endpoint.Uri, "1"));
+        }
+
+        [Test]
+        public async Task TestGetByEntityWithLinkHeaderRelative()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                    Headers = { { "Link", "<children/{id}>; rel=child; templated=true" } }
+                });
+
+            await _endpoint.ReadAllAsync();
+
+            _endpoint[new MockEntity(1, "test")].Uri
+                .Should().Be(new Uri("http://localhost/endpoint/children/1"));
+        }
+
+        [Test]
+        public async Task TestGetByEntityWithLinkHeaderAbsolute()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                    Headers = { { "Link", "<http://localhost/endpoint/children/{id}>; rel=child; templated=true" } }
+                });
+
+            await _endpoint.ReadAllAsync();
+
+            _endpoint[new MockEntity(1, "test")].Uri
+                .Should().Be(new Uri("http://localhost/endpoint/children/1"));
+        }
+
+        [Test]
         public async Task TestReadAll()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -70,49 +116,42 @@ namespace TypedRest
         }
 
         [Test]
-        public void TestGetByEntity()
+        public async Task TestCreateAll()
         {
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri(_endpoint.Uri, "1"));
+            Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint/")
+                .WithContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]")
+                .Respond(new HttpResponseMessage(HttpStatusCode.Accepted));
+
+            await _endpoint.CreateAllAsync(new[] { new MockEntity(5, "test1"), new MockEntity(6, "test2") });
         }
 
         [Test]
-        public void TestGetByEntityTemplate()
+        public async Task TestSetAll()
         {
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri(_endpoint.Uri, "1"));
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint/")
+                .WithContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent));
+
+            await _endpoint.SetAllAsync(new[] { new MockEntity(5, "test1"), new MockEntity(6, "test2") });
         }
 
         [Test]
-        public async Task TestGetByEntityWithLinkHeaderRelative()
+        public async Task TestSetAllETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
                 .Respond(new HttpResponseMessage
                 {
-                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                    Headers = {{"Link", "<children/{id}>; rel=child; templated=true"}}
+                    Content = new StringContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime),
+                    Headers = { ETag = new EntityTagHeaderValue("\"123abc\"") }
                 });
+            var result = await _endpoint.ReadAllAsync();
 
-            await _endpoint.ReadAllAsync();
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint/")
+                .WithContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]")
+                .WithHeaders("If-Match", "\"123abc\"")
+                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent));
 
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri("http://localhost/endpoint/children/1"));
-        }
-
-        [Test]
-        public async Task TestGetByEntityWithLinkHeaderAbsolute()
-        {
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
-                .Respond(new HttpResponseMessage
-                {
-                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                    Headers = {{"Link", "<http://localhost/endpoint/children/{id}>; rel=child; templated=true"}}
-                });
-
-            await _endpoint.ReadAllAsync();
-
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri("http://localhost/endpoint/children/1"));
+            await _endpoint.SetAllAsync(result);
         }
     }
 }

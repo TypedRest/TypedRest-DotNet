@@ -54,7 +54,6 @@
     <Compile Include="..\GlobalAssemblyInfo.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BlobCommand.cs" />
-    <Compile Include="BulkCollectionCommand.cs" />
     <Compile Include="EndpointProvider.cs" />
     <Compile Include="ElementCommand.cs" />
     <Compile Include="EndpointCommand.cs" />

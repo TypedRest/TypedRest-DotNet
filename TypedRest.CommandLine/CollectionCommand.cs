@@ -44,6 +44,14 @@ namespace TypedRest.CommandLine
                     if (newEndpoint != null)
                         await BuildElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
                     return;
+
+                case "create-all":
+                    await Endpoint.CreateAllAsync(InputEntities(args.Skip(1).ToList()), cancellationToken);
+                    return;
+
+                case "set-all":
+                    await Endpoint.SetAllAsync(InputEntities(args.Skip(1).ToList()), cancellationToken);
+                    return;
             }
 
             await base.ExecuteAsync(args, cancellationToken);
@@ -62,10 +70,14 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
-        protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-        {
-            return JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
-        }
+        protected virtual TEntity InputEntity(IReadOnlyList<string> args) =>
+            JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
+
+        /// <summary>
+        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
+        /// </summary>
+        protected virtual IEnumerable<TEntity> InputEntities(IReadOnlyList<string> args) =>
+            JsonConvert.DeserializeObject<List<TEntity>>((args.Count == 0) ? Console.ReadLine() : args[0]);
 
         /// <summary>
         /// Outputs a collection of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.

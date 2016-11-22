@@ -61,6 +61,47 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="CreateAllAllowed"/> is currently allowed.
+        /// </summary>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
+        bool? CreateAllAllowed { get; }
+
+        /// <summary>
+        /// Creates or modifies multiple <typeparamref name="TEntity"/>s.
+        /// </summary>
+        /// <param name="entities">The <typeparamref name="TEntity"/>s to create or modify.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        /// <remarks>Uses a link with the relation type <c>bulk</c> to determine the URI to POST to. Defaults to the relative URI <c>bulk</c>.</remarks>
+        Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="SetAllAllowed"/> is currently allowed.
+        /// </summary>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
+        bool? SetAllAllowed { get; }
+
+        /// <summary>
+        /// Replaces the entire content of the collection with new <typeparamref name="TEntity"/>s.
+        /// </summary>
+        /// <param name="entities">The new set of <typeparamref name="TEntity"/>s the collection shall contain.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="InvalidOperationException">The entities have changed since they were last retrieved with <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.ReadAllAsync"/>. Your changes were rejected to prevent a lost update.</exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
     }
 
     /// <summary>

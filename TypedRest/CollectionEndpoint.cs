@@ -97,6 +97,25 @@ namespace TypedRest
                 ? BuildElementEndpoint(response.Headers.Location)
                 : null;
         }
+
+        public bool? CreateAllAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
+
+        public virtual Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+
+            return HandleResponseAsync(HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken));
+        }
+
+        public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);
+
+        public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
+        {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+
+            var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializer);
+            await PutContentAsync(content, cancellationToken);
+        }
     }
 
     /// <summary>

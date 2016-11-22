@@ -96,7 +96,6 @@
     <None Include="packages.config" />
     <Compile Include="ActionEndpointWithInputTest.cs" />
     <Compile Include="BlobEndpointTest.cs" />
-    <Compile Include="BulkCollectionEndpointTest.cs" />
     <Compile Include="CustomEndpointTest.cs" />
     <Compile Include="ElementEndpointTest.cs" />
     <Compile Include="EndpointTestBase.cs" />
