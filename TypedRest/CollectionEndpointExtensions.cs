@@ -27,10 +27,7 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
         public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
-        {
-            return endpoint[id].ExistsAsync(cancellationToken);
-        }
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[id].ExistsAsync(cancellationToken);
 
         /// <summary>
         /// Determines whether the collection contains a specific entity.
@@ -45,13 +42,10 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
         public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
-        {
-            return endpoint[element].ExistsAsync(cancellationToken);
-        }
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].ExistsAsync(cancellationToken);
 
         /// <summary>
-        /// Updates an existing element in the collection.
+        /// Sets/replaces an existing element in the collection.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
         /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
@@ -65,12 +59,13 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="IElementEndpoint{TEntity}.ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.UpdateAsync"/>.</remarks>
+        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.SetAsync"/>.</remarks>
+        public static Task<TEntity> SetAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].SetAsync(element, cancellationToken);
+
+        [Obsolete("Use SetAsync() instead.")]
         public static Task<TEntity> UpdateAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
-        {
-            return endpoint[element].UpdateAsync(element, cancellationToken);
-        }
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint.SetAsync(element, cancellationToken);
 
         /// <summary>
         /// Deletes an existing element from the collection.
@@ -88,10 +83,7 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>.</remarks>
         public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
-        {
-            return endpoint[id].DeleteAsync(cancellationToken);
-        }
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[id].DeleteAsync(cancellationToken);
 
         /// <summary>
         /// Deletes an existing element from the collection.
@@ -109,9 +101,6 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>.</remarks>
         public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
-        {
-            return endpoint[element].DeleteAsync(cancellationToken);
-        }
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].DeleteAsync(cancellationToken);
     }
 }

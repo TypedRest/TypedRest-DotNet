@@ -4,7 +4,7 @@
     /// Indicates that an existing element was updated.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity that was updated.</typeparam>
-    /// <seealso cref="IElementEndpoint{TEntity}.UpdateAsync"/>
+    /// <seealso cref="IElementEndpoint{TEntity}.SetAsync"/>
     public class ElementUpdatedEvent<TEntity> : ElementEvent<TEntity>
     {
         /// <summary>

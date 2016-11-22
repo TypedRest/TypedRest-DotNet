@@ -35,16 +35,16 @@ namespace TypedRest
         Task<bool> ExistsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="UpdateAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <seealso cref="SetAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
-        bool? UpdateAllowed { get; }
+        bool? SetAllowed { get; }
 
         /// <summary>
-        /// Updates the <typeparamref name="TEntity"/>.
+        /// Sets/replaces the <typeparamref name="TEntity"/>.
         /// </summary>
-        /// <param name="entity">The modified <typeparamref name="TEntity"/>.</param>
+        /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
@@ -53,6 +53,9 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        [Obsolete("Use SetAsync() instead.")]
         Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

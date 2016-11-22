@@ -27,7 +27,7 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = Entity.ToString();
             NotifyOfPropertyChange(() => Entity);
 
-            CanSave = Endpoint.UpdateAllowed.GetValueOrDefault(CanSave);
+            CanSave = Endpoint.SetAllowed.GetValueOrDefault(CanSave);
             NotifyOfPropertyChange(() => CanSave);
 
             CanDelete = Endpoint.DeleteAllowed.GetValueOrDefault(CanDelete);
@@ -41,7 +41,7 @@ namespace TypedRest.Wpf.ViewModels
 
         protected override async Task OnSaveAsync()
         {
-            await Endpoint.UpdateAsync(Entity, CancellationToken);
+            await Endpoint.SetAsync(Entity, CancellationToken);
             EventAggregator.Publish(new ElementUpdatedEvent<TEntity>(Endpoint), null);
         }
 

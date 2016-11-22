@@ -74,28 +74,28 @@ namespace TypedRest
         }
 
         [Test]
-        public async Task TestUpdateResult()
+        public async Task TestSetResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"Id\":5,\"Name\":\"test\"}")
                 .Respond(JsonMime, "{\"Id\":5,\"Name\":\"testXXX\"}");
 
-            var result = await _endpoint.UpdateAsync(new MockEntity(5, "test"));
+            var result = await _endpoint.SetAsync(new MockEntity(5, "test"));
             result.Should().Be(new MockEntity(5, "testXXX"));
         }
 
         [Test]
-        public async Task TestUpdateNoResult()
+        public async Task TestSetNoResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"Id\":5,\"Name\":\"test\"}")
                 .Respond(HttpStatusCode.NoContent);
 
-            await _endpoint.UpdateAsync(new MockEntity(5, "test"));
+            await _endpoint.SetAsync(new MockEntity(5, "test"));
         }
 
         [Test]
-        public async Task TestUpdateETag()
+        public async Task TestSetETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(new HttpResponseMessage
@@ -109,7 +109,7 @@ namespace TypedRest
                 .WithContent("{\"Id\":5,\"Name\":\"test\"}")
                 .WithHeaders("If-Match", "\"123abc\"")
                 .Respond(HttpStatusCode.NoContent);
-            await _endpoint.UpdateAsync(result);
+            await _endpoint.SetAsync(result);
         }
 
         [Test]
