@@ -38,7 +38,15 @@ namespace TypedRest
         /// <summary>
         /// The value used for <see cref="RangeHeaderValue.Unit"/>.
         /// </summary>
-        public const string RangeUnit = "elements";
+        public string RangeUnit { get; set; }= "elements";
+
+        protected override void HandleCapabilities(HttpResponseMessage response)
+        {
+            base.HandleCapabilities(response);
+            ReadRangeAllowed = response.Headers.AcceptRanges.Contains(RangeUnit);
+        }
+
+        public bool? ReadRangeAllowed { get; private set; }
 
         public async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
             CancellationToken cancellationToken = default(CancellationToken))

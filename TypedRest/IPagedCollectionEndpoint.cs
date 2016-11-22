@@ -20,6 +20,13 @@ namespace TypedRest
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="ReadRangeAsync"/> is allowed.
+        /// </summary>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the method is allowed. If no request has been sent yet.</returns>
+        bool? ReadRangeAllowed { get; }
+
+        /// <summary>
         /// Returns all <typeparamref name="TElementEndpoint"/>s within a specific range of the set.
         /// </summary>
         /// <param name="range">The range of elements to retrieve.</param>
