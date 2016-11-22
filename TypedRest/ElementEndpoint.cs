@@ -51,7 +51,7 @@ namespace TypedRest
             return true;
         }
 
-        public bool? SetAllowed => IsVerbAllowed(HttpMethod.Put.Method);
+        public bool? SetAllowed => IsMethodAllowed(HttpMethod.Put);
 
         public virtual async Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -64,10 +64,22 @@ namespace TypedRest
                 : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
         }
 
-        [Obsolete("Use SetAsync() instead.")]
+        [Obsolete("Use SetAsync() instead")]
         public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) => SetAsync(entity, cancellationToken);
 
-        public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);
+        public bool? ModifyAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
+
+        public async Task<TEntity> ModifyAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            var response = await HandleResponseAsync(HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
+            return response.Content == null
+                ? default(TEntity)
+                : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
+        }
+
+        public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
 
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

@@ -113,6 +113,27 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestModifyResult()
+        {
+            Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .Respond(JsonMime, "{\"Id\":5,\"Name\":\"testXXX\"}");
+
+            var result = await _endpoint.ModifyAsync(new MockEntity(5, "test"));
+            result.Should().Be(new MockEntity(5, "testXXX"));
+        }
+
+        [Test]
+        public async Task TestModifyNoResult()
+        {
+            Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .Respond(HttpStatusCode.NoContent);
+
+            await _endpoint.ModifyAsync(new MockEntity(5, "test"));
+        }
+
+        [Test]
         public async Task TestDelete()
         {
             Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")

@@ -29,9 +29,9 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.IsVerbAllowed(HttpMethod.Put.Method).Should().BeTrue();
-            _endpoint.IsVerbAllowed(HttpMethod.Post.Method).Should().BeTrue();
-            _endpoint.IsVerbAllowed(HttpMethod.Delete.Method).Should().BeFalse();
+            _endpoint.IsMethodAllowed(HttpMethod.Put).Should().BeTrue();
+            _endpoint.IsMethodAllowed(HttpMethod.Post).Should().BeTrue();
+            _endpoint.IsMethodAllowed(HttpMethod.Delete).Should().BeFalse();
         }
 
         [Test]
@@ -302,15 +302,9 @@ namespace TypedRest
             {
             }
 
-            public async Task GetAsync()
-            {
-                await HandleResponseAsync(HttpClient.GetAsync(Uri));
-            }
+            public Task GetAsync() => HandleResponseAsync(HttpClient.GetAsync(Uri));
 
-            public new bool? IsVerbAllowed(string verb)
-            {
-                return base.IsVerbAllowed(verb);
-            }
+            public new bool? IsMethodAllowed(HttpMethod method) => base.IsMethodAllowed(method);
         }
 
         [Test]

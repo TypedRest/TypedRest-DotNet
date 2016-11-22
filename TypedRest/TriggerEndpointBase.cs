@@ -35,6 +35,6 @@ namespace TypedRest
             return HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
         }
 
-        public bool? TriggerAllowed => IsVerbAllowed(HttpMethod.Post.Method);
+        public bool? TriggerAllowed => IsMethodAllowed(HttpMethod.Post);
     }
 }

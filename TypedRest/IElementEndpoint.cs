@@ -38,7 +38,7 @@ namespace TypedRest
         /// Shows whether the server has indicated that <seealso cref="SetAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
-        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
+        /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
         bool? SetAllowed { get; }
 
         /// <summary>
@@ -55,14 +55,35 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
-        [Obsolete("Use SetAsync() instead.")]
+        [Obsolete("Use SetAsync() instead")]
         Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Shows whether the server has indicated that <seealso cref="ModifyAsync"/> is currently allowed.
+        /// </summary>
+        /// <remarks>Uses cached data from last response.</remarks>
+        /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
+        bool? ModifyAllowed { get; }
+
+        /// <summary>
+        /// Modifies an existing <typeparamref name="TEntity"/> by merging changes.
+        /// </summary>
+        /// <param name="entity">The <typeparamref name="TEntity"/> data to merge with the existing one.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>The modified <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        Task<TEntity> ModifyAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
-        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
+        /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
         bool? DeleteAllowed { get; }
 
         /// <summary>

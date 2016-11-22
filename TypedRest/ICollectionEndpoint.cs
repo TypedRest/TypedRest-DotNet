@@ -44,7 +44,7 @@ namespace TypedRest
         /// Shows whether the server has indicated that <seealso cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
-        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
+        /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
         bool? CreateAllowed { get; }
 
         /// <summary>

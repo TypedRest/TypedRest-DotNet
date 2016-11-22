@@ -12,6 +12,11 @@ namespace TypedRest
     public static class HttpClientExtensions
     {
         /// <summary>
+        /// Represents an HTTP PATCH protocol method that is used to modify an eixsting entity at a URI.
+        /// </summary>
+        public static readonly HttpMethod Patch = new HttpMethod("PATCH");
+
+        /// <summary>
         /// Send a HEAD request to the specified URI.
         /// </summary>
         public static Task<HttpResponseMessage> HeadAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default(CancellationToken)) =>
@@ -24,7 +29,7 @@ namespace TypedRest
             httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri), cancellationToken);
 
         public static Task<HttpResponseMessage> PatchAsync<T>(this HttpClient httpClient, Uri uri, T value, MediaTypeFormatter formatter, CancellationToken cancellationToken = default(CancellationToken)) =>
-            httpClient.SendAsync(new HttpRequestMessage(new HttpMethod("PATCH"), uri)
+            httpClient.SendAsync(new HttpRequestMessage(Patch, uri)
             {
                 Content = new ObjectContent<T>(value, formatter)
             }, cancellationToken);

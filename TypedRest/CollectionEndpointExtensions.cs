@@ -63,9 +63,28 @@ namespace TypedRest
         public static Task<TEntity> SetAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].SetAsync(element, cancellationToken);
 
-        [Obsolete("Use SetAsync() instead.")]
+        [Obsolete("Use SetAsync() instead")]
         public static Task<TEntity> UpdateAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint.SetAsync(element, cancellationToken);
+
+        /// <summary>
+        /// Modifies an existing <typeparamref name="TEntity"/> in the collection by merging changes.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+        /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
+        /// <param name="endpoint">The collection endpoint containing the element.</param>
+        /// <param name="element">The <typeparamref name="TEntity"/> data to merge with the existing element.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>The <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="IElementEndpoint{TEntity}.ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.SetAsync"/>.</remarks>
+        public static Task<TEntity> ModifyAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].ModifyAsync(element, cancellationToken);
 
         /// <summary>
         /// Deletes an existing element from the collection.

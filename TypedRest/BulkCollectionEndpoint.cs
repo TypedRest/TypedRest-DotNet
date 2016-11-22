@@ -34,7 +34,7 @@ namespace TypedRest
         {
         }
 
-        public bool? SetAllAllowed => IsVerbAllowed(HttpMethod.Put.Method);
+        public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);
 
         public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
         {

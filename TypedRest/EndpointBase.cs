@@ -107,7 +107,7 @@ namespace TypedRest
             var response = await responseTask.NoContext();
 
             await HandleLinksAsync(response).NoContext();
-            HandleAllow(response);
+            HandleCapabilities(response);
             await HandleErrorsAsync(response).NoContext();
 
             return response;
@@ -386,27 +386,27 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Handles allowed HTTP verbs reported by the server.
+        /// Handles allowed HTTP methods and other capabilities reported by the server.
         /// </summary>
-        private void HandleAllow(HttpResponseMessage response)
+        protected virtual void HandleCapabilities(HttpResponseMessage response)
         {
             if (response.Content != null)
-                _allowedVerbs = new HashSet<string>(response.Content.Headers.Allow);
+                _allowedMethods = new HashSet<string>(response.Content.Headers.Allow);
         }
 
         // NOTE: Always replace entire set rather than modifying it to ensure thread-safety.
-        private ISet<string> _allowedVerbs = new HashSet<string>();
+        private ISet<string> _allowedMethods = new HashSet<string>();
 
         /// <summary>
-        /// Shows whether the server has indicated that a specific HTTP verb is currently allowed.
+        /// Shows whether the server has indicated that a specific HTTP method is currently allowed.
         /// </summary>
-        /// <param name="verb">The HTTP verb (e.g. GET, POST, ...) to check.</param>
+        /// <param name="method">The HTTP methods (e.g. GET, POST, ...) to check.</param>
         /// <remarks>Uses cached data from last response.</remarks>
-        /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
-        protected bool? IsVerbAllowed(string verb)
+        /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
+        protected bool? IsMethodAllowed(HttpMethod method)
         {
-            if (_allowedVerbs.Count == 0) return null;
-            return _allowedVerbs.Contains(verb);
+            if (_allowedMethods.Count == 0) return null;
+            return _allowedMethods.Contains(method.Method);
         }
 
         public override string ToString()

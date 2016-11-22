@@ -37,7 +37,7 @@ namespace TypedRest
             return HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
         }
 
-        public bool? DownloadAllowed => IsVerbAllowed(HttpMethod.Get.Method);
+        public bool? DownloadAllowed => IsMethodAllowed(HttpMethod.Get);
 
         public async Task<Stream> DownloadAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -45,7 +45,7 @@ namespace TypedRest
             return await response.Content.ReadAsStreamAsync().NoContext();
         }
 
-        public bool? UploadAllowed => IsVerbAllowed(HttpMethod.Put.Method);
+        public bool? UploadAllowed => IsMethodAllowed(HttpMethod.Put);
 
         public Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = new CancellationToken())
         {
@@ -54,7 +54,7 @@ namespace TypedRest
             return HandleResponseAsync(HttpClient.PutAsync(Uri, content, cancellationToken));
         }
 
-        public bool? DeleteAllowed => IsVerbAllowed(HttpMethod.Delete.Method);
+        public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
 
         public Task DeleteAsync(CancellationToken cancellationToken = new CancellationToken()) => HandleResponseAsync(HttpClient.DeleteAsync(Uri, cancellationToken));
     }

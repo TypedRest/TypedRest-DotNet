@@ -84,7 +84,7 @@ namespace TypedRest
             return await content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
         }
 
-        public bool? CreateAllowed => IsVerbAllowed(HttpMethod.Post.Method);
+        public bool? CreateAllowed => IsMethodAllowed(HttpMethod.Post);
 
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
             CancellationToken cancellationToken = default(CancellationToken))
