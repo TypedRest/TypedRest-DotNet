@@ -83,8 +83,8 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="IElementEndpoint{TEntity}.ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <seealso cref="IElementEndpoint{TEntity}.SetAsync"/>.</remarks>
-        public static Task<TEntity> ModifyAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].ModifyAsync(element, cancellationToken);
+        public static Task<TEntity> MergeAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
+            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].MergeAsync(element, cancellationToken);
 
         /// <summary>
         /// Deletes an existing element from the collection.

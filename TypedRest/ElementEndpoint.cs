@@ -67,9 +67,9 @@ namespace TypedRest
         [Obsolete("Use SetAsync() instead")]
         public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) => SetAsync(entity, cancellationToken);
 
-        public bool? ModifyAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
+        public bool? MergeAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
 
-        public async Task<TEntity> ModifyAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 

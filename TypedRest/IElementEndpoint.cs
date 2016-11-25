@@ -59,11 +59,11 @@ namespace TypedRest
         Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="ModifyAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <seealso cref="MergeAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
-        bool? ModifyAllowed { get; }
+        bool? MergeAllowed { get; }
 
         /// <summary>
         /// Modifies an existing <typeparamref name="TEntity"/> by merging changes.
@@ -77,7 +77,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TEntity> ModifyAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
