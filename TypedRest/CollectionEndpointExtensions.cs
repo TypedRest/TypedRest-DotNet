@@ -50,7 +50,7 @@ namespace TypedRest
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
         /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
-        /// <param name="element">The element to be updated.</param>
+        /// <param name="element">The new state of the element.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
@@ -68,7 +68,7 @@ namespace TypedRest
             where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint.SetAsync(element, cancellationToken);
 
         /// <summary>
-        /// Modifies an existing <typeparamref name="TEntity"/> in the collection by merging changes.
+        /// Modifies an existing element in the collection by merging changes.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
         /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
