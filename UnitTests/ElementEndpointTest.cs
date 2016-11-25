@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -110,6 +111,50 @@ namespace TypedRest
                 .WithHeaders("If-Match", "\"123abc\"")
                 .Respond(HttpStatusCode.NoContent);
             await _endpoint.SetAsync(result);
+        }
+
+        [Test]
+        public async Task TestUpdateRetry()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"Id\":5,\"Name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                    Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
+                });
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"testX\"}")
+                .WithHeaders("If-Match", "\"1\"")
+                .Respond(HttpStatusCode.PreconditionFailed);
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"Id\":5,\"Name\":\"test2\"}", Encoding.UTF8, JsonMime),
+                    Headers = {ETag = new EntityTagHeaderValue("\"2\"")}
+                });
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"testX\"}")
+                .WithHeaders("If-Match", "\"2\"")
+                .Respond(HttpStatusCode.NoContent);
+
+            await _endpoint.UpdateAsync(x => x.Name = "testX");
+        }
+
+        [Test]
+        public void TestUpdateFail()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"Id\":5,\"Name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                    Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
+                });
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"Id\":5,\"Name\":\"testX\"}")
+                .WithHeaders("If-Match", "\"1\"")
+                .Respond(HttpStatusCode.PreconditionFailed);
+
+            Assert.Throws<InvalidOperationException>(async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
         }
 
         [Test]
