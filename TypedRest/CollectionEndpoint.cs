@@ -78,6 +78,8 @@ namespace TypedRest
             }
         }
 
+        public bool? ReadAllAllowed => IsMethodAllowed(HttpMethod.Get);
+
         public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var content = await GetContentAsync(cancellationToken);
