@@ -114,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockEntityBase.cs" />
-    <Compile Include="PagedCollectionEndpointTest.cs" />
     <Compile Include="PollingEndpointTest.cs" />
     <Compile Include="StreamEndpointTest.cs" />
     <Compile Include="ActionEndpointTest.cs" />

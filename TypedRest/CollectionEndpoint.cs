@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,6 +85,33 @@ namespace TypedRest
         {
             var content = await GetContentAsync(cancellationToken);
             return await content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
+        }
+
+        /// <summary>
+        /// The value used for <see cref="RangeHeaderValue.Unit"/>.
+        /// </summary>
+        public string RangeUnit { get; set; } = "elements";
+
+        protected override void HandleCapabilities(HttpResponseMessage response)
+        {
+            base.HandleCapabilities(response);
+            ReadRangeAllowed = response.Headers.AcceptRanges.Contains(RangeUnit);
+        }
+
+        public bool? ReadRangeAllowed { get; private set; }
+
+        public async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, Uri)
+            {
+                Headers = {Range = new RangeHeaderValue {Ranges = {range}, Unit = RangeUnit}}
+            };
+
+            var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
+            return new PartialResponse<TEntity>(
+                elements: await response.Content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext(),
+                range: response.Content.Headers.ContentRange);
         }
 
         public bool? CreateAllowed => IsMethodAllowed(HttpMethod.Post);

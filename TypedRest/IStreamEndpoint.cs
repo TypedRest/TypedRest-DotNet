@@ -8,7 +8,7 @@ namespace TypedRest
     /// <remarks>Use the more constrained <see cref="IStreamEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public interface IStreamEndpoint<TEntity, TElementEndpoint> : IPagedCollectionEndpoint<TEntity, TElementEndpoint>
+    public interface IStreamEndpoint<TEntity, TElementEndpoint> : ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
@@ -23,7 +23,7 @@ namespace TypedRest
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public interface IStreamEndpoint<TEntity> : IStreamEndpoint<TEntity, IElementEndpoint<TEntity>>,
-        IPagedCollectionEndpoint<TEntity>
+        ICollectionEndpoint<TEntity>
     {
     }
 }

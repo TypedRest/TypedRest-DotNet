@@ -101,6 +101,74 @@ namespace TypedRest
         }
 
         [Test]
+        public async Task TestReadRangeOffset()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=1-")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = { ContentRange = new ContentRangeHeaderValue(from: 1, to: 1, length: 2) { Unit = "elements" } }
+                    });
+
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: null));
+            response.Elements.Should().Equal(new MockEntity { Id = 6, Name = "test2" });
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) { Unit = "elements" });
+        }
+
+        [Test]
+        public async Task TestReadRangeHead()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=0-1")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = { ContentRange = new ContentRangeHeaderValue(from: 0, to: 1, length: 2) { Unit = "elements" } }
+                    });
+
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 0, to: 1));
+            response.Elements.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) { Unit = "elements" });
+        }
+
+        [Test]
+        public async Task TestReadRangeTail()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=-1")
+                .Respond(HttpStatusCode.PartialContent,
+                    new StringContent("[{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    {
+                        Headers = { ContentRange = new ContentRangeHeaderValue(from: 2, to: 2) { Unit = "elements" } }
+                    });
+
+            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: null, to: 1));
+            response.Elements.Should().Equal(new MockEntity(6, "test2"));
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) { Unit = "elements" });
+        }
+
+        [Test]
+        public async Task TestReadRangeException()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+                .WithHeaders("Range", "elements=5-10")
+                .Respond(HttpStatusCode.RequestedRangeNotSatisfiable, JsonMime, "{\"message\":\"test\"}");
+
+            string exceptionMessage = null;
+            try
+            {
+                await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 5, to: 10));
+            }
+            catch (InvalidOperationException ex)
+            {
+                exceptionMessage = ex.Message;
+            }
+
+            exceptionMessage.Should().Be("test");
+        }
+
+        [Test]
         public async Task TestCreate()
         {
             var location = new Uri("/endpoint/new", UriKind.Relative);

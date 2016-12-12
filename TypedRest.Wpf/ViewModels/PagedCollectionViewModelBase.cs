@@ -5,13 +5,13 @@ using Caliburn.Micro;
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// Base class for building view models operatingon an <see cref="IPagedCollectionEndpoint{TEntity,TElementEndpoint}"/>.
+    /// Base class for building view models operatingon an <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> using pagination.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the <typeparamref name="TEndpoint"/> represents.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IPagedCollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     public abstract class PagedCollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint> : CollectionViewModelBase<TEntity, TEndpoint, TElementEndpoint>
-        where TEndpoint : class, IPagedCollectionEndpoint<TEntity, TElementEndpoint>
+        where TEndpoint : class, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
