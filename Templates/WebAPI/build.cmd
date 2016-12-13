@@ -13,8 +13,8 @@ if not defined VS140COMNTOOLS (
 call "%VS140COMNTOOLS%vsvars32.bat"
 
 echo Compiling Visual Studio solution...
-nuget restore XProjectNamespaceX.sln -Verbosity quiet
-msbuild XProjectNamespaceX.sln /nologo /v:q /m /t:Rebuild /p:Configuration=%BuildConfiguration% /p:DeployOnBuild=True /p:PublishProfile=%BuildConfiguration%
+nuget restore -Verbosity quiet
+msbuild /nologo /v:q /m /t:Rebuild /p:Configuration=%BuildConfiguration% /p:DeployOnBuild=True /p:PublishProfile=%BuildConfiguration%
 if errorlevel 1 pause
 
 echo Creating NuGet packages...

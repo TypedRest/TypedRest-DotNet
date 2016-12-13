@@ -1,5 +1,6 @@
 # Normalize linebreaks
 *        text=auto
+*.sh     -text
 
 # Visual Studio file types
 *.cs     diff=csharp
