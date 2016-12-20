@@ -17,7 +17,6 @@ namespace XProjectNamespaceX.Service.Controllers
         /// Displays the name of the API and provides HTTP Link headers for further navigation.
         /// </summary>
         [HttpGet, Route("")]
-        [LinkHeader("entities/", Rel = "entities")]
         public IHttpActionResult Read() => Ok("XProjectNameX API")
             .WithLink("swagger", rel: "swagger")
             .WithLink("cli-client", rel: "cli-client")

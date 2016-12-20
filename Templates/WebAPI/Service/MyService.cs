@@ -16,7 +16,7 @@ namespace XProjectNamespaceX.Service
     public class MyService : ServiceControl
     {
         private readonly IUnityContainer _container = UnityConfig.InitContainer();
-        private readonly ILogger _logger = LogManager.GetLogger("XProjectNameX");
+        private readonly ILogger _logger = LogManager.GetLogger("XProjectNamespaceX");
 
         /// <summary>
         /// Starts the internal scheduler and the REST API.
