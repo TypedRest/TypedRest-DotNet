@@ -5,38 +5,32 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class CollectionEndpointTest : EndpointTestBase
     {
-        private CollectionEndpoint<MockEntity> _endpoint;
+        private readonly CollectionEndpoint<MockEntity> _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
-        }
+        public CollectionEndpointTest() => _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public void TestGetByEntity()
         {
             _endpoint[new MockEntity(1, "test")].Uri
                 .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
 
-        [Test]
+        [Fact]
         public void TestGetByEntityTemplate()
         {
             _endpoint[new MockEntity(1, "test")].Uri
                 .Should().Be(new Uri(_endpoint.Uri, "1"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestGetByEntityWithLinkHeaderRelative()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -52,7 +46,7 @@ namespace TypedRest
                 .Should().Be(new Uri("http://localhost/endpoint/children/1"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestGetByEntityWithLinkHeaderAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -68,7 +62,7 @@ namespace TypedRest
                 .Should().Be(new Uri("http://localhost/endpoint/children/1"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadAll()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -78,7 +72,7 @@ namespace TypedRest
             result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadAllCache()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -100,7 +94,7 @@ namespace TypedRest
                 because: "Cache responses, not deserialized objects");
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadRangeOffset()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -116,7 +110,7 @@ namespace TypedRest
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) { Unit = "elements" });
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadRangeHead()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -132,7 +126,7 @@ namespace TypedRest
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) { Unit = "elements" });
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadRangeTail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -148,7 +142,7 @@ namespace TypedRest
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) { Unit = "elements" });
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadRangeException()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -168,7 +162,7 @@ namespace TypedRest
             exceptionMessage.Should().Be("test");
         }
 
-        [Test]
+        [Fact]
         public async Task TestCreate()
         {
             var location = new Uri("/endpoint/new", UriKind.Relative);
@@ -183,7 +177,7 @@ namespace TypedRest
             element.Uri.Should().Be(new Uri(EntryEndpoint.Uri, location));
         }
 
-        [Test]
+        [Fact]
         public async Task TestCreateAll()
         {
             Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint/")
@@ -193,7 +187,7 @@ namespace TypedRest
             await _endpoint.CreateAllAsync(new[] { new MockEntity(5, "test1"), new MockEntity(6, "test2") });
         }
 
-        [Test]
+        [Fact]
         public async Task TestSetAll()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint/")
@@ -203,7 +197,7 @@ namespace TypedRest
             await _endpoint.SetAllAsync(new[] { new MockEntity(5, "test1"), new MockEntity(6, "test2") });
         }
 
-        [Test]
+        [Fact]
         public async Task TestSetAllETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")

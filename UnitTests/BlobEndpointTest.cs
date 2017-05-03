@@ -4,24 +4,18 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class BlobEndpointTest : EndpointTestBase
     {
-        private IBlobEndpoint _endpoint;
+        private readonly IBlobEndpoint _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new BlobEndpoint(EntryEndpoint, "endpoint");
-        }
+        public BlobEndpointTest() => _endpoint = new BlobEndpoint(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public async Task TestProbe()
         {
             Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
@@ -33,7 +27,7 @@ namespace TypedRest
             _endpoint.UploadAllowed.Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public async Task TestDownload()
         {
             byte[] data = {1, 2, 3};
@@ -49,7 +43,7 @@ namespace TypedRest
             }
         }
 
-        [Test]
+        [Fact]
         public async Task TestUpload()
         {
             byte[] data = {1, 2, 3};

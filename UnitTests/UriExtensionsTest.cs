@@ -1,52 +1,39 @@
 using System;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class UriExtensionsTest
     {
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashRelativeUnrooted()
-        {
-            new Uri("test", UriKind.Relative).EnsureTrailingSlash()
+            => new Uri("test", UriKind.Relative).EnsureTrailingSlash()
                 .Should().Be(new Uri("test/", UriKind.Relative));
-        }
 
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashRelativeRooted()
-        {
-            new Uri("/test", UriKind.Relative).EnsureTrailingSlash()
+            => new Uri("/test", UriKind.Relative).EnsureTrailingSlash()
                 .Should().Be(new Uri("/test/", UriKind.Relative));
-        }
 
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashAbsolute()
-        {
-            new Uri("http://localhost/test", UriKind.Absolute).EnsureTrailingSlash()
+            => new Uri("http://localhost/test", UriKind.Absolute).EnsureTrailingSlash()
                 .Should().Be(new Uri("http://localhost/test/", UriKind.Absolute));
-        }
 
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashRelativeUnrootedWithQuery()
-        {
-            new Uri("test?x=1", UriKind.Relative).EnsureTrailingSlash()
+            => new Uri("test?x=1", UriKind.Relative).EnsureTrailingSlash()
                 .Should().Be(new Uri("test/?x=1", UriKind.Relative));
-        }
 
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashRelativeRootedWithQuery()
-        {
-            new Uri("/test?x=1", UriKind.Relative).EnsureTrailingSlash()
+            => new Uri("/test?x=1", UriKind.Relative).EnsureTrailingSlash()
                 .Should().Be(new Uri("/test/?x=1", UriKind.Relative));
-        }
 
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashAbsoluteWithQuery()
-        {
-            new Uri("http://localhost/test?x=1", UriKind.Absolute).EnsureTrailingSlash()
+            => new Uri("http://localhost/test?x=1", UriKind.Absolute).EnsureTrailingSlash()
                 .Should().Be(new Uri("http://localhost/test/?x=1", UriKind.Absolute));
-        }
     }
 }

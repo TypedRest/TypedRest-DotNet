@@ -1,89 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0EBBB26C-3F15-43A1-90AA-2A738CD1E299}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TypedRest.CommandLine</RootNamespace>
-    <AssemblyName>TypedRest.CommandLine</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\build\Debug\Libs\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Debug\Libs\TypedRest.CommandLine.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\build\Release\Libs\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Release\Libs\TypedRest.CommandLine.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
+    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSource>True</IncludeSource>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>TypedRest.CommandLine helps you build simple command-line clients using REST clients designed with TypedRest.</Description>
+    <Summary>Build command-line interfaces using a TypedRest client</Summary>
+    <PackageTags>Typed REST Commandline CLI</PackageTags>
+    <PackageProjectUrl>https://typedrest.github.io</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/1and1/TypedRest-DotNet</RepositoryUrl>
+    <Authors>Bastian Eicher</Authors>
+    <Company>1&amp;1 Internet SE</Company>
+    <Copyright>1&amp;1 Internet SE</Copyright>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BlobCommand.cs" />
-    <Compile Include="EndpointProvider.cs" />
-    <Compile Include="ElementCommand.cs" />
-    <Compile Include="EndpointCommand.cs" />
-    <Compile Include="EntryCommand.cs" />
-    <Compile Include="Executor.cs" />
-    <Compile Include="FunctionCommand.cs" />
-    <Compile Include="IEndpointCommand.cs" />
-    <Compile Include="CollectionCommand.cs" />
-    <Compile Include="PollingCommand.cs" />
-    <Compile Include="StreamCommand.cs" />
-    <Compile Include="ActionCommand.cs" />
-    <Compile Include="StreamPrinter.cs" />
+    <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="packages.config" />
-    <None Include="TypedRest.CommandLine.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TypedRest\TypedRest.csproj">
-      <Project>{1053b515-d182-4b3a-88e2-9e55a7e69e3d}</Project>
-      <Name>TypedRest</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

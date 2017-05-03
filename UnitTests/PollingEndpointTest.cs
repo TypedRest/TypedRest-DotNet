@@ -5,27 +5,21 @@ using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Text;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class PollingEndpointTest : EndpointTestBase
     {
-        private IPollingEndpoint<MockEntity> _endpoint;
+        private readonly IPollingEndpoint<MockEntity> _endpoint;
 
-        [SetUp]
-        public override void SetUp()
+        public PollingEndpointTest() => _endpoint = new PollingEndpoint<MockEntity>(EntryEndpoint, "endpoint", endCondition: x => x.Id == 3)
         {
-            base.SetUp();
-            _endpoint = new PollingEndpoint<MockEntity>(EntryEndpoint, "endpoint", endCondition: x => x.Id == 3)
-            {
-                PollingInterval = TimeSpan.Zero
-            };
-        }
+            PollingInterval = TimeSpan.Zero
+        };
 
-        [Test]
+        [Fact]
         public void TestGetStream()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")

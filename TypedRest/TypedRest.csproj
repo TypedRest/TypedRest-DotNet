@@ -1,136 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1053B515-D182-4B3A-88E2-9E55A7E69E3D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TypedRest</RootNamespace>
-    <AssemblyName>TypedRest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\build\Debug\Libs\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Debug\Libs\TypedRest.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\build\Release\Libs\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Release\Libs\TypedRest.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
+    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSource>True</IncludeSource>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>TypedRest helps you build type-safe fluent-style REST API clients.</Description>
+    <Summary>Build type-safe fluent-style REST API clients</Summary>
+    <PackageTags>Typed REST</PackageTags>
+    <PackageProjectUrl>https://typedrest.github.io</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/1and1/TypedRest-DotNet</RepositoryUrl>
+    <Authors>Bastian Eicher</Authors>
+    <Company>1&amp;1 Internet SE</Company>
+    <Copyright>1&amp;1 Internet SE</Copyright>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BlobEndpoint.cs" />
-    <Compile Include="BulkCollectionEndpoint.cs" />
-    <Compile Include="CollectionEndpoint.cs" />
-    <Compile Include="CollectionEndpointExtensions.cs" />
-    <Compile Include="ElementEndpointExtensions.cs" />
-    <Compile Include="EndpointProviderBase.cs" />
-    <Compile Include="DictionaryExtensions.cs" />
-    <Compile Include="ElementEndpoint.cs" />
-    <Compile Include="EndpointBase.cs" />
-    <Compile Include="EntryEndpoint.cs" />
-    <Compile Include="EtagEndpointBase.cs" />
-    <Compile Include="ExceptionExtensions.cs" />
-    <Compile Include="FunctionEndpoint.cs" />
-    <Compile Include="HttpClientExtensions.cs" />
-    <Compile Include="HttpResponseHeadersExtensions.cs" />
-    <Compile Include="IBlobEndpoint.cs" />
-    <Compile Include="IBulkCollectionEndpoint.cs" />
-    <Compile Include="ICollectionEndpoint.cs" />
-    <Compile Include="IElementEndpoint.cs" />
-    <Compile Include="IEndpoint.cs" />
-    <Compile Include="IEndpointProvider.cs" />
-    <Compile Include="IFunctionEndpoint.cs" />
-    <Compile Include="IPagedCollectionEndpoint.cs" />
-    <Compile Include="IPollingEndpoint.cs" />
-    <Compile Include="IStreamEndpoint.cs" />
-    <Compile Include="IActionEndpoint.cs" />
-    <Compile Include="ITriggerEndpoint.cs" />
-    <Compile Include="LinkHeader.cs" />
-    <Compile Include="PagedCollectionEndpoint.cs" />
-    <Compile Include="PartialResponse.cs" />
-    <Compile Include="PollingEndpoint.cs" />
-    <Compile Include="StreamEndpoint.cs" />
-    <Compile Include="TaskExtensions.cs" />
-    <Compile Include="ActionEndpoint.cs" />
-    <Compile Include="TriggerEndpointBase.cs" />
-    <Compile Include="UriExtensions.cs" />
-    <Compile Include="UriTemplates\CharSpec.cs" />
-    <Compile Include="UriTemplates\Expression.cs" />
-    <Compile Include="UriTemplates\IUriComponent.cs" />
-    <Compile Include="UriTemplates\Literal.cs" />
-    <Compile Include="UriTemplates\Operator.cs" />
-    <Compile Include="UriTemplates\PctEncoding.cs" />
-    <Compile Include="UriTemplates\UriTemplate.cs" />
-    <Compile Include="UriTemplates\UriTemplateBuilder.cs" />
-    <Compile Include="UriTemplates\UriTemplateException.cs" />
-    <Compile Include="UriTemplates\UriTemplateParseException.cs" />
-    <Compile Include="UriTemplates\UriTemplateParser.cs" />
-    <Compile Include="UriTemplates\UriTemplateResolver.cs" />
-    <Compile Include="UriTemplates\VarSpec.cs" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="Rx-Linq" Version="2.2.5" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="packages.config" />
-    <None Include="TypedRest.nuspec" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

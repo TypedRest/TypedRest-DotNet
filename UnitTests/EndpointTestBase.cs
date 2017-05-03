@@ -3,29 +3,20 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
 
 namespace TypedRest
 {
-    public abstract class EndpointTestBase
+    public abstract class EndpointTestBase : IDisposable
     {
         public const string JsonMime = "application/json";
 
-        protected IEndpoint EntryEndpoint;
-        protected MockHttpMessageHandler Mock;
+        protected readonly MockHttpMessageHandler Mock = new SubMockHttpMessageHandler();
+        protected readonly IEndpoint EntryEndpoint;
 
-        [SetUp]
-        public virtual void SetUp()
-        {
-            EntryEndpoint = new MockEntryEndpoint(Mock = new SubMockHttpMessageHandler());
-        }
+        protected EndpointTestBase() => EntryEndpoint = new MockEntryEndpoint(Mock);
 
-        [TearDown]
-        public void TearDown()
-        {
-            Mock.VerifyNoOutstandingExpectation();
-        }
+        public void Dispose() => Mock.VerifyNoOutstandingExpectation();
 
         private class MockEntryEndpoint : EndpointBase
         {

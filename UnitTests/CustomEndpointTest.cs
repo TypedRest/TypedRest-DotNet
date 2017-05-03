@@ -4,24 +4,18 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class CustomEndpointTest : EndpointTestBase
     {
-        private CustomEndpoint _endpoint;
+        private readonly CustomEndpoint _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new CustomEndpoint(EntryEndpoint, "endpoint");
-        }
+        public CustomEndpointTest() => _endpoint = new CustomEndpoint(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public async Task TestAllowHeader()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -34,7 +28,7 @@ namespace TypedRest
             _endpoint.IsMethodAllowed(HttpMethod.Delete).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public async Task TestLink()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -52,7 +46,7 @@ namespace TypedRest
             _endpoint.Link("target2").Should().Be(new Uri(_endpoint.Uri, "b"));
         }
 
-        [Test]
+        [Fact]
         public void TestLinkLazy()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
@@ -68,7 +62,7 @@ namespace TypedRest
             _endpoint.Link("target2").Should().Be(new Uri(_endpoint.Uri, "b"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestLinkAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -85,7 +79,7 @@ namespace TypedRest
             _endpoint.Link("target1").Should().Be(new Uri("http://localhost/b"));
         }
 
-        [Test]
+        [Fact]
         public void TestLinkException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
@@ -97,7 +91,7 @@ namespace TypedRest
             _endpoint.Invoking(x => x.Link("target2")).ShouldThrow<KeyNotFoundException>();
         }
 
-        [Test]
+        [Fact]
         public async Task TestGetLinks()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -118,7 +112,7 @@ namespace TypedRest
                 new Uri(_endpoint.Uri, "target3"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestGetLinksWithTitles()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -140,7 +134,7 @@ namespace TypedRest
             });
         }
 
-        [Test]
+        [Fact]
         public async Task TestGetLinksWithTitlesEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -161,7 +155,7 @@ namespace TypedRest
             });
         }
 
-        [Test]
+        [Fact]
         public void TestSetDefaultLink()
         {
             _endpoint.SetDefaultLink(rel: "child", hrefs: new[] {"target1", "target2"});
@@ -173,7 +167,7 @@ namespace TypedRest
             });
         }
 
-        [Test]
+        [Fact]
         public async Task TestLinkTemplate()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -190,7 +184,7 @@ namespace TypedRest
             _endpoint.LinkTemplate("child").ToString().Should().Be("a{?x}");
         }
 
-        [Test]
+        [Fact]
         public async Task TestLinkTemplateResolve()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -207,7 +201,7 @@ namespace TypedRest
             _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri(_endpoint.Uri, "a?x=1"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestLinkTemplateResolveAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -224,7 +218,7 @@ namespace TypedRest
             _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri("http://localhost/b?x=1"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestLinkTemplateResolveEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -241,7 +235,7 @@ namespace TypedRest
             _endpoint.LinkTemplate("search", new {x = 1, y = 2}).Should().Be(new Uri("http://localhost/b?x=1&y=2"));
         }
 
-        [Test]
+        [Fact]
         public void TestLinkTemplateException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
@@ -256,7 +250,7 @@ namespace TypedRest
             _endpoint.Invoking(x => x.LinkTemplate("child2")).ShouldThrow<KeyNotFoundException>();
         }
 
-        [Test]
+        [Fact]
         public async Task TestLinkBody()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -281,7 +275,7 @@ namespace TypedRest
             _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
         }
 
-        [Test]
+        [Fact]
         public void TestSetDefaultLinkTemplate()
         {
             _endpoint.SetDefaultLinkTemplate(rel: "child", href: "a");
@@ -289,7 +283,7 @@ namespace TypedRest
             _endpoint.LinkTemplate("child").ToString().Should().Be("a");
         }
 
-        [Test]
+        [Fact]
         public void TestEnsureTrailingSlashOnReferrerUri()
         {
             new ActionEndpoint(_endpoint, "subresource").Uri.Should().Be(new Uri("http://localhost/subresource"));
@@ -307,7 +301,7 @@ namespace TypedRest
             public new bool? IsMethodAllowed(HttpMethod method) => base.IsMethodAllowed(method);
         }
 
-        [Test]
+        [Fact]
         public async Task TestErrorHandling()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -326,7 +320,7 @@ namespace TypedRest
             thrown.Should().BeTrue(because: $"{nameof(InvalidOperationException)} should be thrown");
         }
 
-        [Test]
+        [Fact]
         public async Task TestErrorHandlingNoContentType()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")

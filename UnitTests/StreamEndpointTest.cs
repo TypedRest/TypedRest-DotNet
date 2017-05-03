@@ -5,24 +5,18 @@ using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Text;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class StreamEndpointTest : EndpointTestBase
     {
-        private IStreamEndpoint<MockEntity> _endpoint;
+        private readonly IStreamEndpoint<MockEntity> _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new StreamEndpoint<MockEntity>(EntryEndpoint, "endpoint");
-        }
+        public StreamEndpointTest() => _endpoint = new StreamEndpoint<MockEntity>(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public void TestGetStream()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -48,7 +42,7 @@ namespace TypedRest
                 new MockEntity(7, "test3"));
         }
 
-        [Test]
+        [Fact]
         public void TestGetStreamOffset()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
@@ -63,7 +57,7 @@ namespace TypedRest
             stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
         }
 
-        [Test]
+        [Fact]
         public void TestGetStreamTail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")

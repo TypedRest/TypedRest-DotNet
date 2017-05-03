@@ -1,143 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1C24A67E-F51F-47DA-9090-38825CD1960D}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TypedRest.Wpf</RootNamespace>
-    <AssemblyName>TypedRest.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\build\Debug\Libs\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Debug\Libs\TypedRest.Wpf.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\build\Release\Libs\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\build\Release\Libs\TypedRest.Wpf.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
+    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSource>True</IncludeSource>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>TypedRest.WPF helps you build simple WPF clients using REST clients designed with TypedRest.</Description>
+    <Summary>Build WPF GUIs using a TypedRest client</Summary>
+    <PackageTags>Typed REST WPF GUI</PackageTags>
+    <PackageProjectUrl>https://typedrest.github.io</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/1and1/TypedRest-DotNet</RepositoryUrl>
+    <Authors>Bastian Eicher</Authors>
+    <Company>1&amp;1 Internet SE</Company>
+    <Copyright>1&amp;1 Internet SE</Copyright>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Caliburn.Micro, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.Core.3.0.1\lib\net45\Caliburn.Micro.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="EndpointProvider.cs" />
-    <Compile Include="Events\BlobUploadEvent.cs" />
-    <Compile Include="Events\ElementCreatedEvent.cs" />
-    <Compile Include="Events\ElementDeletedEvent.cs" />
-    <Compile Include="Events\ElementEvent.cs" />
-    <Compile Include="Events\ElementUpdatedEvent.cs" />
-    <Compile Include="Events\EndpointEvent.cs" />
-    <Compile Include="Events\IEndpointEvent.cs" />
-    <Compile Include="Events\TriggerEvent.cs" />
-    <Compile Include="InputBox.cs" />
-    <Compile Include="ViewModels\BlobViewModel.cs" />
-    <Compile Include="ViewModels\CollectionViewModel.cs" />
-    <Compile Include="ViewModels\CollectionViewModelBase.cs" />
-    <Compile Include="ViewModels\CreateElementViewModel.cs" />
-    <Compile Include="ViewModels\ElementViewModelBase.cs" />
-    <Compile Include="ViewModels\EntryViewModelBase.cs" />
-    <Compile Include="ViewModels\FunctionViewModel.cs" />
-    <Compile Include="ViewModels\PagedCollectionViewModel.cs" />
-    <Compile Include="ViewModels\PagedCollectionViewModelBase.cs" />
-    <Compile Include="ViewModels\PollingViewModel.cs" />
-    <Compile Include="ViewModels\StreamViewModel.cs" />
-    <Compile Include="ViewModels\StreamViewModelBase.cs" />
-    <Compile Include="ViewModels\ActionViewModel.cs" />
-    <Compile Include="ViewModels\ElementViewModel.cs" />
-    <Compile Include="ViewModels\EndpointViewModelBase.cs" />
-    <Compile Include="ViewModels\TriggerViewModelBase.cs" />
+    <PackageReference Include="Caliburn.Micro.Core" Version="3.0.3" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Events\ClassDiagram.cd" />
-    <None Include="packages.config" />
-    <None Include="TypedRest.Wpf.nuspec" />
-    <None Include="ViewModels\ClassDiagram.cd" />
+    <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TypedRest\TypedRest.csproj">
-      <Project>{1053b515-d182-4b3a-88e2-9e55a7e69e3d}</Project>
-      <Name>TypedRest</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\ActionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BlobView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CollectionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ElementView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FunctionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PagedCollectionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\StreamView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

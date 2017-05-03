@@ -1,23 +1,18 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
     public class ActionEndpointWithInputTest : EndpointTestBase
     {
-        private IActionEndpoint<MockEntity> _endpoint;
+        private readonly IActionEndpoint<MockEntity> _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new ActionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
-        }
+        public ActionEndpointWithInputTest() => _endpoint = new ActionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public async Task TestTrigger()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")

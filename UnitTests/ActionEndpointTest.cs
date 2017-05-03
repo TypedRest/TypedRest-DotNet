@@ -2,24 +2,18 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class ActionEndpointTest : EndpointTestBase
     {
-        private IActionEndpoint _endpoint;
+        private readonly IActionEndpoint _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new ActionEndpoint(EntryEndpoint, "endpoint");
-        }
+        public ActionEndpointTest() => _endpoint = new ActionEndpoint(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public async Task TestProbe()
         {
             Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
@@ -30,7 +24,7 @@ namespace TypedRest
             _endpoint.TriggerAllowed.Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public async Task TestTrigger()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")

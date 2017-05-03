@@ -5,24 +5,18 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NUnit.Framework;
 using RichardSzalay.MockHttp;
+using Xunit;
 
 namespace TypedRest
 {
-    [TestFixture]
     public class ElementEndpointTest : EndpointTestBase
     {
-        private IElementEndpoint<MockEntity> _endpoint;
+        private readonly IElementEndpoint<MockEntity> _endpoint;
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _endpoint = new ElementEndpoint<MockEntity>(EntryEndpoint, "endpoint");
-        }
+        public ElementEndpointTest() => _endpoint = new ElementEndpoint<MockEntity>(EntryEndpoint, "endpoint");
 
-        [Test]
+        [Fact]
         public async Task TestRead()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -32,7 +26,7 @@ namespace TypedRest
             result.Should().Be(new MockEntity(5, "test"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestReadCache()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -54,7 +48,7 @@ namespace TypedRest
                 because: "Cache responses, not deserialized objects");
         }
 
-        [Test]
+        [Fact]
         public async Task TestExistsTrue()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
@@ -64,7 +58,7 @@ namespace TypedRest
             result.Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public async Task TestExistsFalse()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
@@ -74,7 +68,7 @@ namespace TypedRest
             result.Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public async Task TestSetResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
@@ -85,7 +79,7 @@ namespace TypedRest
             result.Should().Be(new MockEntity(5, "testXXX"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestSetNoResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
@@ -95,7 +89,7 @@ namespace TypedRest
             await _endpoint.SetAsync(new MockEntity(5, "test"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestSetETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -113,7 +107,7 @@ namespace TypedRest
             await _endpoint.SetAsync(result);
         }
 
-        [Test]
+        [Fact]
         public async Task TestUpdateRetry()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -140,7 +134,7 @@ namespace TypedRest
             await _endpoint.UpdateAsync(x => x.Name = "testX");
         }
 
-        [Test]
+        [Fact]
         public void TestUpdateFail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -154,10 +148,11 @@ namespace TypedRest
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
 
-            Assert.Throws<InvalidOperationException>(async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
+            Func<Task> asyncFunction = async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0);
+            asyncFunction.ShouldThrow<InvalidOperationException>();
         }
 
-        [Test]
+        [Fact]
         public async Task TestMergeResult()
         {
             Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
@@ -168,7 +163,7 @@ namespace TypedRest
             result.Should().Be(new MockEntity(5, "testXXX"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestMergeNoResult()
         {
             Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
@@ -178,7 +173,7 @@ namespace TypedRest
             await _endpoint.MergeAsync(new MockEntity(5, "test"));
         }
 
-        [Test]
+        [Fact]
         public async Task TestDelete()
         {
             Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
@@ -187,7 +182,7 @@ namespace TypedRest
             await _endpoint.DeleteAsync();
         }
 
-        [Test]
+        [Fact]
         public async Task TestDeleteETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
