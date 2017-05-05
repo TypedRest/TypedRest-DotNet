@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -117,7 +116,7 @@ namespace TypedRest
         /// Wraps HTTP status codes in appropriate <see cref="Exception"/> types.
         /// </summary>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/>, <seealso cref="HttpStatusCode.PreconditionFailed"/> or <see cref="HttpStatusCode.RequestedRangeNotSatisfiable"/></exception>
@@ -151,7 +150,7 @@ namespace TypedRest
                 case HttpStatusCode.BadRequest:
                     throw new InvalidDataException(message, new HttpRequestException(body));
                 case HttpStatusCode.Unauthorized:
-                    throw new InvalidCredentialException(message, new HttpRequestException(body));
+                    throw new AuthenticationException(message, new HttpRequestException(body));
                 case HttpStatusCode.Forbidden:
                     throw new UnauthorizedAccessException(message, new HttpRequestException(body));
                 case HttpStatusCode.NotFound:

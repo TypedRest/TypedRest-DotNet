@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace TypedRest
         /// Returns all <typeparamref name="TEntity"/>s.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
@@ -61,7 +60,7 @@ namespace TypedRest
         /// <param name="range">The range of elements to retrieve.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>A subset of the <typeparamref name="TElementEndpoint"/>s and the range they come from. May not exactly match the request <paramref name="range"/>.</returns>
-        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The requested range is not satisfiable.</exception>
@@ -83,7 +82,7 @@ namespace TypedRest
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The newly created <typeparamref name="TEntity"/>; may be <c>null</c> if the server deferred creating the resource.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
@@ -104,7 +103,7 @@ namespace TypedRest
         /// <param name="entities">The <typeparamref name="TEntity"/>s to create or modify.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
@@ -125,7 +124,7 @@ namespace TypedRest
         /// <param name="entities">The new set of <typeparamref name="TEntity"/>s the collection shall contain.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-        /// <exception cref="InvalidCredentialException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entities have changed since they were last retrieved with <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.ReadAllAsync"/>. Your changes were rejected to prevent a lost update.</exception>
