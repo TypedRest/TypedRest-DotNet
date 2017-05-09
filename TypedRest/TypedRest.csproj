@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net45;netcoreapp1.0</TargetFrameworks>
+    <PackageTargetFallback Condition="'$(TargetFramework)'=='netcoreapp1.0'">$(PackageTargetFallback);portable-net451+win81+wpa81</PackageTargetFallback>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
@@ -24,7 +25,7 @@
     <Copyright>1&amp;1 Internet SE</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
@@ -33,6 +34,10 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
     <PackageReference Include="Rx-Linq" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp1.0'">
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

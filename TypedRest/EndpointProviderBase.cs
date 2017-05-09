@@ -14,7 +14,11 @@ namespace TypedRest
         where T : EntryEndpoint
     {
         private string ConfigDir => Path.Combine(
+#if NET45
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+#else
+                    Environment.ExpandEnvironmentVariables("%appdata%"),
+#endif
                     Assembly.GetEntryAssembly().GetName().Name);
 
         private string UriFile => Path.Combine(ConfigDir, "uri");
@@ -43,7 +47,7 @@ namespace TypedRest
         {
             try
             {
-                string localUriFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? Environment.CurrentDirectory, "uri");
+                string localUriFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? Directory.GetCurrentDirectory(), "uri");
                 return File.Exists(localUriFile)
                     ? new Uri(File.ReadAllText(localUriFile, Encoding.UTF8), UriKind.Absolute)
                     : null;

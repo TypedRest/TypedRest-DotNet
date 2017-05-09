@@ -45,8 +45,9 @@ namespace TypedRest
 
         private void SetupChildHandling()
         {
-            var idProperty = typeof(TEntity).GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .FirstOrDefault(x => x.GetMethod != null && Attribute.GetCustomAttribute(x, typeof(KeyAttribute), inherit: true) != null);
+            var idProperty = typeof(TEntity).GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttribute<KeyAttribute>(inherit: true) != null);
+
             if (idProperty != null) _getIdMethod = idProperty.GetMethod;
 
             SetDefaultLinkTemplate(rel: "child", href: "{id}");

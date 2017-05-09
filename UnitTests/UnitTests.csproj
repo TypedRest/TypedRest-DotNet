@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;netcoreapp1.0</TargetFrameworks>
+    <PackageTargetFallback Condition="'$(TargetFramework)'=='netcoreapp1.0'">$(PackageTargetFallback);portable-net451+win81+wpa81</PackageTargetFallback>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
     <IsPackable>False</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>

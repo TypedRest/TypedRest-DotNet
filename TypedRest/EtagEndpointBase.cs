@@ -55,7 +55,7 @@ namespace TypedRest
         /// <summary>
         /// Performs an HTTP GET request on the <see cref="IEndpoint.Uri"/> and caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>.
         /// </summary>
-        /// <remarks>Sends <see cref="HttpRequestHeader.IfNoneMatch"/> if there is already a cached ETag.</remarks>
+        /// <remarks>Sends If-None-Match header if there is already a cached ETag.</remarks>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The response of the request or the cached response if the server responded with <see cref="HttpStatusCode.NotModified"/>.</returns>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
+
+#if NET45
+using System.IO;
+#endif
 
 namespace TypedRest.CommandLine
 {
@@ -38,6 +41,7 @@ namespace TypedRest.CommandLine
         {
             ShowTokenProvider(uri);
 
+#if NET45
             // Increase maximum length for Console.ReadLine()
             var defaultReader = Console.In;
             byte[] inputBuffer = new byte[1024];
@@ -46,13 +50,16 @@ namespace TypedRest.CommandLine
 
             try
             {
+#endif
                 Console.Write("OAuth token: ");
                 return Console.ReadLine();
+#if NET45
             }
             finally
             {
                 Console.SetIn(defaultReader);
             }
+#endif
         }
 
         /// <summary>
@@ -60,7 +67,9 @@ namespace TypedRest.CommandLine
         /// </summary>
         protected virtual void ShowTokenProvider(Uri uri)
         {
+#if NET45
             if (!Environment.UserInteractive) return;
+#endif
 
             var endpoint = NewEndpoint(uri, new NetworkCredential());
             try
