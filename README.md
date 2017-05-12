@@ -7,6 +7,12 @@ NuGet packages:
 * [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
 * [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/)
 
+The NuGet packages contain binaries for .NET 4.5 and newer as well as .NET Core 1.0 and newer.
+
+The .NET Core builds depend on a pre-release version of the `Microsoft.AspNet.WebApi.Client` package. In order to be able to download it you must run:
+```
+nuget sources Add -Name aspnetwebstack-dev -Source https://dotnet.myget.org/F/aspnetwebstack-dev/api/v3/index.json
+```
 
 ## Nomenclature
 
