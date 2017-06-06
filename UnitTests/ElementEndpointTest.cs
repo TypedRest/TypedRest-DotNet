@@ -135,7 +135,7 @@ namespace TypedRest
         }
 
         [Fact]
-        public void TestUpdateFail()
+        public async Task TestUpdateFail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(new HttpResponseMessage
@@ -148,8 +148,7 @@ namespace TypedRest
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
 
-            Func<Task> asyncFunction = async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0);
-            asyncFunction.ShouldThrow<InvalidOperationException>();
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
         }
 
         [Fact]

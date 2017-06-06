@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
 
@@ -88,7 +89,7 @@ namespace TypedRest
                     Headers = {{"Link", "<a>; rel=target1"}}
                 });
 
-            _endpoint.Invoking(x => x.Link("target2")).ShouldThrow<KeyNotFoundException>();
+            Assert.Throws<KeyNotFoundException>(() => _endpoint.Link("target2"));
         }
 
         [Fact]
@@ -247,19 +248,22 @@ namespace TypedRest
                     }
                 });
 
-            _endpoint.Invoking(x => x.LinkTemplate("child2")).ShouldThrow<KeyNotFoundException>();
+            Assert.Throws<KeyNotFoundException>(() => _endpoint.LinkTemplate("child2"));
         }
 
         [Fact]
         public async Task TestLinkBody()
         {
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(JsonMime, "{\"links\": {"
-                                   + "  \"single\": {\"href\": \"a\"},"
-                                   +
-                                   "  \"collection\": [{\"href\": \"b\", \"title\": \"Title 1\"},{\"href\": \"c\"},true,{\"something\":false}],"
-                                   + "  \"template\": {\"href\": \"{id}\",\"templated\": true}"
-                                   + "}}");
+            string body = JsonConvert.SerializeObject(new
+            {
+                links = new
+                {
+                    single = new {href = "a"},
+                    collection = new object[] {new {href = "b", title = "Title 1"}, new {href = "c"}, true, new {something = false}},
+                    template = new {href = "{id}", templated = true}
+                }
+            });
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint").Respond(JsonMime, body);
 
             await _endpoint.GetAsync();
 
