@@ -9,10 +9,13 @@ NuGet packages:
 
 The NuGet packages contain binaries for .NET 4.5 and newer as well as .NET Core 1.0 and newer.
 
-The .NET Core builds depend on a pre-release version of the `Microsoft.AspNet.WebApi.Client` package. In order to be able to download it you must run:
-```
-nuget sources Add -Name aspnetwebstack-dev -Source https://dotnet.myget.org/F/aspnetwebstack-dev/api/v3/index.json
-```
+**Important information for .NET Core users**
+
+The .NET Core version of TypedRest currently depends on a pre-release version of the `Microsoft.AspNet.WebApi.Client` package. In order to be able to download it you must run:
+
+    nuget sources Add -Name aspnetwebstack-dev -Source https://dotnet.myget.org/F/aspnetwebstack-dev/api/v3/index.json
+
+Alternatively you can copy our [NuGet.config](https://github.com/TypedRest/TypedRest-DotNet/blob/master/NuGet.Config) next to your `.sln` file.
 
 ## Nomenclature
 
