@@ -78,18 +78,3 @@ Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.Com
 Install the [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/) NuGet package to build GUIs with WPF and [Caliburn.Micro](http://caliburnmicro.com/). Derive from `Bootstrapper<TRootView>` and add this class to your `<Application.Resources>` in `App.xaml`.
 
 You can then use the classes `CollectionViewModel`, `ElementViewModel`, `PollingViewModel`, `ActionViewModel`, `PaginationViewModel`, `StreamViewModel` and `BlobViewModel` to operate on `CollectionEndpoint`s, `ElementEndpoint`s, `ActionEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
-
-
-## Sample projects
-
-The source code includes sample projects.
-
-`Samples\Model` contains a simple JSON-serializable sample model.
-
-`Samples\Client` demonstrates how to create a client library for a REST interface using `TypedRest`.
-
-`Samples\Client.CommandLine` demonstrates how to use such a client library and `TypedRest.CommmandLine` to create a command-line client for a REST interface.
-
-`Samples\Client.Wpf` demonstrates how to use such a client library and `TypedRest.Wpf` to create a GUI client for a REST interface.
-
-`Samples\Server` provides a simple REST API that the acutal TypedRest samples use to have something to communicate with. This does not mean that TypedRest requires a specific type of server! It can interoperate with anything provding a RESTful API.
