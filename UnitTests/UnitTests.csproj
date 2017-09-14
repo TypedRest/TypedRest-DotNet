@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
-    <TargetFrameworks>net46;netcoreapp1.0</TargetFrameworks>
+    <TargetFrameworks>net46;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
     <IsPackable>False</IsPackable>

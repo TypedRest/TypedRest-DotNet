@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp1.0</TargetFrameworks>
-    <PackageTargetFallback Condition="'$(TargetFramework)'=='netcoreapp1.0'">$(PackageTargetFallback);portable-net451+win81+wpa81</PackageTargetFallback>
+    <TargetFrameworks>net45;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
@@ -25,7 +24,7 @@
     <Copyright>1&amp;1 Internet SE</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 
