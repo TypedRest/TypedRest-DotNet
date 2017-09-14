@@ -20,7 +20,7 @@ namespace TypedRest
         public async Task TestAllowHeader()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method, HttpMethod.Post.Method}}});
+                .Respond(_ => new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method, HttpMethod.Post.Method}}});
 
             await _endpoint.GetAsync();
 
@@ -33,7 +33,7 @@ namespace TypedRest
         public async Task TestLink()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -51,7 +51,7 @@ namespace TypedRest
         public void TestLinkLazy()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -67,7 +67,7 @@ namespace TypedRest
         public async Task TestLinkAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -84,7 +84,7 @@ namespace TypedRest
         public void TestLinkException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers = {{"Link", "<a>; rel=target1"}}
                 });
@@ -96,7 +96,7 @@ namespace TypedRest
         public async Task TestGetLinks()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -117,7 +117,7 @@ namespace TypedRest
         public async Task TestGetLinksWithTitles()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -139,7 +139,7 @@ namespace TypedRest
         public async Task TestGetLinksWithTitlesEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -172,7 +172,7 @@ namespace TypedRest
         public async Task TestLinkTemplate()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -189,7 +189,7 @@ namespace TypedRest
         public async Task TestLinkTemplateResolve()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -206,7 +206,7 @@ namespace TypedRest
         public async Task TestLinkTemplateResolveAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -223,7 +223,7 @@ namespace TypedRest
         public async Task TestLinkTemplateResolveEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -240,7 +240,7 @@ namespace TypedRest
         public void TestLinkTemplateException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
                 {
                     Headers =
                     {
@@ -309,7 +309,7 @@ namespace TypedRest
         public async Task TestErrorHandling()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.Conflict));
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict));
 
             bool thrown = false;
             try
@@ -328,7 +328,7 @@ namespace TypedRest
         public async Task TestErrorHandlingNoContentType()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
 
             bool thrown = false;
             try

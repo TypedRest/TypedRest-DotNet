@@ -19,7 +19,7 @@ namespace TypedRest
         public async Task TestProbe()
         {
             Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
-                .Respond(new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method}}});
+                .Respond(_ => new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method}}});
 
             await _endpoint.ProbeAsync();
 
@@ -33,7 +33,7 @@ namespace TypedRest
             byte[] data = {1, 2, 3};
 
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new ByteArrayContent(data));
+                .Respond(_ => new ByteArrayContent(data));
 
             using (var downloadStream = await _endpoint.DownloadAsync())
             using (var memStream = new MemoryStream())

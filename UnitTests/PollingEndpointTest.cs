@@ -27,7 +27,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(JsonMime, "{\"Id\":2,\"Name\":\"test\"}");
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":3,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromSeconds(42))}

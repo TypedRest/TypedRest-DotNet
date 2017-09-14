@@ -30,7 +30,7 @@ namespace TypedRest
         public async Task TestReadCache()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
@@ -93,7 +93,7 @@ namespace TypedRest
         public async Task TestSetETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
@@ -111,7 +111,7 @@ namespace TypedRest
         public async Task TestUpdateRetry()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test1\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
@@ -121,7 +121,7 @@ namespace TypedRest
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test2\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"2\"")}
@@ -138,7 +138,7 @@ namespace TypedRest
         public async Task TestUpdateFail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test1\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
@@ -185,7 +185,7 @@ namespace TypedRest
         public async Task TestDeleteETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(new HttpResponseMessage
+                .Respond(_ => new HttpResponseMessage
                 {
                     Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = { ETag = new EntityTagHeaderValue("\"123abc\"") }

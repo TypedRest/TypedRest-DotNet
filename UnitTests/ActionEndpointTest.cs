@@ -17,7 +17,7 @@ namespace TypedRest
         public async Task TestProbe()
         {
             Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
-                .Respond(new StringContent("") {Headers = {Allow = {"POST"}}});
+                .Respond(_ => new StringContent("") {Headers = {Allow = {"POST"}}});
 
             await _endpoint.ProbeAsync();
 
