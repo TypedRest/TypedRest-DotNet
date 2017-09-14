@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp1.0</TargetFrameworks>
+    <TargetFrameworks>net45;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
@@ -38,7 +38,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp1.0'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp1.0' Or '$(TargetFramework)'=='netcoreapp2.0'">
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4-alpha1-170331" />
   </ItemGroup>
 
