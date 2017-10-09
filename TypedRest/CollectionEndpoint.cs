@@ -25,7 +25,7 @@ namespace TypedRest
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
-            : base(referrer, relativeUri.EnsureTrailingSlash())
+            : base(referrer, relativeUri)
             => SetupChildHandling();
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace TypedRest
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
-            : base(referrer, relativeUri.EndsWith("/") ? relativeUri : relativeUri + "/")
+            : base(referrer, relativeUri)
             => SetupChildHandling();
 
         private MethodInfo _getIdMethod;
@@ -46,7 +46,7 @@ namespace TypedRest
 
             if (idProperty != null) _getIdMethod = idProperty.GetMethod;
 
-            SetDefaultLinkTemplate(rel: "child", href: "{id}");
+            SetDefaultLinkTemplate(rel: "child", href: "./{id}");
         }
 
         /// <summary>
