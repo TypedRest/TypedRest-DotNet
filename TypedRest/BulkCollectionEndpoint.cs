@@ -11,13 +11,11 @@ namespace TypedRest
     {
         public BulkCollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public BulkCollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         [Obsolete("Use CreateAllAsync() instead")]
         public Task CreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken)) =>
@@ -29,13 +27,11 @@ namespace TypedRest
     {
         public BulkCollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public BulkCollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri) => new ElementEndpoint<TEntity>(this, relativeUri);
     }

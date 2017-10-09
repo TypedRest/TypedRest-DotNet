@@ -8,8 +8,7 @@ namespace TypedRest
         public string Name { get; set; }
 
         public MockEntity()
-        {
-        }
+        {}
 
         public MockEntity(long id, string name)
         {
@@ -17,16 +16,13 @@ namespace TypedRest
             Name = name;
         }
 
-        protected bool Equals(MockEntity other)
-        {
-            return Id == other.Id && string.Equals(Name, other.Name);
-        }
+        protected bool Equals(MockEntity other) => Id == other.Id && string.Equals(Name, other.Name);
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((MockEntity) obj);
         }
 

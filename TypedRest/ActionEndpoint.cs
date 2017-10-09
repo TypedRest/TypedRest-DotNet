@@ -17,8 +17,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public ActionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new action endpoint.
@@ -27,14 +26,10 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public ActionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public Task TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            return HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri),
-                cancellationToken));
-        }
+            => HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
     }
 
     /// <summary>
@@ -50,8 +45,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public ActionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new action endpoint with a relative URI.
@@ -60,8 +54,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public ActionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public Task TriggerAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
         {

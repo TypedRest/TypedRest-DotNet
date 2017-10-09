@@ -8,13 +8,11 @@ namespace TypedRest
     {
         public PagedCollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public PagedCollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
     }
 
     [Obsolete("Use ICollectionEndpoint instead")]
@@ -22,13 +20,11 @@ namespace TypedRest
     {
         public PagedCollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public PagedCollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri) => new ElementEndpoint<TEntity>(this, relativeUri);
     }

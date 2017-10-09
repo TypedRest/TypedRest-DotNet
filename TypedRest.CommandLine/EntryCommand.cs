@@ -42,10 +42,7 @@ namespace TypedRest.CommandLine
         }
 
         protected override IEndpointCommand GetSubCommand(string name)
-        {
-            Func<TEndpoint, IEndpointCommand> commandProvider;
-            return _commandProviders.TryGetValue(name, out commandProvider) ? commandProvider(Endpoint) : null;
-        }
+            => _commandProviders.TryGetValue(name, out var commandProvider) ? commandProvider(Endpoint) : null;
 
         protected override Task ExecuteInnerAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = new CancellationToken())

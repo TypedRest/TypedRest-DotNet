@@ -23,11 +23,7 @@ namespace TypedRest.CommandLine
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         protected EndpointCommand(TEndpoint endpoint)
-        {
-            if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
-
-            Endpoint = endpoint;
-        }
+            => Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
 
         public virtual async Task ExecuteAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -41,10 +37,7 @@ namespace TypedRest.CommandLine
         /// Creates a sub-<see cref="IEndpointCommand"/> based on the given <paramref name="name"/>.
         /// </summary>
         /// <returns>The <see cref="IEndpointCommand"/> or <c>null</c> if the <paramref name="name"/> does not match.</returns>
-        protected virtual IEndpointCommand GetSubCommand(string name)
-        {
-            return null;
-        }
+        protected virtual IEndpointCommand GetSubCommand(string name) => null;
 
         /// <summary>
         /// Parses command-line arguments and executes the resulting operation when no additional sub-<see cref="IEndpointCommand"/> is specified.
@@ -52,9 +45,6 @@ namespace TypedRest.CommandLine
         /// <param name="args">The command-line arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new ArgumentException("Unknown command: " + args[0]);
-        }
+            CancellationToken cancellationToken = default(CancellationToken)) => throw new ArgumentException("Unknown command: " + args[0]);
     }
 }

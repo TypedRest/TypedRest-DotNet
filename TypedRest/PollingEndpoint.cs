@@ -21,9 +21,7 @@ namespace TypedRest
         /// <param name="endCondition">A check to determine whether the entity has reached its final state an no further polling is required.</param>
         public PollingEndpoint(IEndpoint referrer, Uri relativeUri, Predicate<TEntity> endCondition = null)
             : base(referrer, relativeUri)
-        {
-            _endCondition = endCondition;
-        }
+            => _endCondition = endCondition;
 
         /// <summary>
         /// Creates a new polling endpoint.
@@ -33,9 +31,7 @@ namespace TypedRest
         /// <param name="endCondition">A check to determine whether the entity has reached its final state an no further polling is required.</param>
         public PollingEndpoint(IEndpoint referrer, string relativeUri, Predicate<TEntity> endCondition = null)
             : base(referrer, relativeUri)
-        {
-            _endCondition = endCondition;
-        }
+            => _endCondition = endCondition;
 
         protected override async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
         {

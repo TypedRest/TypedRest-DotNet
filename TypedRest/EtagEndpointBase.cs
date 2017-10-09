@@ -22,8 +22,7 @@ namespace TypedRest
 
         protected ETagEndpointBase(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new REST endpoint with a relative URI.
@@ -32,8 +31,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         protected ETagEndpointBase(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         private class Memory
         {

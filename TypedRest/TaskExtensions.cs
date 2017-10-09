@@ -12,16 +12,12 @@ namespace TypedRest
         /// Convenience wrapper for <seealso cref="Task.ConfigureAwait"/><c>(false)</c>.
         /// </summary>
         public static ConfiguredTaskAwaitable NoContext(this Task task)
-        {
-            return task.ConfigureAwait(continueOnCapturedContext: false);
-        }
+            => task.ConfigureAwait(continueOnCapturedContext: false);
 
         /// <summary>
         /// Convenience wrapper for <seealso cref="Task{T}.ConfigureAwait"/><c>(false)</c>.
         /// </summary>
         public static ConfiguredTaskAwaitable<TResult> NoContext<TResult>(this Task<TResult> task)
-        {
-            return task.ConfigureAwait(continueOnCapturedContext: false);
-        }
+            => task.ConfigureAwait(continueOnCapturedContext: false);
     }
 }

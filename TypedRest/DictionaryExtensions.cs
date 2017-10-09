@@ -16,8 +16,7 @@ namespace TypedRest
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key,
             Func<TValue> valueFactory)
         {
-            TValue value;
-            if (!dictionary.TryGetValue(key, out value))
+            if (!dictionary.TryGetValue(key, out var value))
                 dictionary.Add(key, value = valueFactory());
             return value;
         }
@@ -28,9 +27,7 @@ namespace TypedRest
         /// </summary>
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
             where TValue : new()
-        {
-            return dictionary.GetOrAdd(key, () => new TValue());
-        }
+            => dictionary.GetOrAdd(key, () => new TValue());
 
         /// <summary>
         /// Returns the element with the specified <paramref name="key"/> from the <paramref name="dictionary"/>.
@@ -38,8 +35,7 @@ namespace TypedRest
         /// </summary>
         public static async Task<TValue> GetOrAddAsync<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<Task<TValue>> valueFactory)
         {
-            TValue value;
-            if (!dictionary.TryGetValue(key, out value))
+            if (!dictionary.TryGetValue(key, out var value))
                 dictionary.Add(key, value = await valueFactory());
             return value;
         }

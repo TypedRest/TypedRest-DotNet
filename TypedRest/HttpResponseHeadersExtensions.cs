@@ -16,12 +16,10 @@ namespace TypedRest
         /// Returns all Link headers listed in an <see cref="HttpResponseHeaders"/> collection.
         /// </summary>
         public static IEnumerable<LinkHeader> GetLinkHeaders(this HttpResponseHeaders headers)
-        {
-            return headers.Where(x => x.Key.Equals("Link"))
+            => headers.Where(x => x.Key.Equals("Link"))
                 .SelectMany(x => x.Value)
                 .SelectMany(x => RegexHeaderLinks.Matches(x).Cast<Match>())
                 .Where(x => x.Success)
                 .Select(x => new LinkHeader(x.Groups.Cast<Group>().Skip(1).Single().Value));
-        }
     }
 }

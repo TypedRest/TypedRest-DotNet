@@ -70,19 +70,16 @@ namespace TypedRest
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
         }
 
-        private static MediaTypeFormatter BuildSerializer()
+        private static MediaTypeFormatter BuildSerializer() => new JsonMediaTypeFormatter
         {
-            return new JsonMediaTypeFormatter
+            SerializerSettings =
             {
-                SerializerSettings =
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    Converters = {new StringEnumConverter {CamelCaseText = true}},
-                    NullValueHandling = NullValueHandling.Ignore,
-                    TypeNameHandling = TypeNameHandling.Auto
-                }
-            };
-        }
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Converters = {new StringEnumConverter {CamelCaseText = true}},
+                NullValueHandling = NullValueHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.Auto
+            }
+        };
 
         /// <summary>
         /// Fetches meta data such as links from the server.
@@ -92,8 +89,6 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         public Task ReadMetaAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
-        }
+            => HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
     }
 }

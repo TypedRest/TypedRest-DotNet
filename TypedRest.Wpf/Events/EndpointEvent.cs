@@ -20,9 +20,6 @@ namespace TypedRest.Wpf.Events
         /// Creates a new endpoint event.
         /// </summary>
         /// <param name="endpoint">The endpoint that raised the event.</param>
-        protected EndpointEvent(TEndpoint endpoint)
-        {
-            Endpoint = endpoint;
-        }
+        protected EndpointEvent(TEndpoint endpoint) => Endpoint = endpoint;
     }
 }

@@ -19,8 +19,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public BlobEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new blob endpoint.
@@ -29,13 +28,10 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public BlobEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            return HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
-        }
+            => HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
 
         public bool? DownloadAllowed => IsMethodAllowed(HttpMethod.Get);
 

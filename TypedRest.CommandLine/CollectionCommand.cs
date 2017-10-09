@@ -24,9 +24,8 @@ namespace TypedRest.CommandLine
         /// Creates a new REST collection command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public CollectionCommand(TEndpoint endpoint) : base(endpoint)
-        {
-        }
+        protected CollectionCommand(TEndpoint endpoint) : base(endpoint)
+        {}
 
         public override async Task ExecuteAsync(IReadOnlyList<string> args,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -71,19 +70,13 @@ namespace TypedRest.CommandLine
             var parts = input.Split('-');
             if (parts.Length != 2) return null;
 
-            long fromOut, toOut;
             long? from = null, to = null;
-
-            if (long.TryParse(parts[0], out fromOut)) from = fromOut;
-            if (long.TryParse(parts[1], out toOut)) to = toOut;
-
+            if (long.TryParse(parts[0], out var fromOut)) from = fromOut;
+            if (long.TryParse(parts[1], out var toOut)) to = toOut;
             return new RangeItemHeaderValue(from, to);
         }
 
-        protected override IEndpointCommand GetSubCommand(string name)
-        {
-            return BuildElementCommand(Endpoint[name]);
-        }
+        protected override IEndpointCommand GetSubCommand(string name) => BuildElementCommand(Endpoint[name]);
 
         /// <summary>
         /// Builds an <see cref="IEndpointCommand"/> for the given <paramref name="elementEndpoint"/>.
@@ -127,8 +120,7 @@ namespace TypedRest.CommandLine
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         public CollectionCommand(ICollectionEndpoint<TEntity, TElementEndpoint> endpoint) : base(endpoint)
-        {
-        }
+        {}
     }
 
     /// <summary>
@@ -142,8 +134,7 @@ namespace TypedRest.CommandLine
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         public CollectionCommand(ICollectionEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        {}
 
         protected override ElementCommand<TEntity> BuildElementCommand(IElementEndpoint<TEntity> elementEndpoint) => new ElementCommand<TEntity>(elementEndpoint);
     }

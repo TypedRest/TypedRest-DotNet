@@ -26,9 +26,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri.EnsureTrailingSlash())
-        {
-            SetupChildHandling();
-        }
+            => SetupChildHandling();
 
         /// <summary>
         /// Creates a new element collection endpoint.
@@ -37,9 +35,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri.EndsWith("/") ? relativeUri : relativeUri + "/")
-        {
-            SetupChildHandling();
-        }
+            => SetupChildHandling();
 
         private MethodInfo _getIdMethod;
 
@@ -162,8 +158,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new collection endpoint.
@@ -172,8 +167,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri) => new ElementEndpoint<TEntity>(this, relativeUri);
     }

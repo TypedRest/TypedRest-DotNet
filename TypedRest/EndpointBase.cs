@@ -32,13 +32,9 @@ namespace TypedRest
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server.</param>
         protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer)
         {
-            if (uri == null) throw new ArgumentNullException(nameof(uri));
-            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
-            if (serializer == null) throw new ArgumentNullException(nameof(serializer));
-
-            Uri = uri;
-            HttpClient = httpClient;
-            Serializer = serializer;
+            Uri = uri ?? throw new ArgumentNullException(nameof(uri));
+            HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
         /// <summary>
@@ -290,12 +286,10 @@ namespace TypedRest
 
         public IEnumerable<Uri> GetLinks(string rel)
         {
-            Dictionary<Uri, string> linksForRel;
-            if (_links.TryGetValue(rel, out linksForRel))
+            if (_links.TryGetValue(rel, out var linksForRel))
                 return linksForRel.Keys;
 
-            HashSet<Uri> defaultLinksForRel;
-            if (_defaultLinks.TryGetValue(rel, out defaultLinksForRel))
+            if (_defaultLinks.TryGetValue(rel, out var defaultLinksForRel))
                 return defaultLinksForRel;
 
             return new HashSet<Uri>();
@@ -303,12 +297,10 @@ namespace TypedRest
 
         public IDictionary<Uri, string> GetLinksWithTitles(string rel)
         {
-            Dictionary<Uri, string> linksForRel;
-            if (_links.TryGetValue(rel, out linksForRel))
+            if (_links.TryGetValue(rel, out var linksForRel))
                 return linksForRel;
 
-            HashSet<Uri> defaultLinksForRel;
-            if (_defaultLinks.TryGetValue(rel, out defaultLinksForRel))
+            if (_defaultLinks.TryGetValue(rel, out var defaultLinksForRel))
                 return defaultLinksForRel.ToDictionary(x => x, x => (string)null);
 
             return new Dictionary<Uri, string>();
@@ -352,8 +344,7 @@ namespace TypedRest
 
         public UriTemplate LinkTemplate(string rel)
         {
-            UriTemplate template;
-            if (!_linkTemplates.TryGetValue(rel, out template) && !_defaultLinkTemplates.TryGetValue(rel, out template))
+            if (!_linkTemplates.TryGetValue(rel, out var template) && !_defaultLinkTemplates.TryGetValue(rel, out template))
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties

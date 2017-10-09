@@ -19,7 +19,7 @@ namespace TypedRest
         [Fact]
         public void TestGetStream()
         {
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=0-")
                 .Respond(HttpStatusCode.PartialContent,
                     new StringContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
@@ -27,7 +27,7 @@ namespace TypedRest
                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1) {Unit = "elements"}}
                     });
 
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
                 .Respond(HttpStatusCode.PartialContent,
                     new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
@@ -45,7 +45,7 @@ namespace TypedRest
         [Fact]
         public void TestGetStreamOffset()
         {
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
                 .Respond(HttpStatusCode.PartialContent,
                     new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
@@ -60,7 +60,7 @@ namespace TypedRest
         [Fact]
         public void TestGetStreamTail()
         {
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint/")
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=-1")
                 .Respond(HttpStatusCode.PartialContent,
                     new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
