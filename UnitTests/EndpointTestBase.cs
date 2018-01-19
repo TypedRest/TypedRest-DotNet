@@ -18,20 +18,17 @@ namespace TypedRest
 
         public void Dispose() => Mock.VerifyNoOutstandingExpectation();
 
-        private class MockEntryEndpoint : EndpointBase
+        private class MockEntryEndpoint : EntryEndpoint
         {
             public MockEntryEndpoint(HttpMessageHandler messageHandler)
                 : base(new Uri("http://localhost/"), new HttpClient(messageHandler), new JsonMediaTypeFormatter())
-            {
-            }
+            {}
         }
 
         private class SubMockHttpMessageHandler : MockHttpMessageHandler
         {
             protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                return await base.SendAsync(request, cancellationToken);
-            }
+                => await base.SendAsync(request, cancellationToken);
         }
     }
 }
