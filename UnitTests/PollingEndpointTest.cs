@@ -23,13 +23,13 @@ namespace TypedRest
         public void TestGetStream()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(JsonMime, "{\"Id\":1,\"Name\":\"test\"}");
+                .Respond(JsonMime, "{\"id\":1,\"name\":\"test\"}");
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(JsonMime, "{\"Id\":2,\"Name\":\"test\"}");
+                .Respond(JsonMime, "{\"id\":2,\"name\":\"test\"}");
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":3,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":3,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromSeconds(42))}
                 });
 

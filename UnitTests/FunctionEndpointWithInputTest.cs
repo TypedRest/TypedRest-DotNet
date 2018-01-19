@@ -16,8 +16,8 @@ namespace TypedRest
         public async Task TestTrigger()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-                .WithContent("{\"Id\":1,\"Name\":\"input\"}")
-                .Respond(JsonMime, "{\"Id\":2,\"Name\":\"result\"}");
+                .WithContent("{\"id\":1,\"name\":\"input\"}")
+                .Respond(JsonMime, "{\"id\":2,\"name\":\"result\"}");
 
             var result = await _endpoint.TriggerAsync(new MockEntity(1, "input"));
             result.Should().Be(new MockEntity(2, "result"));

@@ -20,7 +20,7 @@ namespace TypedRest
         public async Task TestRead()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(JsonMime, "{\"Id\":5,\"Name\":\"test\"}");
+                .Respond(JsonMime, "{\"id\":5,\"name\":\"test\"}");
 
             var result = await _endpoint.ReadAsync();
             result.Should().Be(new MockEntity(5, "test"));
@@ -32,7 +32,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
                 });
             var result1 = await _endpoint.ReadAsync();
@@ -72,8 +72,8 @@ namespace TypedRest
         public async Task TestSetResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
-                .Respond(JsonMime, "{\"Id\":5,\"Name\":\"testXXX\"}");
+                .WithContent("{\"id\":5,\"name\":\"test\"}")
+                .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
 
             var result = await _endpoint.SetAsync(new MockEntity(5, "test"));
             result.Should().Be(new MockEntity(5, "testXXX"));
@@ -83,7 +83,7 @@ namespace TypedRest
         public async Task TestSetNoResult()
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(HttpStatusCode.NoContent);
 
             await _endpoint.SetAsync(new MockEntity(5, "test"));
@@ -95,13 +95,13 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
                 });
             var result = await _endpoint.ReadAsync();
 
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .WithHeaders("If-Match", "\"123abc\"")
                 .Respond(HttpStatusCode.NoContent);
             await _endpoint.SetAsync(result);
@@ -113,21 +113,21 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":5,\"Name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
                 });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"testX\"}")
+                .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":5,\"Name\":\"test2\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":5,\"name\":\"test2\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"2\"")}
                 });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"testX\"}")
+                .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"2\"")
                 .Respond(HttpStatusCode.NoContent);
 
@@ -140,11 +140,11 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":5,\"Name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
                 });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"testX\"}")
+                .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
 
@@ -155,8 +155,8 @@ namespace TypedRest
         public async Task TestMergeResult()
         {
             Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
-                .Respond(JsonMime, "{\"Id\":5,\"Name\":\"testXXX\"}");
+                .WithContent("{\"id\":5,\"name\":\"test\"}")
+                .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
 
             var result = await _endpoint.MergeAsync(new MockEntity(5, "test"));
             result.Should().Be(new MockEntity(5, "testXXX"));
@@ -166,7 +166,7 @@ namespace TypedRest
         public async Task TestMergeNoResult()
         {
             Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
-                .WithContent("{\"Id\":5,\"Name\":\"test\"}")
+                .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(HttpStatusCode.NoContent);
 
             await _endpoint.MergeAsync(new MockEntity(5, "test"));
@@ -187,7 +187,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
                 {
-                    Content = new StringContent("{\"Id\":5,\"Name\":\"test\"}", Encoding.UTF8, JsonMime),
+                    Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                     Headers = { ETag = new EntityTagHeaderValue("\"123abc\"") }
                 });
             await _endpoint.ReadAsync();

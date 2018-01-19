@@ -22,7 +22,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=0-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"Id\":5,\"Name\":\"test1\"},{\"Id\":6,\"Name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                    new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
                     {
                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1) {Unit = "elements"}}
                     });
@@ -30,7 +30,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                    new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
                     {
                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
                     });
@@ -48,7 +48,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                    new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
                     {
                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
                     });
@@ -63,7 +63,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=-1")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"Id\":7,\"Name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                    new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
                     {
                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
                     });

@@ -1,6 +1,5 @@
 using System;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading;
 using System.Threading.Tasks;
 using RichardSzalay.MockHttp;
@@ -21,7 +20,7 @@ namespace TypedRest
         private class MockEntryEndpoint : EntryEndpoint
         {
             public MockEntryEndpoint(HttpMessageHandler messageHandler)
-                : base(new Uri("http://localhost/"), new HttpClient(messageHandler), new JsonMediaTypeFormatter())
+                : base(new Uri("http://localhost/"), new HttpClient(messageHandler))
             {}
         }
 
