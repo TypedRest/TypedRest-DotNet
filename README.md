@@ -2,12 +2,12 @@
 
 TypedRest helps you build type-safe fluent-style JSON REST API clients.
 
-NuGet packages:
+NuGet packages (for .NET Framework 4.5+ and .NET Standard 2.0+):
 * [TypedRest](https://www.nuget.org/packages/TypedRest/)
 * [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
 * [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/)
 
-The NuGet packages contain binaries for .NET 4.5 and newer as well as .NET Standard 2.0 and newer.
+[![Build status](https://ci.appveyor.com/api/projects/status/pbdbjrpayham1re1?svg=true)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)
 
 ## Nomenclature
 
