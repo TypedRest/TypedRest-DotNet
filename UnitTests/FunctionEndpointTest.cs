@@ -6,6 +6,7 @@ using Xunit;
 
 namespace TypedRest
 {
+    [Collection("Endpoint")]
     public class FunctionEndpointTest : EndpointTestBase
     {
         private readonly IFunctionEndpoint<MockEntity> _endpoint;

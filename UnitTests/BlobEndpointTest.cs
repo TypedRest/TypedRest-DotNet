@@ -9,6 +9,7 @@ using Xunit;
 
 namespace TypedRest
 {
+    [Collection("Endpoint")]
     public class BlobEndpointTest : EndpointTestBase
     {
         private readonly IBlobEndpoint _endpoint;

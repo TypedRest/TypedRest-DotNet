@@ -7,6 +7,7 @@ using Xunit;
 
 namespace TypedRest
 {
+    [Collection("Endpoint")]
     public class ActionEndpointTest : EndpointTestBase
     {
         private readonly IActionEndpoint _endpoint;

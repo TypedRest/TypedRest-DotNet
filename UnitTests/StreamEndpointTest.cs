@@ -10,6 +10,7 @@ using Xunit;
 
 namespace TypedRest
 {
+    [Collection("Endpoint")]
     public class StreamEndpointTest : EndpointTestBase
     {
         private readonly IStreamEndpoint<MockEntity> _endpoint;

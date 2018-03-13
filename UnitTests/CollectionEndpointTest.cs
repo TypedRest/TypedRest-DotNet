@@ -10,6 +10,7 @@ using Xunit;
 
 namespace TypedRest
 {
+    [Collection("Endpoint")]
     public class CollectionEndpointTest : EndpointTestBase
     {
         private readonly CollectionEndpoint<MockEntity> _endpoint;

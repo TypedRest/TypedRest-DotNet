@@ -6,6 +6,7 @@ using Xunit;
 
 namespace TypedRest
 {
+    [Collection("Endpoint")]
     public class ActionEndpointWithInputTest : EndpointTestBase
     {
         private readonly IActionEndpoint<MockEntity> _endpoint;
