@@ -1,7 +1,5 @@
 using System;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using RichardSzalay.MockHttp;
 
 namespace TypedRest
@@ -10,7 +8,7 @@ namespace TypedRest
     {
         public const string JsonMime = "application/json";
 
-        protected readonly MockHttpMessageHandler Mock = new SubMockHttpMessageHandler();
+        protected readonly MockHttpMessageHandler Mock = new MockHttpMessageHandler();
         protected readonly IEndpoint EntryEndpoint;
 
         protected EndpointTestBase() => EntryEndpoint = new MockEntryEndpoint(Mock);
@@ -22,12 +20,6 @@ namespace TypedRest
             public MockEntryEndpoint(HttpMessageHandler messageHandler)
                 : base(new Uri("http://localhost/"), new HttpClient(messageHandler))
             {}
-        }
-
-        private class SubMockHttpMessageHandler : MockHttpMessageHandler
-        {
-            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-                => await base.SendAsync(request, cancellationToken);
         }
     }
 }
