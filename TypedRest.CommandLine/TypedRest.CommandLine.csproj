@@ -1,15 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <DebugType>full</DebugType>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)'=='Windows_NT' Or '$(MSBuildRuntimeType)'=='Mono'">
+    <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IncludeSource>True</IncludeSource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)'!='Windows_NT' And '$(MSBuildRuntimeType)'=='Core'">
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>

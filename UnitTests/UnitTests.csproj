@@ -2,10 +2,16 @@
 
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
-    <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
     <IsPackable>False</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)'=='Windows_NT' Or '$(MSBuildRuntimeType)'=='Mono'">
+    <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)'!='Windows_NT' And '$(MSBuildRuntimeType)'=='Core'">
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net46'">
