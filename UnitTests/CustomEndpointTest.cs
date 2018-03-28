@@ -44,8 +44,8 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.Link("target1").Should().Be(new Uri(_endpoint.Uri, "a"));
-            _endpoint.Link("target2").Should().Be(new Uri(_endpoint.Uri, "b"));
+            _endpoint.Link("target1").Should().Be(new Uri("http://localhost/a"));
+            _endpoint.Link("target2").Should().Be(new Uri("http://localhost/b"));
         }
 
         [Fact]
@@ -60,8 +60,8 @@ namespace TypedRest
                     }
                 });
 
-            _endpoint.Link("target1").Should().Be(new Uri(_endpoint.Uri, "a"));
-            _endpoint.Link("target2").Should().Be(new Uri(_endpoint.Uri, "b"));
+            _endpoint.Link("target1").Should().Be(new Uri("http://localhost/a"));
+            _endpoint.Link("target2").Should().Be(new Uri("http://localhost/b"));
         }
 
         [Fact]
@@ -109,9 +109,9 @@ namespace TypedRest
             await _endpoint.GetAsync();
 
             _endpoint.GetLinks("notify").Should().BeEquivalentTo(
-                new Uri(_endpoint.Uri, "target1"),
-                new Uri(_endpoint.Uri, "target2"),
-                new Uri(_endpoint.Uri, "target3"));
+                new Uri("http://localhost/target1"),
+                new Uri("http://localhost/target2"),
+                new Uri("http://localhost/target3"));
         }
 
         [Fact]
@@ -131,8 +131,8 @@ namespace TypedRest
 
             _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
             {
-                {new Uri(_endpoint.Uri, "target1"), "Title"},
-                {new Uri(_endpoint.Uri, "target2"), null},
+                {new Uri("http://localhost/target1"), "Title"},
+                {new Uri("http://localhost/target2"), null},
             });
         }
 
@@ -152,8 +152,8 @@ namespace TypedRest
 
             _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
             {
-                {new Uri(_endpoint.Uri, "target1"), "Title 1"},
-                {new Uri(_endpoint.Uri, "target2"), null}
+                {new Uri("http://localhost/target1"), "Title 1"},
+                {new Uri("http://localhost/target2"), null}
             });
         }
 
@@ -164,8 +164,8 @@ namespace TypedRest
 
             _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
             {
-                {new Uri(_endpoint.Uri, "target1"), null},
-                {new Uri(_endpoint.Uri, "target2"), null}
+                {new Uri("http://localhost/target1"), null},
+                {new Uri("http://localhost/target2"), null}
             });
         }
 
@@ -200,7 +200,7 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri(_endpoint.Uri, "a?x=1"));
+            _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri("http://localhost/a?x=1"));
         }
 
         [Fact]
@@ -268,14 +268,14 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.Link("single").Should().Be(new Uri(_endpoint.Uri, "a"));
+            _endpoint.Link("single").Should().Be(new Uri("http://localhost/a"));
             _endpoint.GetLinks("collection").Should().BeEquivalentTo(
-                new Uri(_endpoint.Uri, "b"),
-                new Uri(_endpoint.Uri, "c"));
+                new Uri("http://localhost/b"),
+                new Uri("http://localhost/c"));
             _endpoint.GetLinksWithTitles("collection").Should().Equal(new Dictionary<Uri, string>
             {
-                {new Uri(_endpoint.Uri, "b"), "Title 1"},
-                {new Uri(_endpoint.Uri, "c"), null},
+                {new Uri("http://localhost/b"), "Title 1"},
+                {new Uri("http://localhost/c"), null},
             });
             _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
         }

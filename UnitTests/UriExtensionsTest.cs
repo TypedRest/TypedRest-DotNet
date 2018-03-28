@@ -35,5 +35,15 @@ namespace TypedRest
         public void TestEnsureTrailingSlashAbsoluteWithQuery()
             => new Uri("http://localhost/test?x=1", UriKind.Absolute).EnsureTrailingSlash()
                 .Should().Be(new Uri("http://localhost/test/?x=1", UriKind.Absolute));
+
+        [Fact]
+        public void TestJoinNormal()
+            => new Uri("http://localhost/test?x=1", UriKind.Absolute).Join(relativeUri: "subpath")
+                .Should().Be(new Uri("http://localhost/subpath", UriKind.Absolute));
+
+        [Fact]
+        public void TestJoinWithDotSlash()
+            => new Uri("http://localhost/test?x=1", UriKind.Absolute).Join(relativeUri: "./subpath")
+                .Should().Be(new Uri("http://localhost/test/subpath", UriKind.Absolute));
     }
 }

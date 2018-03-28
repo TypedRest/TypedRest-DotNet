@@ -21,14 +21,14 @@ namespace TypedRest
         public void TestGetByEntity()
         {
             _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri(_endpoint.Uri, "1"));
+                .Should().Be(new Uri("http://localhost/endpoint/1"));
         }
 
         [Fact]
-        public void TestGetByEntityTemplate()
+        public void TestGetById()
         {
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri(_endpoint.Uri, "1"));
+            _endpoint["1"].Uri
+                .Should().Be(new Uri("http://localhost/endpoint/1"));
         }
 
         [Fact]
