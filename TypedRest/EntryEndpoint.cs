@@ -19,26 +19,6 @@ namespace TypedRest
     public class EntryEndpoint : EndpointBase
     {
         /// <summary>
-        /// Creates a new entry point.
-        /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
-        /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null)
-            : this(uri, BuildHttpClient(uri, credentials), serializer)
-        {}
-
-        /// <summary>
-        /// Creates a new entry point using an OAuth token.
-        /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
-        /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
-        /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null)
-            : this(uri, BuildHttpClient(uri), serializer)
-            => HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        /// <summary>
         /// Creates a new REST endpoint with an absolute URI.
         /// </summary>
         /// <param name="uri">The HTTP URI of the remote element.</param>
@@ -50,29 +30,28 @@ namespace TypedRest
             serializer ?? BuildSerializer())
         {}
 
-        private static HttpClient BuildHttpClient(Uri uri, ICredentials credentials = null)
+        /// <summary>
+        /// Creates a new entry point.
+        /// </summary>
+        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
+        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
+        /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
+        public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null)
+            : this(uri, new HttpClient(), serializer)
         {
-            var handler = new HttpClientHandler();
-            var client = new HttpClient(handler);
-
-            if (credentials != null)
-            {
-                handler.PreAuthenticate = true;
-                handler.Credentials = credentials;
-
-                var basicCredentials = credentials.GetCredential(uri, authType: "Basic");
-                if (basicCredentials != null)
-                    SetBasicAuthHeader(client, basicCredentials);
-            }
-
-            return client;
+            BasicAuth(uri, credentials);
         }
 
-        private static void SetBasicAuthHeader(HttpClient client, NetworkCredential basicCredentials)
+        /// <summary>
+        /// Creates a new entry point using an OAuth token.
+        /// </summary>
+        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
+        /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
+        /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
+        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null)
+            : this(uri, new HttpClient(), serializer)
         {
-            string encodedCredentials = Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1")
-                .GetBytes(basicCredentials.UserName + ":" + basicCredentials.Password));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
+            BeararAuth(token);
         }
 
         private static MediaTypeFormatter BuildSerializer() => new JsonMediaTypeFormatter
@@ -85,6 +64,27 @@ namespace TypedRest
                 TypeNameHandling = TypeNameHandling.Auto
             }
         };
+
+        private void BasicAuth(Uri uri, ICredentials credentials)
+        {
+            string userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
+            if (userInfo != null)
+            {
+                HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                    Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1").GetBytes(userInfo)));
+            }
+        }
+
+        private string GetUserInfo(ICredentials credentials)
+        {
+            var basicCredentials = credentials.GetCredential(Uri, authType: "Basic");
+            return (basicCredentials == null)
+                ? null
+                : basicCredentials.UserName + ":" + basicCredentials.Password;
+        }
+
+        private void BeararAuth(string token)
+            => HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         /// <summary>
         /// Fetches meta data such as links from the server.
