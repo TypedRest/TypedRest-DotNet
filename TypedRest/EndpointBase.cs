@@ -43,7 +43,7 @@ namespace TypedRest
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         protected EndpointBase(IEndpoint referrer, Uri relativeUri) : this(
-            uri: new Uri(referrer.Uri, relativeUri),
+            uri: referrer.Uri.Join(relativeUri),
             httpClient: referrer.HttpClient,
             serializer: referrer.Serializer)
         {
