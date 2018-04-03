@@ -7,7 +7,10 @@ NuGet packages (for .NET Framework 4.5+ and .NET Standard 2.0+):
 [![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)
 [![TypedRest.Wpf](https://img.shields.io/nuget/v/TypedRest.Wpf.svg?label=TypedRest.Wpf)](https://www.nuget.org/packages/TypedRest.Wpf/)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/pbdbjrpayham1re1?svg=true)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)
+CI Builds:  
+[![Windows](https://img.shields.io/appveyor/ci/TypedRest/typedrest-dotnet.svg?label=Windows)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)
+[![Linux](https://img.shields.io/travis/TypedRest/TypedRest-DotNet.svg?label=Linux)](https://travis-ci.org/TypedRest/TypedRest-DotNet)
+
 
 ## Nomenclature
 
