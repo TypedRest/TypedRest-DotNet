@@ -1,18 +1,18 @@
 # TypedRest
 
-TypedRest helps you build type-safe fluent-style JSON REST API clients.
+TypedRest helps you build type-safe fluent-style REST API clients.
 
-NuGet packages (for .NET Framework 4.5+ and .NET Standard 2.0+):
-* [TypedRest](https://www.nuget.org/packages/TypedRest/)
-* [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
-* [TypedRest.Wpf](https://www.nuget.org/packages/TypedRest.Wpf/)
+NuGet packages (for .NET Framework 4.5+ and .NET Standard 2.0+):  
+[![TypedRest](https://img.shields.io/nuget/v/TypedRest.svg?label=TypedRest)](https://www.nuget.org/packages/TypedRest/)
+[![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)
+[![TypedRest.Wpf](https://img.shields.io/nuget/v/TypedRest.Wpf.svg?label=TypedRest.Wpf)](https://www.nuget.org/packages/TypedRest.Wpf/)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pbdbjrpayham1re1?svg=true)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)
 
 ## Nomenclature
 
 We use the following terms in the library and documentation:
-* An __entity__ is a data transfer object that can be serialized as JSON.
+* An __entity__ is a data transfer object that can be serialized (usually as JSON).
 * An __endpoint__ is a REST resource at a specific URI.
 * An __entry endpoint__ is an _endpoint_ that is the top-level URI of a REST interface.
 * An __element endpoint__ is an _endpoint_ that represents a single _entity_.
@@ -22,7 +22,7 @@ We use the following terms in the library and documentation:
 
 ## Usecase sample
 
-We'll use this simple POCO (Plain old CLR object) class modelling software packages as a sample _entity_ type:
+We'll use this simple POCO (Plain old CLR object) class modeling software packages as a sample _entity_ type:
 ```cs
 class Package
 {
