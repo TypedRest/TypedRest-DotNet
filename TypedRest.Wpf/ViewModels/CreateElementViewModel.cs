@@ -44,7 +44,6 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         public CreateElementViewModel(ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>> endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
     }
 }

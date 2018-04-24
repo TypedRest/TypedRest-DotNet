@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
@@ -23,19 +23,13 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = caption;
         }
 
-        public override async void Trigger()
+        public override async void Trigger() => await WithErrorHandlingAsync(async () =>
         {
-            await WithErrorHandlingAsync(async () =>
-            {
-                var result = await OnTriggerAsync();
-                EventAggregator.Publish(new TriggerEvent(Endpoint), null);
-                MessageBox.Show(result.ToString(), DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
-            });
-        }
+            var result = await OnTriggerAsync();
+            EventAggregator.Publish(new TriggerEvent(Endpoint), null);
+            MessageBox.Show(result.ToString(), DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
+        });
 
-        private async Task<TResult> OnTriggerAsync()
-        {
-            return await Endpoint.TriggerAsync(CancellationToken);
-        }
+        private async Task<TResult> OnTriggerAsync() => await Endpoint.TriggerAsync(CancellationToken);
     }
 }

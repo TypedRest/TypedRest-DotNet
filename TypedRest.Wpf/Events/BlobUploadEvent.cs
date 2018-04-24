@@ -1,4 +1,4 @@
-﻿namespace TypedRest.Wpf.Events
+namespace TypedRest.Wpf.Events
 {
     /// <summary>
     /// Indicates that <see cref="IBlobEndpoint.UploadFromAsync"/> was called.
@@ -9,8 +9,8 @@
         /// Creates a new blob upload event.
         /// </summary>
         /// <param name="endpoint">The endpoint that data was uploaded to.</param>
-        public BlobUploadEvent(IBlobEndpoint endpoint) : base(endpoint)
-        {
-        }
+        public BlobUploadEvent(IBlobEndpoint endpoint)
+            : base(endpoint)
+        {}
     }
 }

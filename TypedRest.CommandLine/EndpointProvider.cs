@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -44,8 +44,8 @@ namespace TypedRest.CommandLine
 #if NET45
             // Increase maximum length for Console.ReadLine()
             var defaultReader = Console.In;
-            byte[] inputBuffer = new byte[1024];
-            Stream inputStream = Console.OpenStandardInput(inputBuffer.Length);
+            var inputBuffer = new byte[1024];
+            var inputStream = Console.OpenStandardInput(inputBuffer.Length);
             Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
 
             try
@@ -77,8 +77,7 @@ namespace TypedRest.CommandLine
                 Process.Start(endpoint.Link("token-provider").AbsoluteUri);
             }
             catch (KeyNotFoundException)
-            {
-            }
+            {}
         }
     }
 }

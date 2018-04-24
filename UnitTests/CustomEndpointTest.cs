@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -15,7 +15,10 @@ namespace TypedRest
     {
         private readonly CustomEndpoint _endpoint;
 
-        public CustomEndpointTest() => _endpoint = new CustomEndpoint(EntryEndpoint, "endpoint");
+        public CustomEndpointTest()
+        {
+            _endpoint = new CustomEndpoint(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public async Task TestAllowHeader()
@@ -35,12 +38,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<a>; rel=target1, <b>; rel=target2"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<a>; rel=target1, <b>; rel=target2"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -53,12 +56,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<a>; rel=target1, <b>; rel=target2"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<a>; rel=target1, <b>; rel=target2"}
+                     }
+                 });
 
             _endpoint.Link("target1").Should().Be(new Uri("http://localhost/a"));
             _endpoint.Link("target2").Should().Be(new Uri("http://localhost/b"));
@@ -69,12 +72,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<http://localhost/b>; rel=target1"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<http://localhost/b>; rel=target1"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -86,9 +89,9 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers = {{"Link", "<a>; rel=target1"}}
-                });
+                 {
+                     Headers = {{"Link", "<a>; rel=target1"}}
+                 });
 
             Assert.Throws<KeyNotFoundException>(() => _endpoint.Link("target2"));
         }
@@ -98,13 +101,13 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<target1>; rel=notify, <target2>; rel=notify"},
-                        {"Link", "<target3>; rel=notify"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<target1>; rel=notify, <target2>; rel=notify"},
+                         {"Link", "<target3>; rel=notify"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -119,20 +122,20 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<target1>; rel=child; title=Title"},
-                        {"Link", "<target2>; rel=child"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<target1>; rel=child; title=Title"},
+                         {"Link", "<target2>; rel=child"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
             _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
             {
                 {new Uri("http://localhost/target1"), "Title"},
-                {new Uri("http://localhost/target2"), null},
+                {new Uri("http://localhost/target2"), null}
             });
         }
 
@@ -141,12 +144,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<target1>; rel=child; title=\"Title 1\", <target2>; rel=child"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<target1>; rel=child; title=\"Title 1\", <target2>; rel=child"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -174,12 +177,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<a{?x}>; rel=child; templated=true"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<a{?x}>; rel=child; templated=true"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -191,12 +194,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<a{?x}>; rel=child; templated=true"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<a{?x}>; rel=child; templated=true"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -208,12 +211,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<http://localhost/b{?x}>; rel=child; templated=true"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<http://localhost/b{?x}>; rel=child; templated=true"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -225,12 +228,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<http://localhost/b{?x,y}>; rel=search; templated=true"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<http://localhost/b{?x,y}>; rel=search; templated=true"}
+                     }
+                 });
 
             await _endpoint.GetAsync();
 
@@ -242,12 +245,12 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Headers =
-                    {
-                        {"Link", "<a>; rel=child; templated=true"}
-                    }
-                });
+                 {
+                     Headers =
+                     {
+                         {"Link", "<a>; rel=child; templated=true"}
+                     }
+                 });
 
             Assert.Throws<KeyNotFoundException>(() => _endpoint.LinkTemplate("child2"));
         }
@@ -275,7 +278,7 @@ namespace TypedRest
             _endpoint.GetLinksWithTitles("collection").Should().Equal(new Dictionary<Uri, string>
             {
                 {new Uri("http://localhost/b"), "Title 1"},
-                {new Uri("http://localhost/c"), null},
+                {new Uri("http://localhost/c"), null}
             });
             _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
         }
@@ -297,9 +300,9 @@ namespace TypedRest
 
         private class CustomEndpoint : EndpointBase
         {
-            public CustomEndpoint(IEndpoint referrer, string relativeUri) : base(referrer, relativeUri)
-            {
-            }
+            public CustomEndpoint(IEndpoint referrer, string relativeUri)
+                : base(referrer, relativeUri)
+            {}
 
             public Task GetAsync() => HandleResponseAsync(HttpClient.GetAsync(Uri));
 

@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,7 +14,10 @@ namespace TypedRest
     {
         private readonly IBlobEndpoint _endpoint;
 
-        public BlobEndpointTest() => _endpoint = new BlobEndpoint(EntryEndpoint, "endpoint");
+        public BlobEndpointTest()
+        {
+            _endpoint = new BlobEndpoint(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public async Task TestProbe()
@@ -69,11 +72,8 @@ namespace TypedRest
             }
 
             public bool Matches(HttpRequestMessage message)
-            {
-                return
-                    message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data) &&
-                    message.Content.Headers.ContentType.MediaType == _mimeType;
-            }
+                => message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data)
+                && message.Content.Headers.ContentType.MediaType == _mimeType;
         }
     }
 }

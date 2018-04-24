@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -19,7 +19,6 @@ namespace TypedRest
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
-
         protected ETagEndpointBase(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {}

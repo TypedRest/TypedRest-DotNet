@@ -11,7 +11,10 @@ namespace TypedRest
         protected readonly MockHttpMessageHandler Mock = new MockHttpMessageHandler();
         protected readonly IEndpoint EntryEndpoint;
 
-        protected EndpointTestBase() => EntryEndpoint = new MockEntryEndpoint(Mock);
+        protected EndpointTestBase()
+        {
+            EntryEndpoint = new MockEntryEndpoint(Mock);
+        }
 
         public void Dispose() => Mock.VerifyNoOutstandingExpectation();
 

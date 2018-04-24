@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 #if NET45
 using System.Runtime.Serialization;
@@ -14,14 +14,17 @@ namespace TypedRest
         public AuthenticationException()
         {}
 
-        public AuthenticationException(string message) : base(message)
+        public AuthenticationException(string message)
+            : base(message)
         {}
 
-        public AuthenticationException(string message, Exception innerException) : base(message, innerException)
+        public AuthenticationException(string message, Exception innerException)
+            : base(message, innerException)
         {}
 
 #if NET45
-        protected AuthenticationException(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
+        protected AuthenticationException(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
         {}
 #endif
     }

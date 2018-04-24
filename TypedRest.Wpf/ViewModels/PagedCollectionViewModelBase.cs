@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 
@@ -21,8 +21,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         protected PagedCollectionViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
 
         protected override async Task OnLoadAsync()
         {

@@ -23,14 +23,14 @@ namespace TypedRest
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((MockEntity) obj);
+            return Equals((MockEntity)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (Id.GetHashCode()*397) ^ (Name?.GetHashCode() ?? 0);
+                return (Id.GetHashCode() * 397) ^ (Name?.GetHashCode() ?? 0);
             }
         }
     }

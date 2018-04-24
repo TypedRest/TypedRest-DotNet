@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -19,8 +19,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public FunctionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new function endpoint with a relative URI.
@@ -29,12 +28,11 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public FunctionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public async Task<TResult> TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            HttpResponseMessage response =
+            var response =
                 await
                     HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri),
                         cancellationToken));
@@ -59,8 +57,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public FunctionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new function endpoint with a relative URI.
@@ -69,15 +66,14 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public FunctionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public async Task<TResult> TriggerAsync(TEntity entity,
-            CancellationToken cancellationToken = new CancellationToken())
+                                                CancellationToken cancellationToken = new CancellationToken())
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            HttpResponseMessage response =
+            var response =
                 await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted

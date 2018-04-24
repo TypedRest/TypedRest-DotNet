@@ -1,4 +1,4 @@
-﻿namespace TypedRest.Wpf.Events
+namespace TypedRest.Wpf.Events
 {
     /// <summary>
     /// Indicates that an existing element was updated.
@@ -11,8 +11,8 @@
         /// Creates a new element update event.
         /// </summary>
         /// <param name="endpoint">The endpoint representing the updated entity.</param>
-        public ElementUpdatedEvent(IElementEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        public ElementUpdatedEvent(IElementEndpoint<TEntity> endpoint)
+            : base(endpoint)
+        {}
     }
 }

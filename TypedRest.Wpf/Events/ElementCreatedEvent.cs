@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 
 namespace TypedRest.Wpf.Events
 {
@@ -13,8 +13,8 @@ namespace TypedRest.Wpf.Events
         /// Creates a new element create event.
         /// </summary>
         /// <param name="endpoint">The endpoint representing the newly created entity.</param>
-        public ElementCreatedEvent(IElementEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        public ElementCreatedEvent(IElementEndpoint<TEntity> endpoint)
+            : base(endpoint)
+        {}
     }
 }

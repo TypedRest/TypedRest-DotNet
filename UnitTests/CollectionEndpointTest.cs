@@ -15,36 +15,33 @@ namespace TypedRest
     {
         private readonly CollectionEndpoint<MockEntity> _endpoint;
 
-        public CollectionEndpointTest() => _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        public CollectionEndpointTest()
+        {
+            _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public void TestGetByEntity()
-        {
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri("http://localhost/endpoint/1"));
-        }
+            => _endpoint[new MockEntity(1, "test")].Uri.Should().Be(new Uri("http://localhost/endpoint/1"));
 
         [Fact]
         public void TestGetById()
-        {
-            _endpoint["1"].Uri
-                .Should().Be(new Uri("http://localhost/endpoint/1"));
-        }
+            => _endpoint["1"].Uri.Should().Be(new Uri("http://localhost/endpoint/1"));
 
         [Fact]
         public async Task TestGetByEntityWithLinkHeaderRelative()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                    Headers = { { "Link", "<children/{id}>; rel=child; templated=true" } }
-                });
+                 {
+                     Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                     Headers = {{"Link", "<children/{id}>; rel=child; templated=true"}}
+                 });
 
             await _endpoint.ReadAllAsync();
 
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri("http://localhost/children/1"));
+            _endpoint[new MockEntity(1, "test")]
+               .Uri.Should().Be(new Uri("http://localhost/children/1"));
         }
 
         [Fact]
@@ -52,15 +49,15 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                    Headers = { { "Link", "<http://localhost/children/{id}>; rel=child; templated=true" } }
-                });
+                 {
+                     Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                     Headers = {{"Link", "<http://localhost/children/{id}>; rel=child; templated=true"}}
+                 });
 
             await _endpoint.ReadAllAsync();
 
-            _endpoint[new MockEntity(1, "test")].Uri
-                .Should().Be(new Uri("http://localhost/children/1"));
+            _endpoint[new MockEntity(1, "test")]
+               .Uri.Should().Be(new Uri("http://localhost/children/1"));
         }
 
         [Fact]
@@ -78,10 +75,10 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
-                    Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
-                });
+                 {
+                     Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                 });
             var result1 = await _endpoint.ReadAllAsync();
             result1.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
 
@@ -101,14 +98,14 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=1-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = { ContentRange = new ContentRangeHeaderValue(from: 1, to: 1, length: 2) { Unit = "elements" } }
-                    });
+                     new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"}}
+                     });
 
             var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: null));
-            response.Elements.Should().Equal(new MockEntity { Id = 6, Name = "test2" });
-            response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) { Unit = "elements" });
+            response.Elements.Should().Equal(new MockEntity {Id = 6, Name = "test2"});
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"});
         }
 
         [Fact]
@@ -117,14 +114,14 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=0-1")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = { ContentRange = new ContentRangeHeaderValue(from: 0, to: 1, length: 2) { Unit = "elements" } }
-                    });
+                     new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"}}
+                     });
 
             var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 0, to: 1));
             response.Elements.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
-            response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) { Unit = "elements" });
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"});
         }
 
         [Fact]
@@ -133,14 +130,14 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=-1")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = { ContentRange = new ContentRangeHeaderValue(from: 2, to: 2) { Unit = "elements" } }
-                    });
+                     new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"}}
+                     });
 
             var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: null, to: 1));
             response.Elements.Should().Equal(new MockEntity(6, "test2"));
-            response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) { Unit = "elements" });
+            response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"});
         }
 
         [Fact]
@@ -170,9 +167,9 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Created)
-                {
-                    Headers = {Location = location}
-                });
+                 {
+                     Headers = {Location = location}
+                 });
 
             var element = await _endpoint.CreateAsync(new MockEntity(5, "test"));
             element.Uri.Should().Be(new Uri(EntryEndpoint.Uri, location));
@@ -185,7 +182,7 @@ namespace TypedRest
                 .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Accepted));
 
-            await _endpoint.CreateAllAsync(new[] { new MockEntity(5, "test1"), new MockEntity(6, "test2") });
+            await _endpoint.CreateAllAsync(new[] {new MockEntity(5, "test1"), new MockEntity(6, "test2")});
         }
 
         [Fact]
@@ -195,7 +192,7 @@ namespace TypedRest
                 .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent));
 
-            await _endpoint.SetAllAsync(new[] { new MockEntity(5, "test1"), new MockEntity(6, "test2") });
+            await _endpoint.SetAllAsync(new[] {new MockEntity(5, "test1"), new MockEntity(6, "test2")});
         }
 
         [Fact]
@@ -203,10 +200,10 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
-                    Headers = { ETag = new EntityTagHeaderValue("\"123abc\"") }
-                });
+                 {
+                     Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                 });
             var result = await _endpoint.ReadAllAsync();
 
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")

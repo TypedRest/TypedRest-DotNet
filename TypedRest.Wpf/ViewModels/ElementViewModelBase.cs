@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
@@ -22,27 +22,23 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="eventAggregator"></param>
         protected ElementViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
 
-        public virtual async void Save()
+        public virtual async void Save() => await WithErrorHandlingAsync(async () =>
         {
-            await WithErrorHandlingAsync(async () =>
+            try
             {
-                try
-                {
-                    await OnSaveAsync();
-                    TryClose();
-                }
-                catch (InvalidOperationException ex)
-                {
-                    // This usually inidicates a "lost update"
-                    string question = ex.Message + "\nDo you want to refresh this page loosing any changes you have made?";
-                    if (MessageBox.Show(question, "Refresh element", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                        await RefreshAsync();
-                }
-            });
-        }
+                await OnSaveAsync();
+                TryClose();
+            }
+            catch (InvalidOperationException ex)
+            {
+                // This usually inidicates a "lost update"
+                string question = ex.Message + "\nDo you want to refresh this page loosing any changes you have made?";
+                if (MessageBox.Show(question, "Refresh element", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    await RefreshAsync();
+            }
+        });
 
         /// <summary>
         /// Handler for saving the input.

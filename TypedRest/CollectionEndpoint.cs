@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,7 +26,9 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-            => SetupChildHandling();
+        {
+            SetupChildHandling();
+        }
 
         /// <summary>
         /// Creates a new element collection endpoint.
@@ -35,14 +37,18 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-            => SetupChildHandling();
+        {
+            SetupChildHandling();
+        }
 
         private MethodInfo _getIdMethod;
 
         private void SetupChildHandling()
         {
-            var idProperty = typeof(TEntity).GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .FirstOrDefault(x => x.GetMethod != null && x.GetCustomAttribute<KeyAttribute>(inherit: true) != null);
+            var idProperty = typeof(TEntity).GetTypeInfo()
+                                            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                                            .FirstOrDefault(x => x.GetMethod != null
+                                                              && x.GetCustomAttribute<KeyAttribute>(inherit: true) != null);
 
             if (idProperty != null) _getIdMethod = idProperty.GetMethod;
 
@@ -98,7 +104,7 @@ namespace TypedRest
         public bool? ReadRangeAllowed { get; private set; }
 
         public async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                                                   CancellationToken cancellationToken = default(CancellationToken))
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri)
             {
@@ -114,7 +120,7 @@ namespace TypedRest
         public bool? CreateAllowed => IsMethodAllowed(HttpMethod.Post);
 
         public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                                                CancellationToken cancellationToken = default(CancellationToken))
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 

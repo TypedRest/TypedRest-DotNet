@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -58,18 +58,12 @@ namespace TypedRest.Wpf.ViewModels
             base.OnDeactivate(close);
         }
 
-        public async Task RefreshAsync()
-        {
-            await WithErrorHandlingAsync(OnLoadAsync);
-        }
+        public async Task RefreshAsync() => await WithErrorHandlingAsync(OnLoadAsync);
 
         /// <summary>
         /// Handler for loading data for the endpoint.
         /// </summary>
-        protected virtual Task OnLoadAsync()
-        {
-            return Task.FromResult(true);
-        }
+        protected virtual Task OnLoadAsync() => Task.FromResult(true);
 
         protected async Task WithErrorHandlingAsync(Func<Task> action)
         {
@@ -98,18 +92,12 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Handler for errors reported by REST endpoints.
         /// </summary>
-        protected virtual void OnError(Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        }
+        protected virtual void OnError(Exception ex) => MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
         /// <summary>
         /// Opens a child screen in the parent conductor.
         /// </summary>
-        protected void Open(IScreen screen)
-        {
-            (Parent as IConductor)?.ActivateItem(screen);
-        }
+        protected void Open(IScreen screen) => (Parent as IConductor)?.ActivateItem(screen);
 
         /// <summary>
         /// The Link relation type used by the server to send refresh notifications.

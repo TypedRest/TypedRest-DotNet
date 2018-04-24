@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,8 +13,7 @@ namespace TypedRest
         /// Returns the element with the specified <paramref name="key"/> from the <paramref name="dictionary"/>.
         /// Creates, adds and returns a new value using <paramref name="valueFactory"/> if no match was found.
         /// </summary>
-        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key,
-            Func<TValue> valueFactory)
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory)
         {
             if (!dictionary.TryGetValue(key, out var value))
                 dictionary.Add(key, value = valueFactory());

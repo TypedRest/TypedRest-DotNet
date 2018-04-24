@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
@@ -11,7 +11,10 @@ namespace TypedRest
     {
         private readonly IFunctionEndpoint<MockEntity, MockEntity> _endpoint;
 
-        public FunctionEndpointWithInputTest() => _endpoint = new FunctionEndpoint<MockEntity, MockEntity>(EntryEndpoint, "endpoint");
+        public FunctionEndpointWithInputTest()
+        {
+            _endpoint = new FunctionEndpoint<MockEntity, MockEntity>(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public async Task TestTrigger()

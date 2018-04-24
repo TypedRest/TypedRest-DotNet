@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,24 +42,24 @@ namespace TypedRest
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
-        protected EndpointBase(IEndpoint referrer, Uri relativeUri) : this(
-            uri: referrer.Uri.Join(relativeUri),
-            httpClient: referrer.HttpClient,
-            serializer: referrer.Serializer)
-        {
-        }
+        protected EndpointBase(IEndpoint referrer, Uri relativeUri)
+            : this(
+                uri: referrer.Uri.Join(relativeUri),
+                httpClient: referrer.HttpClient,
+                serializer: referrer.Serializer)
+        {}
 
         /// <summary>
         /// Creates a new REST endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
-        protected EndpointBase(IEndpoint referrer, string relativeUri) : this(
-            uri: referrer.Uri.Join(relativeUri),
-            httpClient: referrer.HttpClient,
-            serializer: referrer.Serializer)
-        {
-        }
+        protected EndpointBase(IEndpoint referrer, string relativeUri)
+            : this(
+                uri: referrer.Uri.Join(relativeUri),
+                httpClient: referrer.HttpClient,
+                serializer: referrer.Serializer)
+        {}
 
         /// <summary>
         /// Registers one or more default links for a specific relation type.
@@ -136,8 +136,7 @@ namespace TypedRest
                         if (messageNode != null) message = messageNode.ToString();
                     }
                     catch (JsonException)
-                    {
-                    }
+                    {}
                 }
             }
 
@@ -397,9 +396,6 @@ namespace TypedRest
             return _allowedMethods.Contains(method.Method);
         }
 
-        public override string ToString()
-        {
-            return GetType().Name + ": " + Uri;
-        }
+        public override string ToString() => GetType().Name + ": " + Uri;
     }
 }

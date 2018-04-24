@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -15,11 +15,11 @@ namespace TypedRest
     {
         private string ConfigDir => Path.Combine(
 #if NET45
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 #else
-                    Environment.ExpandEnvironmentVariables("%appdata%"),
+            Environment.ExpandEnvironmentVariables("%appdata%"),
 #endif
-                    Assembly.GetEntryAssembly().GetName().Name);
+            Assembly.GetEntryAssembly().GetName().Name);
 
         private string UriFile => Path.Combine(ConfigDir, "uri");
 
@@ -28,7 +28,7 @@ namespace TypedRest
         /// </summary>
         private Uri GetUri()
         {
-            Uri uri = GetLocalUri() ?? GetStoredUri();
+            var uri = GetLocalUri() ?? GetStoredUri();
             if (uri != null) return uri;
 
             uri = RequestUri();

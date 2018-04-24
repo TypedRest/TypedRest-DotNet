@@ -1,4 +1,4 @@
-﻿using Caliburn.Micro;
+using Caliburn.Micro;
 
 namespace TypedRest.Wpf.Events
 {
@@ -12,8 +12,8 @@ namespace TypedRest.Wpf.Events
         /// Creates a new element event.
         /// </summary>
         /// <param name="endpoint">The endpoint that raised the event.</param>
-        protected ElementEvent(IElementEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        protected ElementEvent(IElementEndpoint<TEntity> endpoint)
+            : base(endpoint)
+        {}
     }
 }

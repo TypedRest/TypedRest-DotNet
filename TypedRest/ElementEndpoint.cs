@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -19,8 +19,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public ElementEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new element endpoint.
@@ -29,8 +28,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public ElementEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -65,7 +63,8 @@ namespace TypedRest
         }
 
         [Obsolete("Use SetAsync() instead")]
-        public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) => SetAsync(entity, cancellationToken);
+        public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+            => SetAsync(entity, cancellationToken);
 
         public bool? MergeAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
 
@@ -82,8 +81,6 @@ namespace TypedRest
         public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
 
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await DeleteContentAsync(cancellationToken);
-        }
+            => await DeleteContentAsync(cancellationToken);
     }
 }

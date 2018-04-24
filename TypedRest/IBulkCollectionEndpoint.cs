@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +16,5 @@ namespace TypedRest
     [Obsolete("Use ICollectionEndpoint instead")]
     public interface IBulkCollectionEndpoint<TEntity> : IBulkCollectionEndpoint<TEntity, IElementEndpoint<TEntity>>,
         ICollectionEndpoint<TEntity>
-    {
-    }
+    {}
 }

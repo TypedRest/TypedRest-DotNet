@@ -1,4 +1,4 @@
-﻿// Resta.UriTemplates
+// Resta.UriTemplates
 // Copyright(c) 2013 Pavel Shkarin
 // Source: https://github.com/a7b0/uri-templates
 // License: The MIT License(MIT)

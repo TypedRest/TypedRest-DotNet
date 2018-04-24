@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -49,7 +49,7 @@ namespace TypedRest.Wpf
                 Width = 70,
                 Height = 30,
                 Margin = new Thickness(7),
-                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
             };
             okButton.Click += delegate
             {

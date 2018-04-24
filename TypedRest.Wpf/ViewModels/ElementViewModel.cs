@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
@@ -18,8 +18,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         public ElementViewModel(IElementEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
 
         protected override async Task OnLoadAsync()
         {

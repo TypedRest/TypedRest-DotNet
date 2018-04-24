@@ -1,4 +1,4 @@
-﻿namespace TypedRest.Wpf.Events
+namespace TypedRest.Wpf.Events
 {
     /// <summary>
     /// Indicates that an element was deleted.
@@ -11,8 +11,8 @@
         /// Creates a new element delete event.
         /// </summary>
         /// <param name="endpoint">The endpoint representing the deleted entity.</param>
-        public ElementDeletedEvent(IElementEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        public ElementDeletedEvent(IElementEndpoint<TEntity> endpoint)
+            : base(endpoint)
+        {}
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -24,10 +24,11 @@ namespace TypedRest
         /// <param name="uri">The HTTP URI of the remote element.</param>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer = null) : base(
-            uri.EnsureTrailingSlash(),
-            httpClient,
-            serializer ?? BuildSerializer())
+        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer = null)
+            : base(
+                uri.EnsureTrailingSlash(),
+                httpClient,
+                serializer ?? BuildSerializer())
         {}
 
         /// <summary>

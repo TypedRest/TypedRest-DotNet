@@ -15,7 +15,10 @@ namespace TypedRest
     {
         private readonly IElementEndpoint<MockEntity> _endpoint;
 
-        public ElementEndpointTest() => _endpoint = new ElementEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        public ElementEndpointTest()
+        {
+            _endpoint = new ElementEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public async Task TestRead()
@@ -32,10 +35,10 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                    Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
-                });
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                 });
             var result1 = await _endpoint.ReadAsync();
             result1.Should().Be(new MockEntity(5, "test"));
 
@@ -55,7 +58,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
                 .Respond(HttpStatusCode.OK);
 
-            var result = await _endpoint.ExistsAsync();
+            bool result = await _endpoint.ExistsAsync();
             result.Should().BeTrue();
         }
 
@@ -65,7 +68,7 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
                 .Respond(HttpStatusCode.NotFound);
 
-            var result = await _endpoint.ExistsAsync();
+            bool result = await _endpoint.ExistsAsync();
             result.Should().BeFalse();
         }
 
@@ -95,10 +98,10 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                    Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
-                });
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                 });
             var result = await _endpoint.ReadAsync();
 
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
@@ -113,20 +116,20 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
-                    Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
-                });
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
+                 });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("{\"id\":5,\"name\":\"test2\"}", Encoding.UTF8, JsonMime),
-                    Headers = {ETag = new EntityTagHeaderValue("\"2\"")}
-                });
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test2\"}", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"2\"")}
+                 });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"2\"")
@@ -140,10 +143,10 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
-                    Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
-                });
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
+                 });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"1\"")
@@ -187,10 +190,10 @@ namespace TypedRest
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
-                {
-                    Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                    Headers = { ETag = new EntityTagHeaderValue("\"123abc\"") }
-                });
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                 });
             await _endpoint.ReadAsync();
 
             Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")

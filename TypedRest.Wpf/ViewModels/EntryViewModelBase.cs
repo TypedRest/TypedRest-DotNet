@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
@@ -17,12 +17,8 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         protected EntryViewModelBase(TEndpoint endpoint)
             : base(endpoint, new EventAggregator())
-        {
-        }
+        {}
 
-        protected override async Task OnLoadAsync()
-        {
-            await Endpoint.ReadMetaAsync(CancellationToken);
-        }
+        protected override async Task OnLoadAsync() => await Endpoint.ReadMetaAsync(CancellationToken);
     }
 }

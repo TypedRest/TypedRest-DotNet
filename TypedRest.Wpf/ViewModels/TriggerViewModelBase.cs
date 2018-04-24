@@ -18,8 +18,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         protected TriggerViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
 
         public bool CanTrigger { get; set; }
 

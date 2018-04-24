@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,11 +21,12 @@ namespace TypedRest.CommandLine
         /// Creates a new REST stream command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        protected StreamCommand(TEndpoint endpoint) : base(endpoint)
+        protected StreamCommand(TEndpoint endpoint)
+            : base(endpoint)
         {}
 
         public override async Task ExecuteAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                                CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count > 0 && args[0].ToLowerInvariant() == "stream")
             {
@@ -57,7 +58,7 @@ namespace TypedRest.CommandLine
         /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.
         /// </summary>
         protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                                         CancellationToken cancellationToken = default(CancellationToken))
             => await new StreamPrinter<TEntity>().PrintAsync(observable, cancellationToken);
     }
 
@@ -75,7 +76,8 @@ namespace TypedRest.CommandLine
         /// Creates a new REST stream command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public StreamCommand(IStreamEndpoint<TEntity, TElementEndpoint> endpoint) : base(endpoint)
+        public StreamCommand(IStreamEndpoint<TEntity, TElementEndpoint> endpoint)
+            : base(endpoint)
         {}
     }
 
@@ -89,7 +91,8 @@ namespace TypedRest.CommandLine
         /// Creates a new REST stream command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public StreamCommand(IStreamEndpoint<TEntity> endpoint) : base(endpoint)
+        public StreamCommand(IStreamEndpoint<TEntity> endpoint)
+            : base(endpoint)
         {}
 
         protected override ElementCommand<TEntity> BuildElementCommand(IElementEndpoint<TEntity> elementEndpoint) => new ElementCommand<TEntity>(elementEndpoint);

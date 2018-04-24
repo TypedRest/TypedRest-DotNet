@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
@@ -17,9 +17,9 @@ namespace TypedRest
         /// </summary>
         public static IEnumerable<LinkHeader> GetLinkHeaders(this HttpResponseHeaders headers)
             => headers.Where(x => x.Key.Equals("Link"))
-                .SelectMany(x => x.Value)
-                .SelectMany(x => RegexHeaderLinks.Matches(x).Cast<Match>())
-                .Where(x => x.Success)
-                .Select(x => new LinkHeader(x.Groups.Cast<Group>().Skip(1).Single().Value));
+                      .SelectMany(x => x.Value)
+                      .SelectMany(x => RegexHeaderLinks.Matches(x).Cast<Match>())
+                      .Where(x => x.Success)
+                      .Select(x => new LinkHeader(x.Groups.Cast<Group>().Skip(1).Single().Value));
     }
 }

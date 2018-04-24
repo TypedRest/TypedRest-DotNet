@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
@@ -23,7 +23,7 @@ namespace TypedRest.Wpf.ViewModels
         protected CollectionViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {
-            DisplayName = typeof (TEntity).Name;
+            DisplayName = typeof(TEntity).Name;
         }
 
         public List<TEntity> Elements { get; private set; }
@@ -47,10 +47,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Handler for opening an existing element in the collection.
         /// </summary>
-        protected virtual void OnOpenElement(TEntity entity)
-        {
-            Open(BuildElementScreen(Endpoint[entity]));
-        }
+        protected virtual void OnOpenElement(TEntity entity) => Open(BuildElementScreen(Endpoint[entity]));
 
         /// <summary>
         /// Builds a sub-<see cref="IScreen"/> for viewing or editing an existing <typeparamref name="TEntity"/> represented by the given <paramref name="elementEndpoint"/>.
@@ -65,10 +62,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Opens a view for creating a new element in the collection.
         /// </summary>
-        public virtual void Create()
-        {
-            Open(BuildCreateElementScreen());
-        }
+        public virtual void Create() => Open(BuildCreateElementScreen());
 
         /// <summary>
         /// Builds a sub-<see cref="IScreen"/> for creating a new <typeparamref name="TEntity"/> in the collection endpoint.
@@ -76,9 +70,6 @@ namespace TypedRest.Wpf.ViewModels
         protected abstract IScreen BuildCreateElementScreen();
 
         // Refresh when child elements are created or updated
-        public async Task Handle(ElementEvent<TEntity> message)
-        {
-            await RefreshAsync();
-        }
+        public async Task Handle(ElementEvent<TEntity> message) => await RefreshAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TypedRest
+namespace TypedRest
 {
     /// <summary>
     /// Builds <see cref="IEndpoint"/> instances.

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 
@@ -12,8 +12,7 @@ namespace TypedRest.Wpf.ViewModels
     {
         public PollingViewModel(IPollingEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
 
         protected override async Task OnLoadAsync()
         {
@@ -27,9 +26,6 @@ namespace TypedRest.Wpf.ViewModels
         /// </summary>
         public bool CanSave => false;
 
-        protected override Task OnSaveAsync()
-        {
-            throw new NotImplementedException();
-        }
+        protected override Task OnSaveAsync() => throw new NotImplementedException();
     }
 }

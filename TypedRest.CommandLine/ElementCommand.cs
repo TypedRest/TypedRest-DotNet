@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,12 +17,12 @@ namespace TypedRest.CommandLine
         /// Creates a new REST element command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public ElementCommand(IElementEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        public ElementCommand(IElementEndpoint<TEntity> endpoint)
+            : base(endpoint)
+        {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                                        CancellationToken cancellationToken = default(CancellationToken))
         {
             if (args.Count == 0)
             {
@@ -52,16 +52,12 @@ namespace TypedRest.CommandLine
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-        {
-            return JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
-        }
+            => JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
 
         /// <summary>
         /// Outputs a <typeparamref name="TEntity"/> to the user via the command-line.
         /// </summary>
         protected virtual void OutputEntity(TEntity entity)
-        {
-            Console.WriteLine(entity.ToString());
-        }
+            => Console.WriteLine(entity.ToString());
     }
 }

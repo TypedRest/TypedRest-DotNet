@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http.Headers;
 using System.Reactive.Linq;
 
@@ -30,48 +30,45 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public virtual IObservable<TEntity> GetStream(long startIndex = 0)
+        public virtual IObservable<TEntity> GetStream(long startIndex = 0) => Observable.Create<TEntity>(async (observer, cancellationToken) =>
         {
-            return Observable.Create<TEntity>(async (observer, cancellationToken) =>
+            long currentStartIndex = startIndex;
+            while (!cancellationToken.IsCancellationRequested)
             {
-                long currentStartIndex = startIndex;
-                while (!cancellationToken.IsCancellationRequested)
+                PartialResponse<TEntity> response;
+                try
                 {
-                    PartialResponse<TEntity> response;
-                    try
-                    {
-                        var range = (currentStartIndex >= 0)
-                            // Offset
-                            ? new RangeItemHeaderValue(currentStartIndex, null)
-                            // Tail
-                            : new RangeItemHeaderValue(null, -currentStartIndex);
-                        response = await ReadRangeAsync(range, cancellationToken);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        // No new data available yet, keep polling
-                        continue;
-                    }
-                    catch (Exception ex)
-                    {
-                        observer.OnError(ex);
-                        return;
-                    }
-
-                    foreach (var entity in response.Elements)
-                        observer.OnNext(entity);
-
-                    if (response.Range == null || response.EndReached)
-                    {
-                        observer.OnCompleted();
-                        return;
-                    }
-
-                    // Continue polling for more data
-                    currentStartIndex = response.Range.To.Value + 1;
+                    var range = (currentStartIndex >= 0)
+                        // Offset
+                        ? new RangeItemHeaderValue(currentStartIndex, null)
+                        // Tail
+                        : new RangeItemHeaderValue(null, -currentStartIndex);
+                    response = await ReadRangeAsync(range, cancellationToken);
                 }
-            });
-        }
+                catch (InvalidOperationException)
+                {
+                    // No new data available yet, keep polling
+                    continue;
+                }
+                catch (Exception ex)
+                {
+                    observer.OnError(ex);
+                    return;
+                }
+
+                foreach (var entity in response.Elements)
+                    observer.OnNext(entity);
+
+                if (response.Range == null || response.EndReached)
+                {
+                    observer.OnCompleted();
+                    return;
+                }
+
+                // Continue polling for more data
+                currentStartIndex = response.Range.To.Value + 1;
+            }
+        });
     }
 
     /// <summary>
@@ -87,8 +84,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
         public StreamEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         /// <summary>
         /// Creates a new stream endpoint.
@@ -97,8 +93,7 @@ namespace TypedRest
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public StreamEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
-        {
-        }
+        {}
 
         protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri) => new ElementEndpoint<TEntity>(this, relativeUri);
     }

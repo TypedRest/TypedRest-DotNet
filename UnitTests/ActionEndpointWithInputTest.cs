@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RichardSzalay.MockHttp;
@@ -11,7 +11,10 @@ namespace TypedRest
     {
         private readonly IActionEndpoint<MockEntity> _endpoint;
 
-        public ActionEndpointWithInputTest() => _endpoint = new ActionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        public ActionEndpointWithInputTest()
+        {
+            _endpoint = new ActionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public async Task TestTrigger()

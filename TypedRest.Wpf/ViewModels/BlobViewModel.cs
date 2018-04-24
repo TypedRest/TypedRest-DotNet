@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using TypedRest.Wpf.Events;
@@ -40,16 +40,11 @@ namespace TypedRest.Wpf.ViewModels
             NotifyOfPropertyChange(() => CanUpload);
         }
 
-        public virtual async void Upload()
+        public virtual async void Upload() => await WithErrorHandlingAsync(async () =>
         {
-            // TODO
-
-            await WithErrorHandlingAsync(async () =>
-            {
-                await Endpoint.UploadFromAsync(null);
-                EventAggregator.Publish(new BlobUploadEvent(Endpoint), null);
-            });
-        }
+            await Endpoint.UploadFromAsync(null);
+            EventAggregator.Publish(new BlobUploadEvent(Endpoint), null);
+        });
 
         /// <summary>
         /// Controls whether a download button is shown.

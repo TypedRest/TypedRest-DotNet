@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,9 @@ namespace TypedRest
         /// <param name="endCondition">A check to determine whether the entity has reached its final state an no further polling is required.</param>
         public PollingEndpoint(IEndpoint referrer, Uri relativeUri, Predicate<TEntity> endCondition = null)
             : base(referrer, relativeUri)
-            => _endCondition = endCondition;
+        {
+            _endCondition = endCondition;
+        }
 
         /// <summary>
         /// Creates a new polling endpoint.
@@ -31,7 +33,9 @@ namespace TypedRest
         /// <param name="endCondition">A check to determine whether the entity has reached its final state an no further polling is required.</param>
         public PollingEndpoint(IEndpoint referrer, string relativeUri, Predicate<TEntity> endCondition = null)
             : base(referrer, relativeUri)
-            => _endCondition = endCondition;
+        {
+            _endCondition = endCondition;
+        }
 
         protected override async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
         {
@@ -45,50 +49,47 @@ namespace TypedRest
 
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
 
-        public IObservable<TEntity> GetStream()
+        public IObservable<TEntity> GetStream() => Observable.Create<TEntity>(async (observer, cancellationToken) =>
         {
-            return Observable.Create<TEntity>(async (observer, cancellationToken) =>
+            TEntity previousEntity;
+            try
             {
-                TEntity previousEntity;
+                previousEntity = await ReadAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                observer.OnError(ex);
+                return;
+            }
+            observer.OnNext(previousEntity);
+
+            while (_endCondition == null || !_endCondition(previousEntity))
+            {
                 try
                 {
-                    previousEntity = await ReadAsync(cancellationToken);
+                    await Task.Delay(PollingInterval, cancellationToken);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+
+                TEntity newEntity;
+                try
+                {
+                    newEntity = await ReadAsync(cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     observer.OnError(ex);
                     return;
                 }
-                observer.OnNext(previousEntity);
+                if (!newEntity.Equals(previousEntity))
+                    observer.OnNext(newEntity);
 
-                while (_endCondition == null || !_endCondition(previousEntity))
-                {
-                    try
-                    {
-                        await Task.Delay( PollingInterval, cancellationToken);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        return;
-                    }
-
-                    TEntity newEntity;
-                    try
-                    {
-                        newEntity = await ReadAsync(cancellationToken);
-                    }
-                    catch (Exception ex)
-                    {
-                        observer.OnError(ex);
-                        return;
-                    }
-                    if (!newEntity.Equals(previousEntity))
-                        observer.OnNext(newEntity);
-
-                    previousEntity = newEntity;
-                }
-                observer.OnCompleted();
-            });
-        }
+                previousEntity = newEntity;
+            }
+            observer.OnCompleted();
+        });
     }
 }

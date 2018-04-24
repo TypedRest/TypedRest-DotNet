@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +14,12 @@ namespace TypedRest.CommandLine
         /// Creates a new REST blob command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public BlobCommand(IBlobEndpoint endpoint) : base(endpoint)
-        {
-        }
+        public BlobCommand(IBlobEndpoint endpoint)
+            : base(endpoint)
+        {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                                        CancellationToken cancellationToken = default(CancellationToken))
         {
             switch (args[0])
             {

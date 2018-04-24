@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,15 +16,13 @@ namespace TypedRest.CommandLine
         /// Creates a new REST action command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public ActionCommand(IActionEndpoint endpoint) : base(endpoint)
-        {
-        }
+        public ActionCommand(IActionEndpoint endpoint)
+            : base(endpoint)
+        {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await Endpoint.TriggerAsync(cancellationToken);
-        }
+                                                        CancellationToken cancellationToken = default(CancellationToken))
+            => await Endpoint.TriggerAsync(cancellationToken);
     }
 
     /// <summary>
@@ -37,22 +35,18 @@ namespace TypedRest.CommandLine
         /// Creates a new REST action command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public ActionCommand(IActionEndpoint<TEntity> endpoint) : base(endpoint)
-        {
-        }
+        public ActionCommand(IActionEndpoint<TEntity> endpoint)
+            : base(endpoint)
+        {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken);
-        }
+                                                        CancellationToken cancellationToken = default(CancellationToken))
+            => await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken);
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-        {
-            return JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
-        }
+            => JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
     }
 }

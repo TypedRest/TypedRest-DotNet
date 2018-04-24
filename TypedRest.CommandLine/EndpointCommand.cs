@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -23,10 +23,12 @@ namespace TypedRest.CommandLine
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
         protected EndpointCommand(TEndpoint endpoint)
-            => Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+        {
+            Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+        }
 
         public virtual async Task ExecuteAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
+                                               CancellationToken cancellationToken = default(CancellationToken))
         {
             var subCommand = (args.Count == 0) ? null : GetSubCommand(args[0]);
             if (subCommand == null) await ExecuteInnerAsync(args, cancellationToken);
@@ -45,6 +47,7 @@ namespace TypedRest.CommandLine
         /// <param name="args">The command-line arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken)) => throw new ArgumentException("Unknown command: " + args[0]);
+                                                 CancellationToken cancellationToken = default(CancellationToken))
+            => throw new ArgumentException("Unknown command: " + args[0]);
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace TypedRest
 {
@@ -24,6 +24,5 @@ namespace TypedRest
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public interface IStreamEndpoint<TEntity> : IStreamEndpoint<TEntity, IElementEndpoint<TEntity>>,
         ICollectionEndpoint<TEntity>
-    {
-    }
+    {}
 }

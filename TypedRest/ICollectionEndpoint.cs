@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -66,7 +66,7 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException">The requested range is not satisfiable.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
-            CancellationToken cancellationToken = default(CancellationToken));
+                                                      CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
@@ -88,7 +88,7 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TElementEndpoint> CreateAsync(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken));
+                                           CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAllAllowed"/> is currently allowed.
@@ -137,6 +137,5 @@ namespace TypedRest
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public interface ICollectionEndpoint<TEntity> : ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>
-    {
-    }
+    {}
 }

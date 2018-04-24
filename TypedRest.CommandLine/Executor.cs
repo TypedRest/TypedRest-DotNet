@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -60,7 +60,7 @@ namespace TypedRest.CommandLine
                         return exitCode;
                 }
             }
-                #region Error handling
+            #region Error handling
             catch (InvalidOperationException ex)
             {
                 PrintError(ex);
@@ -88,7 +88,7 @@ namespace TypedRest.CommandLine
                 await command.ExecuteAsync(args, cancellationToken);
                 return 0;
             }
-                #region Error handling
+            #region Error handling
             catch (OperationCanceledException)
             {
                 return 99;

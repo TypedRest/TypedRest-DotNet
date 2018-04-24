@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,23 +17,19 @@ namespace TypedRest.CommandLine
         /// Creates a new REST function command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public FunctionCommand(IFunctionEndpoint<TResult> endpoint) : base(endpoint)
-        {
-        }
+        public FunctionCommand(IFunctionEndpoint<TResult> endpoint)
+            : base(endpoint)
+        {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            OutputEntity(await Endpoint.TriggerAsync(cancellationToken));
-        }
+                                                        CancellationToken cancellationToken = default(CancellationToken))
+            => OutputEntity(await Endpoint.TriggerAsync(cancellationToken));
 
         /// <summary>
         /// Outputs a <typeparamref name="TResult"/> to the user via the command-line.
         /// </summary>
         protected virtual void OutputEntity(TResult entity)
-        {
-            Console.WriteLine(entity.ToString());
-        }
+            => Console.WriteLine(entity.ToString());
     }
 
     /// <summary>
@@ -47,30 +43,24 @@ namespace TypedRest.CommandLine
         /// Creates a new REST function command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public FunctionCommand(IFunctionEndpoint<TEntity, TResult> endpoint) : base(endpoint)
-        {
-        }
+        public FunctionCommand(IFunctionEndpoint<TEntity, TResult> endpoint)
+            : base(endpoint)
+        {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            OutputEntity(await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken));
-        }
+                                                        CancellationToken cancellationToken = default(CancellationToken))
+            => OutputEntity(await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken));
 
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-        {
-            return JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
-        }
+            => JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
 
         /// <summary>
         /// Outputs a <typeparamref name="TResult"/> to the user via the command-line.
         /// </summary>
         protected virtual void OutputEntity(TResult entity)
-        {
-            Console.WriteLine(entity.ToString());
-        }
+            => Console.WriteLine(entity.ToString());
     }
 }

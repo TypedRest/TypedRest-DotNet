@@ -1,4 +1,4 @@
-﻿using Caliburn.Micro;
+using Caliburn.Micro;
 
 namespace TypedRest.Wpf.ViewModels
 {
@@ -15,8 +15,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         public CollectionViewModel(ICollectionEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
-        {
-        }
+        {}
 
         protected override IScreen BuildElementScreen(IElementEndpoint<TEntity> elementEndpoint) => new ElementViewModel<TEntity>(elementEndpoint, EventAggregator);
 

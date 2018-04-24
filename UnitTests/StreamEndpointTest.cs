@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,7 +15,10 @@ namespace TypedRest
     {
         private readonly IStreamEndpoint<MockEntity> _endpoint;
 
-        public StreamEndpointTest() => _endpoint = new StreamEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        public StreamEndpointTest()
+        {
+            _endpoint = new StreamEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public void TestGetStream()
@@ -23,18 +26,18 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=0-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1) {Unit = "elements"}}
-                    });
+                     new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1) {Unit = "elements"}}
+                     });
 
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
-                    });
+                     new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                     });
 
             var stream = _endpoint.GetStream();
             stream.ToEnumerable().ToList().Should().Equal(
@@ -49,10 +52,10 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
-                    });
+                     new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                     });
 
             var stream = _endpoint.GetStream(startIndex: 2);
             stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
@@ -64,10 +67,10 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=-1")
                 .Respond(HttpStatusCode.PartialContent,
-                    new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
-                    {
-                        Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
-                    });
+                     new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                     });
 
             var stream = _endpoint.GetStream(startIndex: -1);
             stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));

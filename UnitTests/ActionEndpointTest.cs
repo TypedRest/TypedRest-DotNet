@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -12,7 +12,10 @@ namespace TypedRest
     {
         private readonly IActionEndpoint _endpoint;
 
-        public ActionEndpointTest() => _endpoint = new ActionEndpoint(EntryEndpoint, "endpoint");
+        public ActionEndpointTest()
+        {
+            _endpoint = new ActionEndpoint(EntryEndpoint, "endpoint");
+        }
 
         [Fact]
         public async Task TestProbe()
