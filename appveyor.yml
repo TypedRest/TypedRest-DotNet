@@ -1,19 +1,38 @@
-image: Visual Studio 2017
+image:
+- Visual Studio 2017
+- Ubuntu
 
-before_build:
-  - gitversion /l console /output buildserver
+for:
+  - matrix:
+      only:
+        - image: Visual Studio 2017
 
-build_script:
-  - ps: .\build.ps1 $env:GitVersion_NuGetVersion
+    before_build:
+      - gitversion /l console /output buildserver
 
-test_script:
-  - ps: .\test.ps1
+    build_script:
+      - ps: .\build.ps1 $env:GitVersion_NuGetVersion
+      - ps: .\build.ps1
 
-artifacts:
-  - path: '*\bin\Release\*.nupkg'
+    test_script:
+      - ps: .\test.ps1
 
-deploy:
-  provider: Environment
-  name: nuget.org
-  on:
-    appveyor_repo_tag: true
+    artifacts:
+      - path: '*\bin\Release\*.nupkg'
+        name: NuGet
+
+    deploy:
+      provider: Environment
+      name: nuget.org
+      on:
+        appveyor_repo_tag: true
+
+  - matrix:
+      only:
+        - image: Ubuntu
+
+    build_script:
+      - sh: ./build.sh
+
+    test_script:
+      - sh: ./test.sh
