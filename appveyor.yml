@@ -19,11 +19,10 @@ for:
 
     artifacts:
       - path: '*\bin\Release\*.nupkg'
-        name: NuGet
 
     deploy:
       provider: Environment
-      name: nuget.org
+      name: NuGet
       on:
         appveyor_repo_tag: true
 
