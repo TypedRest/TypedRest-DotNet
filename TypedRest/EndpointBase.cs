@@ -121,7 +121,7 @@ namespace TypedRest
         {
             if (response.IsSuccessStatusCode) return;
 
-            string message = $"{response.RequestMessage.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
+            string message = $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
 
             string body = null;
             if (response.Content != null)
