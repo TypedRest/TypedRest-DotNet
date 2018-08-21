@@ -12,7 +12,6 @@ for:
 
     build_script:
       - ps: .\build.ps1 $env:GitVersion_NuGetVersion
-      - ps: .\build.ps1
 
     test_script:
       - ps: .\test.ps1
