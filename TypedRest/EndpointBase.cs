@@ -132,8 +132,12 @@ namespace TypedRest
                 {
                     try
                     {
-                        var messageNode = JToken.Parse(body)["message"];
-                        if (messageNode != null) message = messageNode.ToString();
+                        var token = JToken.Parse(body);
+                        if (token.Type == JTokenType.Object)
+                        {
+                            var messageNode = JToken.Parse(body)["message"];
+                            if (messageNode != null) message = messageNode.ToString();
+                        }
                     }
                     catch (JsonException)
                     {}

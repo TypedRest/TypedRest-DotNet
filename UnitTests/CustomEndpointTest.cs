@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FluentAssertions;
+using FluentAssertions.Specialized;
 using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -310,41 +312,58 @@ namespace TypedRest
         }
 
         [Fact]
-        public async Task TestErrorHandling()
+        public void TestErrorHandlingWithNoContent()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict));
 
-            bool thrown = false;
-            try
-            {
-                await _endpoint.GetAsync();
-            }
-            catch (InvalidOperationException ex)
-            {
-                ex.Message.Should().Be("http://localhost/endpoint responded with 409 Conflict");
-                thrown = true;
-            }
-            thrown.Should().BeTrue(because: $"{nameof(InvalidOperationException)} should be thrown");
+            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
+               .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
 
         [Fact]
-        public async Task TestErrorHandlingNoContentType()
+        public void TestErrorHandlingWithMessage()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict)
+                 {
+                     Content = new StringContent("{\"message\":\"my message\"}")
+                     {
+                         Headers = {ContentType = new MediaTypeHeaderValue(JsonMime)}
+                     }
+                 });
+
+            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
+               .WithMessage("my message");
+        }
+
+        [Fact]
+        public void TestErrorHandlingWithArray()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict)
+                 {
+                     Content = new StringContent("[{\"message\":\"my message\"}]")
+                     {
+                         Headers = {ContentType = new MediaTypeHeaderValue(JsonMime)}
+                     }
+                 });
+
+            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
+               .WithMessage("http://localhost/endpoint responded with 409 Conflict");
+        }
+
+        [Fact]
+        public void TestErrorHandlingWithUnknownContentType()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
 
-            bool thrown = false;
-            try
-            {
-                await _endpoint.GetAsync();
-            }
-            catch (InvalidOperationException ex)
-            {
-                ex.Message.Should().Be("http://localhost/endpoint responded with 409 Conflict");
-                thrown = true;
-            }
-            thrown.Should().BeTrue(because: $"{nameof(InvalidOperationException)} should be thrown");
+            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
+               .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
+
+        private static ExceptionAssertions<TException> ShouldThrow<TException>(Func<Task> action) where TException : Exception
+            => action.Should().Throw<TException>();
     }
 }
