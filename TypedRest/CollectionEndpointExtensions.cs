@@ -24,8 +24,8 @@ namespace TypedRest
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
-        public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
+        /// <remarks>This is a convenience method equivalent to combining <seealso cref="IIndexerEndpoint{TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.ExistsAsync"/>.</remarks>
+        public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this IIndexerEndpoint<TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[id].ExistsAsync(cancellationToken);
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        /// <remarks>This is a convenience method equivalent to combining <seealso cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>.</remarks>
-        public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
+        /// <remarks>This is a convenience method equivalent to combining <seealso cref="IIndexerEndpoint{TElementEndpoint}.this[string]"/> with <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>.</remarks>
+        public static Task DeleteAsync<TEntity, TElementEndpoint>(this IIndexerEndpoint<TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[id].DeleteAsync(cancellationToken);
 
         /// <summary>
