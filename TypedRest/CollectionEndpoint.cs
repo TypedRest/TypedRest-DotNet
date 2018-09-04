@@ -23,7 +23,7 @@ namespace TypedRest
         /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {
@@ -34,7 +34,7 @@ namespace TypedRest
         /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {
@@ -161,7 +161,7 @@ namespace TypedRest
         /// Creates a new collection endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {}

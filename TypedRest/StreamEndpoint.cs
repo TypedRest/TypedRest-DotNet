@@ -16,7 +16,7 @@ namespace TypedRest
         /// Creates a new stream endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public StreamEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {}
@@ -81,7 +81,7 @@ namespace TypedRest
         /// Creates a new stream endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Missing trailing slash will be appended automatically.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public StreamEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {}

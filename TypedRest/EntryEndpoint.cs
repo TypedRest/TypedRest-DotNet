@@ -21,7 +21,7 @@ namespace TypedRest
         /// <summary>
         /// Creates a new REST endpoint with an absolute URI.
         /// </summary>
-        /// <param name="uri">The HTTP URI of the remote element.</param>
+        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer = null)
@@ -34,7 +34,7 @@ namespace TypedRest
         /// <summary>
         /// Creates a new entry point.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
+        /// <param name="uri">The base URI of the REST interface.</param>
         /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null)
@@ -46,7 +46,7 @@ namespace TypedRest
         /// <summary>
         /// Creates a new entry point using an OAuth token.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
+        /// <param name="uri">The base URI of the REST interface.</param>
         /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null)
