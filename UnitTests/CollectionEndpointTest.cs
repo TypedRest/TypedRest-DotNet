@@ -21,12 +21,44 @@ namespace TypedRest
         }
 
         [Fact]
-        public void TestGetByEntity()
-            => _endpoint[new MockEntity(1, "test")].Uri.Should().Be(new Uri("http://localhost/endpoint/1"));
-
-        [Fact]
         public void TestGetById()
             => _endpoint["1"].Uri.Should().Be(new Uri("http://localhost/endpoint/1"));
+
+        [Fact]
+        public async Task TestGetByIdWithLinkHeaderRelative()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage
+                 {
+                     Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                     Headers = { { "Link", "<children/{id}>; rel=child; templated=true" } }
+                 });
+
+            await _endpoint.ReadAllAsync();
+
+            _endpoint["1"]
+               .Uri.Should().Be(new Uri("http://localhost/children/1"));
+        }
+
+        [Fact]
+        public async Task TestGetByIdWithLinkHeaderAbsolute()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage
+                 {
+                     Content = new StringContent("[]", Encoding.UTF8, JsonMime),
+                     Headers = { { "Link", "<http://localhost/children/{id}>; rel=child; templated=true" } }
+                 });
+
+            await _endpoint.ReadAllAsync();
+
+            _endpoint["1"]
+               .Uri.Should().Be(new Uri("http://localhost/children/1"));
+        }
+
+        [Fact]
+        public void TestGetByEntity()
+            => _endpoint[new MockEntity(1, "test")].Uri.Should().Be(new Uri("http://localhost/endpoint/1"));
 
         [Fact]
         public async Task TestGetByEntityWithLinkHeaderRelative()
