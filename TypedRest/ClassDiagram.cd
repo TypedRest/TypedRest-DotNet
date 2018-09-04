@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.CollectionEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="7.5" Y="13.25" Width="2.25" />
+    <Position X="7.5" Y="13.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CollectionEndpoint.cs</FileName>
@@ -35,15 +35,15 @@
   <Class Name="TypedRest.EntryEndpoint" Collapsed="true">
     <Position X="0.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAABAAAAAAAAAAgAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <HashCode>AQAAAAAAAAABAAAAAAAABAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>EntryEndpoint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.StreamEndpoint&lt;TEntity&gt;" Collapsed="true">
+  <Class Name="TypedRest.BulkCollectionEndpoint&lt;TEntity&gt;" Collapsed="true">
     <Position X="7.5" Y="14.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>StreamEndpoint.cs</FileName>
+      <FileName>BulkCollectionEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -58,7 +58,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.BlobEndpoint" Collapsed="true">
-    <Position X="12.5" Y="11.75" Width="1.5" />
+    <Position X="10.75" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAABAAAAoAAARAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>BlobEndpoint.cs</FileName>
@@ -66,30 +66,22 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.TriggerEndpointBase" Collapsed="true">
-    <Position X="19" Y="12" Width="1.75" />
+    <Position X="16.25" Y="12" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TriggerEndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypedRest.StreamEndpoint&lt;TEntity, TElementEndpoint&gt;" Collapsed="true">
-    <Position X="3.5" Y="14.75" Width="3.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>StreamEndpoint.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="TypedRest.CollectionEndpointExtensions">
-    <Position X="8.75" Y="4.75" Width="2.25" />
+    <Position X="7" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAACAAAAAAAAAAAAAAAAgAAAAAAAACAIA=</HashCode>
       <FileName>CollectionEndpointExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.ActionEndpoint" Collapsed="true">
-    <Position X="16" Y="13.5" Width="1.5" />
+    <Position X="13.25" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>ActionEndpoint.cs</FileName>
@@ -97,7 +89,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.ActionEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="17.75" Y="13.5" Width="2" />
+    <Position X="15" Y="13.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>ActionEndpoint.cs</FileName>
@@ -105,7 +97,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.FunctionEndpoint&lt;TResult&gt;" Collapsed="true">
-    <Position X="20" Y="13.5" Width="2.25" />
+    <Position X="17.25" Y="13.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>FunctionEndpoint.cs</FileName>
@@ -113,18 +105,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.FunctionEndpoint&lt;TEntity, TResult&gt;" Collapsed="true">
-    <Position X="22.5" Y="13.5" Width="2.75" />
+    <Position X="19.75" Y="13.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>FunctionEndpoint.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TypedRest.PollingEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="0.5" Y="14.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
-      <FileName>PollingEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -156,22 +140,15 @@
       <FileName>ICollectionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TypedRest.IStreamEndpoint&lt;TEntity, TElementEndpoint&gt;">
-    <Position X="3.25" Y="7.5" Width="3.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IStreamEndpoint.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="TypedRest.IBlobEndpoint">
-    <Position X="12.5" Y="3.75" Width="1.5" />
+    <Position X="10.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAABAAAAoAAARAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>IBlobEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.ITriggerEndpoint">
-    <Position X="19" Y="3.75" Width="1.75" />
+    <Position X="16.25" Y="3.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ITriggerEndpoint.cs</FileName>
@@ -184,46 +161,32 @@
       <FileName>ICollectionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TypedRest.IStreamEndpoint&lt;TEntity&gt;" Collapsed="true">
-    <Position X="7" Y="7.75" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IStreamEndpoint.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="TypedRest.IActionEndpoint">
-    <Position X="15.75" Y="5.75" Width="1.5" />
+    <Position X="13" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>IActionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IActionEndpoint&lt;TEntity&gt;">
-    <Position X="17.5" Y="5.75" Width="2" />
+    <Position X="14.75" Y="5.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>IActionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IFunctionEndpoint&lt;TResult&gt;">
-    <Position X="19.75" Y="5.75" Width="2.25" />
+    <Position X="17" Y="5.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>IFunctionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IFunctionEndpoint&lt;TEntity, TResult&gt;">
-    <Position X="22.25" Y="5.75" Width="2.75" />
+    <Position X="19.5" Y="5.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>IFunctionEndpoint.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="TypedRest.IPollingEndpoint&lt;TEntity&gt;">
-    <Position X="0.5" Y="7.25" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IPollingEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
