@@ -16,7 +16,7 @@ namespace TypedRest
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface ICollectionEndpoint<TEntity, TElementEndpoint> : IIndexerEndpoint<TElementEndpoint>
-        where TElementEndpoint : class, IEndpoint
+        where TElementEndpoint : IEndpoint
     {
         /// <summary>
         /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection.

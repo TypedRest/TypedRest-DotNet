@@ -7,7 +7,7 @@ namespace TypedRest
 {
     [Obsolete("Use ICollectionEndpoint instead")]
     public interface IBulkCollectionEndpoint<TEntity, TElementEndpoint> : ICollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IEndpoint
+        where TElementEndpoint : IEndpoint
     {
         [Obsolete("Use CreateAllAsync() instead")]
         Task CreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
