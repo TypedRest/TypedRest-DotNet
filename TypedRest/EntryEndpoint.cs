@@ -52,7 +52,7 @@ namespace TypedRest
         public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null)
             : this(uri, new HttpClient(), serializer)
         {
-            BeararAuth(token);
+            BearerAuth(token);
         }
 
         private static MediaTypeFormatter BuildSerializer() => new JsonMediaTypeFormatter
@@ -84,7 +84,7 @@ namespace TypedRest
                 : basicCredentials.UserName + ":" + basicCredentials.Password;
         }
 
-        private void BeararAuth(string token)
+        private void BearerAuth(string token)
             => HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         /// <summary>
