@@ -19,8 +19,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>TypedRest helps you build type-safe fluent-style REST API clients.</Description>
-    <Summary>Build type-safe fluent-style REST API clients</Summary>
+    <Description>TypedRest.Reactive extends TypedRest with Reactive (Rx) Endpoints for polling and streaming.</Description>
+    <Summary>Reactive (Rx) Endpoints for polling and streaming</Summary>
     <PackageTags>Typed REST</PackageTags>
     <PackageProjectUrl>https://typedrest.github.io</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
