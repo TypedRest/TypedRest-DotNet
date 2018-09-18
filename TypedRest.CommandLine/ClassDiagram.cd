@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TypedRest.CommandLine.BlobCommand" Collapsed="true">
     <Position X="16.25" Y="4" Width="1.5" />
@@ -17,7 +17,7 @@
   <Class Name="TypedRest.CommandLine.CollectionCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
     <Position X="6.25" Y="4" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAIAAIAwAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAIgAIAwAAEA=</HashCode>
       <FileName>CollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -48,20 +48,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgIAAA=</HashCode>
       <FileName>ActionCommand.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypedRest.CommandLine.PagedCollectionCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="13.5" Y="5.25" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>PagedCollectionCommand.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypedRest.CommandLine.PagedCollectionCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
-    <Position X="6" Y="5.25" Width="4.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAEA=</HashCode>
-      <FileName>PagedCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
@@ -120,13 +106,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CollectionCommand.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="TypedRest.CommandLine.PagedCollectionCommand&lt;TEntity, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
-    <Position X="10.75" Y="5.25" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PagedCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity, TElementEndpoint, TElementCommand&gt;" Collapsed="true">

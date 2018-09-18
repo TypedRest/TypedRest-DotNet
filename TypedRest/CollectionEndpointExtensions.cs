@@ -62,10 +62,6 @@ namespace TypedRest
         public static Task<TEntity> SetAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
             where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint[element].SetAsync(element, cancellationToken);
 
-        [Obsolete("Use SetAsync() instead")]
-        public static Task<TEntity> UpdateAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default(CancellationToken))
-            where TElementEndpoint : class, IElementEndpoint<TEntity> => endpoint.SetAsync(element, cancellationToken);
-
         /// <summary>
         /// Modifies an existing element in the collection by merging changes.
         /// </summary>

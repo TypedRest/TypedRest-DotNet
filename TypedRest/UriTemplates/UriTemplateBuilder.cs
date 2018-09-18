@@ -45,25 +45,6 @@ namespace TypedRest.UriTemplates
             this.components = new List<IUriComponent>(builder.components);
         }
 
-        [Obsolete]
-        public UriTemplateBuilder Append(string value)
-        {
-            return Literal(value);
-        }
-
-        [Obsolete]
-        public UriTemplateBuilder Append(params VarSpec[] varSpecs)
-        {
-            return Expression(Operator.Default, varSpecs);
-        }
-
-        [Obsolete]
-        public UriTemplateBuilder Append(char exprOperator, params VarSpec[] varSpecs)
-        {
-            var op = Operator.Parse(exprOperator);
-            return Expression(op, varSpecs);
-        }
-
         public UriTemplateBuilder Literal(string value)
         {
             if (value == null)

@@ -62,10 +62,6 @@ namespace TypedRest
                 : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
         }
 
-        [Obsolete("Use SetAsync() instead")]
-        public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
-            => SetAsync(entity, cancellationToken);
-
         public bool? MergeAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
 
         public async Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())

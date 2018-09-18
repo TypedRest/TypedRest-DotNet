@@ -54,9 +54,6 @@ namespace TypedRest
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
-        [Obsolete("Use SetAsync() instead")]
-        Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="MergeAsync"/> is currently allowed.
         /// </summary>
