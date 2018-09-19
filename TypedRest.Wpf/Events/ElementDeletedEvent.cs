@@ -4,7 +4,7 @@ namespace TypedRest.Wpf.Events
     /// Indicates that an element was deleted.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity that was deleted.</typeparam>
-    /// <seealso cref="IElementEndpoint{TEntity}.DeleteAsync"/>
+    /// <seealso cref="IElementEndpoint.DeleteAsync"/>
     public class ElementDeletedEvent<TEntity> : ElementEvent<TEntity>
     {
         /// <summary>
