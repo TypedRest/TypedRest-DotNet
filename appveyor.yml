@@ -1,6 +1,6 @@
 image:
-- Visual Studio 2017
-- Ubuntu
+  - Visual Studio 2017
+  - Ubuntu
 
 for:
   - matrix:
@@ -11,13 +11,13 @@ for:
       - gitversion /l console /output buildserver
 
     build_script:
-      - ps: .\build.ps1 $env:GitVersion_NuGetVersion
+      - ps: src\build.ps1 $env:GitVersion_NuGetVersion
 
     test_script:
-      - ps: .\test.ps1
+      - ps: src\test.ps1
 
     artifacts:
-      - path: '*\bin\Release\*.nupkg'
+      - path: artifacts\Release\*.nupkg
 
     deploy:
       provider: Environment
@@ -30,7 +30,7 @@ for:
         - image: Ubuntu
 
     build_script:
-      - sh: ./build.sh
+      - sh: src/build.sh
 
     test_script:
-      - sh: ./test.sh
+      - sh: src/test.sh
