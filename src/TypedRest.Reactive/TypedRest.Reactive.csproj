@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='net45'">
-    <PackageReference Include="System.Reactive" Version="4.1.0" />
+    <PackageReference Include="System.Reactive" Version="4.1.1" />
   </ItemGroup>
 
   <ItemGroup>
