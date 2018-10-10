@@ -19,16 +19,16 @@ namespace TypedRest
         /// <summary>
         /// Send a HEAD request to the specified URI.
         /// </summary>
-        public static Task<HttpResponseMessage> HeadAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default(CancellationToken)) =>
-            httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri), cancellationToken);
+        public static Task<HttpResponseMessage> HeadAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default)
+            => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri), cancellationToken);
 
         /// <summary>
         /// Send an OPTIONS request to the specified URI.
         /// </summary>
-        public static Task<HttpResponseMessage> OptionsAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default(CancellationToken)) =>
-            httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri), cancellationToken);
+        public static Task<HttpResponseMessage> OptionsAsync(this HttpClient httpClient, Uri uri, CancellationToken cancellationToken = default)
+            => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri), cancellationToken);
 
-        public static Task<HttpResponseMessage> PatchAsync<T>(this HttpClient httpClient, Uri uri, T value, MediaTypeFormatter formatter, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public static Task<HttpResponseMessage> PatchAsync<T>(this HttpClient httpClient, Uri uri, T value, MediaTypeFormatter formatter, CancellationToken cancellationToken = default) =>
             httpClient.SendAsync(new HttpRequestMessage(Patch, uri)
             {
                 Content = new ObjectContent<T>(value, formatter)

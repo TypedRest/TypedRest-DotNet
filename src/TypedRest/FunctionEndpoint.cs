@@ -39,7 +39,7 @@ namespace TypedRest
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                 ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)
-                : default(TResult);
+                : default;
         }
     }
 
@@ -78,7 +78,7 @@ namespace TypedRest
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                 ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)
-                : default(TResult);
+                : default;
         }
     }
 }

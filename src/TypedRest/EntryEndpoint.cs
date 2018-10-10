@@ -106,7 +106,7 @@ namespace TypedRest
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        public Task ReadMetaAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task ReadMetaAsync(CancellationToken cancellationToken = default)
             => HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken));
     }
 }

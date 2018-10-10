@@ -39,7 +39,7 @@ namespace TypedRest
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="ReadRangeAsync"/> is allowed.
@@ -59,8 +59,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The requested range is not satisfiable.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
-                                                      CancellationToken cancellationToken = default(CancellationToken));
+        Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
@@ -81,8 +80,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TElementEndpoint> CreateAsync(TEntity entity,
-                                           CancellationToken cancellationToken = default(CancellationToken));
+        Task<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="CreateAllAllowed"/> is currently allowed.
@@ -103,7 +101,7 @@ namespace TypedRest
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>Uses a link with the relation type <c>bulk</c> to determine the URI to POST to. Defaults to the relative URI <c>bulk</c>.</remarks>
-        Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
+        Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="SetAllAllowed"/> is currently allowed.
@@ -123,7 +121,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entities have changed since they were last retrieved with <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.ReadAllAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
+        Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     }
 
     /// <summary>

@@ -23,7 +23,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task ProbeAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task ProbeAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="DownloadAsync"/> is currently allowed.
@@ -43,7 +43,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<Stream> DownloadAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Stream> DownloadAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="UploadFromAsync"/> is currently allowed.
@@ -64,7 +64,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
@@ -83,6 +83,6 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(CancellationToken cancellationToken = default);
     }
 }

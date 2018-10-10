@@ -23,7 +23,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TResult> TriggerAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<TResult> TriggerAsync(CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -44,6 +44,6 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TResult> TriggerAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TResult> TriggerAsync(TEntity entity, CancellationToken cancellationToken = default);
     }
 }

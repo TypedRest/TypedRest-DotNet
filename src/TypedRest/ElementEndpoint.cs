@@ -30,7 +30,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default)
         {
             var content = await GetContentAsync(cancellationToken);
             return await content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken).NoContext();
@@ -51,14 +51,14 @@ namespace TypedRest
 
         public bool? SetAllowed => IsMethodAllowed(HttpMethod.Put);
 
-        public virtual async Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             var content = new ObjectContent<TEntity>(entity, Serializer);
             var response = await PutContentAsync(content, cancellationToken);
             return response.Content == null
-                ? default(TEntity)
+                ? default
                 : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
         }
 
@@ -70,13 +70,13 @@ namespace TypedRest
 
             var response = await HandleResponseAsync(HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
             return response.Content == null
-                ? default(TEntity)
+                ? default
                 : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
         }
 
         public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
 
-        public virtual async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task DeleteAsync(CancellationToken cancellationToken = default)
             => await DeleteContentAsync(cancellationToken);
     }
 }

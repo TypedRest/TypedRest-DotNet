@@ -84,7 +84,7 @@ namespace TypedRest
 
         public bool? ReadAllAllowed => IsMethodAllowed(HttpMethod.Get);
 
-        public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default)
         {
             var content = await GetContentAsync(cancellationToken);
             return await content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
@@ -103,8 +103,7 @@ namespace TypedRest
 
         public bool? ReadRangeAllowed { get; private set; }
 
-        public async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range,
-                                                                   CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri)
             {
@@ -119,8 +118,7 @@ namespace TypedRest
 
         public bool? CreateAllowed => IsMethodAllowed(HttpMethod.Post);
 
-        public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity,
-                                                                CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
@@ -133,7 +131,7 @@ namespace TypedRest
 
         public bool? CreateAllAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
 
-        public virtual Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 
