@@ -1,5 +1,7 @@
-# TypedRest
+# TypedRest for .NET
 
+[![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://typedrest.github.io/TypedRest-DotNet/)
+[![Build status](https://img.shields.io/appveyor/ci/TypedRest/typedrest-dotnet.svg)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)  
 TypedRest helps you build type-safe fluent-style REST API clients.
 
 NuGet packages (for .NET Framework 4.5+ and .NET Standard 2.0+):  
@@ -7,9 +9,6 @@ NuGet packages (for .NET Framework 4.5+ and .NET Standard 2.0+):
 [![TypedRest.Reactive](https://img.shields.io/nuget/v/TypedRest.Reactive.svg?label=TypedRest.Reactive)](https://www.nuget.org/packages/TypedRest.Reactive/)
 [![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)
 [![TypedRest.Wpf](https://img.shields.io/nuget/v/TypedRest.Wpf.svg?label=TypedRest.Wpf)](https://www.nuget.org/packages/TypedRest.Wpf/)
-
-[![Build status](https://img.shields.io/appveyor/ci/TypedRest/typedrest-dotnet.svg)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)
-
 
 ## Nomenclature
 
