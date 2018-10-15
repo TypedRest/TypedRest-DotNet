@@ -26,7 +26,7 @@ namespace TypedRest
         Task ProbeAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="DownloadAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="DownloadAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
@@ -46,7 +46,7 @@ namespace TypedRest
         Task<Stream> DownloadAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="UploadFromAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="UploadFromAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
@@ -67,7 +67,7 @@ namespace TypedRest
         Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="DeleteAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>

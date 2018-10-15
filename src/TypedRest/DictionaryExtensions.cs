@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Provides extension methods for <seealso cref="IDictionary{TKey,TValue}"/>s.
+    /// Provides extension methods for <see cref="IDictionary{TKey,TValue}"/>s.
     /// </summary>
     internal static class DictionaryExtensions
     {

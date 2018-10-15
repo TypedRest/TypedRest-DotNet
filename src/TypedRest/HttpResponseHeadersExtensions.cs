@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace TypedRest
 {
     /// <summary>
-    /// Provides extension methods for <seealso cref="HttpResponseHeaders"/>.
+    /// Provides extension methods for <see cref="HttpResponseHeaders"/>.
     /// </summary>
     public static class HttpResponseHeadersExtensions
     {

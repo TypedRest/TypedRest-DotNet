@@ -25,7 +25,7 @@ namespace TypedRest
         TElementEndpoint this[TEntity entity] { get; }
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="ReadAllAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="ReadAllAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
@@ -42,7 +42,7 @@ namespace TypedRest
         Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="ReadRangeAsync"/> is allowed.
+        /// Shows whether the server has indicated that <see cref="ReadRangeAsync"/> is allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet.</returns>
@@ -62,7 +62,7 @@ namespace TypedRest
         Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
@@ -83,7 +83,7 @@ namespace TypedRest
         Task<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="CreateAllAllowed"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="CreateAllAllowed"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
@@ -104,7 +104,7 @@ namespace TypedRest
         Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="SetAllAllowed"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="SetAllAllowed"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>

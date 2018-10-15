@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Provides extension methods for <seealso cref="HttpClient"/>.
+    /// Provides extension methods for <see cref="HttpClient"/>.
     /// </summary>
     public static class HttpClientExtensions
     {

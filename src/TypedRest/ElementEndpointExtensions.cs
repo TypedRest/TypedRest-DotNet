@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Provides extension methods for <seealso cref="IElementEndpoint{TEntity}"/>.
+    /// Provides extension methods for <see cref="IElementEndpoint{TEntity}"/>.
     /// </summary>
     public static class ElementEndpointExtensions
     {

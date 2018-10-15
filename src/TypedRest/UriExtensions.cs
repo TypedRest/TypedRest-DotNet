@@ -3,7 +3,7 @@ using System;
 namespace TypedRest
 {
     /// <summary>
-    /// Provides extension methods for <seealso cref="Uri"/>.
+    /// Provides extension methods for <see cref="Uri"/>.
     /// </summary>
     public static class UriExtensions
     {

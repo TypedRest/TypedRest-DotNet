@@ -23,7 +23,7 @@ namespace TypedRest
         Task<bool> ExistsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="DeleteAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="DeleteAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
@@ -59,7 +59,7 @@ namespace TypedRest
         Task<TEntity> ReadAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="SetAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="SetAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
@@ -80,7 +80,7 @@ namespace TypedRest
         Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that <seealso cref="MergeAsync"/> is currently allowed.
+        /// Shows whether the server has indicated that <see cref="MergeAsync"/> is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
