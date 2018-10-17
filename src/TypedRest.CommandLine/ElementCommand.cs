@@ -32,11 +32,22 @@ namespace TypedRest.CommandLine
 
             switch (args[0].ToLowerInvariant())
             {
-                case "update":
+                case "set":
+                case "update": // deprecated
+                {
                     var updatedEntity = InputEntity(args.Skip(1).ToList());
                     var result = await Endpoint.SetAsync(updatedEntity, cancellationToken);
                     if (result != null) OutputEntity(result);
                     break;
+                }
+
+                case "merge": // deprecated
+                {
+                    var partialEntity = InputEntity(args.Skip(1).ToList());
+                    var result = await Endpoint.MergeAsync(partialEntity, cancellationToken);
+                    if (result != null) OutputEntity(result);
+                    break;
+                }
 
                 case "delete":
                     await Endpoint.DeleteAsync(cancellationToken);
