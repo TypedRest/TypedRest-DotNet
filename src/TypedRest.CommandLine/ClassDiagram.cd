@@ -8,16 +8,16 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.CollectionCommand&lt;TEntity&gt;" Collapsed="true">
-    <Position X="13.5" Y="4" Width="2.25" />
+    <Position X="13.5" Y="5.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>CollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.CollectionCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
-    <Position X="6.25" Y="4" Width="4" />
+    <Position X="6" Y="5.25" Width="4.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAIgAIAwAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAIgAAAgAAEA=</HashCode>
       <FileName>CollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -102,7 +102,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.CommandLine.CollectionCommand&lt;TEntity, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
-    <Position X="10.75" Y="4" Width="2.5" />
+    <Position X="10.75" Y="5.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CollectionCommand.cs</FileName>
@@ -124,6 +124,13 @@
     <ShowAsAssociation>
       <Field Name="_endpointProvider" />
     </ShowAsAssociation>
+  </Class>
+  <Class Name="TypedRest.CommandLine.IndexerCommand&lt;TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
+    <Position X="6" Y="4" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAQAAAA=</HashCode>
+      <FileName>IndexerCommand.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Interface Name="TypedRest.CommandLine.IEndpointCommand" Collapsed="true">
     <Position X="3.75" Y="0.5" Width="2.5" />

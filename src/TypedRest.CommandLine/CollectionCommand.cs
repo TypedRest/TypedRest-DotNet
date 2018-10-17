@@ -14,8 +14,8 @@ namespace TypedRest.CommandLine
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <see cref="BuildElementCommand"/>.</typeparam>
-    public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : EndpointCommand<TEndpoint>
+    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <c>BuildElementCommand</c>.</typeparam>
+    public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : IndexerCommand<TEndpoint, TElementEndpoint, TElementCommand>
         where TEndpoint : class, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
         where TElementCommand : class, IEndpointCommand
@@ -77,13 +77,6 @@ namespace TypedRest.CommandLine
             return new RangeItemHeaderValue(from, to);
         }
 
-        protected override IEndpointCommand GetSubCommand(string name) => BuildElementCommand(Endpoint[name]);
-
-        /// <summary>
-        /// Builds an <see cref="IEndpointCommand"/> for the given <paramref name="elementEndpoint"/>.
-        /// </summary>
-        protected virtual TElementCommand BuildElementCommand(TElementEndpoint elementEndpoint) => (TElementCommand)Activator.CreateInstance(typeof(TElementCommand), elementEndpoint);
-
         /// <summary>
         /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
@@ -111,7 +104,7 @@ namespace TypedRest.CommandLine
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the endpoint provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <see cref="CollectionCommand{TEntity,TEndpoint,TElementEndpoint,TElementCommand}.BuildElementCommand"/>.</typeparam>
+    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <c>BuildElementCommand</c>.</typeparam>
     public class CollectionCommand<TEntity, TElementEndpoint, TElementCommand> : CollectionCommand<TEntity, ICollectionEndpoint<TEntity, TElementEndpoint>, TElementEndpoint, TElementCommand>
         where TElementEndpoint : class, IEndpoint
         where TElementCommand : class, IEndpointCommand
