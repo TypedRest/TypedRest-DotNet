@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using MorseCode.ITask;
 
 namespace TypedRest
 {
@@ -15,7 +16,7 @@ namespace TypedRest
     /// <remarks>Use the more constrained <see cref="ICollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
-    public interface ICollectionEndpoint<TEntity, TElementEndpoint> : IIndexerEndpoint<TElementEndpoint>
+    public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEndpoint<TElementEndpoint>
         where TElementEndpoint : IEndpoint
     {
         /// <summary>
@@ -80,7 +81,7 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
+        ITask<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <see cref="CreateAllAllowed"/> is currently allowed.

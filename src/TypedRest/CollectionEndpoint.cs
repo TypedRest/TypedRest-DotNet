@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using MorseCode.ITask;
 
 namespace TypedRest
 {
@@ -118,7 +119,7 @@ namespace TypedRest
 
         public bool? CreateAllowed => IsMethodAllowed(HttpMethod.Post);
 
-        public virtual async Task<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async ITask<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
