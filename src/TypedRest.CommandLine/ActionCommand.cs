@@ -44,7 +44,7 @@ namespace TypedRest.CommandLine
             => await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken);
 
         /// <summary>
-        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
+        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
             => JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);

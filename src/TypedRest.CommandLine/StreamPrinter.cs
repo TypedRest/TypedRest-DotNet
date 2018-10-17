@@ -7,7 +7,6 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Prints a stream of entities to the <see cref="Console"/>.
     /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
     public class StreamPrinter<TEntity> : IObserver<TEntity>
     {
         private readonly TaskCompletionSource<bool> _quitEvent = new TaskCompletionSource<bool>();

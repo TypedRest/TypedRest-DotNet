@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Command providing an entry point to a hierachy of named <see cref="IEndpointCommand"/>s.
+    /// Command providing an entry point to a hierarchy of named <see cref="IEndpointCommand"/>s.
     /// </summary>
     /// <typeparamref name="TEndpoint">The specific type of <see cref="IEndpoint"/> the command starts with.</typeparamref>
     public class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>>
