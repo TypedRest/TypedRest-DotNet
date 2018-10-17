@@ -37,12 +37,12 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.
+        /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
         /// </summary>
         protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
                                                          CancellationToken cancellationToken = default)
         {
-            var printer = new StreamPrinter<TEntity>();
+            var printer = new StreamPrinter<TEntity>(Console);
             await printer.PrintAsync(observable, cancellationToken);
         }
     }

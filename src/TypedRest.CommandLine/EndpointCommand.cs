@@ -27,6 +27,11 @@ namespace TypedRest.CommandLine
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        /// <summary>
+        /// The text input/output device used for user interaction.
+        /// </summary>
+        public IConsole Console { get; set; } = new JsonConsole();
+
         public virtual async Task ExecuteAsync(IReadOnlyList<string> args,
                                                CancellationToken cancellationToken = default)
         {
@@ -44,7 +49,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Parses command-line arguments and executes the resulting operation when no additional sub-<see cref="IEndpointCommand"/> is specified.
         /// </summary>
-        /// <param name="args">The command-line arguments.</param>
+        /// <param name="args">the console arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args,
                                                  CancellationToken cancellationToken = default)

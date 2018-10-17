@@ -38,9 +38,7 @@ namespace TypedRest.CommandLine
         protected override Task ExecuteInnerAsync(IReadOnlyList<string> args,
                                                   CancellationToken cancellationToken = new CancellationToken())
         {
-            Console.Error.WriteLine("Known commands:");
-            foreach (string name in _commandProviders.Keys)
-                Console.Error.WriteLine(name);
+            Console.WriteError("Known commands:" + Environment.NewLine + string.Join(Environment.NewLine, _commandProviders.Keys));
 
             return base.ExecuteInnerAsync(args, cancellationToken);
         }

@@ -26,10 +26,10 @@ namespace TypedRest.CommandLine
             => OutputEntity(await Endpoint.TriggerAsync(cancellationToken));
 
         /// <summary>
-        /// Outputs a <typeparamref name="TResult"/> to the user via the command-line.
+        /// Outputs a <typeparamref name="TResult"/> to the user via the console.
         /// </summary>
         protected virtual void OutputEntity(TResult entity)
-            => Console.WriteLine(entity.ToString());
+            => Console.Write(entity);
     }
 
     /// <summary>
@@ -52,15 +52,15 @@ namespace TypedRest.CommandLine
             => OutputEntity(await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken));
 
         /// <summary>
-        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
+        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-            => JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
+            => (args.Count == 0) ? Console.Read<TEntity>() : JsonConvert.DeserializeObject<TEntity>(args[0]);
 
         /// <summary>
-        /// Outputs a <typeparamref name="TResult"/> to the user via the command-line.
+        /// Outputs a <typeparamref name="TResult"/> to the user via the console.
         /// </summary>
         protected virtual void OutputEntity(TResult entity)
-            => Console.WriteLine(entity.ToString());
+            => Console.Write(entity);
     }
 }

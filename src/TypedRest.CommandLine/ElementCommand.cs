@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -60,15 +59,15 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
+        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-            => JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
+            => (args.Count == 0) ? Console.Read<TEntity>() : JsonConvert.DeserializeObject<TEntity>(args[0]);
 
         /// <summary>
-        /// Outputs a <typeparamref name="TEntity"/> to the user via the command-line.
+        /// Outputs a <typeparamref name="TEntity"/> to the user via the console.
         /// </summary>
         protected virtual void OutputEntity(TEntity entity)
-            => Console.WriteLine(entity.ToString());
+            => Console.Write(entity);
     }
 }

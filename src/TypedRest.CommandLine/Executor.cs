@@ -38,23 +38,26 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a new endpoint and command and executes it using the specified command-line arguments.
         /// </summary>
-        /// <param name="args">The command-line arguments to parse.</param>
+        /// <param name="args">the console arguments to parse.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The exit code.</returns>
         public async Task<int> RunAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         {
+            TCommand BuildCommand() => NewCommand(_endpointProvider.Build());
+            Task<int> ExecAsync() => ExecuteAsync(BuildCommand(), args, cancellationToken);
+
             try
             {
-                int exitCode = await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
+                int exitCode = await ExecAsync();
                 switch (exitCode)
                 {
                     case 4:
                         _endpointProvider.ResetAuthentication();
-                        return await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
+                        return await ExecAsync();
 
                     case 5:
                         _endpointProvider.ResetUri();
-                        return await ExecuteAsync(NewCommand(_endpointProvider.Build()), args, cancellationToken);
+                        return await ExecAsync();
 
                     default:
                         return exitCode;
@@ -63,7 +66,7 @@ namespace TypedRest.CommandLine
             #region Error handling
             catch (InvalidOperationException ex)
             {
-                PrintError(ex);
+                BuildCommand().Console.WriteError(ex);
                 return 5;
             }
             #endregion
@@ -78,7 +81,7 @@ namespace TypedRest.CommandLine
         /// Executes a command and performs error handling.
         /// </summary>
         /// <param name="command">The command used to execute.</param>
-        /// <param name="args">The command-line arguments to parse.</param>
+        /// <param name="args">the console arguments to parse.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The exit code.</returns>
         protected virtual async Task<int> ExecuteAsync(TCommand command, IReadOnlyList<string> args, CancellationToken cancellationToken)
@@ -95,81 +98,65 @@ namespace TypedRest.CommandLine
             }
             catch (IndexOutOfRangeException)
             {
-                PrintError("Missing arguments");
+                command.Console.WriteError("Missing arguments");
                 return 1;
             }
             catch (ArgumentOutOfRangeException)
             {
-                PrintError("Missing arguments");
+                command.Console.WriteError("Missing arguments");
                 return 1;
             }
             catch (ArgumentException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 1;
             }
             catch (FormatException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 1;
             }
             catch (InvalidDataException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 2;
             }
             catch (UnauthorizedAccessException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 3;
             }
             catch (AuthenticationException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 4;
             }
             catch (KeyNotFoundException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 5;
             }
             catch (InvalidOperationException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 6;
             }
             catch (HttpRequestException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 10;
             }
             catch (JsonException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 11;
             }
             catch (IOException ex)
             {
-                PrintError(ex);
+                command.Console.WriteError(ex);
                 return 12;
             }
             #endregion
-        }
-
-        /// <summary>
-        /// Prints an <paramref name="exception"/> to the console.
-        /// </summary>
-        protected virtual void PrintError(Exception exception) => PrintError(exception.GetFullMessage());
-
-        /// <summary>
-        /// Prints an error <paramref name="message"/> to the console.
-        /// </summary>
-        protected virtual void PrintError(string message)
-        {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine(message);
-            Console.ForegroundColor = color;
         }
     }
 }

@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 
-#if NET45
-using System.IO;
-#endif
-
 namespace TypedRest.CommandLine
 {
     /// <summary>
@@ -17,13 +13,17 @@ namespace TypedRest.CommandLine
     public class EndpointProvider<T> : EndpointProviderBase<T>
         where T : EntryEndpoint
     {
+        /// <summary>
+        /// The text input/output device used for user interaction.
+        /// </summary>
+        public IConsole Console { get; set; } = new JsonConsole();
+
         protected override Uri RequestUri()
         {
             Uri uri = null;
             while (uri == null)
             {
-                Console.Write("Endpoint URI: ");
-                string input = Console.ReadLine();
+                string input = Console.Read("Endpoint URI:");
                 if (input == null) return null;
                 try
                 {
@@ -31,7 +31,7 @@ namespace TypedRest.CommandLine
                 }
                 catch (UriFormatException ex)
                 {
-                    Console.Error.WriteLine(ex.Message);
+                    Console.WriteError(ex.Message);
                 }
             }
             return uri;
@@ -41,25 +41,7 @@ namespace TypedRest.CommandLine
         {
             ShowTokenProvider(uri);
 
-#if NET45
-            // Increase maximum length for Console.ReadLine()
-            var defaultReader = Console.In;
-            var inputBuffer = new byte[1024];
-            var inputStream = Console.OpenStandardInput(inputBuffer.Length);
-            Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
-
-            try
-            {
-#endif
-                Console.Write("OAuth token: ");
-                return Console.ReadLine();
-#if NET45
-            }
-            finally
-            {
-                Console.SetIn(defaultReader);
-            }
-#endif
+            return Console.ReadSecret("OAuth token:");
         }
 
         /// <summary>

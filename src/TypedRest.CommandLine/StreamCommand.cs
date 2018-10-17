@@ -55,11 +55,11 @@ namespace TypedRest.CommandLine
             => await OutputEntitiesAsync(Endpoint.GetStream(startIndex), cancellationToken);
 
         /// <summary>
-        /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.
+        /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
         /// </summary>
         protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
                                                          CancellationToken cancellationToken = default)
-            => await new StreamPrinter<TEntity>().PrintAsync(observable, cancellationToken);
+            => await new StreamPrinter<TEntity>(Console).PrintAsync(observable, cancellationToken);
     }
 
     /// <summary>

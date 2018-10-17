@@ -78,24 +78,24 @@ namespace TypedRest.CommandLine
         }
 
         /// <summary>
-        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
+        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
-        protected virtual TEntity InputEntity(IReadOnlyList<string> args) =>
-            JsonConvert.DeserializeObject<TEntity>((args.Count == 0) ? Console.ReadLine() : args[0]);
+        protected virtual TEntity InputEntity(IReadOnlyList<string> args)
+            => (args.Count == 0) ? Console.Read<TEntity>() : JsonConvert.DeserializeObject<TEntity>(args[0]);
 
         /// <summary>
-        /// Aquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the command-line.
+        /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
-        protected virtual IEnumerable<TEntity> InputEntities(IReadOnlyList<string> args) =>
-            JsonConvert.DeserializeObject<List<TEntity>>((args.Count == 0) ? Console.ReadLine() : args[0]);
+        protected virtual IEnumerable<TEntity> InputEntities(IReadOnlyList<string> args)
+            => (args.Count == 0) ? Console.Read<List<TEntity>>() : JsonConvert.DeserializeObject<List<TEntity>>(args[0]);
 
         /// <summary>
-        /// Outputs a collection of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.
+        /// Outputs a collection of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
         /// </summary>
         protected virtual void OutputEntities(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
-                Console.WriteLine(entity.ToString());
+                Console.Write(entity);
         }
     }
 
