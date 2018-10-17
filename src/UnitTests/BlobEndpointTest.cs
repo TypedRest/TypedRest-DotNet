@@ -1,5 +1,4 @@
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -58,22 +57,6 @@ namespace TypedRest
 
             using (var stream = new MemoryStream(data))
                 await _endpoint.UploadFromAsync(stream, mimeType: "mock/type");
-        }
-
-        private class ByteContentMatcher : IMockedRequestMatcher
-        {
-            private readonly byte[] _data;
-            private readonly string _mimeType;
-
-            public ByteContentMatcher(byte[] data, string mimeType)
-            {
-                _data = data;
-                _mimeType = mimeType;
-            }
-
-            public bool Matches(HttpRequestMessage message)
-                => message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data)
-                && message.Content.Headers.ContentType.MediaType == _mimeType;
         }
     }
 }

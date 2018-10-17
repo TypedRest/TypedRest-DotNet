@@ -329,7 +329,7 @@ namespace TypedRest
                  {
                      Content = new StringContent("{\"message\":\"my message\"}")
                      {
-                         Headers = {ContentType = new MediaTypeHeaderValue(JsonMime)}
+                         Headers = {ContentType = MediaTypeHeaderValue.Parse(JsonMime)}
                      }
                  });
 
@@ -345,7 +345,7 @@ namespace TypedRest
                  {
                      Content = new StringContent("[{\"message\":\"my message\"}]")
                      {
-                         Headers = {ContentType = new MediaTypeHeaderValue(JsonMime)}
+                         Headers = {ContentType = MediaTypeHeaderValue.Parse(JsonMime)}
                      }
                  });
 
