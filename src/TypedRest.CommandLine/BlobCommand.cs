@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,14 +23,11 @@ namespace TypedRest.CommandLine
             switch (args[0])
             {
                 case "download":
-                    using (var downloadStream = await Endpoint.DownloadAsync(cancellationToken))
-                    using (var fileStream = File.Create(args[1]))
-                        await downloadStream.CopyToAsync(fileStream, 81920, cancellationToken);
+                    await Endpoint.DownloadAsync(args[1], cancellationToken);
                     break;
 
                 case "upload":
-                    using (var stream = File.OpenRead(args[1]))
-                        await Endpoint.UploadFromAsync(stream, cancellationToken: cancellationToken);
+                    await Endpoint.UploadFromAsync(args[1], args.Count > 2 ? args[2] : null, cancellationToken);
                     break;
 
                 case "delete":

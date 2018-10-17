@@ -33,7 +33,7 @@ namespace TypedRest
         bool? DownloadAllowed { get; }
 
         /// <summary>
-        /// Downloads the blob's content.
+        /// Downloads the blob's content to a stream.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>A stream with the blob's content.</returns>
@@ -53,7 +53,7 @@ namespace TypedRest
         bool? UploadAllowed { get; }
 
         /// <summary>
-        /// Uploads content as the blob's content.
+        /// Uploads content as the blob's content from a stream.
         /// </summary>
         /// <param name="stream">The stream to read the upload data from.</param>
         /// <param name="mimeType">The MIME type of the data to upload.</param>

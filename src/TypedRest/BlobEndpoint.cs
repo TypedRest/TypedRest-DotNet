@@ -46,7 +46,7 @@ namespace TypedRest
         public Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = new CancellationToken())
         {
             var content = new StreamContent(stream);
-            if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
+            if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
             return HandleResponseAsync(HttpClient.PutAsync(Uri, content, cancellationToken));
         }
 
