@@ -26,7 +26,7 @@ namespace TypedRest.CommandLine
         {}
 
         public override async Task ExecuteAsync(IReadOnlyList<string> args,
-                                                CancellationToken cancellationToken = default(CancellationToken))
+                                                CancellationToken cancellationToken = default)
         {
             if (args.Count > 0 && args[0].ToLowerInvariant() == "stream")
             {
@@ -58,7 +58,7 @@ namespace TypedRest.CommandLine
         /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the command-line.
         /// </summary>
         protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
-                                                         CancellationToken cancellationToken = default(CancellationToken))
+                                                         CancellationToken cancellationToken = default)
             => await new StreamPrinter<TEntity>().PrintAsync(observable, cancellationToken);
     }
 

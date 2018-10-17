@@ -18,7 +18,7 @@ namespace TypedRest.CommandLine
         {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default(CancellationToken))
+                                                        CancellationToken cancellationToken = default)
         {
             switch (args[0])
             {

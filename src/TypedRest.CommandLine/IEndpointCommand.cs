@@ -14,6 +14,6 @@ namespace TypedRest.CommandLine
         /// </summary>
         /// <param name="args">The command-line arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default(CancellationToken));
+        Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default);
     }
 }

@@ -29,7 +29,7 @@ namespace TypedRest.CommandLine
         {}
 
         public override async Task ExecuteAsync(IReadOnlyList<string> args,
-                                                CancellationToken cancellationToken = default(CancellationToken))
+                                                CancellationToken cancellationToken = default)
         {
             if (args.Count == 0)
             {

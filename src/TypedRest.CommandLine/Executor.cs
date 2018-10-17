@@ -41,7 +41,7 @@ namespace TypedRest.CommandLine
         /// <param name="args">The command-line arguments to parse.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The exit code.</returns>
-        public async Task<int> RunAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<int> RunAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         {
             try
             {

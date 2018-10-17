@@ -21,7 +21,7 @@ namespace TypedRest.CommandLine
         {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default(CancellationToken))
+                                                        CancellationToken cancellationToken = default)
             => await Endpoint.TriggerAsync(cancellationToken);
     }
 
@@ -40,7 +40,7 @@ namespace TypedRest.CommandLine
         {}
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default(CancellationToken))
+                                                        CancellationToken cancellationToken = default)
             => await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken);
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace TypedRest.CommandLine
         }
 
         public virtual async Task ExecuteAsync(IReadOnlyList<string> args,
-                                               CancellationToken cancellationToken = default(CancellationToken))
+                                               CancellationToken cancellationToken = default)
         {
             var subCommand = (args.Count == 0) ? null : GetSubCommand(args[0]);
             if (subCommand == null) await ExecuteInnerAsync(args, cancellationToken);
@@ -47,7 +47,7 @@ namespace TypedRest.CommandLine
         /// <param name="args">The command-line arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                 CancellationToken cancellationToken = default(CancellationToken))
+                                                 CancellationToken cancellationToken = default)
             => throw new ArgumentException("Unknown command: " + args[0]);
     }
 }
