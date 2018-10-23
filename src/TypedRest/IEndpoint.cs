@@ -27,24 +27,25 @@ namespace TypedRest
         MediaTypeFormatter Serializer { get; }
 
         /// <summary>
+        /// Handles errors in HTTP responses.
+        /// </summary>
+        IErrorHandler ErrorHandler { get; }
+
+        /// <summary>
+        /// Detects links in HTTP responses.
+        /// </summary>
+        ILinkHandler LinkHandler { get; }
+
+        /// <summary>
         /// Retrieves all links with a specific relation type cached from the last request.
         /// </summary>
         /// <param name="rel">The relation type of the links to look for.</param>
-        /// <returns>The hrefs of the links resolved relative to this endpoint's URI.</returns>
-        IEnumerable<Uri> GetLinks(string rel);
+        IEnumerable<Link> GetLinks(string rel);
 
         /// <summary>
-        /// Retrieves all links (with titles) with a specific relation type cached from the last request.
-        /// </summary>
-        /// <param name="rel">The relation type of the links to look for.</param>
-        /// <returns>A map of hrefs (resolved relative to this endpoint's URI) to titles (may be <c>null</c>).</returns>
-        IDictionary<Uri, string> GetLinksWithTitles(string rel);
-
-        /// <summary>
-        /// Retrieves a single link with a specific relation type.
+        /// Retrieves the href of a single link with a specific relation type.
         /// </summary>
         /// <param name="rel">The relation type of the link to look for.</param>
-        /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
         /// <exception cref="KeyNotFoundException">No link with the specified <paramref name="rel"/> could be found.</exception>
         /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
         Uri Link(string rel);

@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TypedRest.UriTemplates;
 
 namespace TypedRest
@@ -19,10 +14,10 @@ namespace TypedRest
     public abstract class EndpointBase : IEndpoint
     {
         public Uri Uri { get; }
-
         public HttpClient HttpClient { get; }
-
         public MediaTypeFormatter Serializer { get; }
+        public IErrorHandler ErrorHandler { get; }
+        public ILinkHandler LinkHandler { get; }
 
         /// <summary>
         /// Creates a new REST endpoint with an absolute URI.
@@ -30,11 +25,15 @@ namespace TypedRest
         /// <param name="uri">The HTTP URI of the remote element.</param>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server.</param>
-        protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer)
+        /// <param name="errorHandler">Handles errors in HTTP responses.</param>
+        /// <param name="linkHandler">Detects links in HTTP responses.</param>
+        protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer, IErrorHandler errorHandler, ILinkHandler linkHandler)
         {
             Uri = uri ?? throw new ArgumentNullException(nameof(uri));
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            ErrorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler));
+            LinkHandler = linkHandler ?? throw new ArgumentNullException(nameof(linkHandler));
         }
 
         /// <summary>
@@ -43,10 +42,7 @@ namespace TypedRest
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         protected EndpointBase(IEndpoint referrer, Uri relativeUri)
-            : this(
-                uri: referrer.Uri.Join(relativeUri),
-                httpClient: referrer.HttpClient,
-                serializer: referrer.Serializer)
+            : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkHandler)
         {}
 
         /// <summary>
@@ -55,10 +51,7 @@ namespace TypedRest
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         protected EndpointBase(IEndpoint referrer, string relativeUri)
-            : this(
-                uri: referrer.Uri.Join(relativeUri),
-                httpClient: referrer.HttpClient,
-                serializer: referrer.Serializer)
+            : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkHandler)
         {}
 
         /// <summary>
@@ -69,12 +62,11 @@ namespace TypedRest
         /// <param name="hrefs">The hrefs of links relative to this endpoint's URI. Use <c>null</c> or an empty list to remove all previous entries for the relation type.</param>
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
         /// <seealso cref="IEndpoint.GetLinks"/>
-        /// <seealso cref="IEndpoint.GetLinksWithTitles"/>
         /// <seealso cref="IEndpoint.Link"/>
         public void SetDefaultLink(string rel, params string[] hrefs)
         {
             if (hrefs == null || hrefs.Length == 0) _defaultLinks.Remove(rel);
-            else _defaultLinks[rel] = new HashSet<Uri>(hrefs.Select(x => Uri.Join(x)));
+            else _defaultLinks[rel] = new HashSet<Link>(hrefs.Select(x => new Link(Uri.Join(x))));
         }
 
         /// <summary>
@@ -93,226 +85,45 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Handles the response of a REST request and wraps HTTP status codes in appropriate <see cref="Exception"/> types.
+        /// Handles various cross-cutting concerns regarding a response message such as discovering links and handling errors.
         /// </summary>
         /// <param name="responseTask">A response promise for a request that has started executing.</param>
         /// <returns>The resolved <paramref name="responseTask"/>.</returns>
         protected virtual async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             var response = await responseTask.NoContext();
+            
+            (_links, _linkTemplates) = await LinkHandler.HandleAsync(response).NoContext();
 
-            await HandleLinksAsync(response).NoContext();
             HandleCapabilities(response);
-            await HandleErrorsAsync(response).NoContext();
+
+            if (!response.IsSuccessStatusCode)
+                await ErrorHandler.HandleAsync(response).NoContext();
 
             return response;
         }
 
-        /// <summary>
-        /// Wraps HTTP status codes in appropriate <see cref="Exception"/> types.
-        /// </summary>
-        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
-        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
-        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/>, <seealso cref="HttpStatusCode.PreconditionFailed"/> or <see cref="HttpStatusCode.RequestedRangeNotSatisfiable"/></exception>
-        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected virtual async Task HandleErrorsAsync(HttpResponseMessage response)
-        {
-            if (response.IsSuccessStatusCode) return;
-
-            string message = $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
-
-            string body = null;
-            if (response.Content != null)
-            {
-                body = await response.Content.ReadAsStringAsync().NoContext();
-
-                if (response.Content.Headers.ContentType?.MediaType == "application/json")
-                {
-                    try
-                    {
-                        var token = JToken.Parse(body);
-                        if (token.Type == JTokenType.Object)
-                        {
-                            var messageNode = JToken.Parse(body)["message"];
-                            if (messageNode != null) message = messageNode.ToString();
-                        }
-                    }
-                    catch (JsonException)
-                    {}
-                }
-            }
-
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.BadRequest:
-                    throw new InvalidDataException(message, new HttpRequestException(body));
-                case HttpStatusCode.Unauthorized:
-                    throw new AuthenticationException(message, new HttpRequestException(body));
-                case HttpStatusCode.Forbidden:
-                    throw new UnauthorizedAccessException(message, new HttpRequestException(body));
-                case HttpStatusCode.NotFound:
-                case HttpStatusCode.Gone:
-                    throw new KeyNotFoundException(message, new HttpRequestException(body));
-                case HttpStatusCode.Conflict:
-                    throw new InvalidOperationException(message, new HttpRequestException(body));
-                case HttpStatusCode.PreconditionFailed:
-                    //throw new VersionNotFoundException(message, new HttpRequestException(body));
-                    throw new InvalidOperationException(message, new HttpRequestException(body));
-                case HttpStatusCode.RequestedRangeNotSatisfiable:
-                    //throw new IndexOutOfRangeException(message, new HttpRequestException(body));
-                    throw new InvalidOperationException(message, new HttpRequestException(body));
-                case HttpStatusCode.RequestTimeout:
-                    throw new TimeoutException(message, new HttpRequestException(body));
-                default:
-                    throw new HttpRequestException(message, new HttpRequestException(body));
-            }
-        }
-
-        /// <summary>
-        /// Handles links embedded in an HTTP response.
-        /// </summary>
-        private async Task HandleLinksAsync(HttpResponseMessage response)
-        {
-            var links = new Dictionary<string, Dictionary<Uri, string>>();
-            var linkTemplates = new Dictionary<string, UriTemplate>();
-
-            HandleHeaderLinks(response.Headers, links, linkTemplates);
-            await HandleBodyLinksAsync(response.Content, links, linkTemplates);
-
-            _links = links;
-            _linkTemplates = linkTemplates;
-        }
-
-        /// <summary>
-        /// Handles links embedded in HTTP response headers.
-        /// </summary>
-        /// <param name="headers">The headers to check for links.</param>
-        /// <param name="links">A dictionary to add found links to.</param>
-        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        protected virtual void HandleHeaderLinks(HttpResponseHeaders headers, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
-        {
-            foreach (var header in headers.GetLinkHeaders().Where(x => x.Rel != null))
-            {
-                if (header.Templated)
-                    linkTemplates[header.Rel] = new UriTemplate(header.Href);
-                else
-                    links.GetOrAdd(header.Rel)[Uri.Join(header.Href)] = header.Title;
-            }
-        }
-
-        /// <summary>
-        /// Handles links embedded in JSON response bodies.
-        /// </summary>
-        /// <param name="content">The body to check for links.</param>
-        /// <param name="links">A dictionary to add found links to.</param>
-        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        private async Task HandleBodyLinksAsync(HttpContent content, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
-        {
-            if (content?.Headers.ContentType?.MediaType == "application/json")
-            {
-                string json = await content.ReadAsStringAsync().NoContext();
-                if (!string.IsNullOrEmpty(json))
-                {
-                    try
-                    {
-                        HandleBodyLinks(JToken.Parse(json), links, linkTemplates);
-                    }
-                    catch (JsonReaderException)
-                    {
-                        // Unparsable bodies are handled elsewhere
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles links embedded in JSON response bodies.
-        /// </summary>
-        /// <param name="jsonBody">The body to check for links.</param>
-        /// <param name="links">A dictionary to add found links to.</param>
-        /// <param name="linkTemplates">A dictionary to add found link templates to.</param>
-        protected virtual void HandleBodyLinks(JToken jsonBody, IDictionary<string, Dictionary<Uri, string>> links, IDictionary<string, UriTemplate> linkTemplates)
-        {
-            if (jsonBody.Type != JTokenType.Object) return;
-            var linksNode = jsonBody["_links"] ?? jsonBody["links"];
-            if (linksNode == null) return;
-
-            foreach (var linkNode in linksNode.OfType<JProperty>())
-            {
-                string rel = linkNode.Name;
-                var linksForRel = links.GetOrAdd(rel);
-
-                switch (linkNode.Value.Type)
-                {
-                    case JTokenType.Array:
-                        foreach (var subobj in linkNode.Value.OfType<JObject>())
-                            ParseLinkObject(rel, subobj, linksForRel, linkTemplates);
-                        break;
-
-                    case JTokenType.Object:
-                        ParseLinkObject(rel, (JObject)linkNode.Value, linksForRel, linkTemplates);
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Parses a JSON object for link information.
-        /// </summary>
-        /// <param name="rel">The relation type of the link.</param>
-        /// <param name="obj">The JSON object to parse for link information.</param>
-        /// <param name="linksForRel">A dictionary to add found links to. Maps hrefs to titles.</param>
-        /// <param name="linkTemplates">A dictionary to add found link templates to. Maps rels to templated hrefs.</param>
-        private void ParseLinkObject(string rel, JObject obj, IDictionary<Uri, string> linksForRel, IDictionary<string, UriTemplate> linkTemplates)
-        {
-            var href = obj["href"];
-            if (href == null) return;
-
-            var templated = obj["templated"];
-            if (templated != null && templated.Type == JTokenType.Boolean && templated.Value<bool>())
-                linkTemplates[rel] = new UriTemplate(href.ToString());
-            else
-            {
-                var title = obj["title"];
-                linksForRel[Uri.Join(href.ToString())] =
-                    (title != null && title.Type == JTokenType.String) ? title.Value<string>() : null;
-            }
-        }
-
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private Dictionary<string, Dictionary<Uri, string>> _links = new Dictionary<string, Dictionary<Uri, string>>();
+        private LinkDictionary _links = new LinkDictionary();
 
         // NOTE: Only modify during initial setup
-        private readonly Dictionary<string, HashSet<Uri>> _defaultLinks = new Dictionary<string, HashSet<Uri>>();
+        private readonly IDictionary<string, ISet<Link>> _defaultLinks = new Dictionary<string, ISet<Link>>();
 
-        public IEnumerable<Uri> GetLinks(string rel)
-        {
-            if (_links.TryGetValue(rel, out var linksForRel))
-                return linksForRel.Keys;
-
-            if (_defaultLinks.TryGetValue(rel, out var defaultLinksForRel))
-                return defaultLinksForRel;
-
-            return new HashSet<Uri>();
-        }
-
-        public IDictionary<Uri, string> GetLinksWithTitles(string rel)
+        public IEnumerable<Link> GetLinks(string rel)
         {
             if (_links.TryGetValue(rel, out var linksForRel))
                 return linksForRel;
 
             if (_defaultLinks.TryGetValue(rel, out var defaultLinksForRel))
-                return defaultLinksForRel.ToDictionary(x => x, x => (string)null);
+                return defaultLinksForRel;
 
-            return new Dictionary<Uri, string>();
+            return new Link[0];
         }
 
         public Uri Link(string rel)
         {
-            var uri = GetLinks(rel).FirstOrDefault();
-            if (uri == null)
+            var link = GetLinks(rel).FirstOrDefault();
+            if (link == null)
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
@@ -331,19 +142,19 @@ namespace TypedRest
                 if (error != null)
                     throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", error);
 
-                uri = GetLinks(rel).FirstOrDefault();
-                if (uri == null)
+                link = GetLinks(rel).FirstOrDefault();
+                if (link == null)
                     throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.");
             }
 
-            return uri;
+            return link.Href;
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private Dictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
+        private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
 
         // NOTE: Only modify during initial setup
-        private readonly Dictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
+        private readonly IDictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
 
         public UriTemplate LinkTemplate(string rel)
         {

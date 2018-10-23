@@ -107,7 +107,7 @@ namespace TypedRest.Wpf.ViewModels
         // Refresh when notifications are sent from the server
         public async Task Handle(IEndpointEvent message)
         {
-            if (message.Endpoint.GetLinks(NotifyRel).Contains(Endpoint.Uri))
+            if (message.Endpoint.GetLinks(NotifyRel).Contains(new Link(Endpoint.Uri)))
                 await RefreshAsync();
         }
     }

@@ -106,27 +106,6 @@ namespace TypedRest
                  {
                      Headers =
                      {
-                         {"Link", "<target1>; rel=notify, <target2>; rel=notify"},
-                         {"Link", "<target3>; rel=notify"}
-                     }
-                 });
-
-            await _endpoint.GetAsync();
-
-            _endpoint.GetLinks("notify").Should().BeEquivalentTo(
-                new Uri("http://localhost/target1"),
-                new Uri("http://localhost/target2"),
-                new Uri("http://localhost/target3"));
-        }
-
-        [Fact]
-        public async Task TestGetLinksWithTitles()
-        {
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
-                 {
-                     Headers =
-                     {
                          {"Link", "<target1>; rel=child; title=Title"},
                          {"Link", "<target2>; rel=child"}
                      }
@@ -134,15 +113,13 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
-            {
-                {new Uri("http://localhost/target1"), "Title"},
-                {new Uri("http://localhost/target2"), null}
-            });
+            _endpoint.GetLinks("child").Should().BeEquivalentTo(
+                new Link(new Uri("http://localhost/target1"), "Title"),
+                new Link(new Uri("http://localhost/target2")));
         }
 
         [Fact]
-        public async Task TestGetLinksWithTitlesEscaping()
+        public async Task TestGetLinksEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
@@ -155,11 +132,9 @@ namespace TypedRest
 
             await _endpoint.GetAsync();
 
-            _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
-            {
-                {new Uri("http://localhost/target1"), "Title 1"},
-                {new Uri("http://localhost/target2"), null}
-            });
+            _endpoint.GetLinks("child").Should().BeEquivalentTo(
+                new Link(new Uri("http://localhost/target1"), "Title 1"),
+                new Link(new Uri("http://localhost/target2")));
         }
 
         [Fact]
@@ -167,11 +142,9 @@ namespace TypedRest
         {
             _endpoint.SetDefaultLink(rel: "child", hrefs: new[] {"target1", "target2"});
 
-            _endpoint.GetLinksWithTitles("child").Should().Equal(new Dictionary<Uri, string>
-            {
-                {new Uri("http://localhost/target1"), null},
-                {new Uri("http://localhost/target2"), null}
-            });
+            _endpoint.GetLinks("child").Should().BeEquivalentTo(
+                new Link(new Uri("http://localhost/target1")),
+                new Link(new Uri("http://localhost/target2")));
         }
 
         [Fact]
@@ -275,13 +248,8 @@ namespace TypedRest
 
             _endpoint.Link("single").Should().Be(new Uri("http://localhost/a"));
             _endpoint.GetLinks("collection").Should().BeEquivalentTo(
-                new Uri("http://localhost/b"),
-                new Uri("http://localhost/c"));
-            _endpoint.GetLinksWithTitles("collection").Should().Equal(new Dictionary<Uri, string>
-            {
-                {new Uri("http://localhost/b"), "Title 1"},
-                {new Uri("http://localhost/c"), null}
-            });
+                new Link(new Uri("http://localhost/b"), "Title 1"),
+                new Link(new Uri("http://localhost/c")));
             _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
         }
 

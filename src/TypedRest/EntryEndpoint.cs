@@ -21,11 +21,15 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer = null)
+        /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
+        /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
+        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
             : base(
                 uri.EnsureTrailingSlash(),
                 httpClient,
-                serializer ?? new DefaultJsonSerializer())
+                serializer ?? new DefaultJsonSerializer(),
+                errorHandler ?? new DefaultErrorHandler(),
+                linkHandler ?? new DefaultLinkHandler())
         {}
 
         /// <summary>
@@ -34,8 +38,10 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST interface.</param>
         /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null)
-            : this(uri, new HttpClient(), serializer)
+        /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
+        /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
+        public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
+            : this(uri, new HttpClient(), serializer, errorHandler, linkHandler)
         {
             BasicAuth(uri, credentials);
         }
@@ -46,8 +52,10 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST interface.</param>
         /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null)
-            : this(uri, new HttpClient(), serializer)
+        /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
+        /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
+        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
+            : this(uri, new HttpClient(), serializer, errorHandler, linkHandler)
         {
             BearerAuth(token);
         }
