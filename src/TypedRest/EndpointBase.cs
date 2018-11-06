@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using TypedRest.UriTemplates;
+using Tavis.UriTemplates;
 
 namespace TypedRest
 {
@@ -81,7 +81,7 @@ namespace TypedRest
         public void SetDefaultLinkTemplate(string rel, string href)
         {
             if (href == null) _defaultLinkTemplates.Remove(rel);
-            else _defaultLinkTemplates[rel] = new UriTemplate(href);
+            else _defaultLinkTemplates[rel] = href;
         }
 
         /// <summary>
@@ -151,10 +151,10 @@ namespace TypedRest
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
+        private IDictionary<string, string> _linkTemplates = new Dictionary<string, string>();
 
         // NOTE: Only modify during initial setup
-        private readonly IDictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
+        private readonly IDictionary<string, string> _defaultLinkTemplates = new Dictionary<string, string>();
 
         public UriTemplate LinkTemplate(string rel)
         {
@@ -181,11 +181,14 @@ namespace TypedRest
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.");
             }
 
-            return template;
+            return new UriTemplate(template);
         }
 
+        public Uri LinkTemplate(string rel, IDictionary<string, string> variables)
+            => Uri.Join(LinkTemplate(rel).AddParameters(variables).Resolve());
+
         public Uri LinkTemplate(string rel, object variables)
-            => Uri.Join(LinkTemplate(rel).Resolve(variables));
+            => Uri.Join(LinkTemplate(rel).AddParameters(variables).Resolve());
 
         /// <summary>
         /// Handles allowed HTTP methods and other capabilities reported by the server.

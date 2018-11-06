@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TypedRest.UriTemplates;
 
 namespace TypedRest
 {
@@ -14,12 +13,12 @@ namespace TypedRest
     /// </summary>
     public class DefaultLinkHandler : ILinkHandler
     {
-        public async Task<(LinkDictionary links, IDictionary<string, UriTemplate> linkTemplates)> HandleAsync(HttpResponseMessage response)
+        public async Task<(LinkDictionary links, IDictionary<string, string> linkTemplates)> HandleAsync(HttpResponseMessage response)
         {
             var baseUri = response.RequestMessage?.RequestUri ?? new Uri(".");
 
             var links = new LinkDictionary();
-            var linkTemplates = new Dictionary<string, UriTemplate>();
+            var linkTemplates = new Dictionary<string, string>();
 
             void ParseLinkObject(string rel, JObject obj)
             {
@@ -28,7 +27,7 @@ namespace TypedRest
 
                 var templated = obj["templated"];
                 if (templated != null && templated.Type == JTokenType.Boolean && templated.Value<bool>())
-                    linkTemplates[rel] = new UriTemplate(href.ToString());
+                    linkTemplates[rel] = href.ToString();
                 else
                 {
                     var title = obj["title"];
@@ -41,7 +40,7 @@ namespace TypedRest
             foreach (var header in response.Headers.GetLinkHeaders().Where(x => x.Rel != null))
             {
                 if (header.Templated)
-                    linkTemplates[header.Rel] = new UriTemplate(header.Href);
+                    linkTemplates[header.Rel] = header.Href;
                 else
                     links.Add(header.Rel, new Link(baseUri.Join(header.Href), header.Title));
             }
