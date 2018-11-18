@@ -1,6 +1,6 @@
 # TypedRest for .NET
 
-[![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://typedrest.github.io/TypedRest-DotNet/)
+[![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://dotnet.typedrest.net/)
 [![Build status](https://img.shields.io/appveyor/ci/TypedRest/typedrest-dotnet.svg)](https://ci.appveyor.com/project/TypedRest/typedrest-dotnet)  
 TypedRest helps you build type-safe fluent-style REST API clients.
 

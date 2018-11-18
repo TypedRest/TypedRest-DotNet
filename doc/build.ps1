@@ -13,4 +13,6 @@ mkdir ..\artifacts\Documentation | Out-Null
 
 0install run --batch http://repo.roscidus.com/devel/doxygen
 
+cp CNAME ..\artifacts\Documentation\
+
 popd

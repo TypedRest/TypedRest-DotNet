@@ -27,9 +27,9 @@
     <Description>TypedRest.Reactive extends TypedRest with Reactive (Rx) Endpoints for polling and streaming.</Description>
     <Summary>Reactive (Rx) Endpoints for polling and streaming</Summary>
     <PackageTags>Typed REST</PackageTags>
-    <PackageProjectUrl>https://typedrest.github.io</PackageProjectUrl>
+    <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/1and1/TypedRest-DotNet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
     <Authors>Bastian Eicher</Authors>
   </PropertyGroup>
 

@@ -11,7 +11,6 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
-
   <PropertyGroup Condition="'$(OS)'=='Windows_NT' Or '$(MSBuildRuntimeType)'=='Mono'">
     <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
     <SignAssembly>True</SignAssembly>
@@ -27,9 +26,9 @@
     <Description>TypedRest.CommandLine helps you build simple command-line clients using REST clients designed with TypedRest.</Description>
     <Summary>Build command-line interfaces using a TypedRest client</Summary>
     <PackageTags>Typed REST Commandline CLI</PackageTags>
-    <PackageProjectUrl>https://typedrest.github.io</PackageProjectUrl>
+    <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/1and1/TypedRest-DotNet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
     <Authors>Bastian Eicher</Authors>
   </PropertyGroup>
 
