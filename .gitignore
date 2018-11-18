@@ -1,14 +1,13 @@
-/artifacts/
+*.user
+*.bak
+
+# Caches
 /src/.vs/
 /src/.idea/
 /src/_ReSharper.*/
-obj/
-bin/
-test-results/
-*.bak
-*.cache
-*.pidb
-*.suo
-*.user
-*.userprefs
-*.resources
+/src/*/obj/
+/src/*/bin/
+
+# Output
+/artifacts/
+
