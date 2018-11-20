@@ -6,7 +6,7 @@ namespace TypedRest
     /// <summary>
     /// Provides extension methods for <see cref="Task"/> and <see cref="Task{TResult}"/>.
     /// </summary>
-    internal static class TaskExtensions
+    public static class TaskExtensions
     {
         /// <summary>
         /// Convenience wrapper for <see cref="Task.ConfigureAwait"/><c>(false)</c>.
