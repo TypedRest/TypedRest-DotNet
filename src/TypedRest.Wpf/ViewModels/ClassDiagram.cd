@@ -29,11 +29,11 @@
       <FileName>ViewModels\CreateElementViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.ViewModels.StreamViewModel&lt;TEntity&gt;" Collapsed="true">
+  <Class Name="TypedRest.Wpf.ViewModels.StreamingCollectionViewModel&lt;TEntity&gt;" Collapsed="true">
     <Position X="22.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgA=</HashCode>
-      <FileName>ViewModels\StreamViewModel.cs</FileName>
+      <FileName>ViewModels\StreamingCollectionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.PagedCollectionViewModel&lt;TEntity&gt;" Collapsed="true">
@@ -50,11 +50,11 @@
       <FileName>ViewModels\PagedCollectionViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.ViewModels.StreamViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
+  <Class Name="TypedRest.Wpf.ViewModels.StreamingCollectionViewModelBase&lt;TEntity, TEndpoint, TElementEndpoint&gt;" Collapsed="true">
     <Position X="18" Y="3.5" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\StreamViewModelBase.cs</FileName>
+      <FileName>ViewModels\StreamingCollectionViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.ElementViewModelBase&lt;TEntity, TEndpoint&gt;" Collapsed="true">

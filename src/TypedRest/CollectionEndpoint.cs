@@ -104,7 +104,7 @@ namespace TypedRest
 
         public bool? ReadRangeAllowed { get; private set; }
 
-        public async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range, CancellationToken cancellationToken = default)
+        public virtual async Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri)
             {

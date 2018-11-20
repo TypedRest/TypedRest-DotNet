@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 namespace TypedRest.CommandLine
 {
     /// <summary>
-    /// Command operating on a <see cref="IStreamEndpoint{TEntity,TElementEndpoint}"/>.
+    /// Command operating on a <see cref="IStreamingCollectionEndpoint{TEntity,TElementEndpoint}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="IStreamEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
+    /// <typeparam name="TEndpoint">The specific type of <see cref="IStreamingCollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <c>BuildElementCommand</c>.</typeparam>
-    public abstract class StreamCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>
-        where TEndpoint : class, IStreamEndpoint<TEntity, TElementEndpoint>
+    public abstract class StreamingCollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>
+        where TEndpoint : class, IStreamingCollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
         where TElementCommand : class, IEndpointCommand
     {
         /// <summary>
-        /// Creates a new REST stream command.
+        /// Creates a new REST streaming collection command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        protected StreamCommand(TEndpoint endpoint)
+        protected StreamingCollectionCommand(TEndpoint endpoint)
             : base(endpoint)
         {}
 
@@ -49,10 +49,10 @@ namespace TypedRest.CommandLine
         }
 
         private async Task StreamFromBeginning(CancellationToken cancellationToken)
-            => await OutputEntitiesAsync(Endpoint.GetStream(), cancellationToken);
+            => await OutputEntitiesAsync(Endpoint.GetObservable(), cancellationToken);
 
         private async Task StreamFromOffset(long startIndex, CancellationToken cancellationToken)
-            => await OutputEntitiesAsync(Endpoint.GetStream(startIndex), cancellationToken);
+            => await OutputEntitiesAsync(Endpoint.GetObservable(startIndex), cancellationToken);
 
         /// <summary>
         /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
@@ -63,35 +63,35 @@ namespace TypedRest.CommandLine
     }
 
     /// <summary>
-    /// Command operating on a <see cref="IStreamEndpoint{TEntity,TElementEndpoint}"/>.
+    /// Command operating on a <see cref="IStreamingCollectionEndpoint{TEntity,TElementEndpoint}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the endpoint provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <c>BuildElementCommand</c>.</typeparam>
-    public class StreamCommand<TEntity, TElementEndpoint, TElementCommand> : StreamCommand<TEntity, IStreamEndpoint<TEntity, TElementEndpoint>, TElementEndpoint, TElementCommand>
+    public class StreamingCollectionCommand<TEntity, TElementEndpoint, TElementCommand> : StreamingCollectionCommand<TEntity, IStreamingCollectionEndpoint<TEntity, TElementEndpoint>, TElementEndpoint, TElementCommand>
         where TElementEndpoint : class, IEndpoint
         where TElementCommand : class, IEndpointCommand
     {
         /// <summary>
-        /// Creates a new REST stream command.
+        /// Creates a new REST streaming collection command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public StreamCommand(IStreamEndpoint<TEntity, TElementEndpoint> endpoint)
+        public StreamingCollectionCommand(IStreamingCollectionEndpoint<TEntity, TElementEndpoint> endpoint)
             : base(endpoint)
         {}
     }
 
     /// <summary>
-    /// Command operating on a <see cref="IStreamEndpoint{TEntity}"/>.
+    /// Command operating on a <see cref="IStreamingCollectionEndpoint{TEntity}"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class StreamCommand<TEntity> : StreamCommand<TEntity, IElementEndpoint<TEntity>, ElementCommand<TEntity>>
+    public class StreamingCollectionCommand<TEntity> : StreamingCollectionCommand<TEntity, IElementEndpoint<TEntity>, ElementCommand<TEntity>>
     {
         /// <summary>
-        /// Creates a new REST stream command.
+        /// Creates a new REST streaming collection command.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public StreamCommand(IStreamEndpoint<TEntity> endpoint)
+        public StreamingCollectionCommand(IStreamingCollectionEndpoint<TEntity> endpoint)
             : base(endpoint)
         {}
 

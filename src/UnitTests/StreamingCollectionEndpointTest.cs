@@ -11,17 +11,17 @@ using Xunit;
 namespace TypedRest
 {
     [Collection("Endpoint")]
-    public class StreamEndpointTest : EndpointTestBase
+    public class StreamingCollectionEndpointTest : EndpointTestBase
     {
-        private readonly IStreamEndpoint<MockEntity> _endpoint;
+        private readonly IStreamingCollectionEndpoint<MockEntity> _endpoint;
 
-        public StreamEndpointTest()
+        public StreamingCollectionEndpointTest()
         {
-            _endpoint = new StreamEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new StreamingCollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
         [Fact]
-        public void TestGetStream()
+        public void TestGetObservable()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=0-")
@@ -39,15 +39,15 @@ namespace TypedRest
                          Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
                      });
 
-            var stream = _endpoint.GetStream();
-            stream.ToEnumerable().ToList().Should().Equal(
+            var observable = _endpoint.GetObservable();
+            observable.ToEnumerable().ToList().Should().Equal(
                 new MockEntity(5, "test1"),
                 new MockEntity(6, "test2"),
                 new MockEntity(7, "test3"));
         }
 
         [Fact]
-        public void TestGetStreamOffset()
+        public void TestGetObservableOffset()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=2-")
@@ -57,12 +57,12 @@ namespace TypedRest
                          Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
                      });
 
-            var stream = _endpoint.GetStream(startIndex: 2);
-            stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
+            var observable = _endpoint.GetObservable(startIndex: 2);
+            observable.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
         }
 
         [Fact]
-        public void TestGetStreamTail()
+        public void TestGetObservableTail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("Range", "elements=-1")
@@ -72,8 +72,8 @@ namespace TypedRest
                          Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
                      });
 
-            var stream = _endpoint.GetStream(startIndex: -1);
-            stream.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
+            var observable = _endpoint.GetObservable(startIndex: -1);
+            observable.ToEnumerable().ToList().Should().Equal(new MockEntity(7, "test3"));
         }
     }
 }

@@ -36,11 +36,11 @@
       <FileName>ElementCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity&gt;" Collapsed="true">
+  <Class Name="TypedRest.CommandLine.StreamingCollectionCommand&lt;TEntity&gt;" Collapsed="true">
     <Position X="13.5" Y="6.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>StreamCommand.cs</FileName>
+      <FileName>StreamingCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.ActionCommand&lt;TEntity&gt;" Collapsed="true">
@@ -50,11 +50,11 @@
       <FileName>ActionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
+  <Class Name="TypedRest.CommandLine.StreamingCollectionCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
     <Position X="6" Y="6.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAEA=</HashCode>
-      <FileName>StreamCommand.cs</FileName>
+      <FileName>StreamingCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.EntryCommand&lt;TEndpoint&gt;" Collapsed="true">
@@ -108,11 +108,11 @@
       <FileName>CollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.StreamCommand&lt;TEntity, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
+  <Class Name="TypedRest.CommandLine.StreamingCollectionCommand&lt;TEntity, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
     <Position X="10.75" Y="6.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>StreamCommand.cs</FileName>
+      <FileName>StreamingCollectionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.Executor&lt;TEndpoint, TCommand&gt;">
