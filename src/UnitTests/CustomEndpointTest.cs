@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FluentAssertions.Specialized;
 using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -285,8 +284,9 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict));
 
-            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
-               .WithMessage("http://localhost/endpoint responded with 409 Conflict");
+            _endpoint.Awaiting(x => x.GetAsync())
+                     .Should().Throw<InvalidOperationException>()
+                     .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
 
         [Fact]
@@ -301,8 +301,9 @@ namespace TypedRest
                      }
                  });
 
-            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
-               .WithMessage("my message");
+            _endpoint.Awaiting(x => x.GetAsync())
+                     .Should().Throw<InvalidOperationException>()
+                     .WithMessage("my message");
         }
 
         [Fact]
@@ -317,8 +318,9 @@ namespace TypedRest
                      }
                  });
 
-            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
-               .WithMessage("http://localhost/endpoint responded with 409 Conflict");
+            _endpoint.Awaiting(x => x.GetAsync())
+                     .Should().Throw<InvalidOperationException>()
+                     .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
 
         [Fact]
@@ -327,11 +329,9 @@ namespace TypedRest
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
 
-            ShouldThrow<InvalidOperationException>(() => _endpoint.GetAsync())
-               .WithMessage("http://localhost/endpoint responded with 409 Conflict");
+            _endpoint.Awaiting(x => x.GetAsync())
+                     .Should().Throw<InvalidOperationException>()
+                     .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
-
-        private static ExceptionAssertions<TException> ShouldThrow<TException>(Func<Task> action) where TException : Exception
-            => action.Should().Throw<TException>();
     }
 }
