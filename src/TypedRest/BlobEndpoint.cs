@@ -37,7 +37,7 @@ namespace TypedRest
 
         public async Task<Stream> DownloadAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
+            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken)).NoContext();
             return await response.Content.ReadAsStreamAsync().NoContext();
         }
 
