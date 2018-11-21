@@ -17,6 +17,6 @@ namespace TypedRest
         /// <summary>
         /// Provides an observable stream of element states. Compares entities using <see cref="object.Equals(object)"/> to detect changes.
         /// </summary>
-        IObservable<TEntity> GetStream();
+        IObservable<TEntity> GetObservable();
     }
 }

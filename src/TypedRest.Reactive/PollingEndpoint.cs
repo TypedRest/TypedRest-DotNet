@@ -49,7 +49,7 @@ namespace TypedRest
 
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
 
-        public IObservable<TEntity> GetStream() => Observable.Create<TEntity>(async (observer, cancellationToken) =>
+        public IObservable<TEntity> GetObservable() => Observable.Create<TEntity>(async (observer, cancellationToken) =>
         {
             TEntity previousEntity;
             try

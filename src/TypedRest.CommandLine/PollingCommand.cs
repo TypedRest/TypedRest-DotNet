@@ -28,8 +28,7 @@ namespace TypedRest.CommandLine
         {
             if (args.Count >= 1 && args[0].ToLowerInvariant() == "poll")
             {
-                var stream = Endpoint.GetStream();
-                await OutputEntitiesAsync(stream, cancellationToken);
+                await OutputEntitiesAsync(Endpoint.GetObservable(), cancellationToken);
                 return;
             }
 

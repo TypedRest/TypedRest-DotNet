@@ -12,7 +12,7 @@ namespace TypedRest
         where TElementEndpoint : class, IEndpoint
     {
         /// <summary>
-        /// Provides an observable stream of elements.
+        /// Provides an observable stream of elements. The observable is cold; HTTP communication only starts on <see cref="IObservable{T}.Subscribe"/>.
         /// </summary>
         /// <param name="startIndex">The index of the first element to return in the stream. Use negative values to start counting from the end of the stream.</param>
         IObservable<TEntity> GetObservable(long startIndex = 0);

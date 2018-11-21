@@ -24,7 +24,7 @@ namespace TypedRest
         }
 
         [Fact]
-        public void TestGetStream()
+        public void TestGetObservable()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(JsonMime, "{\"id\":1,\"name\":\"test\"}");
@@ -37,8 +37,8 @@ namespace TypedRest
                      Headers = {RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromSeconds(42))}
                  });
 
-            var stream = _endpoint.GetStream();
-            stream.ToEnumerable().ToList().Should().Equal(
+            var observable = _endpoint.GetObservable();
+            observable.ToEnumerable().ToList().Should().Equal(
                 new MockEntity(1, "test"),
                 new MockEntity(2, "test"),
                 new MockEntity(3, "test"));
