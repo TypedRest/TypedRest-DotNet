@@ -63,7 +63,7 @@ namespace TypedRest
         private void BasicAuth(Uri uri, ICredentials credentials)
         {
             string userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
-            if (userInfo != null)
+            if (!string.IsNullOrEmpty(userInfo))
             {
                 HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1").GetBytes(userInfo)));
