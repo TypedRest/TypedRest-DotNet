@@ -7,19 +7,44 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint that addresses a set of <typeparamref name="TElementEndpoint"/>s via IDs.
     /// </summary>
-    /// <remarks>Use the more constrained <see cref="ICollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual elements.</typeparam>
     public class IndexerEndpoint<TElementEndpoint> : EndpointBase, IIndexerEndpoint<TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
     {
+        private readonly Type _instanceType;
+
+        /// <summary>
+        /// Creates a new element collection endpoint.
+        /// </summary>
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
+        /// <param name="instanceType">The specific type to instantiate as element endpoints. Must derive from or implement <typeparamref name="TElementEndpoint"/>.</param>
+        public IndexerEndpoint(IEndpoint referrer, Uri relativeUri, Type instanceType = null)
+            : base(referrer, relativeUri)
+        {
+            _instanceType = CheckType(instanceType);
+            SetupChildHandling();
+        }
+
         /// <summary>
         /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         public IndexerEndpoint(IEndpoint referrer, Uri relativeUri)
+            : this(referrer, relativeUri, typeof(TElementEndpoint))
+        {}
+
+        /// <summary>
+        /// Creates a new element collection endpoint.
+        /// </summary>
+        /// <param name="referrer">The endpoint used to navigate to this one.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="instanceType">The specific type to instantiate as element endpoints. Must derive from or implement <typeparamref name="TElementEndpoint"/>.</param>
+        public IndexerEndpoint(IEndpoint referrer, string relativeUri, Type instanceType = null)
             : base(referrer, relativeUri)
         {
+            _instanceType = CheckType(instanceType);
             SetupChildHandling();
         }
 
@@ -29,9 +54,16 @@ namespace TypedRest
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         public IndexerEndpoint(IEndpoint referrer, string relativeUri)
-            : base(referrer, relativeUri)
+            : this(referrer, relativeUri, typeof(TElementEndpoint))
+        {}
+
+        private Type CheckType(Type instanceType)
         {
-            SetupChildHandling();
+            if (instanceType == null) throw new ArgumentNullException(nameof(instanceType));
+            if (!instanceType.IsClass || instanceType.IsAbstract) throw new ArgumentException("Must be a non-abstract class.", nameof(instanceType));
+            if (!typeof(TElementEndpoint).IsAssignableFrom(instanceType)) throw new ArgumentException($"Must be assignable to {typeof(TElementEndpoint)}.", nameof(instanceType));
+
+            return instanceType;
         }
 
         private void SetupChildHandling()
@@ -46,7 +78,7 @@ namespace TypedRest
         /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
-        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(typeof(TElementEndpoint), this, relativeUri);
+        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(_instanceType, this, relativeUri);
 
         public virtual TElementEndpoint this[string id]
         {
