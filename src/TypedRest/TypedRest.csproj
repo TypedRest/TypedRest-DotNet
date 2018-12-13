@@ -27,7 +27,7 @@
     <Summary>Build type-safe fluent-style REST API clients</Summary>
     <PackageTags>Typed REST</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
     <Authors>Bastian Eicher</Authors>
   </PropertyGroup>
