@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -125,9 +124,10 @@ namespace TypedRest
 
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
-            return (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.Accepted) && (response.Headers.Location != null)
-                ? BuildElementEndpoint(response.Headers.Location)
-                : null;
+            var elementEndpoint = BuildElementEndpoint(response.Headers.Location ?? Uri);
+            if (response.Content != null && elementEndpoint is ICachingEndpoint caching)
+                caching.ResponseCache = new ResponseCache(response);
+            return elementEndpoint;
         }
 
         public bool? CreateAllAllowed => IsMethodAllowed(HttpClientExtensions.Patch);

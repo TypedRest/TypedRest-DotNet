@@ -197,13 +197,15 @@ namespace TypedRest
         {
             var location = new Uri("/endpoint/new", UriKind.Relative);
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-                .WithContent("{\"id\":5,\"name\":\"test\"}")
+                .WithContent("{\"id\":0,\"name\":\"test\"}")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Created)
                  {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                      Headers = {Location = location}
                  });
 
-            var element = await _endpoint.CreateAsync(new MockEntity(5, "test"));
+            var element = await _endpoint.CreateAsync(new MockEntity(0, "test"));
+            element.Response.Should().Be(new MockEntity(5, "test"));
             element.Uri.Should().Be(new Uri(EntryEndpoint.Uri, location));
         }
 

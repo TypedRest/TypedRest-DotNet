@@ -74,7 +74,7 @@ namespace TypedRest
         /// </summary>
         /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <returns>The newly created <typeparamref name="TEntity"/>; may be <c>null</c> if the server deferred creating the resource.</returns>
+        /// <returns>An endpoint that represents the newly created entity.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
