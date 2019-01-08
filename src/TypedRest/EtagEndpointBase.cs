@@ -12,7 +12,7 @@ namespace TypedRest
     /// <summary>
     /// Base class for building REST endpoints that use ETags (entity tags) for caching and to avoid lost updates.
     /// </summary>
-    public abstract class ETagEndpointBase : EndpointBase
+    public abstract class ETagEndpointBase : EndpointBase, ICachingEndpoint
     {
         /// <summary>
         /// Creates a new REST endpoint with a relative URI.
@@ -32,22 +32,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        private class Memory
-        {
-            public readonly EntityTagHeaderValue ETag;
-            public readonly MediaTypeHeaderValue ContentType;
-            public readonly byte[] Content;
-
-            public Memory(EntityTagHeaderValue eTag, MediaTypeHeaderValue contentType, byte[] content)
-            {
-                ETag = eTag;
-                ContentType = contentType;
-                Content = content;
-            }
-        }
-
-        // NOTE: Replace entire object rather than modifying it to ensure thread-safety.
-        private Memory _last;
+        public ResponseCache ResponseCache { get; set; }
 
         /// <summary>
         /// Performs an HTTP GET request on the <see cref="IEndpoint.Uri"/> and caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>.
@@ -62,34 +47,18 @@ namespace TypedRest
         protected async Task<HttpContent> GetContentAsync(CancellationToken cancellationToken)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri);
-            if (_last != null) request.Headers.IfNoneMatch.Add(_last.ETag);
+            var cache = ResponseCache; // Copy reference for thread-safety
+            if (cache?.ETag != null) request.Headers.IfNoneMatch.Add(cache.ETag);
 
             var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
-            if (response.StatusCode == HttpStatusCode.NotModified && _last != null)
+            if (response.StatusCode == HttpStatusCode.NotModified && cache != null)
+                return cache.GetContent();
+            else
             {
-                // Build new response for each request to avoid shared Stream.Position
-                return new ByteArrayContent(_last.Content) {Headers = {ContentType = _last.ContentType}};
+                await HandleResponseAsync(Task.FromResult(response)).NoContext();
+                if (response.Content != null) ResponseCache = new ResponseCache(response);
+                return response.Content;
             }
-
-            await HandleResponseAsync(Task.FromResult(response)).NoContext();
-            _last = (response.Headers.ETag == null)
-                ? null
-                : new Memory(
-                    response.Headers.ETag,
-                    response.Content.Headers.ContentType,
-                    await CloneArrayAsync(response.Content));
-            return response.Content;
-        }
-
-        /// <summary>
-        /// Creates an array copy of the <paramref name="content"/> without affecting the <see cref="Stream.Position"/> of the original object.
-        /// </summary>
-        private static async Task<byte[]> CloneArrayAsync(HttpContent content)
-        {
-            var result = await content.ReadAsByteArrayAsync();
-            var stream = await content.ReadAsStreamAsync();
-            if (stream.CanSeek) stream.Position = 0;
-            return result;
         }
 
         /// <summary>
@@ -107,8 +76,10 @@ namespace TypedRest
         protected Task<HttpResponseMessage> PutContentAsync(HttpContent content, CancellationToken cancellationToken)
         {
             var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
-            if (_last != null) request.Headers.IfMatch.Add(_last.ETag);
+            var cache = ResponseCache; // Copy reference for thread-safety
+            if (cache?.ETag != null) request.Headers.IfMatch.Add(cache.ETag);
 
+            ResponseCache = null;
             return HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
         }
 
@@ -126,8 +97,10 @@ namespace TypedRest
         protected Task<HttpResponseMessage> DeleteContentAsync(CancellationToken cancellationToken)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
-            if (_last != null) request.Headers.IfMatch.Add(_last.ETag);
+            var cache = ResponseCache; // Copy reference for thread-safety
+            if (cache?.ETag != null) request.Headers.IfMatch.Add(cache.ETag);
 
+            ResponseCache = null;
             return HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
         }
     }
