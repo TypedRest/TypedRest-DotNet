@@ -40,7 +40,7 @@ namespace TypedRest
         {
             try
             {
-                await HandleResponseAsync(HttpClient.HeadAsync(Uri, CancellationToken.None)).NoContext();
+                await HandleResponseAsync(HttpClient.HeadAsync(Uri, cancellationToken)).NoContext();
             }
             catch (KeyNotFoundException)
             {

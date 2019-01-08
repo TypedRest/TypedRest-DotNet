@@ -12,7 +12,7 @@ namespace TypedRest.CommandLine
         {
             var output = new MockEntity(2, "b");
 
-            EndpointMock.Setup(x => x.TriggerAsync(CancellationToken.None)).ReturnsAsync(output);
+            EndpointMock.Setup(x => x.TriggerAsync(default)).ReturnsAsync(output);
             ConsoleMock.Setup(x => x.Write(output));
 
             await ExecuteAsync();
@@ -28,7 +28,7 @@ namespace TypedRest.CommandLine
             var output = new MockEntity(2, "b");
 
             ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(input);
-            EndpointMock.Setup(x => x.TriggerAsync(input, CancellationToken.None)).ReturnsAsync(output);
+            EndpointMock.Setup(x => x.TriggerAsync(input, default)).ReturnsAsync(output);
             ConsoleMock.Setup(x => x.Write(output));
 
             await ExecuteAsync();
