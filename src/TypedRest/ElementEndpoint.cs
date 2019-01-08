@@ -30,6 +30,8 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
+        public TEntity Response => ResponseCache.GetContent().ReadAsAsync<TEntity>(new[] {Serializer}).Result;
+
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default)
         {
             var content = await GetContentAsync(cancellationToken);

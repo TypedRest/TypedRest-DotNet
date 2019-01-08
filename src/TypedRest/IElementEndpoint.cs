@@ -49,6 +49,11 @@ namespace TypedRest
     public interface IElementEndpoint<TEntity> : IElementEndpoint
     {
         /// <summary>
+        /// A cached copy of the entity as received from the server. Can be null.
+        /// </summary>
+        TEntity Response { get; }
+
+        /// <summary>
         /// Returns the specific <typeparamref name="TEntity"/>.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
