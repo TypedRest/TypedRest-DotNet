@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypedRest", "TypedRest\Type
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypedRest.Reactive", "TypedRest.Reactive\TypedRest.Reactive.csproj", "{A9A75ECC-93CA-4055-AFD5-6E7BA5826939}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypedRest.OAuth", "TypedRest.OAuth\TypedRest.OAuth.csproj", "{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypedRest.CommandLine", "TypedRest.CommandLine\TypedRest.CommandLine.csproj", "{0EBBB26C-3F15-43A1-90AA-2A738CD1E299}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{967D6438-9E35-438D-B426-4FCA71864256}"
@@ -32,6 +34,12 @@ Global
 		{A9A75ECC-93CA-4055-AFD5-6E7BA5826939}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
 		{A9A75ECC-93CA-4055-AFD5-6E7BA5826939}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9A75ECC-93CA-4055-AFD5-6E7BA5826939}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178420C1-3E4F-4445-BE5F-F97B7ED30FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0EBBB26C-3F15-43A1-90AA-2A738CD1E299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0EBBB26C-3F15-43A1-90AA-2A738CD1E299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EBBB26C-3F15-43A1-90AA-2A738CD1E299}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
