@@ -17,13 +17,13 @@ namespace TypedRest
         }
 
         [Fact]
-        public async Task TestTrigger()
+        public async Task TestInvoke()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .WithContent("{\"id\":1,\"name\":\"input\"}")
                 .Respond(JsonMime, "{\"id\":2,\"name\":\"result\"}");
 
-            var result = await _endpoint.TriggerAsync(new MockEntity(1, "input"));
+            var result = await _endpoint.InvokeAsync(new MockEntity(1, "input"));
             result.Should().Be(new MockEntity(2, "result"));
         }
     }

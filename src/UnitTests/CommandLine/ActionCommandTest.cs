@@ -7,9 +7,9 @@ namespace TypedRest.CommandLine
     public class ActionCommandTest : CommandTestBase<ActionCommand, IActionEndpoint>
     {
         [Fact]
-        public async Task TestTrigger()
+        public async Task TestInvoke()
         {
-            EndpointMock.Setup(x => x.TriggerAsync(default)).Returns(Task.CompletedTask);
+            EndpointMock.Setup(x => x.InvokeAsync(default)).Returns(Task.CompletedTask);
 
             await ExecuteAsync();
         }
@@ -18,12 +18,12 @@ namespace TypedRest.CommandLine
     public class ActionCommandWithInputTest : CommandTestBase<ActionCommand<MockEntity>, IActionEndpoint<MockEntity>>
     {
         [Fact]
-        public async Task TestTrigger()
+        public async Task TestInvoke()
         {
             var input = new MockEntity(1, "a");
 
             ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(input);
-            EndpointMock.Setup(x => x.TriggerAsync(input, default)).Returns(Task.CompletedTask);
+            EndpointMock.Setup(x => x.InvokeAsync(input, default)).Returns(Task.CompletedTask);
 
             await ExecuteAsync();
         }

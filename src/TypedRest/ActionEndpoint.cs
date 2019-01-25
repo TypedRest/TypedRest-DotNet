@@ -8,7 +8,7 @@ namespace TypedRest
     /// <summary>
     /// REST endpoint that represents an RPC-like action.
     /// </summary>
-    public class ActionEndpoint : TriggerEndpointBase, IActionEndpoint
+    public class ActionEndpoint : RpcEndpointBase, IActionEndpoint
     {
         /// <summary>
         /// Creates a new action endpoint.
@@ -28,7 +28,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public Task TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task InvokeAsync(CancellationToken cancellationToken = new CancellationToken())
             => HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
     }
 
@@ -36,7 +36,7 @@ namespace TypedRest
     /// REST endpoint that represents an RPC-like action which takes <typeparamref name="TEntity"/> as input.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
-    public class ActionEndpoint<TEntity> : TriggerEndpointBase, IActionEndpoint<TEntity>
+    public class ActionEndpoint<TEntity> : RpcEndpointBase, IActionEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new action endpoint with a relative URI.
@@ -56,7 +56,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public Task TriggerAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        public Task InvokeAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 

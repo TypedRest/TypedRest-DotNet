@@ -23,7 +23,7 @@ namespace TypedRest.CommandLine
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
                                                         CancellationToken cancellationToken = default)
-            => OutputEntity(await Endpoint.TriggerAsync(cancellationToken));
+            => OutputEntity(await Endpoint.InvokeAsync(cancellationToken));
 
         /// <summary>
         /// Outputs a <typeparamref name="TResult"/> to the user via the console.
@@ -49,7 +49,7 @@ namespace TypedRest.CommandLine
 
         protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
                                                         CancellationToken cancellationToken = default)
-            => OutputEntity(await Endpoint.TriggerAsync(InputEntity(args.Skip(1).ToList()), cancellationToken));
+            => OutputEntity(await Endpoint.InvokeAsync(InputEntity(args.Skip(1).ToList()), cancellationToken));
 
         /// <summary>
         /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.

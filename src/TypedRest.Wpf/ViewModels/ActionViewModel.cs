@@ -8,7 +8,7 @@ namespace TypedRest.Wpf.ViewModels
     /// <summary>
     /// View model operating on an <see cref="IActionEndpoint"/>.
     /// </summary>
-    public class ActionViewModel<TEndpoint> : TriggerViewModelBase<TEndpoint>
+    public class ActionViewModel<TEndpoint> : RpcViewModelBase<TEndpoint>
         where TEndpoint : class, IActionEndpoint
     {
         /// <summary>
@@ -16,20 +16,20 @@ namespace TypedRest.Wpf.ViewModels
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
-        /// <param name="caption">A caption for the triggerable action.</param>
+        /// <param name="caption">A caption for the invokable action.</param>
         public ActionViewModel(TEndpoint endpoint, IEventAggregator eventAggregator, string caption)
             : base(endpoint, eventAggregator)
         {
             DisplayName = caption;
         }
 
-        public override async void Trigger() => await WithErrorHandlingAsync(async () =>
+        public override async void Invoke() => await WithErrorHandlingAsync(async () =>
         {
-            await OnTriggerAsync();
-            EventAggregator.Publish(new TriggerEvent(Endpoint), null);
+            await OnInvokeAsync();
+            EventAggregator.Publish(new InvokeEvent(Endpoint), null);
             MessageBox.Show("Successful.", DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
         });
 
-        private async Task OnTriggerAsync() => await Endpoint.TriggerAsync(CancellationToken);
+        private async Task OnInvokeAsync() => await Endpoint.InvokeAsync(CancellationToken);
     }
 }

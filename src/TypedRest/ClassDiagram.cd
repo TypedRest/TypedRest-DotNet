@@ -57,11 +57,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypedRest.TriggerEndpointBase" Collapsed="true">
+  <Class Name="TypedRest.RpcEndpointBase" Collapsed="true">
     <Position X="18" Y="11.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>TriggerEndpointBase.cs</FileName>
+      <FileName>RpcEndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -169,11 +169,11 @@
       <FileName>IBlobEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TypedRest.ITriggerEndpoint">
+  <Interface Name="TypedRest.IRpcEndpoint">
     <Position X="18" Y="3.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ITriggerEndpoint.cs</FileName>
+      <FileName>IRpcEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.ICollectionEndpoint&lt;TEntity&gt;" Collapsed="true">

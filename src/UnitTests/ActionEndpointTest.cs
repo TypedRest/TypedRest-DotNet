@@ -25,16 +25,16 @@ namespace TypedRest
 
             await _endpoint.ProbeAsync();
 
-            _endpoint.TriggerAllowed.Should().BeTrue();
+            _endpoint.InvokeAllowed.Should().BeTrue();
         }
 
         [Fact]
-        public async Task TestTrigger()
+        public async Task TestInvoke()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .Respond(HttpStatusCode.Accepted);
 
-            await _endpoint.TriggerAsync();
+            await _endpoint.InvokeAsync();
         }
     }
 }

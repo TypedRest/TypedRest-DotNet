@@ -5,22 +5,22 @@ using Caliburn.Micro;
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// Base class for building view models operating on an <see cref="ITriggerEndpoint"/>.
+    /// Base class for building view models operating on an <see cref="IRpcEndpoint"/>.
     /// </summary>
-    /// <typeparam name="TEndpoint">The specific type of <see cref="ITriggerEndpoint"/> to operate on.</typeparam>
-    public abstract class TriggerViewModelBase<TEndpoint> : EndpointViewModelBase<TEndpoint>
-        where TEndpoint : class, ITriggerEndpoint
+    /// <typeparam name="TEndpoint">The specific type of <see cref="IRpcEndpoint"/> to operate on.</typeparam>
+    public abstract class RpcViewModelBase<TEndpoint> : EndpointViewModelBase<TEndpoint>
+        where TEndpoint : class, IRpcEndpoint
     {
         /// <summary>
-        /// Creates a new REST trigger view model.
+        /// Creates a new RPC view model.
         /// </summary>
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
-        protected TriggerViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
+        protected RpcViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)
         {}
 
-        public bool CanTrigger { get; set; }
+        public bool CanInvoke { get; set; }
 
         protected override async Task OnLoadAsync()
         {
@@ -33,10 +33,10 @@ namespace TypedRest.Wpf.ViewModels
                 // HTTP OPTIONS server-side implementation is optional
             }
 
-            CanTrigger = Endpoint.TriggerAllowed.GetValueOrDefault(CanTrigger);
-            NotifyOfPropertyChange(() => CanTrigger);
+            CanInvoke = Endpoint.InvokeAllowed.GetValueOrDefault(CanInvoke);
+            NotifyOfPropertyChange(() => CanInvoke);
         }
 
-        public abstract void Trigger();
+        public abstract void Invoke();
     }
 }

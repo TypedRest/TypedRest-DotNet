@@ -8,11 +8,11 @@ namespace TypedRest.CommandLine
     public class FunctionCommandTest : CommandTestBase<FunctionCommand<MockEntity>, IFunctionEndpoint<MockEntity>>
     {
         [Fact]
-        public async Task TestTrigger()
+        public async Task TestInvoke()
         {
             var output = new MockEntity(2, "b");
 
-            EndpointMock.Setup(x => x.TriggerAsync(default)).ReturnsAsync(output);
+            EndpointMock.Setup(x => x.InvokeAsync(default)).ReturnsAsync(output);
             ConsoleMock.Setup(x => x.Write(output));
 
             await ExecuteAsync();
@@ -22,13 +22,13 @@ namespace TypedRest.CommandLine
     public class FunctionCommandWithInputTest : CommandTestBase<FunctionCommand<MockEntity, MockEntity>, IFunctionEndpoint<MockEntity, MockEntity>>
     {
         [Fact]
-        public async Task TestTrigger()
+        public async Task TestInvoke()
         {
             var input = new MockEntity(1, "a");
             var output = new MockEntity(2, "b");
 
             ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(input);
-            EndpointMock.Setup(x => x.TriggerAsync(input, default)).ReturnsAsync(output);
+            EndpointMock.Setup(x => x.InvokeAsync(input, default)).ReturnsAsync(output);
             ConsoleMock.Setup(x => x.Write(output));
 
             await ExecuteAsync();

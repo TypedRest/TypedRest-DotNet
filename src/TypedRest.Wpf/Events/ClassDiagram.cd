@@ -47,11 +47,11 @@
       <FileName>Events\BlobUploadEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.Events.TriggerEvent" Collapsed="true">
+  <Class Name="TypedRest.Wpf.Events.InvokeEvent" Collapsed="true">
     <Position X="7.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Events\TriggerEvent.cs</FileName>
+      <FileName>Events\InvokeEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="TypedRest.Wpf.Events.IEndpointEvent">

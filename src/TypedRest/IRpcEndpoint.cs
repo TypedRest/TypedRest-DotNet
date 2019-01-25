@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// An RPC-like trigger endpoint.
+    /// An RPC-like endpoint.
     /// </summary>
-    public interface ITriggerEndpoint : IEndpoint
+    public interface IRpcEndpoint : IEndpoint
     {
         /// <summary>
         /// Queries the server about capabilities of the endpoint without performing any action.
@@ -26,10 +26,10 @@ namespace TypedRest
         Task ProbeAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Shows whether the server has indicated that the trigger method is currently allowed.
+        /// Shows whether the server has indicated that the invoke method is currently allowed.
         /// </summary>
         /// <remarks>Uses cached data from last response.</remarks>
         /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
-        bool? TriggerAllowed { get; }
+        bool? InvokeAllowed { get; }
     }
 }

@@ -108,11 +108,11 @@
       <FileName>ViewModels\FunctionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.ViewModels.TriggerViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
+  <Class Name="TypedRest.Wpf.ViewModels.RpcViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
     <Position X="26.25" Y="2.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAABAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\TriggerViewModelBase.cs</FileName>
+      <FileName>ViewModels\RpcViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.PollingViewModel&lt;TEntity&gt;" Collapsed="true">

@@ -10,7 +10,7 @@ namespace TypedRest
     /// REST endpoint that represents an RPC-like function which returns <typeparamref name="TResult"/> as output.
     /// </summary>
     /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
-    public class FunctionEndpoint<TResult> : TriggerEndpointBase, IFunctionEndpoint<TResult>
+    public class FunctionEndpoint<TResult> : RpcEndpointBase, IFunctionEndpoint<TResult>
     {
         /// <summary>
         /// Creates a new function endpoint with a relative URI.
@@ -30,7 +30,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public async Task<TResult> TriggerAsync(CancellationToken cancellationToken = new CancellationToken())
+        public async Task<TResult> InvokeAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var response =
                 await
@@ -48,7 +48,7 @@ namespace TypedRest
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
     /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
-    public class FunctionEndpoint<TEntity, TResult> : TriggerEndpointBase, IFunctionEndpoint<TEntity, TResult>
+    public class FunctionEndpoint<TEntity, TResult> : RpcEndpointBase, IFunctionEndpoint<TEntity, TResult>
     {
         /// <summary>
         /// Creates a new function endpoint with a relative URI.
@@ -68,7 +68,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public async Task<TResult> TriggerAsync(TEntity entity,
+        public async Task<TResult> InvokeAsync(TEntity entity,
                                                 CancellationToken cancellationToken = new CancellationToken())
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
