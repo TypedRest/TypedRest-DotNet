@@ -20,7 +20,7 @@
     <Position X="7.5" Y="13.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CollectionEndpoint.cs</FileName>
+      <FileName>CollectionEndpoint.Specialized.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -181,7 +181,7 @@
     <Position X="7" Y="5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ICollectionEndpoint.cs</FileName>
+      <FileName>ICollectionEndpoint.Specialized.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IActionEndpoint">

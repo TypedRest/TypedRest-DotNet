@@ -11,7 +11,7 @@
     <Position X="13.5" Y="6.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>CollectionCommand.cs</FileName>
+      <FileName>CollectionCommand.Specialized.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.CollectionCommand&lt;TEntity, TEndpoint, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
@@ -105,7 +105,7 @@
     <Position X="10.75" Y="6.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CollectionCommand.cs</FileName>
+      <FileName>CollectionCommand.Specialized.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.StreamingCollectionCommand&lt;TEntity, TElementEndpoint, TElementCommand&gt;" Collapsed="true">
