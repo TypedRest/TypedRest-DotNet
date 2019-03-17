@@ -6,10 +6,10 @@ using TypedRest.Wpf.Events;
 namespace TypedRest.Wpf.ViewModels
 {
     /// <summary>
-    /// View model operating on an <see cref="IFunctionEndpoint{TResult}"/>.
+    /// View model operating on an <see cref="IProducerEndpoint{TResult}"/>.
     /// </summary>
-    public class FunctionViewModel<TEndpoint, TResult> : RpcViewModelBase<TEndpoint>
-        where TEndpoint : class, IFunctionEndpoint<TResult>
+    public class ProducerViewModel<TEndpoint, TResult> : RpcViewModelBase<TEndpoint>
+        where TEndpoint : class, IProducerEndpoint<TResult>
     {
         /// <summary>
         /// Creates a new REST function view model.
@@ -17,7 +17,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <param name="endpoint">The REST endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         /// <param name="caption">A caption for the invokable function.</param>
-        public FunctionViewModel(TEndpoint endpoint, IEventAggregator eventAggregator, string caption)
+        public ProducerViewModel(TEndpoint endpoint, IEventAggregator eventAggregator, string caption)
             : base(endpoint, eventAggregator)
         {
             DisplayName = caption;

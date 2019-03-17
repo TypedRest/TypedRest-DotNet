@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -7,31 +6,6 @@ using Newtonsoft.Json;
 
 namespace TypedRest.CommandLine
 {
-    /// <summary>
-    /// Command operating on an <see cref="IFunctionEndpoint{TResult}"/>.
-    /// </summary>
-    /// <typeparam name="TResult">The type of entity the <see cref="IFunctionEndpoint{TResult}"/> returns as a result.</typeparam>
-    public class FunctionCommand<TResult> : EndpointCommand<IFunctionEndpoint<TResult>>
-    {
-        /// <summary>
-        /// Creates a new REST function command.
-        /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
-        public FunctionCommand(IFunctionEndpoint<TResult> endpoint)
-            : base(endpoint)
-        {}
-
-        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default)
-            => OutputEntity(await Endpoint.InvokeAsync(cancellationToken));
-
-        /// <summary>
-        /// Outputs a <typeparamref name="TResult"/> to the user via the console.
-        /// </summary>
-        protected virtual void OutputEntity(TResult entity)
-            => Console.Write(entity);
-    }
-
     /// <summary>
     /// Command operating on an <see cref="IFunctionEndpoint{TEntity,TResult}"/>.
     /// </summary>

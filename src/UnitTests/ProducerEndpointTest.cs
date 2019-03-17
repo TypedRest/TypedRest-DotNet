@@ -7,23 +7,22 @@ using Xunit;
 namespace TypedRest
 {
     [Collection("Endpoint")]
-    public class FunctionEndpointWithInputTest : EndpointTestBase
+    public class ProducerEndpointTest : EndpointTestBase
     {
-        private readonly IFunctionEndpoint<MockEntity, MockEntity> _endpoint;
+        private readonly IProducerEndpoint<MockEntity> _endpoint;
 
-        public FunctionEndpointWithInputTest()
+        public ProducerEndpointTest()
         {
-            _endpoint = new FunctionEndpoint<MockEntity, MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new ProducerEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
         [Fact]
         public async Task TestInvoke()
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-                .WithContent("{\"id\":1,\"name\":\"input\"}")
                 .Respond(JsonMime, "{\"id\":2,\"name\":\"result\"}");
 
-            var result = await _endpoint.InvokeAsync(new MockEntity(1, "input"));
+            var result = await _endpoint.InvokeAsync();
             result.Should().Be(new MockEntity(2, "result"));
         }
     }

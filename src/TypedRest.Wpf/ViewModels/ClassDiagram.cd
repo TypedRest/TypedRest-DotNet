@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TypedRest.Wpf.ViewModels.BlobViewModel" Collapsed="true">
     <Position X="22" Y="2.25" Width="1.75" />
@@ -97,21 +97,21 @@
   <Class Name="TypedRest.Wpf.ViewModels.ActionViewModel&lt;TEndpoint&gt;" Collapsed="true">
     <Position X="24.75" Y="3.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\ActionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.Wpf.ViewModels.FunctionViewModel&lt;TEndpoint, TResult&gt;" Collapsed="true">
+  <Class Name="TypedRest.Wpf.ViewModels.ProducerViewModel&lt;TEndpoint, TResult&gt;" Collapsed="true">
     <Position X="27.5" Y="3.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\FunctionViewModel.cs</FileName>
+      <HashCode>AAAAEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ProducerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.Wpf.ViewModels.RpcViewModelBase&lt;TEndpoint&gt;" Collapsed="true">
     <Position X="26.25" Y="2.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABAAABAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>ViewModels\RpcViewModelBase.cs</FileName>
     </TypeIdentifier>
   </Class>

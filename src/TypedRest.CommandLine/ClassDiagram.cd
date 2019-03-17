@@ -72,15 +72,15 @@
       <FileName>ActionCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TypedRest.CommandLine.FunctionCommand&lt;TResult&gt;" Collapsed="true">
-    <Position X="22.75" Y="5" Width="2.25" />
+  <Class Name="TypedRest.CommandLine.ProducerCommand&lt;TResult&gt;" Collapsed="true">
+    <Position X="22.5" Y="5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAIAAA=</HashCode>
-      <FileName>FunctionCommand.cs</FileName>
+      <FileName>ProducerCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TypedRest.CommandLine.FunctionCommand&lt;TEntity, TResult&gt;" Collapsed="true">
-    <Position X="25.25" Y="5" Width="2.75" />
+    <Position X="25" Y="5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAgIAAA=</HashCode>
       <FileName>FunctionCommand.cs</FileName>

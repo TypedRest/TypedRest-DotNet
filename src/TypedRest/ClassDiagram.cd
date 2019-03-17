@@ -88,11 +88,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypedRest.FunctionEndpoint&lt;TResult&gt;" Collapsed="true">
+  <Class Name="TypedRest.ProducerEndpoint&lt;TResult&gt;" Collapsed="true">
     <Position X="19" Y="13.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>FunctionEndpoint.cs</FileName>
+      <FileName>ProducerEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -198,11 +198,11 @@
       <FileName>IConsumerEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TypedRest.IFunctionEndpoint&lt;TResult&gt;">
+  <Interface Name="TypedRest.IProducerEndpoint&lt;TResult&gt;">
     <Position X="19" Y="7" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>IFunctionEndpoint.cs</FileName>
+      <FileName>IProducerEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IFunctionEndpoint&lt;TEntity, TResult&gt;">
