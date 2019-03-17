@@ -7,13 +7,13 @@ using Xunit;
 namespace TypedRest
 {
     [Collection("Endpoint")]
-    public class ActionEndpointWithInputTest : EndpointTestBase
+    public class ConsumerEndpointTest : EndpointTestBase
     {
-        private readonly IActionEndpoint<MockEntity> _endpoint;
+        private readonly IConsumerEndpoint<MockEntity> _endpoint;
 
-        public ActionEndpointWithInputTest()
+        public ConsumerEndpointTest()
         {
-            _endpoint = new ActionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new ConsumerEndpoint<MockEntity>(EntryEndpoint, "endpoint");
         }
 
         [Fact]

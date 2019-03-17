@@ -3,7 +3,7 @@
   <Class Name="TypedRest.ElementEndpoint&lt;TEntity&gt;" Collapsed="true">
     <Position X="0.5" Y="13.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAgAIAAACAAACAAgAABAAAAAAAAAAAAAAAAAAACAIA=</HashCode>
+      <HashCode>AAAgAIAAACBAACAAgAABAAAAAAAAAAAAAAAAAAACAIA=</HashCode>
       <FileName>ElementEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -11,7 +11,7 @@
   <Class Name="TypedRest.EndpointBase" Collapsed="true">
     <Position X="3.75" Y="10.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAgEAAAACAAECAUBAKAAAABCBCAACAACBACRAQAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAECAUBAKAAAABCACAAAAACBACRQQAAAA=</HashCode>
       <FileName>EndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -35,7 +35,7 @@
   <Class Name="TypedRest.EntryEndpoint" Collapsed="true">
     <Position X="0.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAQAAAAAAABAAAAAAAABAAAAAAAABAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAAAABAAAAAAAABAAAAAAAABAAAIAAAAAAAAA=</HashCode>
       <FileName>EntryEndpoint.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -60,7 +60,7 @@
   <Class Name="TypedRest.RpcEndpointBase" Collapsed="true">
     <Position X="18" Y="11.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>RpcEndpointBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -75,23 +75,23 @@
   <Class Name="TypedRest.ActionEndpoint" Collapsed="true">
     <Position X="15" Y="13.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>ActionEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TypedRest.ActionEndpoint&lt;TEntity&gt;" Collapsed="true">
+  <Class Name="TypedRest.ConsumerEndpoint&lt;TEntity&gt;" Collapsed="true">
     <Position X="16.75" Y="13.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>ActionEndpoint.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>ConsumerEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.FunctionEndpoint&lt;TResult&gt;" Collapsed="true">
     <Position X="19" Y="13.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>FunctionEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -99,7 +99,7 @@
   <Class Name="TypedRest.FunctionEndpoint&lt;TEntity, TResult&gt;" Collapsed="true">
     <Position X="21.5" Y="13.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>FunctionEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -107,14 +107,15 @@
   <Class Name="TypedRest.ETagEndpointBase" Collapsed="true">
     <Position X="2.75" Y="11.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAACAAABAAAAAAAAAAAAAAAAAgAAAAAAQAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAABAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>EtagEndpointBase.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TypedRest.IndexerEndpoint&lt;TElementEndpoint&gt;" Collapsed="true">
     <Position X="5.25" Y="11.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAQAAIAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AQBAAAAAAAAAAAAACAAAQAAIAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>IndexerEndpoint.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -144,14 +145,14 @@
   <Interface Name="TypedRest.IElementEndpoint&lt;TEntity&gt;">
     <Position X="0.5" Y="6" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAACAAACAAAAABAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <HashCode>AAAgAAAAACBAACAAAAABAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
       <FileName>IElementEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IEndpoint">
     <Position X="4.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAAAAAAAACACAAAAACAAARAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAACACAAAAACAAARQAAAAA=</HashCode>
       <FileName>IEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -172,7 +173,7 @@
   <Interface Name="TypedRest.IRpcEndpoint">
     <Position X="18" Y="3.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>IRpcEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -186,28 +187,28 @@
   <Interface Name="TypedRest.IActionEndpoint">
     <Position X="14.75" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>IActionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TypedRest.IActionEndpoint&lt;TEntity&gt;">
-    <Position X="16.5" Y="7" Width="2" />
+  <Interface Name="TypedRest.IConsumerEndpoint&lt;TEntity&gt;">
+    <Position X="16.5" Y="7" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>IActionEndpoint.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>IConsumerEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IFunctionEndpoint&lt;TResult&gt;">
-    <Position X="18.75" Y="7" Width="2.25" />
+    <Position X="19" Y="7" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>IFunctionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TypedRest.IFunctionEndpoint&lt;TEntity, TResult&gt;">
-    <Position X="21.25" Y="7" Width="2.75" />
+    <Position X="21.5" Y="7" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>IFunctionEndpoint.cs</FileName>
     </TypeIdentifier>
   </Interface>
