@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using MorseCode.ITask;
 
 namespace TypedRest
 {
@@ -11,7 +11,7 @@ namespace TypedRest
     /// REST endpoint that represents an RPC-like function which returns <typeparamref name="TResult"/> as output.
     /// </summary>
     /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
-    public interface IProducerEndpoint<TResult> : IRpcEndpoint
+    public interface IProducerEndpoint<out TResult> : IRpcEndpoint
     {
         /// <summary>
         /// Invokes the function.
@@ -23,6 +23,6 @@ namespace TypedRest
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TResult> InvokeAsync(CancellationToken cancellationToken = default);
+        ITask<TResult> InvokeAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using MorseCode.ITask;
 
 namespace TypedRest
 {
@@ -30,7 +30,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public async Task<TResult> InvokeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public async ITask<TResult> InvokeAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var response =
                 await
