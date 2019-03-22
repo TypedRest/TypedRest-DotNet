@@ -5,6 +5,9 @@ using Newtonsoft.Json.Serialization;
 
 namespace TypedRest
 {
+    /// <summary>
+    /// Handles serializing/deserializing from/to JSON using camel-case naming.
+    /// </summary>
     public class DefaultJsonSerializer : JsonMediaTypeFormatter
     {
         public DefaultJsonSerializer()
