@@ -6,7 +6,11 @@ namespace TypedRest
     /// REST endpoint that represents an entity that can be polled for state changes.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public interface IPollingEndpoint<TEntity> : IElementEndpoint<TEntity>
+    public interface IPollingEndpoint<
+#if DOXYGEN
+out
+#endif
+        TEntity> : IElementEndpoint<TEntity>
     {
         /// <summary>
         /// The interval in which to send requests to the server.
