@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>TypedRest.Reactive extends TypedRest with Reactive (Rx) Endpoints for polling and streaming.</Description>
+    <Description>Extends TypedRest with Reactive (Rx) Endpoints for polling and streaming.</Description>
     <Summary>Reactive (Rx) Endpoints for polling and streaming</Summary>
     <PackageTags>Typed REST</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>

@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>TypedRest.CommandLine helps you build simple command-line clients using REST clients designed with TypedRest.</Description>
+    <Description>Build simple command-line clients using REST clients designed with TypedRest.</Description>
     <Summary>Build command-line interfaces using a TypedRest client</Summary>
     <PackageTags>Typed REST Commandline CLI</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
