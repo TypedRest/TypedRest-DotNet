@@ -64,7 +64,7 @@ await server.Packages[1].DeleteAsync();
 
 ## Build command-line clients
 
-Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/) NuGet package in your command-line project. You can then use the classes ``CollectionCommand`, `ElementCommand`, `PollingCommand`, `ActionCommand`, `PaginationCommand`, `StreamCommand` and `BlobCommand` to build command objects that parse arguments and operate on `CollectionEndpoint`s, `ElementEndpoint`s, `PollingEndpoint`s, `ActionEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
+Install the [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/) NuGet package in your command-line project. You can then use the classes `CollectionCommand`, `ElementCommand`, `PollingCommand`, `ActionCommand`, `PaginationCommand`, `StreamCommand` and `BlobCommand` to build command objects that parse arguments and operate on `CollectionEndpoint`s, `ElementEndpoint`s, `PollingEndpoint`s, `ActionEndpoint`s, `PaginationEndpoint`s, `StreamEndpoint`s and `BlobEndpoint`s.
 
 
 ## Build GUI clients
