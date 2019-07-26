@@ -18,7 +18,7 @@ namespace TypedRest.Wpf.ViewModels
         where TEndpoint : class, IEndpoint
     {
         /// <summary>
-        /// The REST endpoint this view model operates on.
+        /// The endpoint this view model operates on.
         /// </summary>
         protected readonly TEndpoint Endpoint;
 
@@ -28,9 +28,9 @@ namespace TypedRest.Wpf.ViewModels
         protected readonly IEventAggregator EventAggregator;
 
         /// <summary>
-        /// Creates a new REST endpoint view model.
+        /// Creates a new endpoint view model.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this view model operates on.</param>
+        /// <param name="endpoint">The endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         protected EndpointViewModelBase(TEndpoint endpoint, IEventAggregator eventAggregator)
         {
@@ -90,7 +90,7 @@ namespace TypedRest.Wpf.ViewModels
         }
 
         /// <summary>
-        /// Handler for errors reported by REST endpoints.
+        /// Handler for errors reported by endpoints.
         /// </summary>
         protected virtual void OnError(Exception ex) => MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 

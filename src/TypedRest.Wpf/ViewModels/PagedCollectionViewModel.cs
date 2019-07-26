@@ -11,7 +11,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Creates a new REST paged collection view model.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this view model operates on.</param>
+        /// <param name="endpoint">The endpoint this view model operates on.</param>
         /// <param name="eventAggregator">Used to send refresh notifications.</param>
         public PagedCollectionViewModel(ICollectionEndpoint<TEntity> endpoint, IEventAggregator eventAggregator)
             : base(endpoint, eventAggregator)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Base class for building REST RPC-like endpoints.
+    /// Base class for building RPC endpoints.
     /// </summary>
     public abstract class RpcEndpointBase : EndpointBase, IRpcEndpoint
     {

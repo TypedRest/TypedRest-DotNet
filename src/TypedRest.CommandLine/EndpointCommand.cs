@@ -14,14 +14,14 @@ namespace TypedRest.CommandLine
         where TEndpoint : class, IEndpoint
     {
         /// <summary>
-        /// The REST endpoint this command operates on.
+        /// The endpoint this command operates on.
         /// </summary>
         protected readonly TEndpoint Endpoint;
 
         /// <summary>
-        /// Creates a new REST endpoint command.
+        /// Creates a new endpoint command.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
+        /// <param name="endpoint">The endpoint this command operates on.</param>
         protected EndpointCommand(TEndpoint endpoint)
         {
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));

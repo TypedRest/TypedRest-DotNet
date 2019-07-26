@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single entity. Usually you will want to use the typed-variant of this interface <see cref="IElementEndpoint{TEntity}"/>.
+    /// Endpoint for an individual resource. Usually you will want to use the typed-variant of this interface: <see cref="IElementEndpoint{TEntity}"/>
     /// </summary>
     public interface IElementEndpoint : IEndpoint
     {
         /// <summary>
-        /// Determines whether the entity currently exists.
+        /// Determines whether the element currently exists.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -30,7 +30,7 @@ namespace TypedRest
         bool? DeleteAllowed { get; }
 
         /// <summary>
-        /// Deletes the entity.
+        /// Deletes the element.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>

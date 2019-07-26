@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Base class for building REST endpoints that use ETags (entity tags) for caching and to avoid lost updates.
+    /// Base class for building endpoints that use ETags (entity tags) for caching and to avoid lost updates.
     /// </summary>
     public abstract class ETagEndpointBase : EndpointBase, ICachingEndpoint
     {
         /// <summary>
-        /// Creates a new REST endpoint with a relative URI.
+        /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
@@ -24,7 +24,7 @@ namespace TypedRest
         {}
 
         /// <summary>
-        /// Creates a new REST endpoint with a relative URI.
+        /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>

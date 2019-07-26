@@ -77,7 +77,7 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Asks the user or a service for the base URI of the REST interface.
+        /// Asks the user or a service for the base URI of the REST API.
         /// </summary>
         /// <returns>The endpoint URI or <c>null</c> if it cannot be requested.</returns>
         protected abstract Uri RequestUri();
@@ -115,7 +115,7 @@ namespace TypedRest
             : null;
 
         /// <summary>
-        /// Asks the user or a service for the OAuth token to present as a "Bearer" to the REST interface.
+        /// Asks the user or a service for the OAuth token to present as a "Bearer" to the REST API.
         /// </summary>
         /// <returns>The OAuth token or <c>null</c> if it cannot be requested.</returns>
         protected abstract string RequestToken(Uri uri);
@@ -151,15 +151,15 @@ namespace TypedRest
         /// <summary>
         /// Instantiates a <typeparamref name="T"/> with an <see cref="Uri"/> and <see cref="ICredentials"/>.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface.</param>
-        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
+        /// <param name="uri">The base URI of the REST API.</param>
+        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
         protected virtual T NewEndpoint(Uri uri, ICredentials credentials) => (T)Activator.CreateInstance(typeof(T), uri, credentials);
 
         /// <summary>
         /// Instantiates a <typeparamref name="T"/> with an <see cref="Uri"/> and a token.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface.</param>
-        /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
+        /// <param name="uri">The base URI of the REST API.</param>
+        /// <param name="token">The OAuth token to present as a "Bearer" to the REST API.</param>
         protected virtual T NewEndpoint(Uri uri, string token) => (T)Activator.CreateInstance(typeof(T), uri, token);
     }
 }

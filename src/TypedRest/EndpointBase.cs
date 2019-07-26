@@ -9,7 +9,7 @@ using TypedRest.UriTemplates;
 namespace TypedRest
 {
     /// <summary>
-    /// Base class for building REST endpoints, i.e. remote HTTP resources.
+    /// Base class for building endpoints, i.e. remote HTTP resources.
     /// </summary>
     public abstract class EndpointBase : IEndpoint
     {
@@ -20,7 +20,7 @@ namespace TypedRest
         public ILinkHandler LinkHandler { get; }
 
         /// <summary>
-        /// Creates a new REST endpoint with an absolute URI.
+        /// Creates a new endpoint with an absolute URI.
         /// </summary>
         /// <param name="uri">The HTTP URI of the remote element.</param>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
@@ -37,7 +37,7 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Creates a new REST endpoint with a relative URI.
+        /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
@@ -46,7 +46,7 @@ namespace TypedRest
         {}
 
         /// <summary>
-        /// Creates a new REST endpoint with a relative URI.
+        /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
@@ -92,7 +92,7 @@ namespace TypedRest
         protected virtual async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
         {
             var response = await responseTask.NoContext();
-            
+
             (_links, _linkTemplates) = await LinkHandler.HandleAsync(response).NoContext();
 
             HandleCapabilities(response);

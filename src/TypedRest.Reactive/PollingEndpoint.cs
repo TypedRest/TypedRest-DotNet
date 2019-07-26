@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an entity that can be polled for state changes.
+    /// Endpoint for a resource that can be polled for state changes.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class PollingEndpoint<TEntity> : ElementEndpoint<TEntity>, IPollingEndpoint<TEntity>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// An RPC-like endpoint.
+    /// An endpoint for a non-RESTful resource that acts like a callable function.
     /// </summary>
     public interface IRpcEndpoint : IEndpoint
     {

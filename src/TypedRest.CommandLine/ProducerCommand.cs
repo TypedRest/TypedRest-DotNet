@@ -13,7 +13,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a new REST function command.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
+        /// <param name="endpoint">The endpoint this command operates on.</param>
         public ProducerCommand(IProducerEndpoint<TResult> endpoint)
             : base(endpoint)
         {}

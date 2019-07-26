@@ -3,7 +3,7 @@ using System;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s that can also be streamed.
+    /// Endpoint for a collection of <typeparamref name="TEntity"/>s observable as an append-only stream.
     /// </summary>
     /// <remarks>Use the more constrained <see cref="IStreamingCollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>

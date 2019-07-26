@@ -11,7 +11,7 @@ using MorseCode.ITask;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s.
+    /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
     /// <remarks>Use the more constrained <see cref="ICollectionEndpoint{TEntity}"/> when possible.</remarks>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
@@ -20,7 +20,7 @@ namespace TypedRest
         where TElementEndpoint : IEndpoint
     {
         /// <summary>
-        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element of this collection.
+        /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element.
         /// </summary>
         /// <param name="entity">An existing entity to extract the ID from.</param>
         TElementEndpoint this[TEntity entity] { get; }
@@ -33,7 +33,7 @@ namespace TypedRest
         bool? ReadAllAllowed { get; }
 
         /// <summary>
-        /// Returns all <typeparamref name="TEntity"/>s.
+        /// Returns all <typeparamref name="TEntity"/>s in the collection.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -50,11 +50,11 @@ namespace TypedRest
         bool? ReadRangeAllowed { get; }
 
         /// <summary>
-        /// Returns all <typeparamref name="TElementEndpoint"/>s within a specific range of the set.
+        /// Returns all <typeparamref name="TEntity"/>s within a specific range of the collection.
         /// </summary>
-        /// <param name="range">The range of elements to retrieve.</param>
+        /// <param name="range">The range of entities to retrieve.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <returns>A subset of the <typeparamref name="TElementEndpoint"/>s and the range they come from. May not exactly match the request <paramref name="range"/>.</returns>
+        /// <returns>A subset of the entities and the range they come from. May not exactly match the request <paramref name="range"/>.</returns>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
@@ -70,11 +70,11 @@ namespace TypedRest
         bool? CreateAllowed { get; }
 
         /// <summary>
-        /// Creates a new <typeparamref name="TEntity"/>.
+        /// Adds an <typeparamref name="TEntity"/> as a new element to the collection.
         /// </summary>
         /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <returns>An endpoint that represents the newly created entity.</returns>
+        /// <returns>An endpoint for the newly created entity.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
@@ -91,7 +91,7 @@ namespace TypedRest
         bool? CreateAllAllowed { get; }
 
         /// <summary>
-        /// Creates or modifies multiple <typeparamref name="TEntity"/>s.
+        /// Adds (or updates) multiple <typeparamref name="TEntity"/>s as elements in the collection.
         /// </summary>
         /// <param name="entities">The <typeparamref name="TEntity"/>s to create or modify.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>

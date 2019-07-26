@@ -7,7 +7,7 @@ using MorseCode.ITask;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an RPC-like function which returns <typeparamref name="TResult"/> as output.
+    /// RPC endpoint that returns <typeparamref name="TResult"/> as output when invoked.
     /// </summary>
     /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
     public class ProducerEndpoint<TResult> : RpcEndpointBase, IProducerEndpoint<TResult>

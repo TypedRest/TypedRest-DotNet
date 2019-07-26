@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an RPC-like action which takes <typeparamref name="TEntity"/> as input.
+    /// RPC endpoint that takes <typeparamref name="TEntity"/> as input when invoked.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
     public class ConsumerEndpoint<TEntity> : RpcEndpointBase, IConsumerEndpoint<TEntity>

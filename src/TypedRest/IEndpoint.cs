@@ -7,7 +7,7 @@ using TypedRest.UriTemplates;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint, i.e. a remote HTTP resource.
+    /// Endpoint, i.e. a remote HTTP resource.
     /// </summary>
     public interface IEndpoint
     {

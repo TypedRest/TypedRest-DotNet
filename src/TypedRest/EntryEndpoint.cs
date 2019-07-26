@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// Entry point to a REST interface. Derive from this class and add your own set of child-<see cref="IEndpoint"/>s as properties.
+    /// Represent the top-level URI of an API. Derive from this class and add your own set of child-<see cref="IEndpoint"/>s as properties.
     /// </summary>
     public class EntryEndpoint : EndpointBase
     {
         /// <summary>
-        /// Creates a new REST endpoint with an absolute URI.
+        /// Creates a new endpoint with an absolute URI.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
+        /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically.</param>
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
@@ -35,8 +35,8 @@ namespace TypedRest
         /// <summary>
         /// Creates a new entry point.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface.</param>
-        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST interface.</param>
+        /// <param name="uri">The base URI of the REST API.</param>
+        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
@@ -49,8 +49,8 @@ namespace TypedRest
         /// <summary>
         /// Creates a new entry point using an OAuth token.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface.</param>
-        /// <param name="token">The OAuth token to present as a "Bearer" to the REST interface.</param>
+        /// <param name="uri">The base URI of the REST API.</param>
+        /// <param name="token">The OAuth token to present as a "Bearer" to the REST API.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>

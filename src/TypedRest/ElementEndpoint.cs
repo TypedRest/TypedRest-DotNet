@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single <typeparamref name="TEntity"/>.
+    /// Endpoint for an individual resource.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class ElementEndpoint<TEntity> : ETagEndpointBase, IElementEndpoint<TEntity>

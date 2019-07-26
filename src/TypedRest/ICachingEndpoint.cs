@@ -1,7 +1,7 @@
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that caches the last response.
+    /// Endpoint that caches the last response.
     /// </summary>
     public interface ICachingEndpoint : IEndpoint
     {

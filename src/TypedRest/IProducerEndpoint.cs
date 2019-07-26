@@ -8,13 +8,13 @@ using MorseCode.ITask;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an RPC-like function which returns <typeparamref name="TResult"/> as output.
+    /// RPC endpoint that returns <typeparamref name="TResult"/> as output when invoked.
     /// </summary>
     /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>
     public interface IProducerEndpoint<out TResult> : IRpcEndpoint
     {
         /// <summary>
-        /// Invokes the function.
+        /// Gets an entity from the producer.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <returns>The result returned by the server.</returns>

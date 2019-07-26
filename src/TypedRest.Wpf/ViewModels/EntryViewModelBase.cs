@@ -14,7 +14,7 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Creates a new REST entry view model.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this view model operates on.</param>
+        /// <param name="endpoint">The endpoint this view model operates on.</param>
         protected EntryViewModelBase(TEndpoint endpoint)
             : base(endpoint, new EventAggregator())
         {}

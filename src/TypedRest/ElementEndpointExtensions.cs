@@ -26,7 +26,7 @@ namespace TypedRest
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException">TODO</exception>
+        /// <exception cref="InvalidOperationException">The number of retries performed for optimistic concurrency exceeded <paramref name="maxRetries"/>.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         public static async Task<TEntity> UpdateAsync<TEntity>(this IElementEndpoint<TEntity> endpoint, Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
         {

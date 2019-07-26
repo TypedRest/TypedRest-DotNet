@@ -12,7 +12,7 @@ using MorseCode.ITask;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a collection of <typeparamref name="TEntity"/>s as <typeparamref name="TElementEndpoint"/>s.
+    /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s. This must be a non-abstract class with a constructor that takes an <see cref="IEndpoint"/> and an <see cref="Uri"/>, unless you override <see cref="BuildElementEndpoint"/>.</typeparam>
@@ -56,7 +56,7 @@ namespace TypedRest
         }
 
         /// <summary>
-        /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. Does not perform any network traffic yet.
+        /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
         protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(typeof(TElementEndpoint), this, relativeUri);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single binary blob that can downloaded and uploaded.
+    /// Endpoint for a binary blob that can be downloaded or uploaded.
     /// </summary>
     public interface IBlobEndpoint : IEndpoint
     {

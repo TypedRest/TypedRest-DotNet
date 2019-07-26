@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an RPC-like function which takes <typeparamref name="TEntity"/> as input and returns <typeparamref name="TResult"/> as output.
+    /// RPC endpoint that takes <typeparamref name="TEntity"/> as input and returns <typeparamref name="TResult"/> as output when invoked.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint takes as input.</typeparam>
     /// <typeparam name="TResult">The type of entity the endpoint returns as output.</typeparam>

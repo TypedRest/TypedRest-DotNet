@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a stream of <typeparamref name="TEntity"/>s provided by a long-running connection.
+    /// Endpoint for a stream of <typeparamref name="TEntity"/>s using a persistent HTTP connection.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class StreamingEndpoint<TEntity> : EndpointBase, IStreamingEndpoint<TEntity>

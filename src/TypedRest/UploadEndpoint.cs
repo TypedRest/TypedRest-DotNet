@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that accepts binary uploads.
+    /// Endpoint that accepts binary uploads.
     /// </summary>
     public class UploadEndpoint : EndpointBase, IUploadEndpoint
     {

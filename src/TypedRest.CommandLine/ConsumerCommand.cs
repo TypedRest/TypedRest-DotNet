@@ -15,7 +15,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a new REST action command.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
+        /// <param name="endpoint">The endpoint this command operates on.</param>
         public ConsumerCommand(IConsumerEndpoint<TEntity> endpoint)
             : base(endpoint)
         {}

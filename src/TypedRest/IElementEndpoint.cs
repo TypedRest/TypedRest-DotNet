@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents a single entity.
+    /// Endpoint for an individual resource.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public interface IElementEndpoint<
@@ -21,7 +21,7 @@ out
     {
 #if DOXYGEN
         /// <summary>
-        /// Determines whether the entity currently exists.
+        /// Determines whether the element currently exists.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -37,7 +37,7 @@ out
         bool? DeleteAllowed { get; }
 
         /// <summary>
-        /// Deletes the entity.
+        /// Deletes the element.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
@@ -55,7 +55,7 @@ out
         TEntity Response { get; }
 
         /// <summary>
-        /// Returns the specific <typeparamref name="TEntity"/>.
+        /// Returns the <typeparamref name="TEntity"/>.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -93,7 +93,7 @@ out
         bool? MergeAllowed { get; }
 
         /// <summary>
-        /// Modifies an existing <typeparamref name="TEntity"/> by merging changes.
+        /// Modifies the existing <typeparamref name="TEntity"/> by merging changes.
         /// </summary>
         /// <param name="entity">The <typeparamref name="TEntity"/> data to merge with the existing one.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>

@@ -5,14 +5,14 @@ using System.Net.Http.Formatting;
 namespace TypedRest
 {
     /// <summary>
-    /// Entry point to a REST interface protected with OAuth 2.0. Derive from this class and add your own set of child-<see cref="IEndpoint"/>s as properties.
+    /// Entry point to a REST API protected with OAuth 2.0. Derive from this class and add your own set of child-<see cref="IEndpoint"/>s as properties.
     /// </summary>
     public class OAuthEntryEndpoint : EntryEndpoint
     {
         /// <summary>
-        /// Creates a new REST endpoint with an absolute URI.
+        /// Creates a new endpoint with an absolute URI.
         /// </summary>
-        /// <param name="uri">The base URI of the REST interface. Missing trailing slash will be appended automatically.</param>
+        /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically.</param>
         /// <param name="oAuthOptions">Options for OAuth 2.0 / OpenID Connect authentication. (optional)</param>
         /// <param name="httpMessageHandler">The HTTP message handler used to communicate with the remote element. (optional)</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>

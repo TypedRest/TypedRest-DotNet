@@ -20,7 +20,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a new REST streaming collection command.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
+        /// <param name="endpoint">The endpoint this command operates on.</param>
         protected StreamingCollectionCommand(TEndpoint endpoint)
             : base(endpoint)
         {}

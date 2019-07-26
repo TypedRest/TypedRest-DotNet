@@ -3,7 +3,7 @@ using System;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an entity that can be polled for state changes.
+    /// Endpoint for a resource that can be polled for state changes.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public interface IPollingEndpoint<
@@ -19,7 +19,7 @@ out
         TimeSpan PollingInterval { get; set; }
 
         /// <summary>
-        /// Provides an observable stream of element states. Compares entities using <see cref="object.Equals(object)"/> to detect changes.
+        /// Provides an observable stream of entity states. Compares entities using <see cref="object.Equals(object)"/> to detect changes.
         /// </summary>
         IObservable<TEntity> GetObservable();
     }

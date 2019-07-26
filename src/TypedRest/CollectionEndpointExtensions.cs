@@ -14,7 +14,7 @@ namespace TypedRest
     public static class CollectionEndpointExtensions
     {
         /// <summary>
-        /// Determines whether the collection contains a specific entity.
+        /// Determines whether the collection contains a specific element.
         /// </summary>
         /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual entity.</typeparam>
         /// <param name="endpoint">The collection endpoint containing the element.</param>
@@ -28,7 +28,7 @@ namespace TypedRest
             where TElementEndpoint : class, IElementEndpoint => endpoint[id].ExistsAsync(cancellationToken);
 
         /// <summary>
-        /// Determines whether the collection contains a specific entity.
+        /// Determines whether the collection contains a specific element.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
         /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>

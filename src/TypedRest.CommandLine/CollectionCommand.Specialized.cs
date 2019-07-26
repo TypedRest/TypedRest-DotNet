@@ -13,7 +13,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a new REST collection command.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
+        /// <param name="endpoint">The endpoint this command operates on.</param>
         public CollectionCommand(ICollectionEndpoint<TEntity, TElementEndpoint> endpoint)
             : base(endpoint)
         {}
@@ -28,7 +28,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Creates a new REST collection command.
         /// </summary>
-        /// <param name="endpoint">The REST endpoint this command operates on.</param>
+        /// <param name="endpoint">The endpoint this command operates on.</param>
         public CollectionCommand(ICollectionEndpoint<TEntity> endpoint)
             : base(endpoint)
         {}

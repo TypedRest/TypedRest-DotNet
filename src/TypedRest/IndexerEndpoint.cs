@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that addresses a set of <typeparamref name="TElementEndpoint"/>s via IDs.
+    /// Endpoint that addresses child <typeparamref name="TElementEndpoint"/>s by ID.
     /// </summary>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual elements.</typeparam>
     public class IndexerEndpoint<TElementEndpoint> : EndpointBase, IIndexerEndpoint<TElementEndpoint>
@@ -75,7 +75,7 @@ namespace TypedRest
             => HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
 
         /// <summary>
-        /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element of this collection. Does not perform any network traffic yet.
+        /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
         protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(_instanceType, this, relativeUri);

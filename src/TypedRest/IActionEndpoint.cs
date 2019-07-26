@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TypedRest
 {
     /// <summary>
-    /// REST endpoint that represents an RPC-like action.
+    /// RPC endpoint that is invoked with no input or output.
     /// </summary>
     public interface IActionEndpoint : IRpcEndpoint
     {
