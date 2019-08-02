@@ -63,7 +63,17 @@ namespace TypedRest
         /// Retrieves a link template with a specific relation type and resolves it.
         /// </summary>
         /// <param name="rel">The relation type of the link template to look for.</param>
-        /// <param name="variables">An object used to provide properties for resolving the tmplate</param>
+        /// <param name="variables">Variables for resolving the template</param>
+        /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
+        /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
+        Uri LinkTemplate(string rel, IDictionary<string, string> variables);
+
+        /// <summary>
+        /// Retrieves a link template with a specific relation type and resolves it.
+        /// </summary>
+        /// <param name="rel">The relation type of the link template to look for.</param>
+        /// <param name="variables">An object used to provide properties for resolving the template</param>
         /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
         /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
         /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>

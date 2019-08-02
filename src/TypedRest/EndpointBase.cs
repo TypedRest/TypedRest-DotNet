@@ -184,6 +184,9 @@ namespace TypedRest
             return template;
         }
 
+        public Uri LinkTemplate(string rel, IDictionary<string, string> variables)
+            => Uri.Join(LinkTemplate(rel).Resolve(variables));
+
         public Uri LinkTemplate(string rel, object variables)
             => Uri.Join(LinkTemplate(rel).Resolve(variables));
 
