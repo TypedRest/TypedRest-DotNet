@@ -130,7 +130,7 @@ namespace TypedRest
             return elementEndpoint;
         }
 
-        public bool? CreateAllAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
+        public bool? CreateAllAllowed => IsMethodAllowed(HttpMethods.Patch);
 
         public virtual Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {

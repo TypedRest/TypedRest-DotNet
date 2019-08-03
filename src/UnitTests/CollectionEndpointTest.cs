@@ -212,7 +212,7 @@ namespace TypedRest
         [Fact]
         public async Task TestCreateAll()
         {
-            Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
+            Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
                 .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Accepted));
 

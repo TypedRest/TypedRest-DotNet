@@ -158,7 +158,7 @@ namespace TypedRest
         [Fact]
         public async Task TestMergeResult()
         {
-            Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
+            Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
 
@@ -169,7 +169,7 @@ namespace TypedRest
         [Fact]
         public async Task TestMergeNoResult()
         {
-            Mock.Expect(HttpClientExtensions.Patch, "http://localhost/endpoint")
+            Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(HttpStatusCode.NoContent);
 

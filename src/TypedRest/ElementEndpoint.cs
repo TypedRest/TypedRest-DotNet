@@ -64,7 +64,7 @@ namespace TypedRest
                 : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
         }
 
-        public bool? MergeAllowed => IsMethodAllowed(HttpClientExtensions.Patch);
+        public bool? MergeAllowed => IsMethodAllowed(HttpMethods.Patch);
 
         public async Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
         {
