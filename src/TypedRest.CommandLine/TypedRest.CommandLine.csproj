@@ -23,8 +23,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>Build simple command-line clients using REST clients designed with TypedRest.</Description>
-    <Summary>Build command-line interfaces using a TypedRest client</Summary>
+    <Description>Build command-line interfaces for TypedRest clients.</Description>
+    <Summary>build CLIs for TypedRest clients</Summary>
     <PackageTags>Typed REST Commandline CLI</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -21,8 +21,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>Build simple WPF clients using REST clients designed with TypedRest.</Description>
-    <Summary>Build WPF GUIs using a TypedRest client</Summary>
+    <Description>Build WPF interfaces for TypedRest clients.</Description>
+    <Summary>build WPF UIs for TypedRest clients</Summary>
     <PackageTags>Typed REST WPF GUI</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
