@@ -1,3 +1,5 @@
+using TypedRest.Endpoints.Raw;
+
 namespace TypedRest.Wpf.Events
 {
     /// <summary>

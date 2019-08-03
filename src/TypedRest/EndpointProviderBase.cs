@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using TypedRest.Endpoints;
 
 namespace TypedRest
 {

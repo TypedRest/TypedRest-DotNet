@@ -1,4 +1,5 @@
 using System.Threading;
+using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.Wpf.Events
 {

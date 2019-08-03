@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using TypedRest.Endpoints;
 
 namespace TypedRest.Wpf.ViewModels
 {

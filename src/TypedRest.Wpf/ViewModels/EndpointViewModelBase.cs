@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TypedRest.Endpoints;
+using TypedRest.Links;
 using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels

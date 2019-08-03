@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using TypedRest.Endpoints;
+using TypedRest.Endpoints.Generic;
 using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels

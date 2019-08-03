@@ -1,4 +1,6 @@
 using Caliburn.Micro;
+using TypedRest.Endpoints.Generic;
+using TypedRest.Endpoints.Reactive;
 
 namespace TypedRest.Wpf.ViewModels
 {

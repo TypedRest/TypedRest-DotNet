@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TypedRest.Endpoints;
 
 namespace TypedRest.Wpf.ViewModels
 {

@@ -5,13 +5,15 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TypedRest.CommandLine.Commands;
+using TypedRest.Endpoints;
 
 namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Executes <see cref="IEndpointCommand"/>s based on command-line arguments.
     /// </summary>
-    /// <typeparam name="TEndpoint">The type of entry endpoint to use for <see cref="EndpointProvider{T}"/>. Must have suitable constructors.</typeparam>
+    /// <typeparam name="TEndpoint">The type of entry endpoint to use for <see cref="CliEndpointProvider{T}"/>. Must have suitable constructors.</typeparam>
     /// <typeparam name="TCommand">The type of entry command to use. Must have a constructor that takes a single <typeparamref name="TEndpoint"/>.</typeparam>
     public class Executor<TEndpoint, TCommand>
         where TEndpoint : EntryEndpoint
@@ -20,12 +22,11 @@ namespace TypedRest.CommandLine
         private readonly IEndpointProvider<TEndpoint> _endpointProvider;
 
         /// <summary>
-        /// Creates an executor using the default <see cref="EndpointProvider{T}"/>.
+        /// Creates an executor using the default <see cref="CliEndpointProvider{T}"/>.
         /// </summary>
         public Executor()
-        {
-            _endpointProvider = new EndpointProvider<TEndpoint>();
-        }
+            : this(new CliEndpointProvider<TEndpoint>())
+        {}
 
         /// <summary>
         /// Creates an executor using a custom <paramref name="endpointProvider"/>.

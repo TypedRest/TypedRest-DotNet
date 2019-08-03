@@ -1,6 +1,8 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using TypedRest.Endpoints;
+using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.Wpf.ViewModels
 {

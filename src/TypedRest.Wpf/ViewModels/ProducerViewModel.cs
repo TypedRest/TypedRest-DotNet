@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using TypedRest.Endpoints.Rpc;
 using TypedRest.Wpf.Events;
 
 namespace TypedRest.Wpf.ViewModels
