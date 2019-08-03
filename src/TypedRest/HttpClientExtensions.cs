@@ -12,7 +12,7 @@ namespace TypedRest
     public static class HttpClientExtensions
     {
         /// <summary>
-        /// Represents an HTTP PATCH protocol method that is used to modify an eixsting entity at a URI.
+        /// Represents an HTTP PATCH protocol method that is used to modify an existing entity at a URI.
         /// </summary>
         public static readonly HttpMethod Patch = new HttpMethod("PATCH");
 
