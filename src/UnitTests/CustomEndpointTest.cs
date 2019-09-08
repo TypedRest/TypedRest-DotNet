@@ -22,6 +22,16 @@ namespace TypedRest
         }
 
         [Fact]
+        public async Task TestAcceptHeader()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .WithHeaders("Accept", JsonMime)
+                .Respond(_ => new StringContent("{}"));
+
+            await _endpoint.GetAsync();
+        }
+
+        [Fact]
         public async Task TestAllowHeader()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")

@@ -30,7 +30,9 @@ namespace TypedRest
                 serializer ?? new DefaultJsonSerializer(),
                 errorHandler ?? new DefaultErrorHandler(),
                 linkHandler ?? new DefaultLinkHandler())
-        {}
+        {
+            AcceptContentTypes();
+        }
 
         /// <summary>
         /// Creates a new entry point.
@@ -60,6 +62,12 @@ namespace TypedRest
             BearerAuth(token);
         }
 
+        private void AcceptContentTypes()
+        {
+            foreach (var mediaType in Serializer.SupportedMediaTypes)
+                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
+        }
+
         private void BasicAuth(Uri uri, ICredentials credentials)
         {
             string userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
@@ -80,18 +88,6 @@ namespace TypedRest
 
         private void BearerAuth(string token)
             => HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        /// <summary>
-        /// Sets a custom HTTP header to be sent with all requests. Inherited by child endpoints.
-        /// </summary>
-        /// <param name="name">The name of the header.</param>
-        /// <param name="value">The value for the header.</param>
-        /// <remarks>Only use this for non-default headers. For default headers use the properties on <see cref="EndpointBase.HttpClient"/>.<see cref="HttpClient.DefaultRequestHeaders"/>.</remarks>
-        protected void SetCustomHeader(string name, string value)
-        {
-            HttpClient.DefaultRequestHeaders.Remove(name);
-            HttpClient.DefaultRequestHeaders.Add(name, value);
-        }
 
         /// <summary>
         /// Fetches meta data such as links from the server.
