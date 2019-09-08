@@ -24,8 +24,10 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Controls whether a save button is shown and fields are editable.
         /// </summary>
-        public bool CanSave => false;
+        public bool CanSave
+            => false;
 
-        protected override Task OnSaveAsync() => throw new NotImplementedException();
+        protected override Task OnSaveAsync()
+            => throw new NotImplementedException();
     }
 }

@@ -24,21 +24,22 @@ namespace TypedRest.Wpf.ViewModels
             : base(endpoint, eventAggregator)
         {}
 
-        public virtual async void Save() => await WithErrorHandlingAsync(async () =>
-        {
-            try
+        public virtual async void Save()
+            => await WithErrorHandlingAsync(async () =>
             {
-                await OnSaveAsync();
-                TryClose();
-            }
-            catch (InvalidOperationException ex)
-            {
-                // This usually inidicates a "lost update"
-                string question = ex.Message + "\nDo you want to refresh this page loosing any changes you have made?";
-                if (MessageBox.Show(question, "Refresh element", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                    await RefreshAsync();
-            }
-        });
+                try
+                {
+                    await OnSaveAsync();
+                    TryClose();
+                }
+                catch (InvalidOperationException ex)
+                {
+                    // This usually indicates a "lost update"
+                    string question = ex.Message + "\nDo you want to refresh this page loosing any changes you have made?";
+                    if (MessageBox.Show(question, "Refresh element", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        await RefreshAsync();
+                }
+            });
 
         /// <summary>
         /// Handler for saving the input.

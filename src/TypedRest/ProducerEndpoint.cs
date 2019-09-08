@@ -30,12 +30,9 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public async ITask<TResult> InvokeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public async ITask<TResult> InvokeAsync(CancellationToken cancellationToken = default)
         {
-            var response =
-                await
-                    HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri),
-                        cancellationToken));
+            var response = await HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                 ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)

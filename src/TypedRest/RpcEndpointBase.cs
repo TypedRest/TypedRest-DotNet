@@ -28,7 +28,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task ProbeAsync(CancellationToken cancellationToken = default)
             => HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
 
         public bool? InvokeAllowed => IsMethodAllowed(HttpMethod.Post);

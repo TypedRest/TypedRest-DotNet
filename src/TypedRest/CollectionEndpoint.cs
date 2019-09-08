@@ -59,7 +59,8 @@ namespace TypedRest
         /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
-        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(typeof(TElementEndpoint), this, relativeUri);
+        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri)
+            => (TElementEndpoint)Activator.CreateInstance(typeof(TElementEndpoint), this, relativeUri);
 
         public virtual TElementEndpoint this[string id]
         {
@@ -141,7 +142,7 @@ namespace TypedRest
 
         public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);
 
-        public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken())
+        public async Task SetAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 

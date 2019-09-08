@@ -30,13 +30,13 @@ namespace TypedRest.CommandLine
         IEnumerator IEnumerable.GetEnumerator() => _commandProviders.GetEnumerator();
         #endregion
 
-        public void Add(string name, Func<TEndpoint, IEndpointCommand> commandProvider) => _commandProviders.Add(name, commandProvider);
+        public void Add(string name, Func<TEndpoint, IEndpointCommand> commandProvider)
+            => _commandProviders.Add(name, commandProvider);
 
         protected override IEndpointCommand GetSubCommand(string name)
             => _commandProviders.TryGetValue(name, out var commandProvider) ? commandProvider(Endpoint) : null;
 
-        protected override Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                  CancellationToken cancellationToken = new CancellationToken())
+        protected override Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         {
             Console.WriteError("Known commands:" + Environment.NewLine + string.Join(Environment.NewLine, _commandProviders.Keys));
 

@@ -214,6 +214,7 @@ namespace TypedRest
             return _allowedMethods.Contains(method.Method);
         }
 
-        public override string ToString() => GetType().Name + ": " + Uri;
+        public override string ToString()
+            => GetType().Name + ": " + Uri;
     }
 }

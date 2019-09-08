@@ -30,44 +30,45 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public IObservable<TEntity> GetObservable(long startIndex = 0) => Observable.Create<TEntity>(async (observer, cancellationToken) =>
-        {
-            long currentStartIndex = startIndex;
-            while (!cancellationToken.IsCancellationRequested)
+        public IObservable<TEntity> GetObservable(long startIndex = 0)
+            => Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
-                PartialResponse<TEntity> response;
-                try
+                long currentStartIndex = startIndex;
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    var range = (currentStartIndex >= 0)
-                        // Offset
-                        ? new RangeItemHeaderValue(currentStartIndex, null)
-                        // Tail
-                        : new RangeItemHeaderValue(null, -currentStartIndex);
-                    response = await ReadRangeAsync(range, cancellationToken);
-                }
-                catch (InvalidOperationException)
-                {
-                    // No new data available yet, keep polling
-                    continue;
-                }
-                catch (Exception ex)
-                {
-                    observer.OnError(ex);
-                    return;
-                }
+                    PartialResponse<TEntity> response;
+                    try
+                    {
+                        var range = (currentStartIndex >= 0)
+                            // Offset
+                            ? new RangeItemHeaderValue(currentStartIndex, null)
+                            // Tail
+                            : new RangeItemHeaderValue(null, -currentStartIndex);
+                        response = await ReadRangeAsync(range, cancellationToken);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // No new data available yet, keep polling
+                        continue;
+                    }
+                    catch (Exception ex)
+                    {
+                        observer.OnError(ex);
+                        return;
+                    }
 
-                foreach (var entity in response.Elements)
-                    observer.OnNext(entity);
+                    foreach (var entity in response.Elements)
+                        observer.OnNext(entity);
 
-                if (response.Range == null || response.EndReached)
-                {
-                    observer.OnCompleted();
-                    return;
+                    if (response.Range == null || response.EndReached)
+                    {
+                        observer.OnCompleted();
+                        return;
+                    }
+
+                    // Continue polling for more data
+                    currentStartIndex = response.Range.To.Value + 1;
                 }
-
-                // Continue polling for more data
-                currentStartIndex = response.Range.To.Value + 1;
-            }
-        });
+            });
     }
 }

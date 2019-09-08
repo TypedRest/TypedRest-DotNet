@@ -31,13 +31,11 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public async Task<TResult> InvokeAsync(TEntity entity,
-                                                CancellationToken cancellationToken = new CancellationToken())
+        public async Task<TResult> InvokeAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var response =
-                await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+            var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                 ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)

@@ -23,13 +23,15 @@ namespace TypedRest.Wpf.ViewModels
             DisplayName = caption;
         }
 
-        public override async void Invoke() => await WithErrorHandlingAsync(async () =>
-        {
-            var result = await OnInvokeAsync();
-            EventAggregator.Publish(new InvokeEvent(Endpoint), null);
-            MessageBox.Show(result.ToString(), DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
-        });
+        public override async void Invoke()
+            => await WithErrorHandlingAsync(async () =>
+            {
+                var result = await OnInvokeAsync();
+                EventAggregator.Publish(new InvokeEvent(Endpoint), null);
+                MessageBox.Show(result.ToString(), DisplayName, MessageBoxButton.OK, MessageBoxImage.Information);
+            });
 
-        private async Task<TResult> OnInvokeAsync() => await Endpoint.InvokeAsync(CancellationToken);
+        private async Task<TResult> OnInvokeAsync()
+            => await Endpoint.InvokeAsync(CancellationToken);
     }
 }

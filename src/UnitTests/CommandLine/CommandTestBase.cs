@@ -20,7 +20,8 @@ namespace TypedRest.CommandLine
             _command.Console = ConsoleMock.Object;
         }
 
-        protected Task ExecuteAsync(params string[] args) => _command.ExecuteAsync(args);
+        protected Task ExecuteAsync(params string[] args)
+            => _command.ExecuteAsync(args);
 
         public void Dispose()
         {

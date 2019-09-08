@@ -18,8 +18,7 @@ namespace TypedRest.CommandLine
             : base(endpoint)
         {}
 
-        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default)
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
             => OutputEntity(await Endpoint.InvokeAsync(cancellationToken));
 
         /// <summary>

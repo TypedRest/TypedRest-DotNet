@@ -38,7 +38,7 @@ namespace TypedRest
             return await content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken).NoContext();
         }
 
-        public async Task<bool> ExistsAsync(CancellationToken cancellationToken = new CancellationToken())
+        public async Task<bool> ExistsAsync(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace TypedRest
 
         public bool? MergeAllowed => IsMethodAllowed(HttpMethods.Patch);
 
-        public async Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 

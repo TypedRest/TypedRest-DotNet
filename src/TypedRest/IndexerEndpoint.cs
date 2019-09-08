@@ -71,14 +71,15 @@ namespace TypedRest
             SetDefaultLinkTemplate(rel: "child", href: "./{id}");
         }
 
-        public Task ProbeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task ProbeAsync(CancellationToken cancellationToken = default)
             => HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
 
         /// <summary>
         /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element. Does not perform any network traffic yet.
         /// </summary>
         /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
-        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri) => (TElementEndpoint)Activator.CreateInstance(_instanceType, this, relativeUri);
+        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri)
+            => (TElementEndpoint)Activator.CreateInstance(_instanceType, this, relativeUri);
 
         public virtual TElementEndpoint this[string id]
         {

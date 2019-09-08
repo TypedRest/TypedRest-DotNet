@@ -49,47 +49,48 @@ namespace TypedRest
 
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
 
-        public IObservable<TEntity> GetObservable() => Observable.Create<TEntity>(async (observer, cancellationToken) =>
-        {
-            TEntity previousEntity;
-            try
+        public IObservable<TEntity> GetObservable()
+            => Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
-                previousEntity = await ReadAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                observer.OnError(ex);
-                return;
-            }
-            observer.OnNext(previousEntity);
-
-            while (_endCondition == null || !_endCondition(previousEntity))
-            {
+                TEntity previousEntity;
                 try
                 {
-                    await Task.Delay(PollingInterval, cancellationToken);
-                }
-                catch (OperationCanceledException)
-                {
-                    return;
-                }
-
-                TEntity newEntity;
-                try
-                {
-                    newEntity = await ReadAsync(cancellationToken);
+                    previousEntity = await ReadAsync(cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     observer.OnError(ex);
                     return;
                 }
-                if (!newEntity.Equals(previousEntity))
-                    observer.OnNext(newEntity);
+                observer.OnNext(previousEntity);
 
-                previousEntity = newEntity;
-            }
-            observer.OnCompleted();
-        });
+                while (_endCondition == null || !_endCondition(previousEntity))
+                {
+                    try
+                    {
+                        await Task.Delay(PollingInterval, cancellationToken);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                    }
+
+                    TEntity newEntity;
+                    try
+                    {
+                        newEntity = await ReadAsync(cancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        observer.OnError(ex);
+                        return;
+                    }
+                    if (!newEntity.Equals(previousEntity))
+                        observer.OnNext(newEntity);
+
+                    previousEntity = newEntity;
+                }
+                observer.OnCompleted();
+            });
     }
 }

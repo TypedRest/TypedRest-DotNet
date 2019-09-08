@@ -29,7 +29,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public Task InvokeAsync(TEntity entity, CancellationToken cancellationToken = new CancellationToken())
+        public Task InvokeAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 

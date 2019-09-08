@@ -56,7 +56,7 @@ namespace TypedRest
             _formField = formField;
         }
 
-        public Task UploadFromAsync(Stream stream, string fileName = null, string mimeType = null, CancellationToken cancellationToken = new CancellationToken())
+        public Task UploadFromAsync(Stream stream, string fileName = null, string mimeType = null, CancellationToken cancellationToken = default)
         {
             HttpContent content = new StreamContent(stream);
             if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);

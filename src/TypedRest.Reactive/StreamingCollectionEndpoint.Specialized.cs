@@ -26,6 +26,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri) => new ElementEndpoint<TEntity>(this, relativeUri);
+        protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri)
+            => new ElementEndpoint<TEntity>(this, relativeUri);
     }
 }

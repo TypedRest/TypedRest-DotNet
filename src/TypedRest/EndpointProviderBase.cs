@@ -110,9 +110,10 @@ namespace TypedRest
         /// Gets a previously cached OAuth token.
         /// </summary>
         /// <returns>The cached token or <c>null</c> if none exists.</returns>
-        private string GetCachedToken() => File.Exists(TokenCacheFile)
-            ? File.ReadAllText(TokenCacheFile, Encoding.UTF8)
-            : null;
+        private string GetCachedToken()
+            => File.Exists(TokenCacheFile)
+                ? File.ReadAllText(TokenCacheFile, Encoding.UTF8)
+                : null;
 
         /// <summary>
         /// Asks the user or a service for the OAuth token to present as a "Bearer" to the REST API.
@@ -153,13 +154,15 @@ namespace TypedRest
         /// </summary>
         /// <param name="uri">The base URI of the REST API.</param>
         /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
-        protected virtual T NewEndpoint(Uri uri, ICredentials credentials) => (T)Activator.CreateInstance(typeof(T), uri, credentials);
+        protected virtual T NewEndpoint(Uri uri, ICredentials credentials)
+            => (T)Activator.CreateInstance(typeof(T), uri, credentials);
 
         /// <summary>
         /// Instantiates a <typeparamref name="T"/> with an <see cref="Uri"/> and a token.
         /// </summary>
         /// <param name="uri">The base URI of the REST API.</param>
         /// <param name="token">The OAuth token to present as a "Bearer" to the REST API.</param>
-        protected virtual T NewEndpoint(Uri uri, string token) => (T)Activator.CreateInstance(typeof(T), uri, token);
+        protected virtual T NewEndpoint(Uri uri, string token)
+            => (T)Activator.CreateInstance(typeof(T), uri, token);
     }
 }

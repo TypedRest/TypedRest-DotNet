@@ -28,7 +28,7 @@ namespace TypedRest
             : base(referrer, relativeUri)
         {}
 
-        public Task InvokeAsync(CancellationToken cancellationToken = new CancellationToken())
+        public Task InvokeAsync(CancellationToken cancellationToken = default)
             => HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
     }
 }

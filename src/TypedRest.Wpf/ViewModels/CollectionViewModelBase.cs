@@ -62,7 +62,8 @@ namespace TypedRest.Wpf.ViewModels
         /// <summary>
         /// Opens a view for creating a new element in the collection.
         /// </summary>
-        public virtual void Create() => Open(BuildCreateElementScreen());
+        public virtual void Create()
+            => Open(BuildCreateElementScreen());
 
         /// <summary>
         /// Builds a sub-<see cref="IScreen"/> for creating a new <typeparamref name="TEntity"/> in the collection endpoint.
@@ -70,6 +71,7 @@ namespace TypedRest.Wpf.ViewModels
         protected abstract IScreen BuildCreateElementScreen();
 
         // Refresh when child elements are created or updated
-        public async Task Handle(ElementEvent<TEntity> message) => await RefreshAsync();
+        public async Task Handle(ElementEvent<TEntity> message)
+            => await RefreshAsync();
     }
 }

@@ -23,8 +23,7 @@ namespace TypedRest.CommandLine
             Endpoint = endpoint;
         }
 
-        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default)
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         {
             if (args.Count >= 1 && args[0].ToLowerInvariant() == "poll")
             {
@@ -38,8 +37,7 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
         /// </summary>
-        protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
-                                                         CancellationToken cancellationToken = default)
+        protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable, CancellationToken cancellationToken = default)
         {
             var printer = new StreamPrinter<TEntity>(Console);
             await printer.PrintAsync(observable, cancellationToken);

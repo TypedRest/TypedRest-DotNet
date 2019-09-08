@@ -21,15 +21,13 @@ namespace TypedRest.CommandLine
             : base(endpoint)
         {}
 
-        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                        CancellationToken cancellationToken = default)
+        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
             => await OutputEntitiesAsync(Endpoint.GetObservable(), cancellationToken);
 
         /// <summary>
         /// Outputs a stream of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
         /// </summary>
-        protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable,
-                                                         CancellationToken cancellationToken = default)
+        protected virtual async Task OutputEntitiesAsync(IObservable<TEntity> observable, CancellationToken cancellationToken = default)
             => await new StreamPrinter<TEntity>(Console).PrintAsync(observable, cancellationToken);
     }
 }

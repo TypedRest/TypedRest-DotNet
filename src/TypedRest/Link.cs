@@ -28,10 +28,13 @@ namespace TypedRest
             Title = title;
         }
 
-        public bool Equals(Link other) => other != null && Href.Equals(other.Href);
+        public bool Equals(Link other)
+            => other != null && Href.Equals(other.Href);
 
-        public override bool Equals(object obj) => obj is Link other && Equals(other);
+        public override bool Equals(object obj)
+            => obj is Link other && Equals(other);
 
-        public override int GetHashCode() => Href.GetHashCode();
+        public override int GetHashCode()
+            => Href.GetHashCode();
     }
 }

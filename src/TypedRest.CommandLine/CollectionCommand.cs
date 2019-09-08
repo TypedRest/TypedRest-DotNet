@@ -27,8 +27,7 @@ namespace TypedRest.CommandLine
             : base(endpoint)
         {}
 
-        public override async Task ExecuteAsync(IReadOnlyList<string> args,
-                                                CancellationToken cancellationToken = default)
+        public override async Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         {
             if (args.Count == 0)
             {

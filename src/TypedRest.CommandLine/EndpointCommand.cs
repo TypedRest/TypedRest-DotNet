@@ -32,8 +32,7 @@ namespace TypedRest.CommandLine
         /// </summary>
         public IConsole Console { get; set; } = new JsonConsole();
 
-        public virtual async Task ExecuteAsync(IReadOnlyList<string> args,
-                                               CancellationToken cancellationToken = default)
+        public virtual async Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         {
             var subCommand = (args.Count == 0) ? null : GetSubCommand(args[0]);
             if (subCommand == null) await ExecuteInnerAsync(args, cancellationToken);
@@ -44,15 +43,15 @@ namespace TypedRest.CommandLine
         /// Creates a sub-<see cref="IEndpointCommand"/> based on the given <paramref name="name"/>.
         /// </summary>
         /// <returns>The <see cref="IEndpointCommand"/> or <c>null</c> if the <paramref name="name"/> does not match.</returns>
-        protected virtual IEndpointCommand GetSubCommand(string name) => null;
+        protected virtual IEndpointCommand GetSubCommand(string name)
+            => null;
 
         /// <summary>
         /// Parses command-line arguments and executes the resulting operation when no additional sub-<see cref="IEndpointCommand"/> is specified.
         /// </summary>
         /// <param name="args">the console arguments.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args,
-                                                 CancellationToken cancellationToken = default)
+        protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
             => throw new ArgumentException("Unknown command: " + args[0]);
     }
 }

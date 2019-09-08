@@ -19,6 +19,7 @@ namespace TypedRest.Wpf.ViewModels
             : base(endpoint, new EventAggregator())
         {}
 
-        protected override async Task OnLoadAsync() => await Endpoint.ReadMetaAsync(CancellationToken);
+        protected override async Task OnLoadAsync()
+            => await Endpoint.ReadMetaAsync(CancellationToken);
     }
 }
