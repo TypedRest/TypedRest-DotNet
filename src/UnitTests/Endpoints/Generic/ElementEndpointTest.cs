@@ -156,6 +156,35 @@ namespace TypedRest.Endpoints.Generic
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
         }
 
+#if NETCOREAPP2_0
+        [Fact]
+        public async Task TestJsonPatch()
+        {
+            Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
+                .WithContent("[{\"value\":\"testX\",\"path\":\"/name\",\"op\":\"replace\"}]")
+                .Respond(JsonMime, "{\"id\":5,\"name\":\"testX\"}");
+
+            var result = await _endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
+            result.Should().Be(new MockEntity(5, "testX"));
+        }
+
+        [Fact]
+        public async Task TestJsonPatchFallback()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime)
+                 });
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"id\":5,\"name\":\"testX\"}")
+                .Respond(JsonMime, "{\"id\":5,\"name\":\"testX\"}");
+
+            var result = await _endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
+            result.Should().Be(new MockEntity(5, "testX"));
+        }
+#endif
+
         [Fact]
         public async Task TestMergeResult()
         {
