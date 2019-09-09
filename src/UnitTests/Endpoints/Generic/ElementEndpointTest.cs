@@ -32,6 +32,16 @@ namespace TypedRest.Endpoints.Generic
         }
 
         [Fact]
+        public async Task TestReadCustomMimeWithJsonSuffix()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond("application/sample+json", "{\"id\":5,\"name\":\"test\"}");
+
+            var result = await _endpoint.ReadAsync();
+            result.Should().Be(new MockEntity(5, "test"));
+        }
+
+        [Fact]
         public async Task TestReadCache()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")

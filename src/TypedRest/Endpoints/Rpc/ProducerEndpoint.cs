@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using MorseCode.ITask;
+using TypedRest.Http;
 
 namespace TypedRest.Endpoints.Rpc
 {
@@ -35,7 +36,7 @@ namespace TypedRest.Endpoints.Rpc
             var response = await HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
-                ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)
+                ? await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken)
                 : default;
         }
     }

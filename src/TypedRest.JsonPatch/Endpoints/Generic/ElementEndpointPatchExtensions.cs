@@ -60,7 +60,7 @@ namespace TypedRest.Endpoints.Generic
 
             return response.Content == null
                 ? default
-                : await response.Content.ReadAsAsync<TEntity>(new[] {serializer}, cancellationToken);
+                : await response.Content.ReadAsAsync<TEntity>(endpoint.Serializer, cancellationToken);
         }
     }
 }

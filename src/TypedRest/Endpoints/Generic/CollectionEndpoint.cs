@@ -89,7 +89,7 @@ namespace TypedRest.Endpoints.Generic
         public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default)
         {
             var content = await GetContentAsync(cancellationToken);
-            return await content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext();
+            return await content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace TypedRest.Endpoints.Generic
 
             var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
             return new PartialResponse<TEntity>(
-                elements: await response.Content.ReadAsAsync<List<TEntity>>(new[] {Serializer}, cancellationToken).NoContext(),
+                elements: await response.Content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext(),
                 range: response.Content.Headers.ContentRange);
         }
 

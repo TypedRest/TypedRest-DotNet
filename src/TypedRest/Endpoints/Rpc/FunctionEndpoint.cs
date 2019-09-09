@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using TypedRest.Http;
 
 namespace TypedRest.Endpoints.Rpc
 {
@@ -38,7 +39,7 @@ namespace TypedRest.Endpoints.Rpc
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
             return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
-                ? await response.Content.ReadAsAsync<TResult>(new[] {Serializer}, cancellationToken)
+                ? await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken)
                 : default;
         }
     }

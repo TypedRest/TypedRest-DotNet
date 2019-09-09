@@ -31,12 +31,12 @@ namespace TypedRest.Endpoints.Generic
             : base(referrer, relativeUri)
         {}
 
-        public TEntity Response => ResponseCache.GetContent().ReadAsAsync<TEntity>(new[] {Serializer}).Result;
+        public TEntity Response => ResponseCache.GetContent().ReadAsAsync<TEntity>(Serializer).Result;
 
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default)
         {
             var content = await GetContentAsync(cancellationToken);
-            return await content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken).NoContext();
+            return await content.ReadAsAsync<TEntity>(Serializer, cancellationToken).NoContext();
         }
 
         public async Task<bool> ExistsAsync(CancellationToken cancellationToken = default)
@@ -62,7 +62,7 @@ namespace TypedRest.Endpoints.Generic
             var response = await PutContentAsync(content, cancellationToken);
             return response.Content == null
                 ? default
-                : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
+                : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
         }
 
         public bool? MergeAllowed => IsMethodAllowed(HttpMethods.Patch);
@@ -74,7 +74,7 @@ namespace TypedRest.Endpoints.Generic
             var response = await HandleResponseAsync(HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
             return response.Content == null
                 ? default
-                : await response.Content.ReadAsAsync<TEntity>(new[] {Serializer}, cancellationToken);
+                : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
         }
 
         public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
