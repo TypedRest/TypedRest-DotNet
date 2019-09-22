@@ -23,9 +23,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>Adds support for streaming with Reactive (Rx) to TypedRest.</Description>
-    <Summary>streaming with Reactive (Rx) for TypedRest</Summary>
-    <PackageTags>Typed REST Reactive Rx Streaming</PackageTags>
+    <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest.</Description>
+    <Summary>streaming with ReactiveX (Rx) for TypedRest</Summary>
+    <PackageTags>Typed REST Reactive ReactiveX Rx Streaming</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
