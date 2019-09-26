@@ -1,5 +1,0 @@
-<UserControl x:Class="TypedRest.Wpf.Views.ElementView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <DataGrid x:Name="Entity" />
-</UserControl>
