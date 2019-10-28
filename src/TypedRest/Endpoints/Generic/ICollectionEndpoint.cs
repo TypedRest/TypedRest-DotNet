@@ -15,7 +15,7 @@ namespace TypedRest.Endpoints.Generic
     /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
     /// <remarks>Use the more constrained <see cref="ICollectionEndpoint{TEntity}"/> when possible.</remarks>
-    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEndpoint<TElementEndpoint>
         where TElementEndpoint : IEndpoint

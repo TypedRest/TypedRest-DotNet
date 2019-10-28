@@ -9,7 +9,7 @@ namespace TypedRest.Endpoints.Reactive
     /// <summary>
     /// Endpoint for a stream of <typeparamref name="TEntity"/>s using a persistent HTTP connection.
     /// </summary>
-    /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+    /// <typeparam name="TEntity">The type of individual elements in the stream.</typeparam>
     public class StreamingEndpoint<TEntity> : EndpointBase, IStreamingEndpoint<TEntity>
     {
         /// <summary>
