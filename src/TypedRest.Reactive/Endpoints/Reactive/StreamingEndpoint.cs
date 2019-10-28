@@ -12,28 +12,31 @@ namespace TypedRest.Endpoints.Reactive
     /// <typeparam name="TEntity">The type of individual elements in the stream.</typeparam>
     public class StreamingEndpoint<TEntity> : EndpointBase, IStreamingEndpoint<TEntity>
     {
+        private readonly string _separator;
+
         /// <summary>
         /// Creates a new streaming endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
-        public StreamingEndpoint(IEndpoint referrer, Uri relativeUri)
+        /// <param name="separator">The character sequence used to detect that a new element starts in an HTTP stream.</param>
+        public StreamingEndpoint(IEndpoint referrer, Uri relativeUri, string separator = "\n")
             : base(referrer, relativeUri)
-        {}
+        {
+            _separator = separator;
+        }
 
         /// <summary>
         /// Creates a new streaming endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
-        public StreamingEndpoint(IEndpoint referrer, string relativeUri)
+        /// <param name="separator">The character sequence used to detect that a new element starts in an HTTP stream.</param>
+        public StreamingEndpoint(IEndpoint referrer, string relativeUri, string separator = "\n")
             : base(referrer, relativeUri)
-        {}
-
-        /// <summary>
-        /// The character sequence used to detect that a new element starts in an HTTP stream.
-        /// </summary>
-        public string Separator { get; set; } = "\n";
+        {
+            _separator = separator;
+        }
 
         /// <summary>
         /// The size of the buffer used to collect data for deserialization in bytes.
@@ -48,7 +51,7 @@ namespace TypedRest.Endpoints.Reactive
                     if (!response.IsSuccessStatusCode)
                         await ErrorHandler.HandleAsync(response);
 
-                    var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, Separator, BufferSize);
+                    var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, _separator, BufferSize);
 
                     while (!cancellationToken.IsCancellationRequested)
                     {
