@@ -219,5 +219,24 @@ namespace TypedRest.Endpoints
 
         public override string ToString()
             => GetType().Name + ": " + Uri;
+
+        /// <summary>
+        /// Returns a constructor for <typeparamref name="TEndpoint"/> as a function with a referrer an a relative URI as input.
+        /// </summary>
+        /// <exception cref="ArgumentException">No suitable constructor found on <typeparamref name="TEndpoint"/>.</exception>
+        protected static Func<IEndpoint, Uri, TEndpoint> GetConstructor<TEndpoint>()
+            where TEndpoint : IEndpoint
+        {
+            var type = typeof(TEndpoint);
+
+            var constructor = TypeExtensions.GetConstructor<IEndpoint, Uri, TEndpoint>();
+            if (constructor != null) return constructor;
+
+            var altConstructor = TypeExtensions.GetConstructor<IEndpoint, string, TEndpoint>();
+            if (altConstructor == null)
+                throw new ArgumentException($"{type} must have a public constructor with an {nameof(IEndpoint)} and a {nameof(Uri)} or string parameter.", nameof(type));
+
+            return (endpoint, relativeUri) => altConstructor(endpoint, relativeUri.OriginalString);
+        }
     }
 }

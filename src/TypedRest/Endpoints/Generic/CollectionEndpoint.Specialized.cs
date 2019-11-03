@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using MorseCode.ITask;
 
 namespace TypedRest.Endpoints.Generic
 {
@@ -6,7 +8,7 @@ namespace TypedRest.Endpoints.Generic
     /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <see cref="ElementEndpoint{TEntity}"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
-    public class CollectionEndpoint<TEntity> : CollectionEndpoint<TEntity, IElementEndpoint<TEntity>>, ICollectionEndpoint<TEntity>
+    public class CollectionEndpoint<TEntity> : CollectionEndpoint<TEntity, ElementEndpoint<TEntity>>, ICollectionEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new collection endpoint.
@@ -26,7 +28,13 @@ namespace TypedRest.Endpoints.Generic
             : base(referrer, relativeUri)
         {}
 
-        protected override IElementEndpoint<TEntity> BuildElementEndpoint(Uri relativeUri)
-            => new ElementEndpoint<TEntity>(this, relativeUri);
+        IElementEndpoint<TEntity> IIndexerEndpoint<IElementEndpoint<TEntity>>.this[string id]
+            => this[id];
+
+        IElementEndpoint<TEntity> ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>.this[TEntity entity]
+            => this[entity];
+
+        ITask<IElementEndpoint<TEntity>> ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>.CreateAsync(TEntity entity, CancellationToken cancellationToken)
+            => CreateAsync(entity, cancellationToken);
     }
 }

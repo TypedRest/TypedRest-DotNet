@@ -16,24 +16,11 @@ namespace TypedRest.Endpoints.Generic
         }
 
         [Fact]
-        public void RejectsAbstractTypes()
+        public void RejectsTypesWithoutSuitablePublicConstructor()
         {
-            Func<IndexerEndpoint<EndpointBase>> ctor = () => new IndexerEndpoint<EndpointBase>(EntryEndpoint, "endpoint");
-            ctor.Should().Throw<ArgumentException>();
-        }
-
-        [Fact]
-        public void AcceptsDerivedTypes()
-        {
-            Func<IndexerEndpoint<EndpointBase>> ctor = () => new IndexerEndpoint<EndpointBase>(EntryEndpoint, "endpoint", instanceType: typeof(ElementEndpoint<MockEntity>));
-            ctor.Should().NotThrow<ArgumentException>();
-        }
-
-        [Fact]
-        public void RejectsNonAssignableTypes()
-        {
-            Func<IndexerEndpoint<ElementEndpoint<MockEntity>>> ctor = () => new IndexerEndpoint<ElementEndpoint<MockEntity>>(EntryEndpoint, "endpoint", instanceType: typeof(ElementEndpoint<string>));
-            ctor.Should().Throw<ArgumentException>();
+            var endpoint = new IndexerEndpoint<EndpointBase>(EntryEndpoint, "endpoint");
+            Func<EndpointBase> getter = () => endpoint["1"];
+            getter.Should().Throw<TypeInitializationException>();
         }
     }
 }

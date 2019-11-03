@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using MorseCode.ITask;
@@ -16,7 +14,7 @@ namespace TypedRest.Endpoints.Generic
     /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
-    /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s. This must be a non-abstract class with a constructor that takes an <see cref="IEndpoint"/> and an <see cref="Uri"/>, unless you override <see cref="BuildElementEndpoint"/>.</typeparam>
+    /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
     public class CollectionEndpoint<TEntity, TElementEndpoint> : ETagEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
     {
@@ -28,7 +26,7 @@ namespace TypedRest.Endpoints.Generic
         public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {
-            SetupChildHandling();
+            SetupElementHandling();
         }
 
         /// <summary>
@@ -39,29 +37,18 @@ namespace TypedRest.Endpoints.Generic
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {
-            SetupChildHandling();
+            SetupElementHandling();
         }
 
-        private MethodInfo _getIdMethod;
-
-        private void SetupChildHandling()
+        private void SetupElementHandling()
         {
-            var idProperty = typeof(TEntity).GetTypeInfo()
-                                            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                                            .FirstOrDefault(x => x.GetMethod != null
-                                                              && x.GetCustomAttribute<KeyAttribute>(inherit: true) != null);
-
-            if (idProperty != null) _getIdMethod = idProperty.GetMethod;
-
             SetDefaultLinkTemplate(rel: "child", href: "./{id}");
         }
 
         /// <summary>
-        /// Builds a <typeparamref name="TElementEndpoint"/> for a specific child element. Does not perform any network traffic yet.
+        /// Instantiates a <typeparamref name="TElementEndpoint"/> with a referrer and a relative URI.
         /// </summary>
-        /// <param name="relativeUri">The URI of the child endpoint relative to the this endpoint.</param>
-        protected virtual TElementEndpoint BuildElementEndpoint(Uri relativeUri)
-            => (TElementEndpoint)Activator.CreateInstance(typeof(TElementEndpoint), this, relativeUri);
+        private static readonly Func<IEndpoint, Uri, TElementEndpoint> _getElementEndpoint = GetConstructor<TElementEndpoint>();
 
         public virtual TElementEndpoint this[string id]
         {
@@ -69,18 +56,23 @@ namespace TypedRest.Endpoints.Generic
             {
                 if (id == null) throw new ArgumentNullException(nameof(id));
 
-                return BuildElementEndpoint(LinkTemplate("child", new {id}));
+                return _getElementEndpoint(this, LinkTemplate("child", new {id}));
             }
         }
+
+        /// <summary>
+        /// Gets the ID for an <typeparamref name="TEntity"/>. May be <c>null</c>.
+        /// </summary>
+        private static readonly Func<TEntity, object> _getElementId = typeof(TEntity).GetPropertyWith<KeyAttribute>()?.GetMethod?.ToFunc<TEntity, object>();
 
         public virtual TElementEndpoint this[TEntity entity]
         {
             get
             {
-                if (_getIdMethod == null)
+                if (_getElementId == null)
                     throw new InvalidOperationException($"{typeof(TEntity).Name} has no property marked with [Key] attribute.");
-                string id = _getIdMethod.Invoke(entity, null).ToString();
-                return this[id];
+
+                return this[_getElementId(entity).ToString()];
             }
         }
 
@@ -126,7 +118,7 @@ namespace TypedRest.Endpoints.Generic
 
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
-            var elementEndpoint = BuildElementEndpoint(response.Headers.Location ?? Uri);
+            var elementEndpoint = _getElementEndpoint(this, response.Headers.Location ?? Uri);
             if (response.Content != null && elementEndpoint is ICachingEndpoint caching)
                 caching.ResponseCache = new ResponseCache(response);
             return elementEndpoint;
