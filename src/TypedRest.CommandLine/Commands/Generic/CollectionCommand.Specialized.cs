@@ -8,7 +8,7 @@ namespace TypedRest.CommandLine.Commands.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the endpoint provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <c>BuildElementCommand</c>.</typeparam>
+    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. Must have a public constructor with a <typeparamref name="TElementEndpoint"/> parameter.</typeparam>
     public class CollectionCommand<TEntity, TElementEndpoint, TElementCommand> : CollectionCommand<TEntity, ICollectionEndpoint<TEntity, TElementEndpoint>, TElementEndpoint, TElementCommand>
         where TElementEndpoint : class, IEndpoint
         where TElementCommand : class, IEndpointCommand
@@ -35,7 +35,5 @@ namespace TypedRest.CommandLine.Commands.Generic
         public CollectionCommand(ICollectionEndpoint<TEntity> endpoint)
             : base(endpoint)
         {}
-
-        protected override ElementCommand<TEntity> BuildElementCommand(IElementEndpoint<TEntity> elementEndpoint) => new ElementCommand<TEntity>(elementEndpoint);
     }
 }

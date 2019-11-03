@@ -15,7 +15,7 @@ namespace TypedRest.CommandLine.Commands.Generic
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
-    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <c>BuildElementCommand</c>.</typeparam>
+    /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. Must have a public constructor with a <typeparamref name="TElementEndpoint"/> parameter.</typeparam>
     public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : IndexerCommand<TEndpoint, TElementEndpoint, TElementCommand>
         where TEndpoint : class, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TElementEndpoint : class, IEndpoint
@@ -51,7 +51,7 @@ namespace TypedRest.CommandLine.Commands.Generic
                     var newEntity = InputEntity(args.Skip(1).ToList());
                     var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
                     if (newEndpoint != null)
-                        await BuildElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
+                        await GetElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
                     return;
 
                 case "create-all":
