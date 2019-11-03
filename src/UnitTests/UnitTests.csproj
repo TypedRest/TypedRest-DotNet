@@ -1,18 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
     <RootNamespace>TypedRest</RootNamespace>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <LangVersion>8.0</LangVersion>
     <DebugType>full</DebugType>
     <IsPackable>False</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Windows_NT' Or '$(MSBuildRuntimeType)'=='Mono'">
-    <TargetFrameworks>net46;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>net46;netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)'!='Windows_NT' And '$(MSBuildRuntimeType)'=='Core'">
-    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net46'">
@@ -24,7 +23,7 @@
     <ProjectReference Include="..\TypedRest.CommandLine\TypedRest.CommandLine.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.2'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
     <ProjectReference Include="..\TypedRest.JsonPatch\TypedRest.JsonPatch.csproj" />
   </ItemGroup>
 
