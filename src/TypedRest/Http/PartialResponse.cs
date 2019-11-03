@@ -37,15 +37,15 @@ namespace TypedRest.Http
         {
             get
             {
-                if (!Range.HasRange)
+                if (!Range.To.HasValue)
                 {
                     // No range specified, must be complete response
                     return true;
                 }
 
-                if (!Range.HasLength)
+                if (!Range.Length.HasValue)
                 {
-                    // No lenth specified, can't be end
+                    // No length specified, can't be end
                     return false;
                 }
 

@@ -95,8 +95,8 @@ namespace TypedRest
         /// </summary>
         private string GetToken(Uri uri)
         {
-            string token = GetCachedToken();
-            if (!string.IsNullOrEmpty(token)) return token;
+            var token = GetCachedToken();
+            if (token != null) return token;
 
             token = RequestToken(uri);
             if (token == null) throw new InvalidOperationException("Unable to request OAuth token.");

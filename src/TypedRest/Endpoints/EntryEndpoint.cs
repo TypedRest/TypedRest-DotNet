@@ -73,7 +73,7 @@ namespace TypedRest.Endpoints
 
         private void BasicAuth(Uri uri, ICredentials credentials)
         {
-            string userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
+            var userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
             if (!string.IsNullOrEmpty(userInfo))
             {
                 HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",

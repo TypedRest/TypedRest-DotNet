@@ -9,7 +9,7 @@ namespace TypedRest.Http
     /// </summary>
     public class LinkHeader
     {
-        private static readonly Regex RegexLinkFields =
+        private static readonly Regex _regexLinkFields =
             new Regex("(?=^<(?'href'[^>]*)>)|(?'field'[a-z]+)=\"?(?'value'[^\",;]*)\"?", RegexOptions.Compiled);
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace TypedRest.Http
         /// </summary>
         public LinkHeader(string value)
         {
-            foreach (var match in RegexLinkFields.Matches(value).Cast<Match>())
+            foreach (var match in _regexLinkFields.Matches(value).Cast<Match>())
             {
                 if (Href == null)
                     Href = match.Groups["href"].Value;
@@ -54,6 +54,9 @@ namespace TypedRest.Http
                         Title = match.Groups["value"].Value;
                 }
             }
+
+            if (Href == null) throw new ArgumentException("The link header is lacking the mandatory 'href' field.", nameof(value));
+            if (Rel == null) throw new ArgumentException("The link header is lacking the mandatory 'rel' field", nameof(value));
         }
     }
 }
