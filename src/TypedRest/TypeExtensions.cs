@@ -17,7 +17,7 @@ namespace TypedRest
         /// <typeparam name="T2">The type of the second constructor argument.</typeparam>
         /// <typeparam name="TResult">The type to construct.</typeparam>
         /// <returns>The function; <c>null</c> if no suitable constructor was found.</returns>
-        public static Func<T1, T2, TResult> GetConstructor<T1, T2, TResult>()
+        public static Func<T1, T2, TResult>? GetConstructor<T1, T2, TResult>()
         {
             var type = typeof(TResult);
 

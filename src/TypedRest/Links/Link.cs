@@ -15,14 +15,14 @@ namespace TypedRest.Links
         /// <summary>
         /// The title of the link (optional).
         /// </summary>
-        public string Title { get; }
+        public string? Title { get; }
 
         /// <summary>
         /// Creates a new link.
         /// </summary>
         /// <param name="href">The href/target of the link.</param>
         /// <param name="title">The title of the link (optional).</param>
-        public Link(Uri href, string title = null)
+        public Link(Uri href, string? title = null)
         {
             Href = href ?? throw new ArgumentNullException(nameof(href));
             Title = title;

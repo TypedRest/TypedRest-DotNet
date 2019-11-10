@@ -76,7 +76,8 @@ namespace TypedRest.CommandLine
         /// <summary>
         /// Instantiates a <typeparamref name="TCommand"/>.
         /// </summary>
-        protected virtual TCommand NewCommand(TEndpoint endpoint) => (TCommand)Activator.CreateInstance(typeof(TCommand), endpoint);
+        protected virtual TCommand NewCommand(TEndpoint endpoint)
+            => (TCommand)Activator.CreateInstance(typeof(TCommand), endpoint)!;
 
         /// <summary>
         /// Executes a command and performs error handling.

@@ -18,7 +18,7 @@ namespace TypedRest.Http
         private readonly MediaTypeFormatter _serializer;
         private readonly byte[] _separatorPattern;
 
-        private Stream _stream;
+        private Stream? _stream;
         private byte[] _buffer;
         private int _startIndex, _endIndex;
 
@@ -84,7 +84,7 @@ namespace TypedRest.Http
         {
             if (_startIndex != 0) TrimBuffer();
 
-            int count = await _stream.ReadAsync(_buffer, _endIndex, _buffer.Length - _endIndex, cancellationToken);
+            int count = await _stream!.ReadAsync(_buffer, _endIndex, _buffer.Length - _endIndex, cancellationToken);
             _endIndex += count;
             return count;
         }

@@ -18,7 +18,7 @@ namespace TypedRest.UriTemplates
     {
         private readonly string template;
         private readonly List<IUriComponent> components;
-        private List<VarSpec> variables;
+        private List<VarSpec>? variables;
 
         public UriTemplate(string template)
         {

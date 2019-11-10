@@ -25,7 +25,7 @@ namespace TypedRest.Http
         /// <summary>
         /// The title of the link (optional).
         /// </summary>
-        public string Title { get; }
+        public string? Title { get; }
 
         /// <summary>
         /// Indicates whether the link is an URI Template (RFC 6570).
@@ -56,7 +56,10 @@ namespace TypedRest.Http
             }
 
             if (Href == null) throw new ArgumentException("The link header is lacking the mandatory 'href' field.", nameof(value));
+            else Href = Href; // Makes compiler nullability analysis happy
+
             if (Rel == null) throw new ArgumentException("The link header is lacking the mandatory 'rel' field", nameof(value));
+            else Rel = Rel; // Makes compiler nullability analysis happy
         }
     }
 }

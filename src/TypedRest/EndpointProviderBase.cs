@@ -44,7 +44,7 @@ namespace TypedRest
         /// Gets an endpoint URI placed in a file next to the executable.
         /// </summary>
         /// <returns>The stored URI or <c>null</c> if none exists.</returns>
-        private Uri GetLocalUri()
+        private Uri? GetLocalUri()
         {
             try
             {
@@ -63,7 +63,7 @@ namespace TypedRest
         /// Gets a previously stored endpoint URI.
         /// </summary>
         /// <returns>The stored URI or <c>null</c> if none exists.</returns>
-        private Uri GetStoredUri()
+        private Uri? GetStoredUri()
         {
             try
             {
@@ -81,7 +81,7 @@ namespace TypedRest
         /// Asks the user or a service for the base URI of the REST API.
         /// </summary>
         /// <returns>The endpoint URI or <c>null</c> if it cannot be requested.</returns>
-        protected abstract Uri RequestUri();
+        protected abstract Uri? RequestUri();
 
         public void ResetUri()
         {
@@ -111,7 +111,7 @@ namespace TypedRest
         /// Gets a previously cached OAuth token.
         /// </summary>
         /// <returns>The cached token or <c>null</c> if none exists.</returns>
-        private string GetCachedToken()
+        private string? GetCachedToken()
             => File.Exists(TokenCacheFile)
                 ? File.ReadAllText(TokenCacheFile, Encoding.UTF8)
                 : null;
@@ -120,7 +120,7 @@ namespace TypedRest
         /// Asks the user or a service for the OAuth token to present as a "Bearer" to the REST API.
         /// </summary>
         /// <returns>The OAuth token or <c>null</c> if it cannot be requested.</returns>
-        protected abstract string RequestToken(Uri uri);
+        protected abstract string? RequestToken(Uri uri);
 
         public void ResetAuthentication()
         {
@@ -138,7 +138,7 @@ namespace TypedRest
                 : NewEndpoint(uri, credentials);
         }
 
-        private static ICredentials ExtractCredentials(ref Uri uri)
+        private static ICredentials? ExtractCredentials(ref Uri uri)
         {
             var builder = new UriBuilder(uri);
             if (string.IsNullOrEmpty(builder.UserName)) return null;

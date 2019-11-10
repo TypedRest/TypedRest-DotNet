@@ -17,7 +17,7 @@ namespace TypedRest.CommandLine.Commands
 
         protected CommandTestBase()
         {
-            _command = (TCommand)Activator.CreateInstance(typeof(TCommand), EndpointMock.Object);
+            _command = (TCommand)Activator.CreateInstance(typeof(TCommand), EndpointMock.Object)!;
             _command.Console = ConsoleMock.Object;
         }
 

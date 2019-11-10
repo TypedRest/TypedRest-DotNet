@@ -20,9 +20,9 @@ namespace TypedRest.CommandLine
         /// </summary>
         public IConsole Console { get; set; } = new JsonConsole();
 
-        protected override Uri RequestUri()
+        protected override Uri? RequestUri()
         {
-            Uri uri = null;
+            Uri? uri = null;
             while (uri == null)
             {
                 string input = Console.Read("Endpoint URI:");

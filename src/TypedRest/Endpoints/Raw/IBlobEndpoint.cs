@@ -64,7 +64,7 @@ namespace TypedRest.Endpoints.Raw
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default);
+        Task UploadFromAsync(Stream stream, string? mimeType = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <see cref="DeleteAsync"/> is currently allowed.

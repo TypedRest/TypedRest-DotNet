@@ -18,7 +18,7 @@ namespace TypedRest.Errors
         {
             string message = $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
 
-            string body = null;
+            string? body = null;
             if (response.Content != null)
             {
                 body = await response.Content.ReadAsStringAsync().NoContext();

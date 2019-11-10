@@ -5,7 +5,7 @@ namespace TypedRest
         // NOTE: [Key] is inherited
         public override long Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public MockEntity()
         {}
@@ -18,7 +18,7 @@ namespace TypedRest
 
         protected bool Equals(MockEntity other) => Id == other.Id && string.Equals(Name, other.Name);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;

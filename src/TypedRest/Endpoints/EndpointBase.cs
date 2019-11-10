@@ -130,7 +130,7 @@ namespace TypedRest.Endpoints
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                Exception error = null;
+                Exception? error = null;
                 Task.Run(async () =>
                 {
                     try
@@ -165,7 +165,7 @@ namespace TypedRest.Endpoints
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
-                Exception error = null;
+                Exception? error = null;
                 Task.Run(async () =>
                 {
                     try

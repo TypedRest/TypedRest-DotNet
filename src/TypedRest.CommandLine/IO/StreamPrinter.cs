@@ -35,7 +35,8 @@ namespace TypedRest.CommandLine.IO
         /// <summary>
         /// Outputs a <typeparamref name="TEntity"/> to the user via the console.
         /// </summary>
-        public virtual void OnNext(TEntity value) => _console.Write(value.ToString());
+        public virtual void OnNext(TEntity value)
+            => _console.Write(value?.ToString());
 
         /// <summary>
         /// Reprots an <paramref name="error"/> to the user via the console.

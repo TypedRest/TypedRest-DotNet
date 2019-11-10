@@ -12,7 +12,7 @@ namespace TypedRest.Endpoints.Raw
     /// </summary>
     public class UploadEndpoint : EndpointBase, IUploadEndpoint
     {
-        private readonly string _formField;
+        private readonly string? _formField;
 
         /// <summary>
         /// Creates a new upload endpoint using raw bodies.
@@ -56,7 +56,7 @@ namespace TypedRest.Endpoints.Raw
             _formField = formField;
         }
 
-        public Task UploadFromAsync(Stream stream, string fileName = null, string mimeType = null, CancellationToken cancellationToken = default)
+        public Task UploadFromAsync(Stream stream, string? fileName = null, string? mimeType = null, CancellationToken cancellationToken = default)
         {
             HttpContent content = new StreamContent(stream);
             if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);

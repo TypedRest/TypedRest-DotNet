@@ -66,7 +66,7 @@ namespace TypedRest.CommandLine.Commands.Generic
             await base.ExecuteAsync(args, cancellationToken);
         }
 
-        private static RangeItemHeaderValue GetRange(string input)
+        private static RangeItemHeaderValue? GetRange(string input)
         {
             var parts = input.Split('-');
             if (parts.Length != 2) return null;

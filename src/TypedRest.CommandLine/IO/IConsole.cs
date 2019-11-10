@@ -28,7 +28,7 @@ namespace TypedRest.CommandLine.IO
         /// <summary>
         /// Writes an output object (usually in JSON format).
         /// </summary>
-        void Write(object output);
+        void Write(object? output);
 
         /// <summary>
         /// Writes an error message.

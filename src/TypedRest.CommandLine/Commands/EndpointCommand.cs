@@ -45,7 +45,7 @@ namespace TypedRest.CommandLine.Commands
         /// Creates a sub-<see cref="IEndpointCommand"/> based on the given <paramref name="name"/>.
         /// </summary>
         /// <returns>The <see cref="IEndpointCommand"/> or <c>null</c> if the <paramref name="name"/> does not match.</returns>
-        protected virtual IEndpointCommand GetSubCommand(string name)
+        protected virtual IEndpointCommand? GetSubCommand(string name)
             => null;
 
         /// <summary>

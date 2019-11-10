@@ -63,7 +63,7 @@ namespace TypedRest.Endpoints.Generic
         /// <summary>
         /// Gets the ID for an <typeparamref name="TEntity"/>. May be <c>null</c>.
         /// </summary>
-        private static readonly Func<TEntity, object> _getElementId = typeof(TEntity).GetPropertyWith<KeyAttribute>()?.GetMethod?.ToFunc<TEntity, object>();
+        private static readonly Func<TEntity, object>? _getElementId = typeof(TEntity).GetPropertyWith<KeyAttribute>()?.GetMethod?.ToFunc<TEntity, object>();
 
         public virtual TElementEndpoint this[TEntity entity]
         {

@@ -10,6 +10,6 @@ namespace TypedRest.Endpoints
         /// <summary>
         /// A cached copy of the last response. Can be null.
         /// </summary>
-        ResponseCache ResponseCache { get; set; }
+        ResponseCache? ResponseCache { get; set; }
     }
 }

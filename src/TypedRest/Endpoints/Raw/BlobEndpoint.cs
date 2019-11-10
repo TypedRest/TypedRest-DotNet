@@ -44,7 +44,7 @@ namespace TypedRest.Endpoints.Raw
 
         public bool? UploadAllowed => IsMethodAllowed(HttpMethod.Put);
 
-        public Task UploadFromAsync(Stream stream, string mimeType = null, CancellationToken cancellationToken = default)
+        public Task UploadFromAsync(Stream stream, string? mimeType = null, CancellationToken cancellationToken = default)
         {
             var content = new StreamContent(stream);
             if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);

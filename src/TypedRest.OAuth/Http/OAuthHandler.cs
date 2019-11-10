@@ -20,7 +20,7 @@ namespace TypedRest.Http
         /// </summary>
         /// <param name="oAuthOptions">Options for OAuth 2.0 / OpenID Connect authentication.</param>
         /// <param name="innerHandler">An optional inner HTTP message handler to delegate to.</param>
-        public OAuthHandler(OAuthOptions oAuthOptions, HttpMessageHandler innerHandler = null)
+        public OAuthHandler(OAuthOptions oAuthOptions, HttpMessageHandler? innerHandler = null)
         {
             if (oAuthOptions == null) throw new ArgumentNullException(nameof(oAuthOptions));
             if (oAuthOptions.Uri == null) throw new ArgumentException($"{nameof(OAuthOptions)}.{nameof(OAuthOptions.Uri)} must not be null.", nameof(oAuthOptions));

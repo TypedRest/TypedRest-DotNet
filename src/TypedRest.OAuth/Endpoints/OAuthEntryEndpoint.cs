@@ -21,7 +21,7 @@ namespace TypedRest.Endpoints
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public OAuthEntryEndpoint(Uri uri, OAuthOptions oAuthOptions = null, HttpMessageHandler httpMessageHandler = null, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
+        public OAuthEntryEndpoint(Uri uri, OAuthOptions? oAuthOptions = null, HttpMessageHandler? httpMessageHandler = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
             : base(
                 uri,
                 new HttpClient(oAuthOptions == null ? httpMessageHandler : new OAuthHandler(oAuthOptions, httpMessageHandler)),

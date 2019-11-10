@@ -26,7 +26,7 @@ namespace TypedRest.Endpoints.Raw
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        public static async Task UploadFromAsync(this IUploadEndpoint endpoint, string path, string mimeType = null, CancellationToken cancellationToken = default)
+        public static async Task UploadFromAsync(this IUploadEndpoint endpoint, string path, string? mimeType = null, CancellationToken cancellationToken = default)
         {
             using (var fileStream = File.OpenRead(path))
                 await endpoint.UploadFromAsync(fileStream, Path.GetFileName(path), mimeType, cancellationToken);

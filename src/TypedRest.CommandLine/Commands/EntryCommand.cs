@@ -34,7 +34,7 @@ namespace TypedRest.CommandLine.Commands
         public void Add(string name, Func<TEndpoint, IEndpointCommand> commandProvider)
             => _commandProviders.Add(name, commandProvider);
 
-        protected override IEndpointCommand GetSubCommand(string name)
+        protected override IEndpointCommand? GetSubCommand(string name)
             => _commandProviders.TryGetValue(name, out var commandProvider) ? commandProvider(Endpoint) : null;
 
         protected override Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)

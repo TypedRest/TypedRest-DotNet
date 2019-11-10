@@ -180,7 +180,7 @@ namespace TypedRest.Endpoints.Generic
                 .WithHeaders("Range", "elements=5-10")
                 .Respond(HttpStatusCode.RequestedRangeNotSatisfiable, JsonMime, "{\"message\":\"test\"}");
 
-            string exceptionMessage = null;
+            string? exceptionMessage = null;
             try
             {
                 await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 5, to: 10));

@@ -26,7 +26,7 @@ namespace TypedRest.Endpoints
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
+        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
             : base(
                 uri.EnsureTrailingSlash(),
                 httpClient,
@@ -45,7 +45,7 @@ namespace TypedRest.Endpoints
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, ICredentials credentials = null, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
+        public EntryEndpoint(Uri uri, ICredentials? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
             : this(uri, new HttpClient(), serializer, errorHandler, linkHandler)
         {
             BasicAuth(uri, credentials);
@@ -59,7 +59,7 @@ namespace TypedRest.Endpoints
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter serializer = null, IErrorHandler errorHandler = null, ILinkHandler linkHandler = null)
+        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
             : this(uri, new HttpClient(), serializer, errorHandler, linkHandler)
         {
             BearerAuth(token);
@@ -71,7 +71,7 @@ namespace TypedRest.Endpoints
                 HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
         }
 
-        private void BasicAuth(Uri uri, ICredentials credentials)
+        private void BasicAuth(Uri uri, ICredentials? credentials)
         {
             var userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
             if (!string.IsNullOrEmpty(userInfo))
@@ -81,7 +81,7 @@ namespace TypedRest.Endpoints
             }
         }
 
-        private string GetUserInfo(ICredentials credentials)
+        private string? GetUserInfo(ICredentials credentials)
         {
             var basicCredentials = credentials.GetCredential(Uri, authType: "Basic");
             return (basicCredentials == null)

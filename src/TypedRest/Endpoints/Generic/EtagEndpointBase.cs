@@ -33,7 +33,7 @@ namespace TypedRest.Endpoints.Generic
             : base(referrer, relativeUri)
         {}
 
-        public ResponseCache ResponseCache { get; set; }
+        public ResponseCache? ResponseCache { get; set; }
 
         /// <summary>
         /// Performs an HTTP GET request on the <see cref="IEndpoint.Uri"/> and caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>.
