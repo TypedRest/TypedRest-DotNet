@@ -69,6 +69,7 @@ namespace TypedRest.Endpoints.Reactive
                     }
 
                     // Continue polling for more data
+                    if (response.Range.To == null) return;
                     currentStartIndex = response.Range.To.Value + 1;
                 }
             });

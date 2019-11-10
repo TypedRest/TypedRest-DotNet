@@ -46,6 +46,7 @@ namespace TypedRest.CommandLine.IO
 
         public void Write(object output)
         {
+            if (output == null) return;
             bool hasCustomToString = output.GetType().GetMethod(nameof(ToString))?.DeclaringType != typeof(object);
             Console.WriteLine(hasCustomToString
                 ? output.ToString()

@@ -43,7 +43,7 @@ namespace TypedRest.Endpoints.Generic
         /// <returns>The response of the request or the cached response if the server responded with <see cref="HttpStatusCode.NotModified"/>.</returns>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
-        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/> or empty response body</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         protected async Task<HttpContent> GetContentAsync(CancellationToken cancellationToken)
         {
@@ -57,7 +57,9 @@ namespace TypedRest.Endpoints.Generic
             else
             {
                 await HandleResponseAsync(Task.FromResult(response)).NoContext();
-                if (response.Content != null) ResponseCache = new ResponseCache(response);
+                if (response.Content == null) throw new KeyNotFoundException($"{Uri} returned no body.");
+
+                ResponseCache = new ResponseCache(response);
                 return response.Content;
             }
         }

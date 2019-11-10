@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -21,6 +22,7 @@ namespace TypedRest.Http
         /// </summary>
         public ResponseCache(HttpResponseMessage response)
         {
+            if (response.Content == null) throw new ArgumentException("Missing content.", nameof(response));
             _content = response.Content.ReadAsByteArrayAsync().Result;
 
             // Rewind stream position
@@ -35,9 +37,7 @@ namespace TypedRest.Http
         /// Returns the cached <see cref="HttpClient"/>.
         /// </summary>
         public HttpContent GetContent()
-            => (_content == null)
-                ? null
-                // Build new response for each request to avoid shared Stream.Position
-                : new ByteArrayContent(_content) {Headers = {ContentType = _contentType}};
+            // Build new response for each request to avoid shared Stream.Position
+            => new ByteArrayContent(_content) {Headers = {ContentType = _contentType}};
     }
 }
