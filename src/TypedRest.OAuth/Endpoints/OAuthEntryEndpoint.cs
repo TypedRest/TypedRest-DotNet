@@ -10,6 +10,7 @@ namespace TypedRest.Endpoints
     /// <summary>
     /// Entry point to a REST API protected with OAuth 2.0. Derive from this class and add your own set of child-<see cref="IEndpoint"/>s as properties.
     /// </summary>
+    /// <seealso cref="OAuthHandler"/>
     public class OAuthEntryEndpoint : EntryEndpoint
     {
         /// <summary>

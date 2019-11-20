@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>Adds support for OAuth 2.0 / OpenID Connect authentication to TypedRest.</Description>
+    <Description>Adds support for OAuth 2.0 / OpenID Connect authentication with a client secret to TypedRest.</Description>
     <Summary>OAuth 2.0 / OpenID Connect authentication for TypedRest</Summary>
     <PackageTags>Typed REST OAuth OIDC</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>

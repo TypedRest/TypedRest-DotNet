@@ -7,7 +7,7 @@ using IdentityModel.Client;
 namespace TypedRest.Http
 {
     /// <summary>
-    /// HTTP message delegating handler that transparently handles OAuth 2.0 authentication. Performs OpenID Connect discovery on the first request.
+    /// HTTP message delegating handler that transparently performs OAuth 2.0 authentication with a client secret. Performs OpenID Connect discovery to find the token endpoint.
     /// </summary>
     public class OAuthHandler : DelegatingHandler
     {
