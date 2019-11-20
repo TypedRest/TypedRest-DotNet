@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.Client;
@@ -12,8 +13,7 @@ namespace TypedRest.Http
     public class OAuthHandler : DelegatingHandler
     {
         private readonly OAuthOptions _oAuthOptions;
-
-        private readonly HttpMessageHandler _innerHandler;
+        private readonly HttpClient _httpClient;
 
         /// <summary>
         /// Creates a new OAuth handler.
@@ -21,6 +21,7 @@ namespace TypedRest.Http
         /// <param name="oAuthOptions">Options for OAuth 2.0 / OpenID Connect authentication.</param>
         /// <param name="innerHandler">An optional inner HTTP message handler to delegate to.</param>
         public OAuthHandler(OAuthOptions oAuthOptions, HttpMessageHandler? innerHandler = null)
+            : base(innerHandler ?? new HttpClientHandler())
         {
             if (oAuthOptions == null) throw new ArgumentNullException(nameof(oAuthOptions));
             if (oAuthOptions.Uri == null) throw new ArgumentException($"{nameof(OAuthOptions)}.{nameof(OAuthOptions.Uri)} must not be null.", nameof(oAuthOptions));
@@ -28,41 +29,47 @@ namespace TypedRest.Http
             if (string.IsNullOrEmpty(oAuthOptions.ClientSecret)) throw new ArgumentException($"{nameof(OAuthOptions)}.{nameof(OAuthOptions.ClientSecret)} must not be null or empty.", nameof(oAuthOptions));
 
             _oAuthOptions = oAuthOptions;
-            _innerHandler = innerHandler ?? new HttpClientHandler();
+            _httpClient = new HttpClient(InnerHandler);
         }
 
-        private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+        private AccessToken? _accessToken;
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            // Double-checked locking pattern
-            if (InnerHandler == null)
-            {
-                await _lock.WaitAsync(cancellationToken).NoContext();
-                try
-                {
-                    if (InnerHandler == null)
-                        InnerHandler = await BuildTokenHandlerAsync(cancellationToken).NoContext();
-                }
-                finally
-                {
-                    _lock.Release();
-                }
-            }
+            if (_accessToken == null || _accessToken.IsExpired)
+                _accessToken = await RequestAccessTokenAsync(cancellationToken);
 
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken.Value);
             return await base.SendAsync(request, cancellationToken).NoContext();
         }
 
-        private async Task<AccessTokenDelegatingHandler> BuildTokenHandlerAsync(CancellationToken cancellationToken)
+        private async Task<AccessToken> RequestAccessTokenAsync(CancellationToken cancellationToken)
         {
-            var discovery = await new HttpClient(_innerHandler).GetDiscoveryDocumentAsync(_oAuthOptions.Uri.ToString(), cancellationToken).NoContext();
+            var response = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = await DiscoverTokenEndpointAsync(cancellationToken),
+                ClientId = _oAuthOptions.ClientId,
+                ClientSecret = _oAuthOptions.ClientSecret,
+                Scope = _oAuthOptions.Scope
+            }, cancellationToken).NoContext();
 
-            return new AccessTokenDelegatingHandler(
-                discovery.TokenEndpoint ?? throw new HttpRequestException($"Unable to discover token endpoint for {_oAuthOptions.Uri}."),
-                _oAuthOptions.ClientId,
-                _oAuthOptions.ClientSecret,
-                _oAuthOptions.Scope,
-                _innerHandler);
+            if (response.Exception != null) throw response.Exception;
+            if (response.IsError) throw new AuthenticationException(response.Error);
+            return new AccessToken(
+                response.AccessToken,
+                DateTime.Now.AddSeconds(response.ExpiresIn - 15 /* buffer time */));
+        }
+
+        private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)
+        {
+            var response = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                RequestUri = _oAuthOptions.Uri
+            }, cancellationToken);
+
+            if (response.Exception != null) throw response.Exception;
+            if (response.IsError) throw new AuthenticationException(response.Error);
+            return response.TokenEndpoint;
         }
     }
 }
