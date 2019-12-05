@@ -1,6 +1,6 @@
 using System;
 
-#if NET45
+#if NETFRAMEWORK
 using System.Runtime.Serialization;
 #endif
 
@@ -22,7 +22,7 @@ namespace TypedRest
             : base(message, innerException)
         {}
 
-#if NET45
+#if NETFRAMEWORK
         protected AuthenticationException(SerializationInfo serializationInfo, StreamingContext streamingContext)
             : base(serializationInfo, streamingContext)
         {}

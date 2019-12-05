@@ -15,7 +15,7 @@ namespace TypedRest
         where T : EntryEndpoint
     {
         private string ConfigDir => Path.Combine(
-#if NET45
+#if NETFRAMEWORK
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 #else
             Environment.ExpandEnvironmentVariables("%appdata%"),

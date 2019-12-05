@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-#if NET45
+#if NETFRAMEWORK
 using System.IO;
 #endif
 
@@ -23,7 +23,7 @@ namespace TypedRest.CommandLine.IO
 
         public string ReadSecret(string prompt)
         {
-#if NET45
+#if NETFRAMEWORK
             // Increase maximum length for Console.ReadLine()
             var defaultReader = Console.In;
             var inputBuffer = new byte[1024];
@@ -35,7 +35,7 @@ namespace TypedRest.CommandLine.IO
 #endif
                 Console.Write(prompt + " ");
                 return Console.ReadLine();
-#if NET45
+#if NETFRAMEWORK
             }
             finally
             {

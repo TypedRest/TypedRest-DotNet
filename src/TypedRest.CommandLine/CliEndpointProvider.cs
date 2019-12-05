@@ -51,7 +51,7 @@ namespace TypedRest.CommandLine
         /// </summary>
         protected virtual void ShowTokenProvider(Uri uri)
         {
-#if NET45
+#if NETFRAMEWORK
             if (!Environment.UserInteractive) return;
 #endif
 
