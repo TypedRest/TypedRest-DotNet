@@ -62,10 +62,7 @@ namespace TypedRest.Http
 
         private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)
         {
-            var response = await _httpClient.Value.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
-            {
-                RequestUri = _oAuthOptions.Uri
-            }, cancellationToken);
+            var response = await _httpClient.Value.GetDiscoveryDocumentAsync(_oAuthOptions.Uri.OriginalString, cancellationToken);
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
