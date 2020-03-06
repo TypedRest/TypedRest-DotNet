@@ -13,7 +13,7 @@ namespace TypedRest.Http
     public class OAuthHandler : DelegatingHandler
     {
         private readonly OAuthOptions _oAuthOptions;
-        private readonly HttpClient _httpClient;
+        private readonly Lazy<HttpClient> _httpClient;
 
         /// <summary>
         /// Creates a new OAuth handler.
@@ -21,15 +21,15 @@ namespace TypedRest.Http
         /// <param name="oAuthOptions">Options for OAuth 2.0 / OpenID Connect authentication.</param>
         /// <param name="innerHandler">An optional inner HTTP message handler to delegate to.</param>
         public OAuthHandler(OAuthOptions oAuthOptions, HttpMessageHandler? innerHandler = null)
-            : base(innerHandler ?? new HttpClientHandler())
         {
             if (oAuthOptions == null) throw new ArgumentNullException(nameof(oAuthOptions));
             if (oAuthOptions.Uri == null) throw new ArgumentException($"{nameof(OAuthOptions)}.{nameof(OAuthOptions.Uri)} must not be null.", nameof(oAuthOptions));
             if (string.IsNullOrEmpty(oAuthOptions.ClientId)) throw new ArgumentException($"{nameof(OAuthOptions)}.{nameof(OAuthOptions.ClientId)} must not be null or empty.", nameof(oAuthOptions));
             if (string.IsNullOrEmpty(oAuthOptions.ClientSecret)) throw new ArgumentException($"{nameof(OAuthOptions)}.{nameof(OAuthOptions.ClientSecret)} must not be null or empty.", nameof(oAuthOptions));
-
             _oAuthOptions = oAuthOptions;
-            _httpClient = new HttpClient(InnerHandler);
+
+            if (innerHandler != null) InnerHandler = innerHandler;
+            _httpClient = new Lazy<HttpClient>(() => new HttpClient(InnerHandler ?? new HttpClientHandler()));
         }
 
         private AccessToken? _accessToken;
@@ -45,7 +45,7 @@ namespace TypedRest.Http
 
         private async Task<AccessToken> RequestAccessTokenAsync(CancellationToken cancellationToken)
         {
-            var response = await _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            var response = await _httpClient.Value.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
                 Address = await DiscoverTokenEndpointAsync(cancellationToken),
                 ClientId = _oAuthOptions.ClientId,
@@ -62,7 +62,7 @@ namespace TypedRest.Http
 
         private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)
         {
-            var response = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            var response = await _httpClient.Value.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
                 RequestUri = _oAuthOptions.Uri
             }, cancellationToken);
