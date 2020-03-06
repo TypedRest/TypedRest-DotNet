@@ -25,7 +25,9 @@ namespace TypedRest.Endpoints
         public OAuthEntryEndpoint(Uri uri, OAuthOptions? oAuthOptions = null, HttpMessageHandler? httpMessageHandler = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
             : base(
                 uri,
-                new HttpClient(oAuthOptions == null ? httpMessageHandler : new OAuthHandler(oAuthOptions, httpMessageHandler)),
+                new HttpClient(oAuthOptions == null
+                    ? httpMessageHandler ?? new HttpClientHandler()
+                    : new OAuthHandler(oAuthOptions, httpMessageHandler ?? new HttpClientHandler())),
                 serializer,
                 errorHandler,
                 linkHandler)
