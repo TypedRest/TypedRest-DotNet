@@ -26,5 +26,10 @@ namespace TypedRest
         /// The scope to request an authentication token for.
         /// </summary>
         public string? Scope { get; set; }
+
+        /// <summary>
+        /// The audience to request an authentication token for.
+        /// </summary>
+        public string? Audience { get; set; }
     }
 }

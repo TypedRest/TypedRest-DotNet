@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityModel.Client;
 
 namespace TypedRest.Http
@@ -45,13 +46,17 @@ namespace TypedRest.Http
 
         private async Task<AccessToken> RequestAccessTokenAsync(CancellationToken cancellationToken)
         {
-            var response = await _httpClient.Value.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            var request = new ClientCredentialsTokenRequest
             {
                 Address = await DiscoverTokenEndpointAsync(cancellationToken),
                 ClientId = _oAuthOptions.ClientId,
                 ClientSecret = _oAuthOptions.ClientSecret,
-                Scope = _oAuthOptions.Scope
-            }, cancellationToken).NoContext();
+                Scope = _oAuthOptions.Scope,
+            };
+            if (_oAuthOptions.Audience != null)
+                request.Parameters[OidcConstants.TokenRequest.Audience] = _oAuthOptions.Audience;
+
+            var response = await _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken).NoContext();
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
