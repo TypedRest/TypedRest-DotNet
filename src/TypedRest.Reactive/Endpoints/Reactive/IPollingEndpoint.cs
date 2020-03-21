@@ -12,6 +12,7 @@ namespace TypedRest.Endpoints.Reactive
 out
 #endif
         TEntity> : IElementEndpoint<TEntity>
+        where TEntity : class
     {
         /// <summary>
         /// The interval in which to send requests to the server.

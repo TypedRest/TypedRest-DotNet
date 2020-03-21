@@ -12,6 +12,7 @@ namespace TypedRest.CommandLine.Commands.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
+        where TEntity : class
     {
         /// <summary>
         /// Creates a new REST element command.

@@ -12,6 +12,7 @@ namespace TypedRest.Endpoints.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class ElementEndpoint<TEntity> : ETagEndpointBase, IElementEndpoint<TEntity>
+        where TEntity : class
     {
         /// <summary>
         /// Creates a new element endpoint.
@@ -31,10 +32,8 @@ namespace TypedRest.Endpoints.Generic
             : base(referrer, relativeUri)
         {}
 
-        public TEntity Response
-            => ResponseCache == null
-                ? default
-                : ResponseCache.GetContent().ReadAsAsync<TEntity>(Serializer).Result;
+        public TEntity? Response
+            => ResponseCache?.GetContent().ReadAsAsync<TEntity>(Serializer).Result;
 
         public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default)
         {
@@ -57,7 +56,7 @@ namespace TypedRest.Endpoints.Generic
 
         public bool? SetAllowed => IsMethodAllowed(HttpMethod.Put);
 
-        public virtual async Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity?> SetAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
@@ -70,7 +69,7 @@ namespace TypedRest.Endpoints.Generic
 
         public bool? MergeAllowed => IsMethodAllowed(HttpMethods.Patch);
 
-        public async Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> MergeAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 

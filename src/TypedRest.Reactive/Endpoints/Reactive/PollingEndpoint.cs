@@ -11,6 +11,7 @@ namespace TypedRest.Endpoints.Reactive
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class PollingEndpoint<TEntity> : ElementEndpoint<TEntity>, IPollingEndpoint<TEntity>
+        where TEntity : class
     {
         private readonly Predicate<TEntity>? _endCondition;
 

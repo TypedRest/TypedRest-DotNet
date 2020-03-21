@@ -38,9 +38,7 @@ namespace TypedRest.Endpoints.Rpc
 
             var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
 
-            return response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
-                ? await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken)
-                : default;
+            return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken);
         }
     }
 }

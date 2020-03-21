@@ -27,6 +27,7 @@ namespace TypedRest.CommandLine.Commands.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class CollectionCommand<TEntity> : CollectionCommand<TEntity, IElementEndpoint<TEntity>, ElementCommand<TEntity>>
+        where TEntity : class
     {
         /// <summary>
         /// Creates a new REST collection command.

@@ -13,6 +13,7 @@ namespace TypedRest.CommandLine.Commands.Reactive
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class PollingCommand<TEntity> : ElementCommand<TEntity>
+        where TEntity : class
     {
         protected new readonly IPollingEndpoint<TEntity> Endpoint;
 

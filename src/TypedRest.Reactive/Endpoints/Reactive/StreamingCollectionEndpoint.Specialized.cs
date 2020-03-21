@@ -10,6 +10,7 @@ namespace TypedRest.Endpoints.Reactive
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     public class StreamingCollectionEndpoint<TEntity> : StreamingCollectionEndpoint<TEntity, ElementEndpoint<TEntity>>, IStreamingCollectionEndpoint<TEntity>
+        where TEntity : class
     {
         /// <summary>
         /// Creates a new streaming collection endpoint.

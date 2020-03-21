@@ -9,6 +9,7 @@ namespace TypedRest.Endpoints.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
     public class CollectionEndpoint<TEntity> : CollectionEndpoint<TEntity, ElementEndpoint<TEntity>>, ICollectionEndpoint<TEntity>
+        where TEntity : class
     {
         /// <summary>
         /// Creates a new collection endpoint.

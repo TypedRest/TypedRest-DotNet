@@ -18,6 +18,7 @@ out
 #endif
         // ReSharper disable once RedundantExtendsListEntry
         TEntity> : IElementEndpoint, IEndpoint
+        where TEntity : class
     {
 #if DOXYGEN
         /// <summary>
@@ -50,9 +51,9 @@ out
 #endif
 
         /// <summary>
-        /// A cached copy of the entity as received from the server. Can be null.
+        /// A cached copy of the entity as received from the server. Can be <c>null</c>.
         /// </summary>
-        TEntity Response { get; }
+        TEntity? Response { get; }
 
         /// <summary>
         /// Returns the <typeparamref name="TEntity"/>.
@@ -83,7 +84,7 @@ out
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TEntity> SetAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<TEntity?> SetAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <see cref="MergeAsync"/> is currently allowed.
@@ -104,6 +105,6 @@ out
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        Task<TEntity> MergeAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<TEntity?> MergeAsync(TEntity entity, CancellationToken cancellationToken = default);
     }
 }
