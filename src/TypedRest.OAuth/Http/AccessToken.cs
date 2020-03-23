@@ -1,5 +1,4 @@
 using System;
-using IdentityModel.Client;
 
 namespace TypedRest.Http
 {
@@ -10,7 +9,7 @@ namespace TypedRest.Http
         private readonly DateTime _expiration;
 
         public bool IsExpired
-            => _expiration >= DateTime.Now;
+            => DateTime.Now >= _expiration;
 
         public AccessToken(string value, DateTime expiration)
         {
