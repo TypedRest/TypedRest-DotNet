@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -38,13 +39,19 @@ namespace TypedRest.Http
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (_accessToken == null || _accessToken.IsExpired)
-                _accessToken = await RequestAccessTokenAsync(cancellationToken);
+                await RequestAccessTokenAsync(cancellationToken);
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken.Value);
-            return await base.SendAsync(request, cancellationToken).NoContext();
+            var response = await SendAuthenticatedAsync(request, cancellationToken);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                // Retry with new access token
+                await RequestAccessTokenAsync(cancellationToken);
+                return await SendAuthenticatedAsync(request, cancellationToken);
+            }
+            else return response;
         }
 
-        private async Task<AccessToken> RequestAccessTokenAsync(CancellationToken cancellationToken)
+        private async Task RequestAccessTokenAsync(CancellationToken cancellationToken)
         {
             var request = new ClientCredentialsTokenRequest
             {
@@ -60,7 +67,7 @@ namespace TypedRest.Http
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
-            return new AccessToken(
+            _accessToken = new AccessToken(
                 response.AccessToken,
                 DateTime.Now.AddSeconds(response.ExpiresIn - 15 /* buffer time */));
         }
@@ -72,6 +79,12 @@ namespace TypedRest.Http
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
             return response.TokenEndpoint;
+        }
+
+        private async Task<HttpResponseMessage> SendAuthenticatedAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken!.Value);
+            return await base.SendAsync(request, cancellationToken).NoContext();
         }
     }
 }
