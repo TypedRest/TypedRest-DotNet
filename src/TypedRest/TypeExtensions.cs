@@ -35,7 +35,7 @@ namespace TypedRest
         /// Gets a property defined on a <paramref name="type"/> that is annotated with a specific <typeparamref name="TAttribute"/>.
         /// </summary>
         /// <returns>The property; <c>null</c> if no such property was found.</returns>
-        public static PropertyInfo GetPropertyWith<TAttribute>(this Type type)
+        public static PropertyInfo? GetPropertyWith<TAttribute>(this Type type)
             where TAttribute : Attribute
             => type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                    .FirstOrDefault(x => x.GetCustomAttribute<TAttribute>(inherit: true) != null);
