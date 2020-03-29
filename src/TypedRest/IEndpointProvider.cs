@@ -7,7 +7,7 @@ namespace TypedRest
     /// </summary>
     /// <typeparam name="T">The type of endpoint created.</typeparam>
     public interface IEndpointProvider<out T>
-        where T : class, IEndpoint
+        where T : IEndpoint
     {
         /// <summary>
         /// Resets any stored endpoint URI information.

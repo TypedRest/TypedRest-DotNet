@@ -18,7 +18,8 @@ namespace TypedRest.Endpoints.Generic
     /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEndpoint<TElementEndpoint>
-        where TElementEndpoint : IEndpoint
+        where TEntity : class
+        where TElementEndpoint : IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Returns an <see cref="ElementEndpoint{TEntity}"/> for a specific child element.

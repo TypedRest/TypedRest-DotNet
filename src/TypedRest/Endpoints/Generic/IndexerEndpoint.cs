@@ -10,7 +10,7 @@ namespace TypedRest.Endpoints.Generic
     /// </summary>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual elements. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
     public class IndexerEndpoint<TElementEndpoint> : EndpointBase, IIndexerEndpoint<TElementEndpoint>
-        where TElementEndpoint : class, IEndpoint
+        where TElementEndpoint : IEndpoint
     {
         /// <summary>
         /// Creates a new element collection endpoint.

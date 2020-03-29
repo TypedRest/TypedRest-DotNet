@@ -10,7 +10,8 @@ namespace TypedRest.Endpoints.Reactive
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s.</typeparam>
     public interface IStreamingCollectionEndpoint<TEntity, out TElementEndpoint> : ICollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IEndpoint
+        where TEntity : class
+        where TElementEndpoint : IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Provides an observable stream of elements. The observable is cold; HTTP communication only starts on <see cref="IObservable{T}.Subscribe"/>.

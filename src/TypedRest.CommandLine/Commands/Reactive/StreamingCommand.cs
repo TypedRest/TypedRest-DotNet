@@ -13,7 +13,7 @@ namespace TypedRest.CommandLine.Commands.Reactive
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
     /// <typeparam name="TEndpoint">The specific type of <see cref="IStreamingEndpoint{TEntity}"/> to operate on.</typeparam>
     public abstract class StreamingCommand<TEntity, TEndpoint> : EndpointCommand<TEndpoint>
-        where TEndpoint : class, IStreamingEndpoint<TEntity>
+        where TEndpoint : IStreamingEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new REST streaming command.

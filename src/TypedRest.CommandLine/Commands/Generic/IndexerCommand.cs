@@ -11,9 +11,9 @@ namespace TypedRest.CommandLine.Commands.Generic
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual elements.</typeparam>
     /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. This must be a non-abstract class with a constructor that takes a <typeparamref name="TElementEndpoint"/>, unless you override <see cref="GetElementCommand"/>.</typeparam>
     public abstract class IndexerCommand<TEndpoint, TElementEndpoint, TElementCommand> : EndpointCommand<TEndpoint>
-        where TEndpoint : class, IIndexerEndpoint<TElementEndpoint>
-        where TElementEndpoint : class, IEndpoint
-        where TElementCommand : class, IEndpointCommand
+        where TEndpoint : IIndexerEndpoint<TElementEndpoint>
+        where TElementEndpoint : IEndpoint
+        where TElementCommand : IEndpointCommand
     {
         /// <summary>
         /// Creates a new REST Indexer command.

@@ -25,7 +25,7 @@ namespace TypedRest.Endpoints.Generic
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <see cref="IIndexerEndpoint{TElementEndpoint}.this[string]"/> with <see cref="IElementEndpoint.ExistsAsync"/>.</remarks>
         public static Task<bool> ContainsAsync<TElementEndpoint>(this IIndexerEndpoint<TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default)
-            where TElementEndpoint : class, IElementEndpoint
+            where TElementEndpoint : IElementEndpoint
             => endpoint[id].ExistsAsync(cancellationToken);
 
         /// <summary>
@@ -41,7 +41,8 @@ namespace TypedRest.Endpoints.Generic
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <see cref="IElementEndpoint.ExistsAsync"/>.</remarks>
         public static Task<bool> ContainsAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default)
-            where TElementEndpoint : class, IElementEndpoint
+            where TEntity : class
+            where TElementEndpoint : IElementEndpoint<TEntity>
             => endpoint[element].ExistsAsync(cancellationToken);
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace TypedRest.Endpoints.Generic
         /// <remarks>This is a convenience method equivalent to combining <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <see cref="IElementEndpoint{TEntity}.SetAsync"/>.</remarks>
         public static Task<TEntity?> SetAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default)
             where TEntity : class
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
+            where TElementEndpoint : IElementEndpoint<TEntity>
             => endpoint[element].SetAsync(element, cancellationToken);
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace TypedRest.Endpoints.Generic
         /// <remarks>This is a convenience method equivalent to combining <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <see cref="IElementEndpoint{TEntity}.SetAsync"/>.</remarks>
         public static Task<TEntity?> MergeAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default)
             where TEntity : class
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
+            where TElementEndpoint : IElementEndpoint<TEntity>
             => endpoint[element].MergeAsync(element, cancellationToken);
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace TypedRest.Endpoints.Generic
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         /// <remarks>This is a convenience method equivalent to combining <see cref="IIndexerEndpoint{TElementEndpoint}.this[string]"/> with <see cref="IElementEndpoint.DeleteAsync"/>.</remarks>
         public static Task DeleteAsync<TElementEndpoint>(this IIndexerEndpoint<TElementEndpoint> endpoint, string id, CancellationToken cancellationToken = default)
-            where TElementEndpoint : class, IElementEndpoint
+            where TElementEndpoint : IElementEndpoint
             => endpoint[id].DeleteAsync(cancellationToken);
 
         /// <summary>
@@ -121,7 +122,7 @@ namespace TypedRest.Endpoints.Generic
         /// <remarks>This is a convenience method equivalent to combining <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}.this[TEntity]"/> with <see cref="IElementEndpoint.DeleteAsync"/>.</remarks>
         public static Task DeleteAsync<TEntity, TElementEndpoint>(this ICollectionEndpoint<TEntity, TElementEndpoint> endpoint, TEntity element, CancellationToken cancellationToken = default)
             where TEntity : class
-            where TElementEndpoint : class, IElementEndpoint<TEntity>
+            where TElementEndpoint : IElementEndpoint<TEntity>
             => endpoint[element].DeleteAsync(cancellationToken);
     }
 }

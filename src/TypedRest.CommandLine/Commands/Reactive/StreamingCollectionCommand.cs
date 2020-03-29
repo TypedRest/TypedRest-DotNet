@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TypedRest.CommandLine.Commands.Generic;
 using TypedRest.CommandLine.IO;
-using TypedRest.Endpoints;
 using TypedRest.Endpoints.Generic;
 using TypedRest.Endpoints.Reactive;
 
@@ -18,9 +17,10 @@ namespace TypedRest.CommandLine.Commands.Reactive
     /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
     /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. Must have a public constructor with a <typeparamref name="TElementEndpoint"/> parameter.</typeparam>
     public abstract class StreamingCollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>
-        where TEndpoint : class, IStreamingCollectionEndpoint<TEntity, TElementEndpoint>
-        where TElementEndpoint : class, IEndpoint
-        where TElementCommand : class, IEndpointCommand
+        where TEntity : class
+        where TEndpoint : IStreamingCollectionEndpoint<TEntity, TElementEndpoint>
+        where TElementEndpoint : IElementEndpoint<TEntity>
+        where TElementCommand : IEndpointCommand
     {
         /// <summary>
         /// Creates a new REST streaming collection command.
