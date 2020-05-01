@@ -1,7 +1,7 @@
-# TypedRest for .NET
+# ![TypedRest](logo.svg) for .NET
 
 [![Build status](https://img.shields.io/appveyor/ci/TypedRest/TypedRest-DotNet.svg)](https://ci.appveyor.com/project/TypedRest/TypedRest-DotNet)  
-TypedRest helps you build type-safe, fluent-style REST API clients.
+TypedRest for .NET helps you build type-safe, fluent-style REST API clients with.
 
 Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code. For example, TypedRest lets you turn this:
 
@@ -17,6 +17,12 @@ into this:
 var myService = new MyServiceClient(new Uri("http://example.com/"));
 var contact = myService.Contacts["123"].ReadAsync();
 ```
+
+## Documentation
+
+Read an **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
+
+For information about specific classes or interfaces you can read the **[API Documentation](https://dotnet.typedrest.net/)**.
 
 ## NuGet packages
 
@@ -34,9 +40,3 @@ Adds support for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://op
 
 [![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)  
 Build command-line interfaces for TypedRest clients.
-
-## Documentation
-
-Read an **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
-
-For information about specific classes or interfaces you can read the **[API Documentation](https://dotnet.typedrest.net/)**.

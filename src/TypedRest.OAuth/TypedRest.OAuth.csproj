@@ -33,6 +33,7 @@
     <PackageTags>Typed REST OAuth OIDC</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
     <Authors>Bastian Eicher</Authors>
   </PropertyGroup>
@@ -47,6 +48,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
