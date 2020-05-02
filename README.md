@@ -1,28 +1,33 @@
 # ![TypedRest](logo.svg) for .NET
 
 [![Build status](https://img.shields.io/appveyor/ci/TypedRest/TypedRest-DotNet.svg)](https://ci.appveyor.com/project/TypedRest/TypedRest-DotNet)  
-TypedRest for .NET helps you build type-safe, fluent-style REST API clients with.
-
-Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code. For example, TypedRest lets you turn this:
+TypedRest for .NET helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
 
 ```csharp
-var httpClient = new HttpClient {BaseAddress = new Uri("http://example.com/")};
-var response = httpClient.GetAsync("/contacts/123");
-var contact = await response.Content.ReadAsAsync<Contact>();
+var client = new MyClient(new Uri("http://example.com/"));
+
+// GET /contacts
+List<Contact> contactList = await client.Contacts.ReadAllAsync();
+
+// POST /contacts
+await client.Contacts.CreateAsync(new Contact {Name = "smith"});
+
+// GET /contacts/smith
+Contact contact = await client.Contacts["smith"].ReadAsync();
+
+// DELETE /contacts/smith
+await client.Contacts["smith"].DeleteAsync();
+
+// PUT /contacts/smith/note
+await client.Contacts["smith"].Note.SetAsync(new Note {Content = "some note"});
+
+// GET /contacts/smith/note
+Note note = await client.Contacts["smith"].Note.ReadAsync();
 ```
-
-into this:
-
-```csharp
-var myService = new MyServiceClient(new Uri("http://example.com/"));
-var contact = myService.Contacts["123"].ReadAsync();
-```
-
-## Documentation
 
 Read an **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
 
-For information about specific classes or interfaces you can read the **[API Documentation](https://dotnet.typedrest.net/)**.
+For information about specific .NET classes or interfaces you can read the **[API Documentation](https://dotnet.typedrest.net/)**.
 
 ## NuGet packages
 
