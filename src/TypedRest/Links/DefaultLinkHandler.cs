@@ -17,10 +17,10 @@ namespace TypedRest.Links
     {
         public async Task<(LinkDictionary links, IDictionary<string, UriTemplate> linkTemplates)> HandleAsync(HttpResponseMessage response)
         {
-            var baseUri = response.RequestMessage?.RequestUri ?? new Uri(".");
+            Uri baseUri = response.RequestMessage?.RequestUri ?? new Uri(".");
 
-            var links = new LinkDictionary();
-            var linkTemplates = new Dictionary<string, UriTemplate>();
+            LinkDictionary links = new LinkDictionary();
+            Dictionary<string, UriTemplate> linkTemplates = new Dictionary<string, UriTemplate>();
 
             void ParseLinkObject(string rel, JObject obj)
             {
