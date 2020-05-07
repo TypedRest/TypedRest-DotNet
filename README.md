@@ -9,20 +9,21 @@ var client = new MyClient(new Uri("http://example.com/"));
 // GET /contacts
 List<Contact> contactList = await client.Contacts.ReadAllAsync();
 
-// POST /contacts
-await client.Contacts.CreateAsync(new Contact {Name = "smith"});
+// POST /contacts -> /contacts/1337
+ContactEndpoint smith = await client.Contacts.CreateAsync(new Contact {Name = "Smith"});
+//ContactEndpoint smith = client.Contacts["1337"];
 
-// GET /contacts/smith
-Contact contact = await client.Contacts["smith"].ReadAsync();
+// GET /contacts/1337
+Contact contact = await smith.ReadAsync();
 
-// DELETE /contacts/smith
-await client.Contacts["smith"].DeleteAsync();
+// PUT /contacts/1337/note
+await smith.Note.SetAsync(new Note {Content = "some note"});
 
-// PUT /contacts/smith/note
-await client.Contacts["smith"].Note.SetAsync(new Note {Content = "some note"});
+// GET /contacts/1337/note
+Note note = await smith.Note.ReadAsync();
 
-// GET /contacts/smith/note
-Note note = await client.Contacts["smith"].Note.ReadAsync();
+// DELETE /contacts/1337
+await smith.DeleteAsync();
 ```
 
 Read an **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
