@@ -20,26 +20,27 @@ namespace TypedRest.Endpoints
     public class EntryEndpoint : EndpointBase
     {
         /// <summary>
-        /// Creates a new endpoint with an absolute URI.
+        /// Creates a new entry endpoint.
         /// </summary>
-        /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically.</param>
-        /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
+        /// <param name="httpClient">The HTTP client used to communicate with the REST API.</param>
+        /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically. <see cref="HttpClient.BaseAddress"/> is used if this is unset.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, HttpClient httpClient, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
+        public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
             : base(
-                uri.EnsureTrailingSlash(),
+                (uri ?? httpClient.BaseAddress ?? throw new ArgumentException("uri or httpClient.BaseAddress must be set.", nameof(uri))).EnsureTrailingSlash(),
                 httpClient,
                 serializer ?? new DefaultJsonSerializer(),
                 errorHandler ?? new DefaultErrorHandler(),
                 linkHandler ?? new DefaultLinkHandler())
         {
-            AcceptContentTypes();
+            foreach (var mediaType in Serializer.SupportedMediaTypes)
+                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
         }
 
         /// <summary>
-        /// Creates a new entry point.
+        /// Creates a new entry endpoint.
         /// </summary>
         /// <param name="uri">The base URI of the REST API.</param>
         /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
@@ -47,51 +48,19 @@ namespace TypedRest.Endpoints
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
         public EntryEndpoint(Uri uri, ICredentials? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
-            : this(uri, new HttpClient(), serializer, errorHandler, linkHandler)
+            : this(new HttpClient(), uri, serializer, errorHandler, linkHandler)
         {
-            BasicAuth(uri, credentials);
-        }
+            var basicAuthCredentials = credentials?.GetCredential(Uri, authType: "Basic");
+            string? userInfo = (basicAuthCredentials != null)
+                ? basicAuthCredentials.UserName + ":" + basicAuthCredentials.Password
+                : uri.UserInfo;
 
-        /// <summary>
-        /// Creates a new entry point using an OAuth token.
-        /// </summary>
-        /// <param name="uri">The base URI of the REST API.</param>
-        /// <param name="token">The OAuth token to present as a "Bearer" to the REST API.</param>
-        /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
-        /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
-        /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, string token, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
-            : this(uri, new HttpClient(), serializer, errorHandler, linkHandler)
-        {
-            BearerAuth(token);
-        }
-
-        private void AcceptContentTypes()
-        {
-            foreach (var mediaType in Serializer.SupportedMediaTypes)
-                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
-        }
-
-        private void BasicAuth(Uri uri, ICredentials? credentials)
-        {
-            var userInfo = (credentials == null) ? uri.UserInfo : GetUserInfo(credentials);
             if (!string.IsNullOrEmpty(userInfo))
             {
                 HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1").GetBytes(userInfo)));
             }
         }
-
-        private string? GetUserInfo(ICredentials credentials)
-        {
-            var basicCredentials = credentials.GetCredential(Uri, authType: "Basic");
-            return (basicCredentials == null)
-                ? null
-                : basicCredentials.UserName + ":" + basicCredentials.Password;
-        }
-
-        private void BearerAuth(string token)
-            => HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         /// <summary>
         /// Fetches meta data such as links from the server.

@@ -21,7 +21,7 @@ namespace TypedRest.Endpoints
         private class MockEntryEndpoint : EntryEndpoint
         {
             public MockEntryEndpoint(HttpMessageHandler messageHandler)
-                : base(new Uri("http://localhost/"), new HttpClient(messageHandler))
+                : base(new HttpClient(messageHandler), new Uri("http://localhost/"))
             {}
         }
     }
