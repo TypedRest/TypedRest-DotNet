@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using IdentityModel;
 using IdentityModel.Client;
 
-namespace TypedRest.Http
+namespace TypedRest.OAuth
 {
     /// <summary>
     /// HTTP message delegating handler that transparently performs OAuth 2.0 authentication with a client secret. Performs OpenID Connect discovery to find the token endpoint.
@@ -64,7 +64,7 @@ namespace TypedRest.Http
             if (_oAuthOptions.Audience != null)
                 request.Parameters[OidcConstants.TokenRequest.Audience] = _oAuthOptions.Audience;
 
-            var response = await _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken).NoContext();
+            var response = await _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
@@ -85,7 +85,7 @@ namespace TypedRest.Http
         private async Task<HttpResponseMessage> SendAuthenticatedAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken!.Value);
-            return await base.SendAsync(request, cancellationToken).NoContext();
+            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
     }
 }
