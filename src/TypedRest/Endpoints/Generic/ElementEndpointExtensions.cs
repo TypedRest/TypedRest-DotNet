@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,9 +45,10 @@ namespace TypedRest.Endpoints.Generic
                 {
                     return await endpoint.SetAsync(entity, cancellationToken);
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ex)
                 {
                     if (retryCounter++ >= maxRetries) throw;
+                    await ex.HttpRetryDelayAsync(cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                 }
             }
