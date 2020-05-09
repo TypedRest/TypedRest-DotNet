@@ -45,5 +45,8 @@ Adds support for [JSON Patch](http://jsonpatch.com/) to TypedRest.
 Provides a [HttpClient DelegatingHandler](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.delegatinghandler) for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication.  
 Note: This can also be used independently of the other TypedRest packages.
 
+[![TypedRest.DependencyInjection](https://img.shields.io/nuget/v/TypedRest.DependencyInjection.svg?label=TypedRest.DependencyInjection)](https://www.nuget.org/packages/TypedRest.DependencyInjection/)  
+Adds support for [.NET Core dependency injection](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection) and [HttpClientFactory](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests) to TypedRest.
+
 [![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)  
 Build command-line interfaces for TypedRest clients.
