@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,52 +18,56 @@ namespace TypedRest.Errors
         public async Task HandleAsync(HttpResponseMessage response)
         {
             string message = $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
-
             string? body = null;
+
             if (response.Content != null)
             {
                 body = await response.Content.ReadAsStringAsync().NoContext();
-
-                if (response.Content.Headers.ContentType?.MediaType == "application/json")
-                {
-                    try
-                    {
-                        var token = JToken.Parse(body);
-                        if (token.Type == JTokenType.Object)
-                        {
-                            var messageNode = JToken.Parse(body)["message"];
-                            if (messageNode != null) message = messageNode.ToString();
-                        }
-                    }
-                    catch (JsonException)
-                    {}
-                }
+                message = ExtractJsonMessage(response, body) ?? message;
             }
 
-            switch (response.StatusCode)
+            var exception = MapException(response.StatusCode, message);
+            exception.SetHttpResponseHeaders(response.Headers);
+            if (body != null) exception.SetHttpResponseBody(body);
+            throw exception;
+        }
+
+        private static string? ExtractJsonMessage(HttpResponseMessage response, string body)
+        {
+            if (response.Content.Headers.ContentType?.MediaType == "application/json")
             {
-                case HttpStatusCode.BadRequest:
-                    throw new InvalidDataException(message, new HttpRequestException(body));
-                case HttpStatusCode.Unauthorized:
-                    throw new AuthenticationException(message, new HttpRequestException(body));
-                case HttpStatusCode.Forbidden:
-                    throw new UnauthorizedAccessException(message, new HttpRequestException(body));
-                case HttpStatusCode.NotFound:
-                case HttpStatusCode.Gone:
-                    throw new KeyNotFoundException(message, new HttpRequestException(body));
-                case HttpStatusCode.Conflict:
-                    throw new InvalidOperationException(message, new HttpRequestException(body));
-                case HttpStatusCode.PreconditionFailed:
-                    //throw new VersionNotFoundException(message, new HttpRequestException(body));
-                    throw new InvalidOperationException(message, new HttpRequestException(body));
-                case HttpStatusCode.RequestedRangeNotSatisfiable:
-                    //throw new IndexOutOfRangeException(message, new HttpRequestException(body));
-                    throw new InvalidOperationException(message, new HttpRequestException(body));
-                case HttpStatusCode.RequestTimeout:
-                    throw new TimeoutException(message, new HttpRequestException(body));
-                default:
-                    throw new HttpRequestException(message, new HttpRequestException(body));
+                try
+                {
+                    var token = JToken.Parse(body);
+                    if (token.Type == JTokenType.Object)
+                    {
+                        var messageNode = JToken.Parse(body)["message"];
+                        if (messageNode != null) return messageNode.ToString();
+                    }
+                }
+                catch (JsonException)
+                {}
             }
+
+            return null;
+        }
+
+        private static Exception MapException(HttpStatusCode statusCode, string message)
+        {
+            var innerException = new HttpRequestException(message);
+            return statusCode switch
+            {
+                HttpStatusCode.BadRequest => new InvalidDataException(message, innerException),
+                HttpStatusCode.Unauthorized => new AuthenticationException(message, innerException),
+                HttpStatusCode.Forbidden => new UnauthorizedAccessException(message, innerException),
+                HttpStatusCode.NotFound => new KeyNotFoundException(message, innerException),
+                HttpStatusCode.Gone => new KeyNotFoundException(message, innerException),
+                HttpStatusCode.Conflict => throw new InvalidOperationException(message, innerException),
+                HttpStatusCode.PreconditionFailed => new InvalidOperationException(message, innerException),
+                HttpStatusCode.RequestedRangeNotSatisfiable => new InvalidOperationException(message, innerException),
+                HttpStatusCode.RequestTimeout => new TimeoutException(message, innerException),
+                _ => innerException
+            };
         }
     }
 }
