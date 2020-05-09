@@ -13,7 +13,8 @@ The main TypedRest library.
 Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/) to TypedRest.
 
 [TypedRest.OAuth](https://www.nuget.org/packages/TypedRest.OAuth/)  
-Adds support for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication to TypedRest.
+Provides an [HttpClient DelegatingHandler](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.delegatinghandler) for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication.  
+This can also be used independently of the other TypedRest packages.
 
 [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)  
 Build command-line interfaces for TypedRest clients.

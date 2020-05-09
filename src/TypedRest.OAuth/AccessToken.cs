@@ -1,6 +1,6 @@
 using System;
 
-namespace TypedRest.Http
+namespace TypedRest.OAuth
 {
     internal class AccessToken
     {

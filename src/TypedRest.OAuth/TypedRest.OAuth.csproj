@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>TypedRest</RootNamespace>
     <LangVersion>8.0</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
@@ -20,7 +19,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)'!='Windows_NT' And '$(MSBuildRuntimeType)'=='Core'">
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(TargetFramework)=='netstandard2.1'">
@@ -28,9 +27,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>Adds support for OAuth 2.0 / OpenID Connect authentication with a client secret to TypedRest.</Description>
-    <Summary>OAuth 2.0 / OpenID Connect authentication for TypedRest</Summary>
-    <PackageTags>Typed REST OAuth OIDC</PackageTags>
+    <Description>Provides an HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication. This can also be used independently of the other TypedRest packages.</Description>
+    <Summary>OAuth 2.0 / OpenID Connect authentication for HttpClient</Summary>
+    <PackageTags>OAuth OIDC HttpClient DelegatingHandler</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
@@ -44,10 +43,6 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="4.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
   </ItemGroup>
 
   <ItemGroup>
