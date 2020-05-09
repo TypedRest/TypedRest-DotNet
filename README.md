@@ -42,7 +42,8 @@ Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/) to TypedR
 Adds support for [JSON Patch](http://jsonpatch.com/) to TypedRest.
 
 [![TypedRest.OAuth](https://img.shields.io/nuget/v/TypedRest.OAuth.svg?label=TypedRest.OAuth)](https://www.nuget.org/packages/TypedRest.OAuth/)  
-Adds support for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication to TypedRest.
+Provides a [HttpClient DelegatingHandler](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.delegatinghandler) for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication.  
+Note: This can also be used independently of the other TypedRest packages.
 
 [![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)  
 Build command-line interfaces for TypedRest clients.

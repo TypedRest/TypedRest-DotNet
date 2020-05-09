@@ -1,6 +1,6 @@
 using System;
 
-namespace TypedRest
+namespace TypedRest.OAuth
 {
     /// <summary>
     /// Options for OAuth 2.0 / OpenID Connect authentication.
