@@ -29,10 +29,6 @@
     <ProjectReference Include="..\TypedRest.CommandLine\TypedRest.CommandLine.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
-    <ProjectReference Include="..\TypedRest.JsonPatch\TypedRest.JsonPatch.csproj" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Moq" Version="4.14.1" />
