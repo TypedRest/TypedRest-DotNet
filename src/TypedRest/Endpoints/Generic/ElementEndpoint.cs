@@ -5,6 +5,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using TypedRest.Http;
 
+#if NETSTANDARD
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
+using Microsoft.AspNetCore.JsonPatch.Operations;
+using Microsoft.AspNetCore.JsonPatch;
+using Newtonsoft.Json;
+#endif
+
 namespace TypedRest.Endpoints.Generic
 {
     /// <summary>
@@ -83,5 +92,58 @@ namespace TypedRest.Endpoints.Generic
 
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default)
             => await DeleteContentAsync(cancellationToken);
+
+        public async Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
+        {
+            int retryCounter = 0;
+            while (true)
+            {
+                var entity = await ReadAsync(cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                updateAction(entity);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                try
+                {
+                    return await SetAsync(entity, cancellationToken);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    if (retryCounter++ >= maxRetries) throw;
+                    await ex.HttpRetryDelayAsync(cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
+            }
+        }
+
+#if NETSTANDARD
+        public async Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default)
+        {
+            if (!(Serializer is JsonMediaTypeFormatter serializer))
+                throw new NotSupportedException($"JSON Patch can only be used if the endpoint's serializer is a {nameof(JsonMediaTypeFormatter)}.");
+
+            var patch = new JsonPatchDocument<TEntity>(new List<Operation<TEntity>>(), serializer.SerializerSettings.ContractResolver);
+            patchAction(patch);
+
+            var response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethods.Patch, Uri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(patch))
+                {
+                    Headers = {ContentType = new MediaTypeHeaderValue("application/json-patch+json")}
+                }
+            }, cancellationToken).NoContext();
+
+            if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.MethodNotAllowed)
+                return await UpdateAsync(patch.ApplyTo, maxRetries, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+                await ErrorHandler.HandleAsync(response).NoContext();
+
+            return response.Content == null
+                ? default
+                : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
+        }
+#endif
     }
 }
