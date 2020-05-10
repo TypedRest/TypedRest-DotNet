@@ -13,7 +13,13 @@ namespace TypedRest.Serializers
         public DefaultJsonSerializer()
         {
             SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            SerializerSettings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
+            SerializerSettings.Converters.Add(
+#if NETSTANDARD
+                new StringEnumConverter(new CamelCaseNamingStrategy())
+#else
+                new StringEnumConverter {NamingStrategy = new CamelCaseNamingStrategy()}
+#endif
+                );
             SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
         }
