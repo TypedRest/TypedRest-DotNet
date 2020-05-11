@@ -105,7 +105,7 @@ namespace TypedRest.Endpoints.Generic
                 Headers = {Range = new RangeHeaderValue {Ranges = {range}, Unit = RangeUnit}}
             };
 
-            var response = await HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken)).NoContext();
+            var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken)).NoContext();
             return new PartialResponse<TEntity>(
                 elements: await response.Content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext(),
                 range: response.Content.Headers.ContentRange);
@@ -117,7 +117,7 @@ namespace TypedRest.Endpoints.Generic
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var response = await HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
+            var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
             var elementEndpoint = _getElementEndpoint(this, response.Headers.Location ?? Uri);
             if (response.Content != null && elementEndpoint is ICachingEndpoint caching)
@@ -131,7 +131,7 @@ namespace TypedRest.Endpoints.Generic
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-            return HandleResponseAsync(HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken));
+            return HandleAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken));
         }
 
         public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);

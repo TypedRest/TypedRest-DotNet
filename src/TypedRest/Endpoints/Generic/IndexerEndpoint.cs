@@ -45,7 +45,7 @@ namespace TypedRest.Endpoints.Generic
         private static readonly Func<IEndpoint, Uri, TElementEndpoint> _getElementEndpoint = GetConstructor<TElementEndpoint>();
 
         public Task ProbeAsync(CancellationToken cancellationToken = default)
-            => HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
+            => HandleAsync(() => HttpClient.OptionsAsync(Uri, cancellationToken));
 
         public virtual TElementEndpoint this[string id]
         {

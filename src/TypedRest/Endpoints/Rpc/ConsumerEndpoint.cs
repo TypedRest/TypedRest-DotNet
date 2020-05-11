@@ -33,7 +33,7 @@ namespace TypedRest.Endpoints.Rpc
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            return HandleResponseAsync(HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+            return HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
         }
     }
 }

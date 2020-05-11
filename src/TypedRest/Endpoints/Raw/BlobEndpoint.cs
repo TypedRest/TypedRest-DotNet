@@ -32,13 +32,13 @@ namespace TypedRest.Endpoints.Raw
         {}
 
         public Task ProbeAsync(CancellationToken cancellationToken = default)
-            => HandleResponseAsync(HttpClient.OptionsAsync(Uri, cancellationToken));
+            => HandleAsync(() => HttpClient.OptionsAsync(Uri, cancellationToken));
 
         public bool? DownloadAllowed => IsMethodAllowed(HttpMethod.Get);
 
         public async Task<Stream> DownloadAsync(CancellationToken cancellationToken = default)
         {
-            var response = await HandleResponseAsync(HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken)).NoContext();
+            var response = await HandleAsync(() => HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken)).NoContext();
             return await response.Content.ReadAsStreamAsync().NoContext();
         }
 
@@ -48,12 +48,12 @@ namespace TypedRest.Endpoints.Raw
         {
             var content = new StreamContent(stream);
             if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
-            return HandleResponseAsync(HttpClient.PutAsync(Uri, content, cancellationToken));
+            return HandleAsync(() => HttpClient.PutAsync(Uri, content, cancellationToken));
         }
 
         public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
 
         public Task DeleteAsync(CancellationToken cancellationToken = default)
-            => HandleResponseAsync(HttpClient.DeleteAsync(Uri, cancellationToken));
+            => HandleAsync(() => HttpClient.DeleteAsync(Uri, cancellationToken));
     }
 }

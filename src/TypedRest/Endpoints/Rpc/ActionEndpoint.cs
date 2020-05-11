@@ -29,6 +29,6 @@ namespace TypedRest.Endpoints.Rpc
         {}
 
         public Task InvokeAsync(CancellationToken cancellationToken = default)
-            => HandleResponseAsync(HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
+            => HandleAsync(() => HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, Uri), cancellationToken));
     }
 }

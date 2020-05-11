@@ -68,7 +68,7 @@ namespace TypedRest.Endpoints.Raw
                     : new MultipartFormDataContent {{content, _formField, fileName}};
             }
 
-            return HandleResponseAsync(HttpClient.PostAsync(Uri, content, cancellationToken));
+            return HandleAsync(() => HttpClient.PostAsync(Uri, content, cancellationToken));
         }
     }
 }
