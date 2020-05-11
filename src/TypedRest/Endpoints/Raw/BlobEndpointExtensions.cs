@@ -28,9 +28,9 @@ namespace TypedRest.Endpoints.Raw
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         public static async Task DownloadAsync(this IBlobEndpoint endpoint, string path, CancellationToken cancellationToken = default)
         {
-            using (var fileStream = File.Create(path))
-            using (var downloadStream = await endpoint.DownloadAsync(cancellationToken))
-                await downloadStream.CopyToAsync(fileStream);
+            using var fileStream = File.Create(path);
+            using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
+            await downloadStream.CopyToAsync(fileStream);
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace TypedRest.Endpoints.Raw
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         public static async Task UploadFromAsync(this IBlobEndpoint endpoint, string path, string? mimeType = null, CancellationToken cancellationToken = default)
         {
-            using (var fileStream = File.OpenRead(path))
-                await endpoint.UploadFromAsync(fileStream, mimeType, cancellationToken);
+            using var fileStream = File.OpenRead(path);
+            await endpoint.UploadFromAsync(fileStream, mimeType, cancellationToken);
         }
     }
 }

@@ -46,37 +46,35 @@ namespace TypedRest.Endpoints.Reactive
         public virtual IObservable<TEntity> GetObservable()
             => Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
-                using (var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
+                using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                if (!response.IsSuccessStatusCode)
+                    await ErrorHandler.HandleAsync(response);
+
+                var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, _separator, BufferSize);
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    if (!response.IsSuccessStatusCode)
-                        await ErrorHandler.HandleAsync(response);
-
-                    var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, _separator, BufferSize);
-
-                    while (!cancellationToken.IsCancellationRequested)
+                    TEntity entity;
+                    try
                     {
-                        TEntity entity;
-                        try
-                        {
-                            entity = await entityStream.GetNextAsync(cancellationToken);
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            return;
-                        }
-                        catch (EndOfStreamException)
-                        {
-                            observer.OnCompleted();
-                            return;
-                        }
-                        catch (Exception ex)
-                        {
-                            observer.OnError(ex);
-                            return;
-                        }
-
-                        observer.OnNext(entity);
+                        entity = await entityStream.GetNextAsync(cancellationToken);
                     }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                    }
+                    catch (EndOfStreamException)
+                    {
+                        observer.OnCompleted();
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        observer.OnError(ex);
+                        return;
+                    }
+
+                    observer.OnNext(entity);
                 }
             });
     }

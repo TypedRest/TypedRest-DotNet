@@ -21,8 +21,8 @@ namespace TypedRest.Endpoints.Raw
                 .With(new ByteContentMatcher(data, mimeType: "mock/type"))
                 .Respond(HttpStatusCode.NoContent);
 
-            using (var stream = new MemoryStream(data))
-                await endpoint.UploadFromAsync(stream, mimeType: "mock/type");
+            using var stream = new MemoryStream(data);
+            await endpoint.UploadFromAsync(stream, mimeType: "mock/type");
         }
 
         [Fact]
@@ -36,8 +36,8 @@ namespace TypedRest.Endpoints.Raw
                 .With(new MultipartFormContentMatcher("data", data, mimeType: "mock/type", fileName: "file.dat"))
                 .Respond(HttpStatusCode.NoContent);
 
-            using (var stream = new MemoryStream(data))
-                await endpoint.UploadFromAsync(stream, mimeType: "mock/type", fileName: "file.dat");
+            using var stream = new MemoryStream(data);
+            await endpoint.UploadFromAsync(stream, mimeType: "mock/type", fileName: "file.dat");
         }
     }
 }
