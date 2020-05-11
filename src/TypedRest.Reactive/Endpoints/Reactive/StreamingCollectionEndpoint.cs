@@ -63,14 +63,14 @@ namespace TypedRest.Endpoints.Reactive
                     foreach (var entity in response.Elements)
                         observer.OnNext(entity);
 
-                    if (response.Range == null || response.EndReached)
+                    if (response.EndReached)
                     {
                         observer.OnCompleted();
                         return;
                     }
 
                     // Continue polling for more data
-                    if (response.Range.To == null) return;
+                    if (response.Range?.To == null) return;
                     currentStartIndex = response.Range.To.Value + 1;
                 }
             });

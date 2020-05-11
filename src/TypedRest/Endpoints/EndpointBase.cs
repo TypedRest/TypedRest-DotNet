@@ -66,7 +66,7 @@ namespace TypedRest.Endpoints
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
         /// <seealso cref="IEndpoint.GetLinks"/>
         /// <seealso cref="IEndpoint.Link"/>
-        public void SetDefaultLink(string rel, params string[] hrefs)
+        public void SetDefaultLink(string rel, params string[]? hrefs)
         {
             if (hrefs == null || hrefs.Length == 0) _defaultLinks.Remove(rel);
             else _defaultLinks[rel] = new HashSet<Link>(hrefs.Select(x => new Link(Uri.Join(x))));
@@ -81,7 +81,7 @@ namespace TypedRest.Endpoints
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
         /// <seealso cref="IEndpoint.LinkTemplate(string)"/>
         /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
-        public void SetDefaultLinkTemplate(string rel, string href)
+        public void SetDefaultLinkTemplate(string rel, string? href)
         {
             if (href == null) _defaultLinkTemplates.Remove(rel);
             else _defaultLinkTemplates[rel] = new UriTemplate(href);
@@ -180,7 +180,7 @@ namespace TypedRest.Endpoints
                 if (error != null)
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.", error);
 
-                if (_linkTemplates == null || !_linkTemplates.TryGetValue(rel, out template))
+                if (!_linkTemplates.TryGetValue(rel, out template))
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.");
             }
 
