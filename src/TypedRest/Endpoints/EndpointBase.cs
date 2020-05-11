@@ -90,11 +90,11 @@ namespace TypedRest.Endpoints
         /// <summary>
         /// Handles various cross-cutting concerns regarding a response message such as discovering links and handling errors.
         /// </summary>
-        /// <param name="responseTask">A response promise for a request that has started executing.</param>
-        /// <returns>The resolved <paramref name="responseTask"/>.</returns>
-        protected virtual async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
+        /// <param name="request">A callback that performs the actual HTTP request.</param>
+        /// <returns>The resolved <paramref name="request"/>.</returns>
+        protected virtual async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request)
         {
-            var response = await responseTask.NoContext();
+            var response = await request().NoContext();
 
             (_links, _linkTemplates) = await LinkHandler.HandleAsync(response).NoContext();
 
@@ -135,7 +135,7 @@ namespace TypedRest.Endpoints
                 {
                     try
                     {
-                        await HandleResponseAsync(HttpClient.HeadAsync(Uri)).NoContext();
+                        await HandleAsync(() => HttpClient.HeadAsync(Uri)).NoContext();
                     }
                     catch (Exception ex)
                     {
@@ -170,7 +170,7 @@ namespace TypedRest.Endpoints
                 {
                     try
                     {
-                        await HandleResponseAsync(HttpClient.HeadAsync(Uri)).NoContext();
+                        await HandleAsync(() => HttpClient.HeadAsync(Uri)).NoContext();
                     }
                     catch (Exception ex)
                     {

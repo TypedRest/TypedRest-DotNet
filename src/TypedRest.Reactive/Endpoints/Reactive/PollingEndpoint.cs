@@ -39,9 +39,9 @@ namespace TypedRest.Endpoints.Reactive
             _endCondition = endCondition;
         }
 
-        protected override async Task<HttpResponseMessage> HandleResponseAsync(Task<HttpResponseMessage> responseTask)
+        protected override async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request)
         {
-            var response = await base.HandleResponseAsync(responseTask);
+            var response = await base.HandleAsync(request);
             PollingInterval =
                 response.Headers.RetryAfter?.Delta ??
                 (response.Headers.RetryAfter?.Date - DateTime.UtcNow) ??

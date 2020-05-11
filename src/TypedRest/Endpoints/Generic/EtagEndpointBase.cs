@@ -57,7 +57,7 @@ namespace TypedRest.Endpoints.Generic
                 return cache.GetContent();
             else
             {
-                await HandleResponseAsync(Task.FromResult(response)).NoContext();
+                await HandleAsync(() => Task.FromResult(response)).NoContext();
                 if (response.Content == null) throw new KeyNotFoundException($"{Uri} returned no body.");
 
                 ResponseCache = new ResponseCache(response);
@@ -84,7 +84,7 @@ namespace TypedRest.Endpoints.Generic
             if (cache?.ETag != null) request.Headers.IfMatch.Add(cache.ETag);
 
             ResponseCache = null;
-            return HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
+            return HandleAsync(() => HttpClient.SendAsync(request, cancellationToken));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace TypedRest.Endpoints.Generic
             if (cache?.ETag != null) request.Headers.IfMatch.Add(cache.ETag);
 
             ResponseCache = null;
-            return HandleResponseAsync(HttpClient.SendAsync(request, cancellationToken));
+            return HandleAsync(() => HttpClient.SendAsync(request, cancellationToken));
         }
     }
 }

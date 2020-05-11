@@ -54,7 +54,7 @@ namespace TypedRest.Endpoints.Generic
         {
             try
             {
-                await HandleResponseAsync(HttpClient.HeadAsync(Uri, cancellationToken)).NoContext();
+                await HandleAsync(() => HttpClient.HeadAsync(Uri, cancellationToken)).NoContext();
             }
             catch (KeyNotFoundException)
             {
@@ -82,7 +82,7 @@ namespace TypedRest.Endpoints.Generic
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var response = await HandleResponseAsync(HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
+            var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
             return response.Content == null
                 ? default
                 : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);

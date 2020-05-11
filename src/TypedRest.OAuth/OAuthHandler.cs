@@ -64,7 +64,7 @@ namespace TypedRest.OAuth
             if (_oAuthOptions.Audience != null)
                 request.Parameters[OidcConstants.TokenRequest.Audience] = _oAuthOptions.Audience;
 
-            var response = await _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await HandleAsync(() => _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken)).ConfigureAwait(false);
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
@@ -75,11 +75,18 @@ namespace TypedRest.OAuth
 
         private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)
         {
-            var response = await _httpClient.Value.GetDiscoveryDocumentAsync(_oAuthOptions.Uri.OriginalString, cancellationToken);
+            var response = await HandleAsync(() => _httpClient.Value.GetDiscoveryDocumentAsync(_oAuthOptions.Uri.OriginalString, cancellationToken)).ConfigureAwait(false);
+            return response.TokenEndpoint;
+        }
+
+        private static async Task<TResponse> HandleAsync<TResponse>(Func<Task<TResponse>> request)
+            where TResponse : ProtocolResponse
+        {
+            var response = await request().ConfigureAwait(false);
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
-            return response.TokenEndpoint;
+            return response;
         }
 
         private async Task<HttpResponseMessage> SendAuthenticatedAsync(HttpRequestMessage request, CancellationToken cancellationToken)
