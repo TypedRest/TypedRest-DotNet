@@ -38,12 +38,10 @@ namespace TypedRest.Endpoints.Raw
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new ByteArrayContent(data));
 
-            using (var downloadStream = await _endpoint.DownloadAsync())
-            using (var memStream = new MemoryStream())
-            {
-                await downloadStream.CopyToAsync(memStream);
-                memStream.ToArray().Should().Equal(data);
-            }
+            using var downloadStream = await _endpoint.DownloadAsync();
+            using var memStream = new MemoryStream();
+            await downloadStream.CopyToAsync(memStream);
+            memStream.ToArray().Should().Equal(data);
         }
 
         [Fact]
@@ -55,8 +53,8 @@ namespace TypedRest.Endpoints.Raw
                 .With(new ByteContentMatcher(data, mimeType: "mock/type"))
                 .Respond(HttpStatusCode.NoContent);
 
-            using (var stream = new MemoryStream(data))
-                await _endpoint.UploadFromAsync(stream, mimeType: "mock/type");
+            using var stream = new MemoryStream(data);
+            await _endpoint.UploadFromAsync(stream, mimeType: "mock/type");
         }
     }
 }

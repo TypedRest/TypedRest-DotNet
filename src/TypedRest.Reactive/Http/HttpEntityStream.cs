@@ -114,12 +114,10 @@ namespace TypedRest.Http
 
         private async Task<TEntity> ParseAsync(int separatorIndex, CancellationToken cancellationToken)
         {
-            using (var subStream = new MemoryStream(_buffer, _startIndex, count: separatorIndex - _startIndex))
-            {
-                var result = (TEntity)await _serializer.ReadFromStreamAsync(typeof(TEntity), subStream, _content, null, cancellationToken);
-                _startIndex = separatorIndex + _separatorPattern.Length;
-                return result;
-            }
+            using var subStream = new MemoryStream(_buffer, _startIndex, count: separatorIndex - _startIndex);
+            var result = (TEntity)await _serializer.ReadFromStreamAsync(typeof(TEntity), subStream, _content, null, cancellationToken);
+            _startIndex = separatorIndex + _separatorPattern.Length;
+            return result;
         }
     }
 }
