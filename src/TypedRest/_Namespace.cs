@@ -1,2 +1,2 @@
 //! \namespace TypedRest
-//! \brief Various helpers for building type-safe REST API clients.
+//! \brief TypedRest helps you build type-safe fluent-style REST API clients. **NuGet:** [TypedRest](https://www.nuget.org/packages/TypedRest/)

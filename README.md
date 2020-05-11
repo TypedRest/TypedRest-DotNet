@@ -9,7 +9,7 @@ var client = new MyClient(new Uri("http://example.com/"));
 // GET /contacts
 List<Contact> contactList = await client.Contacts.ReadAllAsync();
 
-// POST /contacts -> /contacts/1337
+// POST /contacts -> Location: /contacts/1337
 ContactEndpoint smith = await client.Contacts.CreateAsync(new Contact {Name = "Smith"});
 //ContactEndpoint smith = client.Contacts["1337"];
 

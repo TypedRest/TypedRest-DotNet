@@ -1,10 +1,19 @@
-# TypedRest for .NET
+TypedRest helps you build type-safe fluent-style REST API clients. You can learn more at [typedrest.net](https://typedrest.net/).  
+This website documents TypedRest for .NET.
 
-TypedRest helps you build type-safe fluent-style REST API clients.
+Take a look at the [Namespace List](namespaces.html) to get an overview of the available functionality.  
+See the [GitHub repository](https://github.com/TypedRest/TypedRest-DotNet) to report issues, contribute code, etc.. 
 
-This website documents the TypedRest .NET API.  
-For a general introduction to TypedRest and its concepts visit [typedrest.net](https://typedrest.net/).
+**NuGet packages**
 
-## Building and contributing
+[TypedRest](https://www.nuget.org/packages/TypedRest/)  
+The main TypedRest library.
 
-See the [GitHub project](https://github.com/TypedRest/TypedRest-DotNet) for more information.
+[TypedRest.Reactive](https://www.nuget.org/packages/TypedRest.Reactive/)  
+Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/) to TypedRest.
+
+[TypedRest.OAuth](https://www.nuget.org/packages/TypedRest.OAuth/)  
+Adds support for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication to TypedRest.
+
+[TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)  
+Build command-line interfaces for TypedRest clients.

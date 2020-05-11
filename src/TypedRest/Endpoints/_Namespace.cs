@@ -1,2 +1,3 @@
 //! \namespace TypedRest.Endpoints
-//! \brief Endpoints are the main building blocks of TypedRest. An endpoint represents an URI that provides methods for operating on a specific resource. The type of the endpoint determines the available methods.
+//! \brief Endpoints represent URIs that provides methods for operating on specific resources.
+//! \sa https://typedrest.net/endpoints/
