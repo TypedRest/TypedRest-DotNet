@@ -1,7 +1,8 @@
 # ![TypedRest](logo.svg) for .NET
 
+[![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://dotnet.typedrest.net/)
 [![Build status](https://img.shields.io/appveyor/ci/TypedRest/TypedRest-DotNet.svg)](https://ci.appveyor.com/project/TypedRest/TypedRest-DotNet)  
-TypedRest for .NET helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
+TypedRest helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
 
 ```csharp
 var client = new MyClient(new Uri("http://example.com/"));
@@ -9,7 +10,7 @@ var client = new MyClient(new Uri("http://example.com/"));
 // GET /contacts
 List<Contact> contactList = await client.Contacts.ReadAllAsync();
 
-// POST /contacts -> /contacts/1337
+// POST /contacts -> Location: /contacts/1337
 ContactEndpoint smith = await client.Contacts.CreateAsync(new Contact {Name = "Smith"});
 //ContactEndpoint smith = client.Contacts["1337"];
 
@@ -26,9 +27,7 @@ Note note = await smith.Note.ReadAsync();
 await smith.DeleteAsync();
 ```
 
-Read an **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
-
-For information about specific .NET classes or interfaces you can read the **[API Documentation](https://dotnet.typedrest.net/)**.
+Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
 
 ## NuGet packages
 

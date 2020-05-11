@@ -1,11 +1,13 @@
 PROJECT_NAME = "TypedRest for .NET"
+PROJECT_LOGO = ../logo.svg
+PROJECT_BRIEF = "build type-safe fluent-style REST API clients"
 
 INPUT = . ../src
 USE_MDFILE_AS_MAINPAGE = main.md
 STRIP_FROM_PATH = ../src
 RECURSIVE = YES
-EXCLUDE_PATTERNS = */UnitTests/* */Properties/* */obj/* */bin/* **/*.Specialized.cs
-PREDEFINED = DOXYGEN
+EXCLUDE_PATTERNS = */UnitTests/* */Properties/* */obj/* */bin/* **/*.Specialized.cs */UriTemplates/*
+PREDEFINED = DOXYGEN NETSTANDARD
 
 OUTPUT_DIRECTORY = ../artifacts/Documentation
 GENERATE_TAGFILE = ../artifacts/Documentation/typedrest-dotnet.tag
