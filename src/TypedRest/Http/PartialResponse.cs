@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 
@@ -12,21 +13,21 @@ namespace TypedRest.Http
         /// <summary>
         /// The returned elements.
         /// </summary>
-        public readonly IReadOnlyList<TEntity> Elements;
+        public IReadOnlyList<TEntity> Elements { get; }
 
         /// <summary>
         /// The range the <see cref="Elements"/> come from.
         /// </summary>
-        public readonly ContentRangeHeaderValue Range;
+        public ContentRangeHeaderValue? Range { get; }
 
         /// <summary>
         /// Creates a new partial response.
         /// </summary>
         /// <param name="elements">The returned elements.</param>
         /// <param name="range">The range the <paramref name="elements"/> come from.</param>
-        public PartialResponse(IReadOnlyList<TEntity> elements, ContentRangeHeaderValue range)
+        public PartialResponse(IReadOnlyList<TEntity> elements, ContentRangeHeaderValue? range)
         {
-            Elements = elements;
+            Elements = elements ?? throw new ArgumentNullException(nameof(elements));
             Range = range;
         }
 
@@ -37,19 +38,17 @@ namespace TypedRest.Http
         {
             get
             {
-                if (!Range.To.HasValue)
+                if (Range?.To == null)
                 {
                     // No range specified, must be complete response
                     return true;
                 }
-
-                if (!Range.Length.HasValue)
+                else if (!Range.Length.HasValue)
                 {
                     // No length specified, can't be end
                     return false;
                 }
-
-                return (Range.To.Value == Range.Length.Value - 1);
+                else return Range.To.Value == Range.Length.Value - 1;
             }
         }
     }
