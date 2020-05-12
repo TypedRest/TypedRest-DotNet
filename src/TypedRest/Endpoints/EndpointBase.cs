@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TypedRest.Errors;
 using TypedRest.Http;
@@ -91,19 +93,82 @@ namespace TypedRest.Endpoints
         /// Handles various cross-cutting concerns regarding a response message such as discovering links and handling errors.
         /// </summary>
         /// <param name="request">A callback that performs the actual HTTP request.</param>
+        /// <param name="caller">The name of the method calling this method.</param>
         /// <returns>The resolved <paramref name="request"/>.</returns>
-        protected virtual async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request)
+        protected virtual Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
+            => TracedAsync(async activity =>
+            {
+                var response = await request().NoContext();
+                activity.AddTag("http.method", response.RequestMessage.Method.Method)
+                        .AddTag("http.status_code", ((int)response.StatusCode).ToString());
+
+                (_links, _linkTemplates) = await LinkHandler.HandleAsync(response).NoContext();
+
+                HandleCapabilities(response);
+
+                if (!response.IsSuccessStatusCode)
+                    await ErrorHandler.HandleAsync(response).NoContext();
+
+                return response;
+            });
+
+        /// <summary>
+        /// Runs an operation in the context of a tracing span.
+        /// </summary>
+        /// <param name="operation">Callback to run the operation. Passes in an <see cref="Activity"/> to record additional tracing information.</param>
+        /// <param name="caller">The name of the method calling this method.</param>
+        protected async Task TracedAsync(Func<Activity, Task> operation, [CallerMemberName] string caller = "unknown")
         {
-            var response = await request().NoContext();
+            var activity = StartActivity(caller);
 
-            (_links, _linkTemplates) = await LinkHandler.HandleAsync(response).NoContext();
+            try
+            {
+                await operation(activity).NoContext();
+            }
+            catch (Exception ex)
+            {
+                activity.AddException(ex);
+                throw;
+            }
+            finally
+            {
+                activity.Stop();
+            }
+        }
 
-            HandleCapabilities(response);
+        /// <summary>
+        /// Runs an operation in the context of a tracing span.
+        /// </summary>
+        /// <param name="operation">Callback to run the operation. Passes in an <see cref="Activity"/> to record additional tracing information.</param>
+        /// <param name="caller">The name of the method calling this method.</param>
+        protected async Task<T> TracedAsync<T>(Func<Activity, Task<T>> operation, [CallerMemberName] string caller = "unknown")
+        {
+            var activity = StartActivity(caller);
 
-            if (!response.IsSuccessStatusCode)
-                await ErrorHandler.HandleAsync(response).NoContext();
+            try
+            {
+                return await operation(activity).NoContext();
+            }
+            catch (Exception ex)
+            {
+                activity.AddException(ex);
+                throw;
+            }
+            finally
+            {
+                activity.Stop();
+            }
+        }
 
-            return response;
+        private Activity StartActivity(string caller)
+        {
+            if (caller.EndsWith("Async")) caller = caller.Substring(0, caller.Length - "Async".Length);
+
+            return new Activity(GetType().Name + "::" + caller)
+                  .AddTag("component", "TypedRest")
+                  .AddTag("span.kind", "client")
+                  .AddTag("http.url", Uri.ToString())
+                  .Start();
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
