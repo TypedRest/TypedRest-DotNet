@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,14 +81,36 @@ namespace TypedRest.OAuth
             return response.TokenEndpoint;
         }
 
-        private static async Task<TResponse> HandleAsync<TResponse>(Func<Task<TResponse>> request)
+        private static async Task<TResponse> HandleAsync<TResponse>(Func<Task<TResponse>> request, [CallerMemberName] string caller = "unknown")
             where TResponse : ProtocolResponse
         {
-            var response = await request().ConfigureAwait(false);
+            var activity = new Activity(nameof(OAuthHandler) + "::" + caller.Substring(0, caller.Length - "Async".Length))
+                          .AddTag("component", "TypedRest.OAuth")
+                          .AddTag("span.kind", "client")
+                          .Start();
 
-            if (response.Exception != null) throw response.Exception;
-            if (response.IsError) throw new AuthenticationException(response.Error);
-            return response;
+            try
+            {
+                var response = await request().ConfigureAwait(false);
+                activity.AddTag("http.url", response.HttpResponse.RequestMessage.RequestUri.ToString())
+                        .AddTag("http.method", response.HttpResponse.RequestMessage.Method.Method)
+                        .AddTag("http.status_code", ((int)response.HttpResponse.StatusCode).ToString());
+
+                if (response.Exception != null) throw response.Exception;
+                if (response.IsError) throw new AuthenticationException(response.Error);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                activity.AddTag("error", "true")
+                        .AddTag("error.type", ex.GetType().Name)
+                        .AddTag("error.message", ex.Message);
+                throw;
+            }
+            finally
+            {
+                activity.Stop();
+            }
         }
 
         private async Task<HttpResponseMessage> SendAuthenticatedAsync(HttpRequestMessage request, CancellationToken cancellationToken)

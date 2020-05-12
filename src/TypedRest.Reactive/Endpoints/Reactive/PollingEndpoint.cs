@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TypedRest.Endpoints.Generic;
 
@@ -39,9 +40,9 @@ namespace TypedRest.Endpoints.Reactive
             _endCondition = endCondition;
         }
 
-        protected override async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request)
+        protected override async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
         {
-            var response = await base.HandleAsync(request);
+            var response = await base.HandleAsync(request, caller);
             PollingInterval =
                 response.Headers.RetryAfter?.Delta ??
                 (response.Headers.RetryAfter?.Date - DateTime.UtcNow) ??
@@ -52,7 +53,7 @@ namespace TypedRest.Endpoints.Reactive
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
 
         public IObservable<TEntity> GetObservable()
-            => Observable.Create<TEntity>(async (observer, cancellationToken) =>
+            => Observable.Create<TEntity>((observer, cancellationToken) => TracedAsync(async _ =>
             {
                 TEntity previousEntity;
                 try
@@ -93,6 +94,6 @@ namespace TypedRest.Endpoints.Reactive
                     previousEntity = newEntity;
                 }
                 observer.OnCompleted();
-            });
+            }));
     }
 }
