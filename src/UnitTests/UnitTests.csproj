@@ -3,19 +3,12 @@
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
     <LangVersion>8.0</LangVersion>
+    <TargetFrameworks>net46;netcoreapp3.1</TargetFrameworks>
     <DebugType>full</DebugType>
     <IsPackable>False</IsPackable>
     <Nullable>annotations</Nullable>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(OS)'=='Windows_NT' Or '$(MSBuildRuntimeType)'=='Mono'">
-    <TargetFrameworks>net46;netcoreapp3.1</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(OS)'!='Windows_NT' And '$(MSBuildRuntimeType)'=='Core'">
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
-  </PropertyGroup>
-
   <PropertyGroup Condition="$(TargetFramework)=='netcoreapp3.1'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
