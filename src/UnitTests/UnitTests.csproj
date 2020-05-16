@@ -4,8 +4,8 @@
     <RootNamespace>TypedRest</RootNamespace>
     <LangVersion>8.0</LangVersion>
     <TargetFrameworks>net46;netcoreapp3.1</TargetFrameworks>
-    <DebugType>full</DebugType>
     <IsPackable>False</IsPackable>
+    <DeterministicSourcePaths>False</DeterministicSourcePaths>
     <Nullable>annotations</Nullable>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
