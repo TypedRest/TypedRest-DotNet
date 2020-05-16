@@ -37,10 +37,10 @@ namespace TypedRest.Http
         /// </summary>
         public LinkHeader(string value)
         {
+            // ReSharper disable once RedundantEnumerableCastCall
             foreach (var match in _regexLinkFields.Matches(value).Cast<Match>())
             {
-                if (Href == null)
-                    Href = match.Groups["href"].Value;
+                Href ??= match.Groups["href"].Value;
 
                 if (match.Groups["field"].Success)
                 {

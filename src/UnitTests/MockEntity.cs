@@ -12,6 +12,7 @@ namespace TypedRest
 
         public MockEntity(long id, string name)
         {
+            // ReSharper disable once VirtualMemberCallInConstructor
             Id = id;
             Name = name;
         }
@@ -26,12 +27,6 @@ namespace TypedRest
             return Equals((MockEntity)obj);
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Id.GetHashCode() * 397) ^ (Name?.GetHashCode() ?? 0);
-            }
-        }
+        public override int GetHashCode() => 0;
     }
 }
