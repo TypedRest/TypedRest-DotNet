@@ -23,7 +23,9 @@ namespace TypedRest.Endpoints.Generic
 
         [Fact]
         public void TestGetById()
-            => _endpoint["1"].Uri.Should().Be(new Uri("http://localhost/endpoint/1"));
+        {
+            _endpoint["x/y"].Uri.Should().Be(new Uri("http://localhost/endpoint/x%2Fy"));
+        }
 
         [Fact]
         public async Task TestGetByIdWithLinkHeaderRelative()
@@ -32,13 +34,16 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(_ => new HttpResponseMessage
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                     Headers = { { "Link", "<children/{id}>; rel=child; templated=true" } }
+                     Headers =
+                     {
+                         {"Link", "<children{?id}>; rel=child; templated=true"}
+                     }
                  });
 
             await _endpoint.ReadAllAsync();
 
             _endpoint["1"]
-               .Uri.Should().Be(new Uri("http://localhost/children/1"));
+               .Uri.Should().Be(new Uri("http://localhost/children?id=1"));
         }
 
         [Fact]
@@ -48,13 +53,16 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(_ => new HttpResponseMessage
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                     Headers = { { "Link", "<http://localhost/children/{id}>; rel=child; templated=true" } }
+                     Headers =
+                     {
+                         {"Link", "<http://localhost/children{?id}>; rel=child; templated=true"}
+                     }
                  });
 
             await _endpoint.ReadAllAsync();
 
             _endpoint["1"]
-               .Uri.Should().Be(new Uri("http://localhost/children/1"));
+               .Uri.Should().Be(new Uri("http://localhost/children?id=1"));
         }
 
         [Fact]
@@ -68,7 +76,10 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(_ => new HttpResponseMessage
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                     Headers = {{"Link", "<children/{id}>; rel=child; templated=true"}}
+                     Headers =
+                     {
+                         {"Link", "<children/{id}>; rel=child; templated=true"}
+                     }
                  });
 
             await _endpoint.ReadAllAsync();
@@ -84,7 +95,10 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(_ => new HttpResponseMessage
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
-                     Headers = {{"Link", "<http://localhost/children/{id}>; rel=child; templated=true"}}
+                     Headers =
+                     {
+                         {"Link", "<http://localhost/children/{id}>; rel=child; templated=true"}
+                     }
                  });
 
             await _endpoint.ReadAllAsync();
