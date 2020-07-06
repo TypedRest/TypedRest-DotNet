@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using Resta.UriTemplates;
 using TypedRest.Errors;
 using TypedRest.Links;
-using TypedRest.UriTemplates;
 
 namespace TypedRest.Endpoints
 {
@@ -69,7 +69,7 @@ namespace TypedRest.Endpoints
         /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
         /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
         /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
-        Uri LinkTemplate(string rel, IDictionary<string, string> variables);
+        Uri LinkTemplate(string rel, IDictionary<string, object> variables);
 
         /// <summary>
         /// Retrieves a link template with a specific relation type and resolves it.

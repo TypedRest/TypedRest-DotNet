@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Resta.UriTemplates;
 using TypedRest.Errors;
 using TypedRest.Http;
 using TypedRest.Links;
-using TypedRest.UriTemplates;
 
 namespace TypedRest.Endpoints
 {
@@ -252,11 +252,15 @@ namespace TypedRest.Endpoints
             return template;
         }
 
-        public Uri LinkTemplate(string rel, IDictionary<string, string> variables)
+        public Uri LinkTemplate(string rel, IDictionary<string, object> variables)
             => Uri.Join(LinkTemplate(rel).Resolve(variables));
 
         public Uri LinkTemplate(string rel, object variables)
-            => Uri.Join(LinkTemplate(rel).Resolve(variables));
+            => LinkTemplate(
+                rel,
+                variables.GetType().GetProperties()
+                         .Where(property => property.GetGetMethod() != null && property.GetIndexParameters().Length == 0)
+                         .ToDictionary(property => property.Name, property => property.GetValue(variables, null)));
 
         /// <summary>
         /// Handles allowed HTTP methods and other capabilities reported by the server.

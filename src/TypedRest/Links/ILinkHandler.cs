@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TypedRest.UriTemplates;
+using Resta.UriTemplates;
 
 namespace TypedRest.Links
 {

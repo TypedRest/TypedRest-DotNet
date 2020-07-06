@@ -189,7 +189,7 @@ namespace TypedRest.Endpoints
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri("http://localhost/a?x=1"));
+            _endpoint.LinkTemplate("child", new {x = "1"}).Should().Be(new Uri("http://localhost/a?x=1"));
         }
 
         [Fact]
@@ -206,7 +206,7 @@ namespace TypedRest.Endpoints
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("child", new {x = 1}).Should().Be(new Uri("http://localhost/b?x=1"));
+            _endpoint.LinkTemplate("child", new {x = "1"}).Should().Be(new Uri("http://localhost/b?x=1"));
         }
 
         [Fact]
@@ -223,7 +223,7 @@ namespace TypedRest.Endpoints
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("search", new {x = 1, y = 2}).Should().Be(new Uri("http://localhost/b?x=1&y=2"));
+            _endpoint.LinkTemplate("search", new {x = "1", y = "2"}).Should().Be(new Uri("http://localhost/b?x=1&y=2"));
         }
 
         [Fact]

@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Resta.UriTemplates;
 using TypedRest.Http;
-using TypedRest.UriTemplates;
 
 namespace TypedRest.Links
 {
