@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <LangVersion>8.0</LangVersion>
-    <TargetFrameworks>net45;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\sgKey.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -16,7 +16,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework)=='netcoreapp3.1'">
+  <PropertyGroup Condition="$(TargetFramework)=='netstandard2.1'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -40,10 +40,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
 </Project>

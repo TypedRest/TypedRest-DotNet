@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD
-using System;
+﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -45,4 +44,3 @@ namespace TypedRest.OAuth
             });
     }
 }
-#endif

@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD
-using System;
+﻿using System;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using TypedRest.Endpoints;
@@ -45,4 +44,3 @@ namespace TypedRest
             => services.AddHttpClient<TInterface, TEndpoint>(client => client.BaseAddress = uri);
     }
 }
-#endif

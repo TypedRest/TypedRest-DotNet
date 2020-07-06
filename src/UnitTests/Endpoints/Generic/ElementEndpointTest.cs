@@ -166,7 +166,6 @@ namespace TypedRest.Endpoints.Generic
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
         }
 
-#if NETCOREAPP
         [Fact]
         public async Task TestJsonPatch()
         {
@@ -193,7 +192,6 @@ namespace TypedRest.Endpoints.Generic
             var result = await _endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
             result.Should().Be(new MockEntity(5, "testX"));
         }
-#endif
 
         [Fact]
         public async Task TestMergeResult()

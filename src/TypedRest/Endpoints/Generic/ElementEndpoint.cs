@@ -1,18 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using TypedRest.Http;
-
-#if NETSTANDARD
-using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Formatting;
-using Microsoft.AspNetCore.JsonPatch.Operations;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.JsonPatch.Operations;
 using Newtonsoft.Json;
-#endif
+using TypedRest.Http;
 
 namespace TypedRest.Endpoints.Generic
 {
@@ -118,7 +115,6 @@ namespace TypedRest.Endpoints.Generic
                 }
             });
 
-#if NETSTANDARD
         public async Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default)
         {
             if (!(Serializer is JsonMediaTypeFormatter serializer))
@@ -145,6 +141,5 @@ namespace TypedRest.Endpoints.Generic
                 ? default
                 : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
         }
-#endif
     }
 }

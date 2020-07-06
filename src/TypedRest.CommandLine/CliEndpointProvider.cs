@@ -51,9 +51,7 @@ namespace TypedRest.CommandLine
         /// </summary>
         protected virtual void ShowTokenProvider(Uri uri)
         {
-#if NETFRAMEWORK
             if (!Environment.UserInteractive) return;
-#endif
 
             var endpoint = NewEndpoint(uri, new NetworkCredential());
             try

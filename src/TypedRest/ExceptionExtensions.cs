@@ -33,9 +33,14 @@ namespace TypedRest
         /// </summary>
         public static void SetHttpResponseHeaders(this Exception exception, HttpResponseHeaders headers)
         {
-#if !NETFRAMEWORK // .NET Framework does not allow non-serializable data in exceptions
-            exception.Data[HttpHeadersKey] = headers;
-#endif
+            try
+            {
+                exception.Data[HttpHeadersKey] = headers;
+            }
+            catch
+            {
+                // .NET Framework does not allow non-serializable data in exceptions
+            }
         }
 
         /// <summary>

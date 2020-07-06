@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
-
-#if NETSTANDARD
-using System.Net.Http.Formatting;
 using Microsoft.AspNetCore.JsonPatch;
-#endif
 
 namespace TypedRest.Endpoints.Generic
 {
@@ -128,7 +125,6 @@ out
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default);
 
-#if NETSTANDARD
         /// <summary>
         /// Applies a JSON Patch to the entity. Sends the patch instructions to the server for processing; falls back to local processing with optimistic concurrency if that fails.
         /// </summary>
@@ -144,6 +140,5 @@ out
         /// <exception cref="InvalidOperationException">The number of retries performed for optimistic concurrency exceeded <paramref name="maxRetries"/>.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default);
-#endif
     }
 }

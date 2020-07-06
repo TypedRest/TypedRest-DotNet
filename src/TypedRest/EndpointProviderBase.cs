@@ -14,15 +14,11 @@ namespace TypedRest
     public abstract class EndpointProviderBase<T> : IEndpointProvider<T>
         where T : EntryEndpoint
     {
-        private string ConfigDir => Path.Combine(
-#if NETFRAMEWORK
+        private static string ConfigDir => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-#else
-            Environment.ExpandEnvironmentVariables("%appdata%"),
-#endif
             Assembly.GetEntryAssembly().GetName().Name);
 
-        private string UriFile => Path.Combine(ConfigDir, "uri");
+        private static string UriFile => Path.Combine(ConfigDir, "uri");
 
         /// <summary>
         /// Gets an URI and stores it.

@@ -1,9 +1,6 @@
 using System;
-using Newtonsoft.Json;
-
-#if NETFRAMEWORK
 using System.IO;
-#endif
+using Newtonsoft.Json;
 
 namespace TypedRest.CommandLine.IO
 {
@@ -23,25 +20,28 @@ namespace TypedRest.CommandLine.IO
 
         public string ReadSecret(string prompt)
         {
-#if NETFRAMEWORK
             // Increase maximum length for Console.ReadLine()
             var defaultReader = Console.In;
-            var inputBuffer = new byte[1024];
-            var inputStream = Console.OpenStandardInput(inputBuffer.Length);
-            Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
+            try
+            {
+                var inputBuffer = new byte[1024];
+                var inputStream = Console.OpenStandardInput(inputBuffer.Length);
+                Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
+            }
+            catch
+            {
+                // May fail on some platforms
+            }
 
             try
             {
-#endif
                 Console.Write(prompt + " ");
                 return Console.ReadLine();
-#if NETFRAMEWORK
             }
             finally
             {
                 Console.SetIn(defaultReader);
             }
-#endif
         }
 
         public void Write(object? output)

@@ -1,4 +1,3 @@
-#if NETCOREAPP
 using System;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,4 +20,3 @@ namespace TypedRest
         }
     }
 }
-#endif
