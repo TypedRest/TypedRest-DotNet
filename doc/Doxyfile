@@ -1,6 +1,7 @@
 PROJECT_NAME = "TypedRest for .NET"
 PROJECT_LOGO = ../logo.svg
 PROJECT_BRIEF = "build type-safe fluent-style REST API clients"
+PROJECT_NUMBER = $(VERSION)
 
 INPUT = . ../src
 USE_MDFILE_AS_MAINPAGE = main.md
