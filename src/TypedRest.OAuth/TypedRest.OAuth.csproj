@@ -21,7 +21,7 @@
   <PropertyGroup>
     <Description>Provides an HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication. This can also be used independently of the other TypedRest packages.</Description>
     <Summary>OAuth 2.0 / OpenID Connect authentication for HttpClient</Summary>
-    <PackageTags>OAuth OIDC HttpClient DelegatingHandler</PackageTags>
+    <PackageTags>OAuth;OIDC;HttpClient;DelegatingHandler</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>

@@ -22,7 +22,7 @@
   <PropertyGroup>
     <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest.</Description>
     <Summary>streaming with ReactiveX (Rx) for TypedRest</Summary>
-    <PackageTags>Typed REST Reactive ReactiveX Rx Streaming</PackageTags>
+    <PackageTags>REST;Client;Type-safe;Reactive;Rx;Streaming</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>

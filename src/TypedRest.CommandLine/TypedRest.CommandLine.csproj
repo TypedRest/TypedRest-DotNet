@@ -21,7 +21,7 @@
   <PropertyGroup>
     <Description>Build command-line interfaces for TypedRest clients.</Description>
     <Summary>build CLIs for TypedRest clients</Summary>
-    <PackageTags>Typed REST Commandline CLI</PackageTags>
+    <PackageTags>REST;Client;Type-safe;CLI;command-line</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>

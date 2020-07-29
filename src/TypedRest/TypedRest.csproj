@@ -21,7 +21,7 @@
   <PropertyGroup>
     <Description>TypedRest helps you build type-safe fluent-style REST API clients.</Description>
     <Summary>Build type-safe fluent-style REST API clients</Summary>
-    <PackageTags>Typed REST</PackageTags>
+    <PackageTags>REST;Client;Type-safe</PackageTags>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
