@@ -25,7 +25,9 @@ await smith.DeleteAsync();
 
 Read a more detailed [**Introduction**](https://typedrest.net/introduction/) to TypedRest or jump right in with the [**Getting started**](https://typedrest.net/getting-started/dotnet/) guide.
 
-Take a look at the [**Namespace List**](namespaces.html) to get an overview of the available functionality.
+Take a look at the \ref TypedRest.Endpoints "TypedRest.Endpoints namespace" to get an overview of the available functionality.
+
+[**GitHub repository**](https://github.com/TypedRest/TypedRest-DotNet)
 
 **NuGet packages**
 
@@ -41,5 +43,3 @@ This can also be used independently of the other TypedRest packages.
 
 [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)  
 Build command-line interfaces for TypedRest clients.
-
-[**GitHub repository**](https://github.com/TypedRest/TypedRest-DotNet)
