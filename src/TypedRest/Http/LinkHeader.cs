@@ -58,7 +58,7 @@ namespace TypedRest.Http
             if (Href == null) throw new ArgumentException("The link header is lacking the mandatory 'href' field.", nameof(value));
             else Href = Href; // Makes compiler nullability analysis happy
 
-            if (Rel == null) throw new ArgumentException("The link header is lacking the mandatory 'rel' field", nameof(value));
+            if (Rel == null) throw new ArgumentException("The link header is lacking the mandatory 'rel' field.", nameof(value));
             else Rel = Rel; // Makes compiler nullability analysis happy
         }
     }

@@ -39,7 +39,7 @@ namespace TypedRest.Links
                 }
             }
 
-            foreach (var header in response.Headers.GetLinkHeaders().Where(x => x.Rel != null))
+            foreach (var header in response.Headers.GetLinkHeaders())
             {
                 if (header.Templated)
                     linkTemplates[header.Rel] = new UriTemplate(header.Href);
