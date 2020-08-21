@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TypedRest.Errors
 {
     /// <summary>
-    /// Handles errors in HTTP responses.
+    /// Handles errors in responses.
     /// </summary>
     public interface IErrorHandler
     {

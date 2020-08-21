@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using Resta.UriTemplates;
 using TypedRest.Errors;
 using TypedRest.Links;
 
@@ -29,53 +28,42 @@ namespace TypedRest.Endpoints
         MediaTypeFormatter Serializer { get; }
 
         /// <summary>
-        /// Handles errors in HTTP responses.
+        /// Handles errors in responses.
         /// </summary>
         IErrorHandler ErrorHandler { get; }
 
         /// <summary>
-        /// Detects links in HTTP responses.
+        /// Extracts links from responses.
         /// </summary>
-        ILinkHandler LinkHandler { get; }
+        ILinkExtractor LinkExtractor { get; }
 
         /// <summary>
-        /// Retrieves all links with a specific relation type cached from the last request.
+        /// Resolves all links with a specific relation type cached from the last request.
         /// </summary>
         /// <param name="rel">The relation type of the links to look for.</param>
-        IEnumerable<Link> GetLinks(string rel);
+        IReadOnlyList<(Uri uri, string? title)> GetLinks(string rel);
 
         /// <summary>
-        /// Retrieves the href of a single link with a specific relation type.
+        /// Resolves a single link with a specific relation type. Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.
         /// </summary>
         /// <param name="rel">The relation type of the link to look for.</param>
         /// <exception cref="KeyNotFoundException">No link with the specified <paramref name="rel"/> could be found.</exception>
-        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
         Uri Link(string rel);
 
         /// <summary>
-        /// Retrieves a link template with a specific relation type.
+        /// Resolves a link template with a specific relation type. Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.
         /// </summary>
         /// <param name="rel">The relation type of the link template to look for.</param>
-        /// <returns>The unresolved link template.</returns>
-        /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
-        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
-        UriTemplate LinkTemplate(string rel);
-
-        /// <summary>
-        /// Retrieves a link template with a specific relation type and resolves it.
-        /// </summary>
-        /// <param name="rel">The relation type of the link template to look for.</param>
-        /// <param name="variables">Variables for resolving the template</param>
+        /// <param name="variables">Variables for resolving the template.</param>
         /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
         /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
-        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
         Uri LinkTemplate(string rel, IDictionary<string, object> variables);
 
         /// <summary>
-        /// Retrieves a link template with a specific relation type and resolves it.
+        /// Resolves a link template with a specific relation type.
         /// </summary>
         /// <param name="rel">The relation type of the link template to look for.</param>
-        /// <param name="variables">An object used to provide properties for resolving the template</param>
+        /// <param name="variables">An object used to provide properties for resolving the template.</param>
         /// <returns>The href of the link resolved relative to this endpoint's URI.</returns>
         /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
         /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>

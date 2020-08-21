@@ -26,14 +26,14 @@ namespace TypedRest.Endpoints
         /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically. <see cref="HttpClient.BaseAddress"/> is used if this is unset.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
-        /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
+        /// <param name="linkExtractor">Detects links in HTTP responses. Leave unset for default implementation.</param>
+        public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
             : base(
                 (uri ?? httpClient.BaseAddress ?? throw new ArgumentException("uri or httpClient.BaseAddress must be set.", nameof(uri))).EnsureTrailingSlash(),
                 httpClient,
                 serializer ?? new DefaultJsonSerializer(),
                 errorHandler ?? new DefaultErrorHandler(),
-                linkHandler ?? new DefaultLinkHandler())
+                linkExtractor ?? new AggregateLinkExtractor(new HeaderLinkExtractor(), new HalLinkExtractor()))
         {
             foreach (var mediaType in Serializer.SupportedMediaTypes)
                 HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
@@ -46,9 +46,9 @@ namespace TypedRest.Endpoints
         /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
-        /// <param name="linkHandler">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, ICredentials? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkHandler? linkHandler = null)
-            : this(new HttpClient(), uri, serializer, errorHandler, linkHandler)
+        /// <param name="linkExtractor">Detects links in HTTP responses. Leave unset for default implementation.</param>
+        public EntryEndpoint(Uri uri, ICredentials? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
+            : this(new HttpClient(), uri, serializer, errorHandler, linkExtractor)
         {
             var basicAuthCredentials = credentials?.GetCredential(Uri, authType: "Basic");
             string? userInfo = (basicAuthCredentials != null)

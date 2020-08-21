@@ -8,7 +8,6 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using TypedRest.Endpoints.Rpc;
-using TypedRest.Links;
 using Xunit;
 
 namespace TypedRest.Endpoints
@@ -125,8 +124,8 @@ namespace TypedRest.Endpoints
             await _endpoint.GetAsync();
 
             _endpoint.GetLinks("child").Should().BeEquivalentTo(
-                new Link(new Uri("http://localhost/target1"), "Title"),
-                new Link(new Uri("http://localhost/target2")));
+                (new Uri("http://localhost/target1"), "Title"),
+                (new Uri("http://localhost/target2"), (string?)null));
         }
 
         [Fact]
@@ -144,18 +143,16 @@ namespace TypedRest.Endpoints
             await _endpoint.GetAsync();
 
             _endpoint.GetLinks("child").Should().BeEquivalentTo(
-                new Link(new Uri("http://localhost/target1"), "Title 1"),
-                new Link(new Uri("http://localhost/target2")));
+                (new Uri("http://localhost/target1"), "Title 1"),
+                (new Uri("http://localhost/target2"), (string?)null));
         }
 
         [Fact]
         public void TestSetDefaultLink()
         {
-            _endpoint.SetDefaultLink(rel: "child", hrefs: new[] {"target1", "target2"});
+            _endpoint.SetDefaultLink(rel: "child", "target");
 
-            _endpoint.GetLinks("child").Should().BeEquivalentTo(
-                new Link(new Uri("http://localhost/target1")),
-                new Link(new Uri("http://localhost/target2")));
+            _endpoint.Link("child").Should().Be(new Uri("http://localhost/target"));
         }
 
         [Fact]
@@ -172,7 +169,7 @@ namespace TypedRest.Endpoints
 
             await _endpoint.GetAsync();
 
-            _endpoint.LinkTemplate("child").ToString().Should().Be("a{?x}");
+            _endpoint.GetLinkTemplate("child").ToString().Should().Be("a{?x}");
         }
 
         [Fact]
@@ -238,30 +235,30 @@ namespace TypedRest.Endpoints
                      }
                  });
 
-            Assert.Throws<KeyNotFoundException>(() => _endpoint.LinkTemplate("child2"));
+            Assert.Throws<KeyNotFoundException>(() => _endpoint.GetLinkTemplate("child2"));
         }
 
         [Fact]
-        public async Task TestLinkBody()
+        public async Task TestLinkHal()
         {
             string body = JsonConvert.SerializeObject(new
             {
-                links = new
+                _links = new
                 {
                     single = new {href = "a"},
-                    collection = new object[] {new {href = "b", title = "Title 1"}, new {href = "c"}, true, new {something = false}},
+                    collection = new object[] {new {href = "b", title = "Title 1"}, new {href = "c"}},
                     template = new {href = "{id}", templated = true}
                 }
             });
-            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint").Respond(JsonMime, body);
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint").Respond("application/hal+json", body);
 
             await _endpoint.GetAsync();
 
             _endpoint.Link("single").Should().Be(new Uri("http://localhost/a"));
             _endpoint.GetLinks("collection").Should().BeEquivalentTo(
-                new Link(new Uri("http://localhost/b"), "Title 1"),
-                new Link(new Uri("http://localhost/c")));
-            _endpoint.LinkTemplate("template").ToString().Should().Be("{id}");
+                (new Uri("http://localhost/b"), "Title 1"),
+                (new Uri("http://localhost/c"), (string?)null));
+            _endpoint.GetLinkTemplate("template").ToString().Should().Be("{id}");
         }
 
         [Fact]
@@ -269,7 +266,7 @@ namespace TypedRest.Endpoints
         {
             _endpoint.SetDefaultLinkTemplate(rel: "child", href: "a");
 
-            _endpoint.LinkTemplate("child").ToString().Should().Be("a");
+            _endpoint.GetLinkTemplate("child").ToString().Should().Be("a");
         }
 
         [Fact]

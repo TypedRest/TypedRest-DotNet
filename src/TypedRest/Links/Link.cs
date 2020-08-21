@@ -1,16 +1,19 @@
-using System;
-
 namespace TypedRest.Links
 {
     /// <summary>
-    /// Represents a link to an HTTP resource.
+    /// Represents a link to another resource.
     /// </summary>
-    public class Link : IEquatable<Link>
+    public sealed class Link
     {
+        /// <summary>
+        /// The relation type of the link.
+        /// </summary>
+        public string Rel { get; }
+
         /// <summary>
         /// The href/target of the link.
         /// </summary>
-        public Uri Href { get; }
+        public string Href { get; }
 
         /// <summary>
         /// The title of the link (optional).
@@ -18,23 +21,23 @@ namespace TypedRest.Links
         public string? Title { get; }
 
         /// <summary>
-        /// Creates a new link.
+        /// Indicates whether the link is an URI Template (RFC 6570).
         /// </summary>
+        public bool Templated { get; }
+
+        /// <summary>
+        /// Creates a new link
+        /// </summary>
+        /// <param name="rel">The relation type of the link.</param>
         /// <param name="href">The href/target of the link.</param>
         /// <param name="title">The title of the link (optional).</param>
-        public Link(Uri href, string? title = null)
+        /// <param name="templated">Indicates whether the link is an URI Template (RFC 6570).</param>
+        public Link(string rel, string href, string? title = null, bool templated = false)
         {
-            Href = href ?? throw new ArgumentNullException(nameof(href));
+            Rel = rel;
+            Href = href;
             Title = title;
+            Templated = templated;
         }
-
-        public bool Equals(Link other)
-            => other != null && Href.Equals(other.Href);
-
-        public override bool Equals(object obj)
-            => obj is Link other && Equals(other);
-
-        public override int GetHashCode()
-            => Href.GetHashCode();
     }
 }

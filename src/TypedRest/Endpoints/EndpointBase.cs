@@ -22,7 +22,7 @@ namespace TypedRest.Endpoints
         public HttpClient HttpClient { get; }
         public MediaTypeFormatter Serializer { get; }
         public IErrorHandler ErrorHandler { get; }
-        public ILinkHandler LinkHandler { get; }
+        public ILinkExtractor LinkExtractor { get; }
 
         /// <summary>
         /// Creates a new endpoint with an absolute URI.
@@ -31,14 +31,14 @@ namespace TypedRest.Endpoints
         /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses.</param>
-        /// <param name="linkHandler">Detects links in HTTP responses.</param>
-        protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer, IErrorHandler errorHandler, ILinkHandler linkHandler)
+        /// <param name="linkExtractor">Detects links in HTTP responses.</param>
+        protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer, IErrorHandler errorHandler, ILinkExtractor linkExtractor)
         {
             Uri = uri ?? throw new ArgumentNullException(nameof(uri));
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             ErrorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler));
-            LinkHandler = linkHandler ?? throw new ArgumentNullException(nameof(linkHandler));
+            LinkExtractor = linkExtractor ?? throw new ArgumentNullException(nameof(linkExtractor));
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace TypedRest.Endpoints
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
         protected EndpointBase(IEndpoint referrer, Uri relativeUri)
-            : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkHandler)
+            : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkExtractor)
         {}
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace TypedRest.Endpoints
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
         protected EndpointBase(IEndpoint referrer, string relativeUri)
-            : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkHandler)
+            : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkExtractor)
         {}
 
         /// <summary>
@@ -64,14 +64,14 @@ namespace TypedRest.Endpoints
         /// These links are used when no links with this relation type are provided by the server.
         /// </summary>
         /// <param name="rel">The relation type of the link to add.</param>
-        /// <param name="hrefs">The hrefs of links relative to this endpoint's URI. Use <c>null</c> or an empty list to remove all previous entries for the relation type.</param>
+        /// <param name="href">The href of the link relative to this endpoint's URI. Use <c>null</c> to remove any previous entries for the relation type.</param>
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
         /// <seealso cref="IEndpoint.GetLinks"/>
         /// <seealso cref="IEndpoint.Link"/>
-        public void SetDefaultLink(string rel, params string[]? hrefs)
+        public void SetDefaultLink(string rel, string? href)
         {
-            if (hrefs == null || hrefs.Length == 0) _defaultLinks.Remove(rel);
-            else _defaultLinks[rel] = new HashSet<Link>(hrefs.Select(x => new Link(Uri.Join(x))));
+            if (string.IsNullOrEmpty(href)) _defaultLinks.Remove(rel);
+            else _defaultLinks[rel] = Uri.Join(href);
         }
 
         /// <summary>
@@ -81,11 +81,10 @@ namespace TypedRest.Endpoints
         /// <param name="rel">The relation type of the link template to add.</param>
         /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
         /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
-        /// <seealso cref="IEndpoint.LinkTemplate(string)"/>
         /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
         public void SetDefaultLinkTemplate(string rel, string? href)
         {
-            if (href == null) _defaultLinkTemplates.Remove(rel);
+            if (string.IsNullOrEmpty(href)) _defaultLinkTemplates.Remove(rel);
             else _defaultLinkTemplates[rel] = new UriTemplate(href);
         }
 
@@ -102,7 +101,7 @@ namespace TypedRest.Endpoints
                 activity.AddTag("http.method", response.RequestMessage.Method.Method)
                         .AddTag("http.status_code", ((int)response.StatusCode).ToString());
 
-                (_links, _linkTemplates) = await LinkHandler.HandleAsync(response).NoContext();
+                _links = await LinkExtractor.GetLinksAsync(response).NoContext();
 
                 HandleCapabilities(response);
 
@@ -172,26 +171,33 @@ namespace TypedRest.Endpoints
         }
 
         // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private LinkDictionary _links = new LinkDictionary();
+        private IReadOnlyList<Link> _links = new Link[0];
 
         // NOTE: Only modify during initial setup
-        private readonly IDictionary<string, ISet<Link>> _defaultLinks = new Dictionary<string, ISet<Link>>();
+        private readonly IDictionary<string, Uri> _defaultLinks = new Dictionary<string, Uri>();
 
-        public IEnumerable<Link> GetLinks(string rel)
+        // NOTE: Only modify during initial setup
+        private readonly IDictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
+
+        public IReadOnlyList<(Uri uri, string? title)> GetLinks(string rel)
         {
-            if (_links.TryGetValue(rel, out var linksForRel))
-                return linksForRel;
+            var links = _links.Where(x => !x.Templated && x.Rel == rel)
+                              .Select(x => (Uri.Join(x.Href), x.Title))
+                              .ToList();
 
-            if (_defaultLinks.TryGetValue(rel, out var defaultLinksForRel))
-                return defaultLinksForRel;
+            if (links.Count == 0)
+            {
+                if (_defaultLinks.TryGetValue(rel, out var defaultLink))
+                    links.Add((defaultLink, null));
+            }
 
-            return new Link[0];
+            return links;
         }
 
         public Uri Link(string rel)
         {
-            var link = GetLinks(rel).FirstOrDefault();
-            if (link == null)
+            var links = GetLinks(rel);
+            if (links.Count == 0)
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
@@ -210,23 +216,28 @@ namespace TypedRest.Endpoints
                 if (error != null)
                     throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.", error);
 
-                link = GetLinks(rel).FirstOrDefault();
-                if (link == null)
+                links = GetLinks(rel);
+                if (links.Count == 0)
                     throw new KeyNotFoundException($"No link with rel={rel} provided by endpoint {Uri}.");
             }
 
-            return link.Href;
+            return links[0].uri;
         }
 
-        // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
-        private IDictionary<string, UriTemplate> _linkTemplates = new Dictionary<string, UriTemplate>();
-
-        // NOTE: Only modify during initial setup
-        private readonly IDictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
-
-        public UriTemplate LinkTemplate(string rel)
+        /// <summary>
+        /// Retrieves a link template with a specific relation type.
+        /// </summary>
+        /// <param name="rel">The relation type of the link template to look for.</param>
+        /// <returns>The unresolved link template.</returns>
+        /// <exception cref="KeyNotFoundException">No link template with the specified <paramref name="rel"/> could be found.</exception>
+        /// <remarks>Uses cached data from last response if possible. Tries lazy lookup with HTTP HEAD on cache miss.</remarks>
+        public UriTemplate GetLinkTemplate(string rel)
         {
-            if (!_linkTemplates.TryGetValue(rel, out var template) && !_defaultLinkTemplates.TryGetValue(rel, out template))
+            var template = _links.Where(x => x.Templated && x.Rel == rel)
+                                 .Select(x => new UriTemplate(x.Href))
+                                 .FirstOrDefault();
+
+            if (template == null && !_defaultLinkTemplates.TryGetValue(rel, out template))
             {
                 // Lazy lookup
                 // NOTE: Synchronous execution so the method remains easy to use in constructors and properties
@@ -245,7 +256,8 @@ namespace TypedRest.Endpoints
                 if (error != null)
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.", error);
 
-                if (!_linkTemplates.TryGetValue(rel, out template))
+                template = _links.Where(x => x.Templated && x.Rel == rel).Select(x => new UriTemplate(x.Href)).FirstOrDefault();
+                if (template == null)
                     throw new KeyNotFoundException($"No link template with rel={rel} provided by endpoint {Uri}.");
             }
 
@@ -253,7 +265,7 @@ namespace TypedRest.Endpoints
         }
 
         public Uri LinkTemplate(string rel, IDictionary<string, object> variables)
-            => Uri.Join(LinkTemplate(rel).Resolve(variables));
+            => Uri.Join(GetLinkTemplate(rel).Resolve(variables));
 
         public Uri LinkTemplate(string rel, object variables)
             => LinkTemplate(
