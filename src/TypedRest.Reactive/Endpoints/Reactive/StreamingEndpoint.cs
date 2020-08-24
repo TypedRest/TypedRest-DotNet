@@ -49,8 +49,7 @@ namespace TypedRest.Endpoints.Reactive
                 activity.AddTag("http.method", HttpMethod.Get.Method);
 
                 using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-                if (!response.IsSuccessStatusCode)
-                    await ErrorHandler.HandleAsync(response);
+                await ErrorHandler.HandleAsync(response);
 
                 var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, _separator, BufferSize);
 

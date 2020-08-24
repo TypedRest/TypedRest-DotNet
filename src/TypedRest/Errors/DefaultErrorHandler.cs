@@ -17,6 +17,8 @@ namespace TypedRest.Errors
     {
         public async Task HandleAsync(HttpResponseMessage response)
         {
+            if (response.IsSuccessStatusCode) return;
+
             string message = $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
             string? body = null;
 

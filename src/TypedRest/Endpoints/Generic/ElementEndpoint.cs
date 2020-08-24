@@ -132,8 +132,7 @@ namespace TypedRest.Endpoints.Generic
             if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.MethodNotAllowed)
                 return await UpdateAsync(patch.ApplyTo, maxRetries, cancellationToken);
 
-            if (!response.IsSuccessStatusCode)
-                await ErrorHandler.HandleAsync(response).NoContext();
+            await ErrorHandler.HandleAsync(response).NoContext();
 
             return response.Content == null
                 ? default

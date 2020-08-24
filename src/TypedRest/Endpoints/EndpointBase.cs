@@ -105,8 +105,7 @@ namespace TypedRest.Endpoints
 
                 HandleCapabilities(response);
 
-                if (!response.IsSuccessStatusCode)
-                    await ErrorHandler.HandleAsync(response).NoContext();
+                await ErrorHandler.HandleAsync(response).NoContext();
 
                 return response;
             });
