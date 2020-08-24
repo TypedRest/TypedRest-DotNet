@@ -49,15 +49,12 @@ namespace TypedRest.Endpoints.Generic
 
         public async Task<bool> ExistsAsync(CancellationToken cancellationToken = default)
         {
-            try
-            {
-                await HandleAsync(() => HttpClient.HeadAsync(Uri, cancellationToken)).NoContext();
-            }
-            catch (KeyNotFoundException)
-            {
-                return false;
-            }
-            return true;
+            var response = await HttpClient.HeadAsync(Uri, cancellationToken).NoContext();
+            if (response.IsSuccessStatusCode) return true;
+            if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Gone) return false;
+
+            await ErrorHandler.HandleAsync(response).NoContext();
+            return false;
         }
 
         public bool? SetAllowed => IsMethodAllowed(HttpMethod.Put);
