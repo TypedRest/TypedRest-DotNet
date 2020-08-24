@@ -119,7 +119,9 @@ namespace TypedRest.Endpoints.Generic
 
             var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
-            var elementEndpoint = _getElementEndpoint(this, response.Headers.Location ?? Uri);
+            var elementEndpoint = response.Headers.Location == null
+                ? this[await response.Content.ReadAsAsync<TEntity>(cancellationToken)]
+                : _getElementEndpoint(this, response.Headers.Location);
             if (response.Content != null && elementEndpoint is ICachingEndpoint caching)
                 caching.ResponseCache = new ResponseCache(response);
             return elementEndpoint;

@@ -208,6 +208,18 @@ namespace TypedRest.Endpoints.Generic
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .WithContent("{\"id\":0,\"name\":\"test\"}")
+                .Respond(JsonMime, "{\"id\":5,\"name\":\"test\"}");
+
+            var element = await _endpoint.CreateAsync(new MockEntity(0, "test"));
+            element.Response.Should().Be(new MockEntity(5, "test"));
+            element.Uri.Should().Be(new Uri("http://localhost/endpoint/5"));
+        }
+
+        [Fact]
+        public async Task TestCreateLocation()
+        {
+            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
+                .WithContent("{\"id\":0,\"name\":\"test\"}")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Created)
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
