@@ -80,6 +80,7 @@ namespace TypedRest.Endpoints.Generic
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
+            ResponseCache = null;
             return response.Content == null
                 ? default
                 : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
