@@ -39,7 +39,6 @@ namespace TypedRest.Endpoints.Generic
                          {"Link", "<children{?id}>; rel=child; templated=true"}
                      }
                  });
-
             await _endpoint.ReadAllAsync();
 
             _endpoint["1"]
@@ -58,7 +57,6 @@ namespace TypedRest.Endpoints.Generic
                          {"Link", "<http://localhost/children{?id}>; rel=child; templated=true"}
                      }
                  });
-
             await _endpoint.ReadAllAsync();
 
             _endpoint["1"]
@@ -81,7 +79,6 @@ namespace TypedRest.Endpoints.Generic
                          {"Link", "<children/{id}>; rel=child; templated=true"}
                      }
                  });
-
             await _endpoint.ReadAllAsync();
 
             _endpoint[new MockEntity(1, "test")]
@@ -100,7 +97,6 @@ namespace TypedRest.Endpoints.Generic
                          {"Link", "<http://localhost/children/{id}>; rel=child; templated=true"}
                      }
                  });
-
             await _endpoint.ReadAllAsync();
 
             _endpoint[new MockEntity(1, "test")]
@@ -210,18 +206,17 @@ namespace TypedRest.Endpoints.Generic
         [Fact]
         public async Task TestCreate()
         {
-            var location = new Uri("/endpoint/new", UriKind.Relative);
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .WithContent("{\"id\":0,\"name\":\"test\"}")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.Created)
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                     Headers = {Location = location}
+                     Headers = {Location = new Uri("/endpoint/new", UriKind.Relative)}
                  });
 
             var element = await _endpoint.CreateAsync(new MockEntity(0, "test"));
             element.Response.Should().Be(new MockEntity(5, "test"));
-            element.Uri.Should().Be(new Uri(EntryEndpoint.Uri, location));
+            element.Uri.Should().Be(new Uri("http://localhost/endpoint/new"));
         }
 
         [Fact]

@@ -101,7 +101,8 @@ namespace TypedRest.Endpoints.Generic
                 .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(HttpStatusCode.NoContent);
 
-            await _endpoint.SetAsync(new MockEntity(5, "test"));
+            var result = await _endpoint.SetAsync(new MockEntity(5, "test"));
+            result.Should().BeNull();
         }
 
         [Fact]
@@ -211,7 +212,8 @@ namespace TypedRest.Endpoints.Generic
                 .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .Respond(HttpStatusCode.NoContent);
 
-            await _endpoint.MergeAsync(new MockEntity(5, "test"));
+            var result = await _endpoint.MergeAsync(new MockEntity(5, "test"));
+            result.Should().BeNull();
         }
 
         [Fact]
