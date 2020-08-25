@@ -33,7 +33,7 @@ namespace TypedRest.Endpoints.Generic
         /// Creates a new element endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
         public ElementEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {}

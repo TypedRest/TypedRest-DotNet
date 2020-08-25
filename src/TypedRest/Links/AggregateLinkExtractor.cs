@@ -12,7 +12,7 @@ namespace TypedRest.Links
         private readonly ILinkExtractor[] _extractors;
 
         /// <summary>
-        /// Creates a new aggregate link extractor
+        /// Creates a new aggregate link extractor.
         /// </summary>
         /// <param name="extractors">The link extractors to aggregate.</param>
         public AggregateLinkExtractor(params ILinkExtractor[] extractors)

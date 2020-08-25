@@ -10,7 +10,7 @@ namespace TypedRest.Endpoints.Generic
         /// <summary>
         /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element.
         /// </summary>
-        /// <param name="id">The ID identifying the entity in the collection.</param>
+        /// <param name="id">The ID identifying the entity.</param>
         TElementEndpoint this[string id] { get; }
     }
 }

@@ -54,39 +54,10 @@ namespace TypedRest.Endpoints
         /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
         protected EndpointBase(IEndpoint referrer, string relativeUri)
             : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkExtractor)
         {}
-
-        /// <summary>
-        /// Registers one or more default links for a specific relation type.
-        /// These links are used when no links with this relation type are provided by the server.
-        /// </summary>
-        /// <param name="rel">The relation type of the link to add.</param>
-        /// <param name="href">The href of the link relative to this endpoint's URI. Use <c>null</c> to remove any previous entries for the relation type.</param>
-        /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
-        /// <seealso cref="IEndpoint.GetLinks"/>
-        /// <seealso cref="IEndpoint.Link"/>
-        public void SetDefaultLink(string rel, string? href)
-        {
-            if (string.IsNullOrEmpty(href)) _defaultLinks.Remove(rel);
-            else _defaultLinks[rel] = Uri.Join(href);
-        }
-
-        /// <summary>
-        /// Registers a default link template for a specific relation type.
-        /// This template is used when no template with this relation type is provided by the server.
-        /// </summary>
-        /// <param name="rel">The relation type of the link template to add.</param>
-        /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
-        /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
-        /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
-        public void SetDefaultLinkTemplate(string rel, string? href)
-        {
-            if (string.IsNullOrEmpty(href)) _defaultLinkTemplates.Remove(rel);
-            else _defaultLinkTemplates[rel] = new UriTemplate(href);
-        }
 
         /// <summary>
         /// Handles various cross-cutting concerns regarding a response message such as discovering links and handling errors.
@@ -169,14 +140,43 @@ namespace TypedRest.Endpoints
                   .Start();
         }
 
-        // NOTE: Always replace entire dictionary rather than modifying it to ensure thread-safety.
+        // NOTE: Always replace entire list rather than modifying it to ensure thread-safety.
         private IReadOnlyList<Link> _links = new Link[0];
 
-        // NOTE: Only modify during initial setup
+        // NOTE: Only modified during initial setup of the endpoint.
         private readonly IDictionary<string, Uri> _defaultLinks = new Dictionary<string, Uri>();
-
-        // NOTE: Only modify during initial setup
         private readonly IDictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
+
+        /// <summary>
+        /// Registers one or more default links for a specific relation type.
+        /// These links are used when no links with this relation type are provided by the server.
+        /// This should only be called during initial setup of the endpoint.
+        /// </summary>
+        /// <param name="rel">The relation type of the link to add.</param>
+        /// <param name="href">The href of the link relative to this endpoint's URI. Use <c>null</c> to remove any previous entries for the relation type.</param>
+        /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
+        /// <seealso cref="IEndpoint.GetLinks"/>
+        /// <seealso cref="IEndpoint.Link"/>
+        public void SetDefaultLink(string rel, string? href)
+        {
+            if (string.IsNullOrEmpty(href)) _defaultLinks.Remove(rel);
+            else _defaultLinks[rel] = Uri.Join(href);
+        }
+
+        /// <summary>
+        /// Registers a default link template for a specific relation type.
+        /// This template is used when no template with this relation type is provided by the server.
+        /// This should only be called during initial setup of the endpoint.
+        /// </summary>
+        /// <param name="rel">The relation type of the link template to add.</param>
+        /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
+        /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
+        /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
+        public void SetDefaultLinkTemplate(string rel, string? href)
+        {
+            if (string.IsNullOrEmpty(href)) _defaultLinkTemplates.Remove(rel);
+            else _defaultLinkTemplates[rel] = new UriTemplate(href);
+        }
 
         public IReadOnlyList<(Uri uri, string? title)> GetLinks(string rel)
         {
@@ -290,7 +290,7 @@ namespace TypedRest.Endpoints
         /// </summary>
         /// <param name="method">The HTTP methods (e.g. GET, POST, ...) to check.</param>
         /// <remarks>Uses cached data from last response.</remarks>
-        /// <returns>An indicator whether the method is allowed. If no request has been sent yet or the server did not specify allowed methods <c>null</c> is returned.</returns>
+        /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
         protected bool? IsMethodAllowed(HttpMethod method)
         {
             if (_allowedMethods.Count == 0) return null;

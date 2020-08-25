@@ -10,12 +10,12 @@ namespace TypedRest.Http
     public class ResponseCache
     {
         private readonly byte[] _content;
-        private readonly MediaTypeHeaderValue _contentType;
+        private readonly MediaTypeHeaderValue? _contentType;
 
         /// <summary>
-        /// The ETag header value of the cached <see cref="HttpResponseMessage"/>. Can be null.
+        /// The ETag header value of the cached <see cref="HttpResponseMessage"/>.
         /// </summary>
-        public EntityTagHeaderValue ETag { get; }
+        public EntityTagHeaderValue? ETag { get; }
 
         /// <summary>
         /// Caches the content of the <paramref name="response"/>.

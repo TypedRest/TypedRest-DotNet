@@ -8,7 +8,7 @@ namespace TypedRest.Endpoints
     public interface ICachingEndpoint : IEndpoint
     {
         /// <summary>
-        /// A cached copy of the last response. Can be null.
+        /// A cached copy of the last response.
         /// </summary>
         ResponseCache? ResponseCache { get; set; }
     }

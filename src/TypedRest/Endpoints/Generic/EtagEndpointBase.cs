@@ -21,7 +21,7 @@ namespace TypedRest.Endpoints.Generic
         /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
         protected ETagEndpointBase(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {}
@@ -30,7 +30,7 @@ namespace TypedRest.Endpoints.Generic
         /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
         protected ETagEndpointBase(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {}
@@ -68,17 +68,17 @@ namespace TypedRest.Endpoints.Generic
         }
 
         /// <summary>
-        /// Performs an HTTP PUT request on the <see cref="IEndpoint.Uri"/>. Sets <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached ETag to detect lost updates.
+        /// Performs an <see cref="HttpMethod.Put"/> request on the <see cref="IEndpoint.Uri"/>. Sets <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached <see cref="HttpResponseHeader.ETag"/> to detect lost updates.
         /// </summary>
         /// <param name="content">The content to send to the server.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <param name="caller">The name of the method calling this method.</param>
         /// <returns>The response message.</returns>
+        /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         protected Task<HttpResponseMessage> PutContentAsync(HttpContent content, CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
         {
@@ -91,16 +91,16 @@ namespace TypedRest.Endpoints.Generic
         }
 
         /// <summary>
-        /// Performs an HTTP DELETE request on the <see cref="IEndpoint.Uri"/>. Sets <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached ETag to detect lost updates.
+        /// Performs an <see cref="HttpMethod.Delete"/> request on the <see cref="IEndpoint.Uri"/>. Sets <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached ETag to detect lost updates.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel the request.</param>
         /// <param name="caller">The name of the method calling this method.</param>
         /// <returns>The response message.</returns>
+        /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         protected Task<HttpResponseMessage> DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
         {

@@ -20,11 +20,10 @@ namespace TypedRest.Endpoints.Rpc
         /// </summary>
         /// <param name="entity">The <typeparamref name="TEntity"/> to post as input.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <returns>The result returned by the server.</returns>
+        /// <returns>The <typeparamref name="TResult"/> returned by the server.</returns>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-        /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
         Task<TResult> InvokeAsync(TEntity entity, CancellationToken cancellationToken = default);
     }

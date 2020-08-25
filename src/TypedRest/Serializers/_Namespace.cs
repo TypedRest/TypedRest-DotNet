@@ -1,2 +1,2 @@
 //! \namespace TypedRest.Serializers
-//! \brief Serializers handle serializing/deserializing of entities for endpoint
+//! \brief Serialization of entities sent to and received from the server.

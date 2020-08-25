@@ -14,7 +14,7 @@ namespace TypedRest.Endpoints.Generic
     /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <typeparamref name="TElementEndpoint"/>s.
     /// </summary>
     /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
-    /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
+    /// <typeparam name="TElementEndpoint">The type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
     public class CollectionEndpoint<TEntity, TElementEndpoint> : ETagEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TEntity : class
         where TElementEndpoint : IElementEndpoint<TEntity>
@@ -34,7 +34,7 @@ namespace TypedRest.Endpoints.Generic
         /// Creates a new element collection endpoint.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Prefix <c>./</c> to append a trailing slash to the <paramref name="referrer"/> URI if missing.</param>
+        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
         public CollectionEndpoint(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {
@@ -62,7 +62,7 @@ namespace TypedRest.Endpoints.Generic
         }
 
         /// <summary>
-        /// Gets the ID for an <typeparamref name="TEntity"/>. May be <c>null</c>.
+        /// Gets the ID for a <typeparamref name="TEntity"/>. May be <c>null</c>.
         /// </summary>
         private static readonly Func<TEntity, object>? _getElementId = typeof(TEntity).GetPropertyWith<KeyAttribute>()?.GetMethod?.ToFunc<TEntity, object>();
 
