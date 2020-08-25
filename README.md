@@ -29,6 +29,8 @@ await smith.DeleteAsync();
 
 Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
 
+You can also take a look at our [Sample project](https://github.com/TypedRest/Sample-DotNet).
+
 ## NuGet packages
 
 [![TypedRest](https://img.shields.io/nuget/v/TypedRest.svg?label=TypedRest)](https://www.nuget.org/packages/TypedRest/)  
