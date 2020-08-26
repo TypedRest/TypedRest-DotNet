@@ -36,7 +36,8 @@ namespace TypedRest.Errors
 
         private static string? ExtractJsonMessage(HttpResponseMessage response, string body)
         {
-            if (response.Content.Headers.ContentType?.MediaType == "application/json")
+            string? mediaType = response.Content.Headers.ContentType?.MediaType;
+            if (mediaType == "application/json" || (mediaType != null && mediaType.EndsWith("+json")))
             {
                 try
                 {
