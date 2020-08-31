@@ -224,7 +224,7 @@ namespace TypedRest.Endpoints
         }
 
         /// <summary>
-        /// Retrieves a link template with a specific relation type.
+        /// Retrieves a link template with a specific relation type. Prefer <see cref="IEndpoint.LinkTemplate(string,object)"/> when possible.
         /// </summary>
         /// <param name="rel">The relation type of the link template to look for.</param>
         /// <returns>The unresolved link template.</returns>

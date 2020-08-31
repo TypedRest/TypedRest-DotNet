@@ -38,7 +38,7 @@ namespace TypedRest.Endpoints
         ILinkExtractor LinkExtractor { get; }
 
         /// <summary>
-        /// Resolves all links with a specific relation type cached from the last request.
+        /// Resolves all links with a specific relation type. Uses cached data from last response.
         /// </summary>
         /// <param name="rel">The relation type of the links to look for.</param>
         IReadOnlyList<(Uri uri, string? title)> GetLinks(string rel);
