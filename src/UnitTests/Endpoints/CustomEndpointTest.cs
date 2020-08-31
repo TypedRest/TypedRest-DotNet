@@ -136,14 +136,14 @@ namespace TypedRest.Endpoints
                  {
                      Headers =
                      {
-                         {"Link", "<target1>; rel=child; title=\"Title 1\", <target2>; rel=child"}
+                         {"Link", "<target1>; rel=child; title=\"Title, 1\", <target2>; rel=child"}
                      }
                  });
 
             await _endpoint.GetAsync();
 
             _endpoint.GetLinks("child").Should().BeEquivalentTo(
-                (new Uri("http://localhost/target1"), "Title 1"),
+                (new Uri("http://localhost/target1"), "Title, 1"),
                 (new Uri("http://localhost/target2"), (string?)null));
         }
 
@@ -207,7 +207,7 @@ namespace TypedRest.Endpoints
         }
 
         [Fact]
-        public async Task TestLinkTemplateResolveEscaping()
+        public async Task TestLinkTemplateResolveQuery()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
