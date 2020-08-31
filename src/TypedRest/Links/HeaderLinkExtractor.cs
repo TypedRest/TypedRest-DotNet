@@ -14,7 +14,7 @@ namespace TypedRest.Links
     {
         // ReSharper disable RedundantEnumerableCastCall
 
-        private static readonly Regex _regexHeaderLinks = new Regex("(<[^>]+>;[^,]+)", RegexOptions.Compiled);
+        private static readonly Regex _regexHeaderLinks = new Regex("<[^>]*>\\s*(\\s*;\\s*[^\\(\\)<>@,;:\\\"\\/\\[\\]\\?={} \\t]+=(([^\\(\\)<>@,;:\\\"\\/\\[\\]\\?={} \\t]+)|(\\\"[^\\\"]*\\\")))*(,|$)", RegexOptions.Compiled);
 
         public Task<IReadOnlyList<Link>> GetLinksAsync(HttpResponseMessage response)
             => Task.FromResult<IReadOnlyList<Link>>(
@@ -23,37 +23,41 @@ namespace TypedRest.Links
                         .SelectMany(x => x.Value)
                         .SelectMany(x => _regexHeaderLinks.Matches(x).Cast<Match>())
                         .Where(x => x.Success)
-                        .Select(x => ParseLink(x.Groups.Cast<Group>().Skip(1).Single().Value))
+                        .Select(x => ParseLink(x.Groups.Cast<Group>().First().Value))
                         .ToList());
 
-        private static readonly Regex _regexLinkFields =
-            new Regex("(?=^<(?'href'[^>]*)>)|(?'field'[a-z]+)=\"?(?'value'[^\",;]*)\"?", RegexOptions.Compiled);
+        private static readonly Regex _regexLinkFields = new Regex("[^\\(\\)<>@,;:\"\\/\\[\\]\\?={} \\t]+=(([^\\(\\)<>@,;:\"\\/\\[\\]\\?={} \\t]+)|(\"[^\"]*\"))", RegexOptions.Compiled);
 
         private static Link ParseLink(string value)
         {
-            string? href = null, rel = null, title = null;
+            var split = value.Split(new [] {'>'}, 2);
+            string href = split[0].Substring(1);
+            string? rel = null, title = null;
             bool templated = false;
 
-            foreach (var match in _regexLinkFields.Matches(value).Cast<Match>())
+            foreach (string param in _regexLinkFields.Matches(split[1]).Cast<Match>().Select(x => x.Groups.Cast<Group>().First().Value))
             {
-                href ??= match.Groups["href"].Value;
-
-                if (match.Groups["field"].Success)
+                var paramSplit = param.Split(new [] {'='}, 2);
+                if (paramSplit.Length != 2) continue;
+                switch (paramSplit[0])
                 {
-                    if (rel == null && match.Groups["field"].Value.Equals("rel", StringComparison.OrdinalIgnoreCase))
-                        rel = match.Groups["value"].Value;
-
-                    if (match.Groups["field"].Value.Equals("templated", StringComparison.OrdinalIgnoreCase))
-                        templated = match.Groups["value"].Value.Equals("true", StringComparison.OrdinalIgnoreCase);
-
-                    if (title == null && match.Groups["field"].Value.Equals("title", StringComparison.OrdinalIgnoreCase))
-                        title = match.Groups["value"].Value;
+                    case "rel":
+                        rel = paramSplit[1];
+                        break;
+                    case "title":
+                        title = paramSplit[1];
+                        if (title.StartsWith("\"") && title.EndsWith("\""))
+                            title = title.Substring(1, title.Length - 2);
+                        break;
+                    case "templated" when paramSplit[1] == "true":
+                        templated = true;
+                        break;
                 }
             }
 
             return new Link(
                 rel ?? throw new FormatException("The link header is lacking the mandatory 'rel' field."),
-                href ?? throw new FormatException("The link header is lacking the mandatory href."),
+                href,
                 title,
                 templated);
         }
