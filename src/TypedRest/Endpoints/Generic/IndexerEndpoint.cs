@@ -1,7 +1,4 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using TypedRest.Http;
 
 namespace TypedRest.Endpoints.Generic
 {
@@ -48,7 +45,7 @@ namespace TypedRest.Endpoints.Generic
         {
             get
             {
-                if (id == null) throw new ArgumentNullException(nameof(id));
+                if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
 
                 return _getElementEndpoint(this, LinkTemplate("child", new {id}));
             }

@@ -55,7 +55,7 @@ namespace TypedRest.Endpoints.Generic
         {
             get
             {
-                if (id == null) throw new ArgumentNullException(nameof(id));
+                if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
 
                 return _getElementEndpoint(this, LinkTemplate("child", new {id}));
             }
