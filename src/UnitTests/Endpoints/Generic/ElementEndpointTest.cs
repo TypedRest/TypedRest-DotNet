@@ -42,7 +42,7 @@ namespace TypedRest.Endpoints.Generic
         }
 
         [Fact]
-        public async Task TestReadCache()
+        public async Task TestReadCacheETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new HttpResponseMessage
@@ -55,6 +55,30 @@ namespace TypedRest.Endpoints.Generic
 
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .WithHeaders("If-None-Match", "\"123abc\"")
+                .Respond(HttpStatusCode.NotModified);
+            var result2 = await _endpoint.ReadAsync();
+            result2.Should().Be(new MockEntity(5, "test"));
+
+            result2.Should().NotBeSameAs(result1,
+                because: "Cache responses, not deserialized objects");
+        }
+
+        [Fact]
+        public async Task TestReadCacheLastModified()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {LastModified = new DateTimeOffset(new DateTime(2015, 10, 21), TimeSpan.Zero)}
+                     }
+                 });
+            var result1 = await _endpoint.ReadAsync();
+            result1.Should().Be(new MockEntity(5, "test"));
+
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .WithHeaders("If-Modified-Since", "Wed, 21 Oct 2015 00:00:00 GMT")
                 .Respond(HttpStatusCode.NotModified);
             var result2 = await _endpoint.ReadAsync();
             result2.Should().Be(new MockEntity(5, "test"));
@@ -119,6 +143,26 @@ namespace TypedRest.Endpoints.Generic
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"test\"}")
                 .WithHeaders("If-Match", "\"123abc\"")
+                .Respond(HttpStatusCode.NoContent);
+            await _endpoint.SetAsync(result);
+        }
+
+        [Fact]
+        public async Task TestSetLastModified()
+        {
+            Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+                .Respond(_ => new HttpResponseMessage
+                 {
+                     Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime)
+                     {
+                         Headers = {LastModified = new DateTimeOffset(new DateTime(2015, 10, 21), TimeSpan.Zero)}
+                     }
+                 });
+            var result = await _endpoint.ReadAsync();
+
+            Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+                .WithContent("{\"id\":5,\"name\":\"test\"}")
+                .WithHeaders("If-Unmodified-Since", "Wed, 21 Oct 2015 00:00:00 GMT")
                 .Respond(HttpStatusCode.NoContent);
             await _endpoint.SetAsync(result);
         }

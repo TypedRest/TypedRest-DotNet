@@ -17,7 +17,7 @@ namespace TypedRest.Endpoints.Generic
     /// Endpoint for an individual resource.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-    public class ElementEndpoint<TEntity> : ETagEndpointBase, IElementEndpoint<TEntity>
+    public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TEntity>
         where TEntity : class
     {
         /// <summary>

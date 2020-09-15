@@ -15,7 +15,7 @@ namespace TypedRest.Endpoints.Generic
     /// </summary>
     /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
     /// <typeparam name="TElementEndpoint">The type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
-    public class CollectionEndpoint<TEntity, TElementEndpoint> : ETagEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
+    public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TEntity : class
         where TElementEndpoint : IElementEndpoint<TEntity>
     {
@@ -123,7 +123,7 @@ namespace TypedRest.Endpoints.Generic
                 ? this[await response.Content.ReadAsAsync<TEntity>(cancellationToken)]
                 : _getElementEndpoint(this, response.Headers.Location);
             if (response.Content != null && elementEndpoint is ICachingEndpoint caching)
-                caching.ResponseCache = new ResponseCache(response);
+                caching.ResponseCache = ResponseCache.From(response);
             return elementEndpoint;
         }
 

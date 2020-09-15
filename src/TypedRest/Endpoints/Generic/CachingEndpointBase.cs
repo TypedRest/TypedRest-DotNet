@@ -13,16 +13,16 @@ using TypedRest.Http;
 namespace TypedRest.Endpoints.Generic
 {
     /// <summary>
-    /// Base class for building endpoints that use ETags (entity tags) for caching and to avoid lost updates.
+    /// Base class for building endpoints that use ETags and Last-Modified timestamps for caching and to avoid lost updates.
     /// </summary>
-    public abstract class ETagEndpointBase : EndpointBase, ICachingEndpoint
+    public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     {
         /// <summary>
         /// Creates a new endpoint with a relative URI.
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
-        protected ETagEndpointBase(IEndpoint referrer, Uri relativeUri)
+        protected CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
             : base(referrer, relativeUri)
         {}
 
@@ -31,7 +31,7 @@ namespace TypedRest.Endpoints.Generic
         /// </summary>
         /// <param name="referrer">The endpoint used to navigate to this one.</param>
         /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
-        protected ETagEndpointBase(IEndpoint referrer, string relativeUri)
+        protected CachingEndpointBase(IEndpoint referrer, string relativeUri)
             : base(referrer, relativeUri)
         {}
 
@@ -52,17 +52,17 @@ namespace TypedRest.Endpoints.Generic
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri);
             var cache = ResponseCache; // Copy reference for thread-safety
-            if (cache?.ETag != null) request.Headers.IfNoneMatch.Add(cache.ETag);
+            cache?.SetIfModifiedHeaders(request.Headers);
 
             var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
-            if (response.StatusCode == HttpStatusCode.NotModified && cache != null)
+            if (response.StatusCode == HttpStatusCode.NotModified && cache != null && !cache.IsExpired)
                 return cache.GetContent();
             else
             {
                 await HandleAsync(() => Task.FromResult(response), caller).NoContext();
                 if (response.Content == null) throw new KeyNotFoundException($"{Uri} returned no body.");
 
-                ResponseCache = new ResponseCache(response);
+                ResponseCache = ResponseCache.From(response);
                 return response.Content;
             }
         }
@@ -84,7 +84,7 @@ namespace TypedRest.Endpoints.Generic
         {
             var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
             var cache = ResponseCache; // Copy reference for thread-safety
-            if (cache?.ETag != null) request.Headers.IfMatch.Add(cache.ETag);
+            cache?.SetIfUnmodifiedHeaders(request.Headers);
 
             ResponseCache = null;
             return HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller);
@@ -106,7 +106,7 @@ namespace TypedRest.Endpoints.Generic
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
             var cache = ResponseCache; // Copy reference for thread-safety
-            if (cache?.ETag != null) request.Headers.IfMatch.Add(cache.ETag);
+            cache?.SetIfUnmodifiedHeaders(request.Headers);
 
             ResponseCache = null;
             return HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller);

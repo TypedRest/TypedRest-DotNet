@@ -5,39 +5,84 @@ using System.Net.Http.Headers;
 namespace TypedRest.Http
 {
     /// <summary>
-    /// Caches the content of an <see cref="HttpResponseMessage"/>.
+    /// Captures the content of an <see cref="HttpResponseMessage"/> for caching.
     /// </summary>
     public class ResponseCache
     {
         private readonly byte[] _content;
         private readonly MediaTypeHeaderValue? _contentType;
+        private readonly EntityTagHeaderValue? _eTag;
+        private readonly DateTimeOffset? _lastModified;
+        private readonly DateTimeOffset? _expires;
 
         /// <summary>
-        /// The ETag header value of the cached <see cref="HttpResponseMessage"/>.
+        /// Creates a <see cref="ResponseCache"/> from a <paramref name="response"/> if it is eligible for caching.
         /// </summary>
-        public EntityTagHeaderValue? ETag { get; }
+        /// <returns>The <see cref="ResponseCache"/>; <c>null</c> if the response is not eligible for caching.</returns>
+        public static ResponseCache? From(HttpResponseMessage response)
+            => response.IsSuccessStatusCode && !(response.Headers.CacheControl?.NoStore ?? false)
+                ? new ResponseCache(response)
+                : null;
 
-        /// <summary>
-        /// Caches the content of the <paramref name="response"/>.
-        /// </summary>
-        public ResponseCache(HttpResponseMessage response)
+        private ResponseCache(HttpResponseMessage response)
         {
-            if (response.Content == null) throw new ArgumentException("Missing content.", nameof(response));
-            _content = response.Content.ReadAsByteArrayAsync().Result;
-
-            // Rewind stream position
-            var stream = response.Content.ReadAsStreamAsync().Result;
-            if (stream.CanSeek) stream.Position = 0;
+            _content = ReadContent(response.Content ?? throw new ArgumentException("Missing content.", nameof(response)));
 
             _contentType = response.Content.Headers.ContentType;
-            ETag = response.Headers.ETag;
+            _eTag = response.Headers.ETag;
+            _lastModified = response.Content.Headers.LastModified;
+
+            _expires = response.Content.Headers.Expires;
+            if (_expires == null && response.Headers.CacheControl?.MaxAge != null)
+                _expires = DateTimeOffset.Now + response.Headers.CacheControl.MaxAge;
+
+            // Treat no-cache as expired immediately
+            if (response.Headers.CacheControl?.NoCache ?? false)
+                _expires = DateTimeOffset.Now;
         }
+
+        private static byte[] ReadContent(HttpContent content)
+        {
+            var result = content.ReadAsByteArrayAsync().Result;
+
+            // Rewind stream if possible
+            var stream = content.ReadAsStreamAsync().Result;
+            if (stream.CanSeek) stream.Position = 0;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Indicates whether this cached response has expired.
+        /// </summary>
+        public bool IsExpired
+            => _expires.HasValue && DateTime.Now >= _expires;
 
         /// <summary>
         /// Returns the cached <see cref="HttpClient"/>.
         /// </summary>
         public HttpContent GetContent()
+        {
             // Build new response for each request to avoid shared Stream.Position
-            => new ByteArrayContent(_content) {Headers = {ContentType = _contentType}};
+            return new ByteArrayContent(_content) {Headers = {ContentType = _contentType}};
+        }
+
+        /// <summary>
+        /// Sets request headers that require that the resource has been modified since it was cached.
+        /// </summary>
+        public void SetIfModifiedHeaders(HttpRequestHeaders headers)
+        {
+            if (_eTag != null) headers.IfNoneMatch.Add(_eTag);
+            else if (_lastModified != null) headers.IfModifiedSince = _lastModified;
+        }
+
+        /// <summary>
+        /// Sets request headers that require that the resource has not been modified since it was cached.
+        /// </summary>
+        public void SetIfUnmodifiedHeaders(HttpRequestHeaders headers)
+        {
+            if (_eTag != null) headers.IfMatch.Add(_eTag);
+            else if (_lastModified != null) headers.IfUnmodifiedSince = _lastModified;
+        }
     }
 }
