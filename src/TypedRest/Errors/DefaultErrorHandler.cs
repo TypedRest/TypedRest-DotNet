@@ -44,7 +44,7 @@ namespace TypedRest.Errors
                     var token = JToken.Parse(body);
                     if (token.Type == JTokenType.Object)
                     {
-                        var messageNode = JToken.Parse(body)["message"];
+                        var messageNode = token["message"] ?? token["details"];
                         if (messageNode != null) return messageNode.ToString();
                     }
                 }
