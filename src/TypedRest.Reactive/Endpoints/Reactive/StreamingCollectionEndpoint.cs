@@ -34,8 +34,10 @@ namespace TypedRest.Endpoints.Reactive
         {}
 
         public IObservable<TEntity> GetObservable(long startIndex = 0)
-            => Observable.Create<TEntity>((observer, cancellationToken) => TracedAsync(async _ =>
+            => Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
+                using var activity = StartActivity();
+
                 long currentStartIndex = startIndex;
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -73,6 +75,6 @@ namespace TypedRest.Endpoints.Reactive
                     if (response.Range?.To == null) return;
                     currentStartIndex = response.Range.To.Value + 1;
                 }
-            }));
+            });
     }
 }

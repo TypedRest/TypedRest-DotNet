@@ -65,80 +65,37 @@ namespace TypedRest.Endpoints
         /// <param name="request">A callback that performs the actual HTTP request.</param>
         /// <param name="caller">The name of the method calling this method.</param>
         /// <returns>The resolved <paramref name="request"/>.</returns>
-        protected virtual Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
-            => TracedAsync(async activity =>
-            {
-                var response = await request().NoContext();
-                activity.AddTag("http.method", response.RequestMessage.Method.Method)
-                        .AddTag("http.status_code", ((int)response.StatusCode).ToString());
+        protected virtual async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
+        {
+            using var activity = StartActivity(caller);
 
-                _links = await LinkExtractor.GetLinksAsync(response).NoContext();
+            var response = await request().NoContext();
+            activity?.AddTag("http.method", response.RequestMessage.Method.Method)
+                     .AddTag("http.status_code", ((int)response.StatusCode).ToString());
 
-                HandleCapabilities(response);
+            _links = await LinkExtractor.GetLinksAsync(response).NoContext();
+            HandleCapabilities(response);
+            await ErrorHandler.HandleAsync(response).NoContext();
 
-                await ErrorHandler.HandleAsync(response).NoContext();
+            return response;
+        }
 
-                return response;
-            });
+        private static readonly ActivitySource _activitySource = new ActivitySource("TypedRest");
 
         /// <summary>
-        /// Runs an operation in the context of a tracing span.
+        /// Starts a new <see cref="Activity"/> if there is any listener registered (e.g. OpenTelemetry), returns <c>null</c> otherwise.
         /// </summary>
-        /// <param name="operation">Callback to run the operation. Passes in an <see cref="Activity"/> to record additional tracing information.</param>
         /// <param name="caller">The name of the method calling this method.</param>
-        protected async Task TracedAsync(Func<Activity, Task> operation, [CallerMemberName] string caller = "unknown")
-        {
-            var activity = StartActivity(caller);
+        protected Activity? StartActivity([CallerMemberName] string caller = "unknown")
+            => _activitySource.StartActivity(GetType().Name + "." + TrimEnding(caller, "Async"))
+                             ?.AddTag("component", "TypedRest")
+                              .AddTag("span.kind", "client")
+                              .AddTag("http.url", Uri.ToString());
 
-            try
-            {
-                await operation(activity).NoContext();
-            }
-            catch (Exception ex)
-            {
-                activity.AddException(ex);
-                throw;
-            }
-            finally
-            {
-                activity.Stop();
-            }
-        }
-
-        /// <summary>
-        /// Runs an operation in the context of a tracing span.
-        /// </summary>
-        /// <param name="operation">Callback to run the operation. Passes in an <see cref="Activity"/> to record additional tracing information.</param>
-        /// <param name="caller">The name of the method calling this method.</param>
-        protected async Task<T> TracedAsync<T>(Func<Activity, Task<T>> operation, [CallerMemberName] string caller = "unknown")
-        {
-            var activity = StartActivity(caller);
-
-            try
-            {
-                return await operation(activity).NoContext();
-            }
-            catch (Exception ex)
-            {
-                activity.AddException(ex);
-                throw;
-            }
-            finally
-            {
-                activity.Stop();
-            }
-        }
-
-        private Activity StartActivity(string caller)
-        {
-            if (caller.EndsWith("Async")) caller = caller.Substring(0, caller.Length - "Async".Length);
-
-            return new Activity(GetType().Name + "::" + caller)
-                  .AddTag("component", "TypedRest")
-                  .AddTag("span.kind", "client")
-                  .AddTag("http.url", Uri.ToString())
-                  .Start();
-        }
+        private static string TrimEnding(string value, string ending)
+            => value.EndsWith(ending)
+                ? value.Substring(0, value.Length - ending.Length)
+                : value;
 
         // NOTE: Always replace entire list rather than modifying it to ensure thread-safety.
         private IReadOnlyList<Link> _links = new Link[0];

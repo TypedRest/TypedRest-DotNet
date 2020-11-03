@@ -53,8 +53,10 @@ namespace TypedRest.Endpoints.Reactive
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
 
         public IObservable<TEntity> GetObservable()
-            => Observable.Create<TEntity>((observer, cancellationToken) => TracedAsync(async _ =>
+            => Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
+                using var activity = StartActivity();
+
                 TEntity previousEntity;
                 try
                 {
@@ -94,6 +96,6 @@ namespace TypedRest.Endpoints.Reactive
                     previousEntity = newEntity;
                 }
                 observer.OnCompleted();
-            }));
+            });
     }
 }

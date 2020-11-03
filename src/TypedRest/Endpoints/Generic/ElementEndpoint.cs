@@ -88,46 +88,49 @@ namespace TypedRest.Endpoints.Generic
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default)
             => await DeleteContentAsync(cancellationToken);
 
-        public Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
-            => TracedAsync(async _ =>
+        public async Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
+        {
+            using var activity = StartActivity();
+
+            int retryCounter = 0;
+            while (true)
             {
-                int retryCounter = 0;
-                while (true)
+                var entity = await ReadAsync(cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                updateAction(entity);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                try
                 {
-                    var entity = await ReadAsync(cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    updateAction(entity);
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    try
-                    {
-                        return await SetAsync(entity, cancellationToken);
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        if (retryCounter++ >= maxRetries) throw;
-                        await ex.HttpRetryDelayAsync(cancellationToken);
-                        cancellationToken.ThrowIfCancellationRequested();
-                    }
+                    return await SetAsync(entity, cancellationToken);
                 }
-            });
+                catch (InvalidOperationException ex)
+                {
+                    if (retryCounter++ >= maxRetries) throw;
+                    await ex.HttpRetryDelayAsync(cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
+            }
+        }
 
         public async Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default)
         {
             if (!(Serializer is JsonMediaTypeFormatter serializer))
                 throw new NotSupportedException($"JSON Patch can only be used if the endpoint's serializer is a {nameof(JsonMediaTypeFormatter)}.");
 
+            using var activity = StartActivity();
+
             var patch = new JsonPatchDocument<TEntity>(new List<Operation<TEntity>>(), serializer.SerializerSettings.ContractResolver);
             patchAction(patch);
 
-            var response = await TracedAsync(_ => HttpClient.SendAsync(new HttpRequestMessage(HttpMethods.Patch, Uri)
+            var response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethods.Patch, Uri)
             {
                 Content = new StringContent(JsonConvert.SerializeObject(patch))
                 {
                     Headers = {ContentType = new MediaTypeHeaderValue("application/json-patch+json")}
                 }
-            }, cancellationToken)).NoContext();
+            }, cancellationToken).NoContext();
 
             if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.MethodNotAllowed)
                 return await UpdateAsync(patch.ApplyTo, maxRetries, cancellationToken);

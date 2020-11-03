@@ -44,9 +44,11 @@ namespace TypedRest.Endpoints.Reactive
         public int BufferSize { get; set; } = 64 * 1024;
 
         public virtual IObservable<TEntity> GetObservable()
-            => Observable.Create<TEntity>((observer, cancellationToken) => TracedAsync(async activity =>
+            => Observable.Create<TEntity>(async (observer, cancellationToken) =>
             {
-                activity.AddTag("http.method", HttpMethod.Get.Method);
+                using var activity = StartActivity();
+
+                activity?.AddTag("http.method", HttpMethod.Get.Method);
 
                 using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                 await ErrorHandler.HandleAsync(response);
@@ -71,13 +73,13 @@ namespace TypedRest.Endpoints.Reactive
                     }
                     catch (Exception ex)
                     {
-                        activity.AddException(ex);
+                        activity?.AddException(ex);
                         observer.OnError(ex);
                         return;
                     }
 
                     observer.OnNext(entity);
                 }
-            }));
+            });
     }
 }

@@ -81,20 +81,21 @@ namespace TypedRest.OAuth
             return response.TokenEndpoint;
         }
 
+        private static readonly ActivitySource _activitySource = new ActivitySource("TypedRest.OAuth");
+
         private static async Task<TResponse> HandleAsync<TResponse>(Func<Task<TResponse>> request, [CallerMemberName] string caller = "unknown")
             where TResponse : ProtocolResponse
         {
-            var activity = new Activity(nameof(OAuthHandler) + "::" + caller.Substring(0, caller.Length - "Async".Length))
-                          .AddTag("component", "TypedRest.OAuth")
-                          .AddTag("span.kind", "client")
-                          .Start();
+            using var activity = _activitySource.StartActivity(nameof(OAuthHandler) + "." + TrimEnding(caller, "Async"))
+                                               ?.AddTag("component", "TypedRest.OAuth")
+                                                .AddTag("span.kind", "client");
 
             try
             {
                 var response = await request().ConfigureAwait(false);
-                activity.AddTag("http.url", response.HttpResponse.RequestMessage.RequestUri.ToString())
-                        .AddTag("http.method", response.HttpResponse.RequestMessage.Method.Method)
-                        .AddTag("http.status_code", ((int)response.HttpResponse.StatusCode).ToString());
+                activity?.AddTag("http.url", response.HttpResponse.RequestMessage.RequestUri.ToString())
+                         .AddTag("http.method", response.HttpResponse.RequestMessage.Method.Method)
+                         .AddTag("http.status_code", ((int)response.HttpResponse.StatusCode).ToString());
 
                 if (response.Exception != null) throw response.Exception;
                 if (response.IsError) throw new AuthenticationException(response.Error);
@@ -102,16 +103,17 @@ namespace TypedRest.OAuth
             }
             catch (Exception ex)
             {
-                activity.AddTag("error", "true")
-                        .AddTag("error.type", ex.GetType().Name)
-                        .AddTag("error.message", ex.Message);
+                activity?.AddTag("error", "true")
+                         .AddTag("error.type", ex.GetType().Name)
+                         .AddTag("error.message", ex.Message);
                 throw;
             }
-            finally
-            {
-                activity.Stop();
-            }
         }
+
+        private static string TrimEnding(string value, string ending)
+            => value.EndsWith(ending)
+                ? value.Substring(0, value.Length - ending.Length)
+                : value;
 
         private async Task<HttpResponseMessage> SendAuthenticatedAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
