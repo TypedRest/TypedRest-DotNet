@@ -93,7 +93,7 @@ namespace TypedRest.OAuth
             try
             {
                 var response = await request().ConfigureAwait(false);
-                activity?.AddTag("http.url", response.HttpResponse.RequestMessage.RequestUri.ToString())
+                activity?.AddTag("http.url", response.HttpResponse!.RequestMessage!.RequestUri!.ToString())
                          .AddTag("http.method", response.HttpResponse.RequestMessage.Method.Method)
                          .AddTag("http.status_code", ((int)response.HttpResponse.StatusCode).ToString());
 

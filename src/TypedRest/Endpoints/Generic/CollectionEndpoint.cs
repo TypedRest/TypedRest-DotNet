@@ -73,7 +73,7 @@ namespace TypedRest.Endpoints.Generic
                 if (_getElementId == null)
                     throw new InvalidOperationException($"{typeof(TEntity).Name} has no property marked with [Key] attribute.");
 
-                return this[_getElementId(entity).ToString()];
+                return this[_getElementId(entity).ToString()!];
             }
         }
 

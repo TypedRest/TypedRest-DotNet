@@ -70,7 +70,7 @@ namespace TypedRest.Endpoints
             using var activity = StartActivity(caller);
 
             var response = await request().NoContext();
-            activity?.AddTag("http.method", response.RequestMessage.Method.Method)
+            activity?.AddTag("http.method", response.RequestMessage!.Method.Method)
                      .AddTag("http.status_code", ((int)response.StatusCode).ToString());
 
             _links = await LinkExtractor.GetLinksAsync(response).NoContext();
@@ -228,7 +228,7 @@ namespace TypedRest.Endpoints
                 rel,
                 variables.GetType().GetProperties()
                          .Where(property => property.GetGetMethod() != null && property.GetIndexParameters().Length == 0)
-                         .ToDictionary(property => property.Name, property => property.GetValue(variables, null)));
+                         .ToDictionary(property => property.Name, property => property.GetValue(variables, null)!));
 
         /// <summary>
         /// Handles allowed HTTP methods and other capabilities reported by the server.

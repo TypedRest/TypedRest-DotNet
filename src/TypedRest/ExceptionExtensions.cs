@@ -1,5 +1,4 @@
 using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
@@ -15,14 +14,11 @@ namespace TypedRest
         /// <summary>
         /// Concatenates the <see cref="Exception.Message"/>s of the entire <see cref="Exception.InnerException"/> tree.
         /// </summary>
-        public static string GetFullMessage(this Exception ex)
+        public static string GetFullMessage(this Exception exception)
         {
             var builder = new StringBuilder();
-            do
-            {
-                builder.AppendLine(ex.Message);
-                ex = ex.InnerException;
-            } while (ex != null && !(ex is HttpRequestException));
+            for (Exception? current = exception; current != null; current = current.InnerException)
+                builder.AppendLine(current.Message);
             return builder.ToString();
         }
 

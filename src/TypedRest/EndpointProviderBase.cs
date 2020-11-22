@@ -16,7 +16,7 @@ namespace TypedRest
     {
         private static string ConfigDir => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            Assembly.GetEntryAssembly().GetName().Name);
+            Assembly.GetEntryAssembly()?.GetName().Name ?? "TypedRest");
 
         private static string UriFile => Path.Combine(ConfigDir, "uri");
 
@@ -44,7 +44,9 @@ namespace TypedRest
         {
             try
             {
-                string localUriFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? Directory.GetCurrentDirectory(), "uri");
+                string localUriFile = Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? Directory.GetCurrentDirectory(),
+                    "uri");
                 return File.Exists(localUriFile)
                     ? new Uri(File.ReadAllText(localUriFile, Encoding.UTF8), UriKind.Absolute)
                     : null;
@@ -152,7 +154,8 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST API.</param>
         /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
         protected virtual T NewEndpoint(Uri uri, ICredentials credentials)
-            => (T)Activator.CreateInstance(typeof(T), uri, credentials);
+            => Activator.CreateInstance(typeof(T), uri, credentials) as T
+            ?? throw new MissingMethodException($"Unable to find matching ctor({nameof(Uri)}, {nameof(ICredentials)}) on {typeof(T).Name}.");
 
         /// <summary>
         /// Instantiates a <typeparamref name="T"/> with an <see cref="Uri"/> and a token.
@@ -160,6 +163,7 @@ namespace TypedRest
         /// <param name="uri">The base URI of the REST API.</param>
         /// <param name="token">The OAuth token to present as a "Bearer" to the REST API.</param>
         protected virtual T NewEndpoint(Uri uri, string token)
-            => (T)Activator.CreateInstance(typeof(T), uri, token);
+            => Activator.CreateInstance(typeof(T), uri, token) as T
+            ?? throw new MissingMethodException($"Unable to find matching ctor({nameof(Uri)}, string) on {typeof(T).Name}.");
     }
 }

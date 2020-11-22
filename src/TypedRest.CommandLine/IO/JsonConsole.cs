@@ -10,12 +10,12 @@ namespace TypedRest.CommandLine.IO
     public class JsonConsole : IConsole
     {
         public T Read<T>()
-            => JsonConvert.DeserializeObject<T>(Console.ReadLine());
+            => JsonConvert.DeserializeObject<T>(Console.ReadLine() ?? throw new EndOfStreamException());
 
         public string Read(string prompt)
         {
             Console.Write(prompt + " ");
-            return Console.ReadLine();
+            return Console.ReadLine() ?? throw new EndOfStreamException();
         }
 
         public string ReadSecret(string prompt)
@@ -36,7 +36,7 @@ namespace TypedRest.CommandLine.IO
             try
             {
                 Console.Write(prompt + " ");
-                return Console.ReadLine();
+                return Console.ReadLine() ?? throw new EndOfStreamException();
             }
             finally
             {

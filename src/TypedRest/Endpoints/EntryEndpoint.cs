@@ -36,7 +36,10 @@ namespace TypedRest.Endpoints
                 linkExtractor ?? new AggregateLinkExtractor(new HeaderLinkExtractor(), new HalLinkExtractor()))
         {
             foreach (var mediaType in Serializer.SupportedMediaTypes)
-                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
+            {
+                if (mediaType.MediaType != null)
+                    HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
+            }
         }
 
         /// <summary>

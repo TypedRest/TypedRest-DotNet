@@ -19,7 +19,7 @@ namespace TypedRest.Http
         /// <param name="cancellationToken">Used to cancel the request.</param>
         public static Task<T> ReadAsAsync<T>(this HttpContent content, MediaTypeFormatter serializer, CancellationToken cancellationToken = default)
         {
-            if (content.Headers?.ContentType?.MediaType != null
+            if (content.Headers.ContentType?.MediaType != null
              && content.Headers.ContentType.MediaType.EndsWith("+json")
              && serializer is JsonMediaTypeFormatter)
                 content.Headers.ContentType.MediaType = "application/json";

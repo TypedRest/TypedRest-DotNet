@@ -23,7 +23,7 @@ namespace TypedRest.CommandLine.Commands.Generic
             : base(endpoint)
         {}
 
-        protected override IEndpointCommand? GetSubCommand(string name) => GetElementCommand(Endpoint[name]);
+        protected override IEndpointCommand GetSubCommand(string name) => GetElementCommand(Endpoint[name]);
 
         /// <summary>
         /// Gets an <see cref="IEndpointCommand"/> for the given <paramref name="elementEndpoint"/>.

@@ -20,23 +20,19 @@ namespace TypedRest.CommandLine
         /// </summary>
         public IConsole Console { get; set; } = new JsonConsole();
 
-        protected override Uri? RequestUri()
+        protected override Uri RequestUri()
         {
-            Uri? uri = null;
-            while (uri == null)
+            while (true)
             {
-                string input = Console.Read("Endpoint URI:");
-                if (input == null) return null;
                 try
                 {
-                    uri = new Uri(input, UriKind.Absolute);
+                    return new Uri(Console.Read("Endpoint URI:"), UriKind.Absolute);
                 }
                 catch (UriFormatException ex)
                 {
                     Console.WriteError(ex.Message);
                 }
             }
-            return uri;
         }
 
         protected override string RequestToken(Uri uri)
