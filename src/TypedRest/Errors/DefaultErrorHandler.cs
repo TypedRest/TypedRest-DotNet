@@ -19,14 +19,9 @@ namespace TypedRest.Errors
         {
             if (response.IsSuccessStatusCode) return;
 
-            string message = $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
-            string? body = null;
-
-            if (response.Content != null)
-            {
-                body = await response.Content.ReadAsStringAsync().NoContext();
-                message = ExtractJsonMessage(response, body) ?? message;
-            }
+            string? body = await response.Content.ReadAsStringAsync().NoContext();
+            string message = ExtractJsonMessage(response, body)
+                          ?? $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
 
             var exception = MapException(response.StatusCode, message);
             exception.SetHttpResponseHeaders(response.Headers);
@@ -34,23 +29,24 @@ namespace TypedRest.Errors
             throw exception;
         }
 
-        private static string? ExtractJsonMessage(HttpResponseMessage response, string body)
+        private static string? ExtractJsonMessage(HttpResponseMessage response, string? body)
         {
+            if (string.IsNullOrEmpty(body)) return null;
+
             string? mediaType = response.Content.Headers.ContentType?.MediaType;
-            if (mediaType == "application/json" || (mediaType != null && mediaType.EndsWith("+json")))
+            if (mediaType != "application/json" && (mediaType == null || !mediaType.EndsWith("+json"))) return null;
+
+            try
             {
-                try
+                var token = JToken.Parse(body);
+                if (token.Type == JTokenType.Object)
                 {
-                    var token = JToken.Parse(body);
-                    if (token.Type == JTokenType.Object)
-                    {
-                        var messageNode = token["message"] ?? token["details"];
-                        if (messageNode != null) return messageNode.ToString();
-                    }
+                    var messageNode = token["message"] ?? token["details"];
+                    if (messageNode != null) return messageNode.ToString();
                 }
-                catch (JsonException)
-                {}
             }
+            catch (JsonException)
+            {}
 
             return null;
         }

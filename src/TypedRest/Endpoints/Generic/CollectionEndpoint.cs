@@ -122,7 +122,7 @@ namespace TypedRest.Endpoints.Generic
             var elementEndpoint = response.Headers.Location == null
                 ? this[await response.Content.ReadAsAsync<TEntity>(cancellationToken)]
                 : _getElementEndpoint(this, response.Headers.Location);
-            if (response.Content != null && elementEndpoint is ICachingEndpoint caching)
+            if (elementEndpoint is ICachingEndpoint caching)
                 caching.ResponseCache = ResponseCache.From(response);
             return elementEndpoint;
         }

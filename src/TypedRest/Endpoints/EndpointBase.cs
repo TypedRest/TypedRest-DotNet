@@ -70,6 +70,10 @@ namespace TypedRest.Endpoints
             using var activity = StartActivity(caller);
 
             var response = await request().NoContext();
+
+            // ReSharper disable once ConstantNullCoalescingCondition
+            response.Content ??= new ByteArrayContent(Array.Empty<byte>());
+
             activity?.AddTag("http.method", response.RequestMessage!.Method.Method)
                      .AddTag("http.status_code", ((int)response.StatusCode).ToString());
 
@@ -235,7 +239,7 @@ namespace TypedRest.Endpoints
         /// </summary>
         protected virtual void HandleCapabilities(HttpResponseMessage response)
         {
-            if (response.Content != null)
+            if (response.Content.Headers.Allow.Count != 0)
                 _allowedMethods = new HashSet<string>(response.Content.Headers.Allow);
         }
 

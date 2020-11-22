@@ -15,7 +15,7 @@ namespace TypedRest.Links
     {
         public async Task<IReadOnlyList<Link>> GetLinksAsync(HttpResponseMessage response)
         {
-            var links = response.Content?.Headers.ContentType?.MediaType switch
+            var links = response.Content.Headers.ContentType?.MediaType switch
             {
                 "application/hal+json" => ParseJsonBody(await response.Content!.ReadAsStringAsync().NoContext()),
                 _ => Enumerable.Empty<Link>()

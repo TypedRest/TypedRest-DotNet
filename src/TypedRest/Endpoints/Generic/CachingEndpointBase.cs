@@ -60,8 +60,6 @@ namespace TypedRest.Endpoints.Generic
             else
             {
                 await HandleAsync(() => Task.FromResult(response), caller).NoContext();
-                if (response.Content == null) throw new KeyNotFoundException($"{Uri} returned no body.");
-
                 ResponseCache = ResponseCache.From(response);
                 return response.Content;
             }

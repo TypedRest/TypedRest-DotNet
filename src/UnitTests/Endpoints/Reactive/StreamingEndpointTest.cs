@@ -36,13 +36,16 @@ namespace TypedRest.Endpoints.Reactive
         public void TestErrorHandling()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict));
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict)
+                 {
+                     Content = new StringContent("{\"message\":\"my message\"}")
+                 });
 
             var observable = _endpoint.GetObservable();
             observable.Invoking(x =>
             {
                 var _ = x.ToEnumerable().ToList();
-            }).Should().Throw<InvalidOperationException>();
+            }).Should().Throw<InvalidOperationException>("my message");
         }
     }
 }

@@ -65,9 +65,7 @@ namespace TypedRest.Endpoints.Generic
 
             var content = new ObjectContent<TEntity>(entity, Serializer);
             var response = await PutContentAsync(content, cancellationToken);
-            return response.Content == null
-                ? default
-                : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
+            return await TryReadAsAsync(response, cancellationToken);
         }
 
         public bool? MergeAllowed => IsMethodAllowed(HttpMethods.Patch);
@@ -78,9 +76,7 @@ namespace TypedRest.Endpoints.Generic
 
             var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
             ResponseCache = null;
-            return response.Content == null
-                ? default
-                : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
+            return await TryReadAsAsync(response, cancellationToken);
         }
 
         public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
@@ -137,9 +133,23 @@ namespace TypedRest.Endpoints.Generic
 
             await ErrorHandler.HandleAsync(response).NoContext();
 
-            return response.Content == null
-                ? default
-                : await response.Content.ReadAsAsync<TEntity>(Serializer, cancellationToken);
+            return await TryReadAsAsync(response, cancellationToken);
+        }
+
+        private async Task<TEntity?> TryReadAsAsync(HttpResponseMessage response, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await response.Content.ReadAsAsync<TEntity?>(Serializer, cancellationToken);
+            }
+            catch (UnsupportedMediaTypeException)
+            {
+                return null;
+            }
+            catch (JsonException)
+            {
+                return null;
+            }
         }
     }
 }
