@@ -1,44 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- Project properties -->
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);1591</NoWarn>
-    <Nullable>annotations</Nullable>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <RootNamespace>TypedRest.OAuth</RootNamespace>
+    <Summary>OAuth 2.0 / OpenID Connect authentication for HttpClient</Summary>
+    <Description>Provides an HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication. This can also be used independently of the other TypedRest packages.</Description>
+    <PackageTags>OAuth;OIDC;HttpClient;DelegatingHandler</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
-    <OutputType>Library</OutputType>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="$(TargetFramework)=='netstandard2.1'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Description>Provides an HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication. This can also be used independently of the other TypedRest packages.</Description>
-    <Summary>OAuth 2.0 / OpenID Connect authentication for HttpClient</Summary>
-    <PackageTags>OAuth;OIDC;HttpClient;DelegatingHandler</PackageTags>
-    <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
-    <Authors>Bastian Eicher</Authors>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
+  <!-- Dependencies -->
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="4.4.0" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.0" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
   </ItemGroup>

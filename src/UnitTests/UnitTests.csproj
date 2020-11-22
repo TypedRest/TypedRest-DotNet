@@ -1,18 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- Project properties -->
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
-    <LangVersion>8.0</LangVersion>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <IsPackable>False</IsPackable>
     <DeterministicSourcePaths>False</DeterministicSourcePaths>
-    <Nullable>annotations</Nullable>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework)=='netcoreapp3.1'">
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Mark as unit test project -->
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <!-- Dependencies -->
+  <ItemGroup>
+    <ProjectReference Include="..\TypedRest.CommandLine\TypedRest.CommandLine.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="JUnitTestLogger" Version="1.1.0" />
@@ -20,17 +25,8 @@
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TypedRest.CommandLine\TypedRest.CommandLine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
 </Project>

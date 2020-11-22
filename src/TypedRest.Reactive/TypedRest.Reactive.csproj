@@ -1,45 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- Project properties -->
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
-    <LangVersion>8.0</LangVersion>
-    <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);1591</NoWarn>
-    <Nullable>annotations</Nullable>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <Summary>streaming with ReactiveX (Rx) for TypedRest</Summary>
+    <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest.</Description>
+    <PackageTags>REST;Client;Type-safe;Reactive;Rx;Streaming</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
-    <OutputType>Library</OutputType>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="$(TargetFramework)=='netstandard2.1'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest.</Description>
-    <Summary>streaming with ReactiveX (Rx) for TypedRest</Summary>
-    <PackageTags>REST;Client;Type-safe;Reactive;Rx;Streaming</PackageTags>
-    <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
-    <Authors>Bastian Eicher</Authors>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
+  <!-- Dependencies -->
   <ItemGroup>
     <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
