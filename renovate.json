@@ -10,7 +10,7 @@
       "automergeType": "branch"
     },
     {
-      "packagePatterns": ["SourceLink", "ValueTuple", "IdentityModel"],
+      "packagePatterns": ["gittools", "SourceLink", "ValueTuple", "IdentityModel"],
       "automerge": true,
       "automergeType": "branch"
     },
