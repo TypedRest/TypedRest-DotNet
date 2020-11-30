@@ -8,6 +8,9 @@
     <IsPackable>False</IsPackable>
     <DeterministicSourcePaths>False</DeterministicSourcePaths>
   </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework)=='net5.0'">
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
   <!-- Mark as unit test project -->
   <ItemGroup>

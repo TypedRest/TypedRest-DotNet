@@ -16,7 +16,8 @@ namespace TypedRest
         }
 
         public bool Matches(HttpRequestMessage message)
-            => message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data)
-            && message.Content.Headers.ContentType.MediaType == _mimeType;
+            => message.Content != null
+            && message.Content.ReadAsByteArrayAsync().Result.SequenceEqual(_data)
+            && message.Content.Headers.ContentType!.MediaType == _mimeType;
     }
 }

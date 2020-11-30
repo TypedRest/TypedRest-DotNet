@@ -22,10 +22,10 @@ namespace TypedRest
         public bool Matches(HttpRequestMessage message)
         {
             var content = message.Content.ReadAsMultipartAsync().Result.Contents
-                                 .Single(x => x.Headers.ContentDisposition.Name == _formField);
+                                 .Single(x => x.Headers.ContentDisposition?.Name == _formField);
             return content.ReadAsByteArrayAsync().Result.SequenceEqual(_data)
-                && content.Headers.ContentType.MediaType == _mimeType
-                && content.Headers.ContentDisposition.FileName == _fileName;
+                && content.Headers.ContentType?.MediaType == _mimeType
+                && content.Headers.ContentDisposition?.FileName == _fileName;
         }
     }
 }
