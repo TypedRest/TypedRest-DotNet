@@ -102,7 +102,7 @@ namespace TypedRest.Endpoints
                 : value;
 
         // NOTE: Always replace entire list rather than modifying it to ensure thread-safety.
-        private IReadOnlyList<Link> _links = new Link[0];
+        private IReadOnlyList<Link> _links = Array.Empty<Link>();
 
         // NOTE: Only modified during initial setup of the endpoint.
         private readonly IDictionary<string, Uri> _defaultLinks = new Dictionary<string, Uri>();
