@@ -77,13 +77,13 @@ namespace TypedRest.Endpoints.Generic
         /// </summary>
         /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">Used to cancel the request.</param>
-        /// <returns>An endpoint for the newly created entity.</returns>
+        /// <returns>An endpoint for the newly created entity; <c>null</c> if the server returned neither a "Location" header nor an entity with an ID in the response body.</returns>
         /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
         /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="InvalidOperationException"><see cref="HttpStatusCode.Conflict"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        ITask<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
+        ITask<TElementEndpoint?> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Shows whether the server has indicated that <see cref="CreateAllAllowed"/> is currently allowed.

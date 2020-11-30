@@ -210,7 +210,7 @@ namespace TypedRest.Endpoints.Generic
                 .WithContent("{\"id\":0,\"name\":\"test\"}")
                 .Respond(JsonMime, "{\"id\":5,\"name\":\"test\"}");
 
-            var element = await _endpoint.CreateAsync(new MockEntity(0, "test"));
+            var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
             element.Response.Should().Be(new MockEntity(5, "test"));
             element.Uri.Should().Be(new Uri("http://localhost/endpoint/5"));
         }
@@ -226,9 +226,20 @@ namespace TypedRest.Endpoints.Generic
                      Headers = {Location = new Uri("/endpoint/new", UriKind.Relative)}
                  });
 
-            var element = await _endpoint.CreateAsync(new MockEntity(0, "test"));
+            var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
             element.Response.Should().Be(new MockEntity(5, "test"));
             element.Uri.Should().Be(new Uri("http://localhost/endpoint/new"));
+        }
+
+        [Fact]
+        public async Task TestCreateNull()
+        {
+            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
+                .WithContent("{\"id\":0,\"name\":\"test\"}")
+                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Accepted));
+
+            var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
+            element.Should().BeNull();
         }
 
         [Fact]

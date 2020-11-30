@@ -13,7 +13,7 @@ namespace TypedRest.Endpoints.Reactive
     /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
     public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : CollectionEndpoint<TEntity, TElementEndpoint>, IStreamingCollectionEndpoint<TEntity, TElementEndpoint>
         where TEntity : class
-        where TElementEndpoint : IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new streaming collection endpoint.

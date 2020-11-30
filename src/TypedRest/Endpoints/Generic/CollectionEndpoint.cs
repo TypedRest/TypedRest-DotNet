@@ -17,7 +17,7 @@ namespace TypedRest.Endpoints.Generic
     /// <typeparam name="TElementEndpoint">The type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
     public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
         where TEntity : class
-        where TElementEndpoint : IElementEndpoint<TEntity>
+        where TElementEndpoint : class, IElementEndpoint<TEntity>
     {
         /// <summary>
         /// Creates a new element collection endpoint.
@@ -113,17 +113,35 @@ namespace TypedRest.Endpoints.Generic
 
         public bool? CreateAllowed => IsMethodAllowed(HttpMethod.Post);
 
-        public virtual async ITask<TElementEndpoint> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async ITask<TElementEndpoint?> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
-            var elementEndpoint = response.Headers.Location == null
-                ? this[await response.Content.ReadAsAsync<TEntity>(cancellationToken)]
-                : _getElementEndpoint(this, response.Headers.Location);
+            TElementEndpoint elementEndpoint;
+            if (response.Headers.Location == null)
+            {
+                try
+                {
+                    // Infer URL from entity ID in response body
+                    elementEndpoint = this[await response.Content.ReadAsAsync<TEntity>(cancellationToken)];
+                }
+                catch
+                {
+                    // No element endpoint
+                    return null;
+                }
+            }
+            else
+            {
+                // Explicit element endpoint URL from "Location" header
+                elementEndpoint = _getElementEndpoint(this, response.Headers.Location);
+            }
+
             if (elementEndpoint is ICachingEndpoint caching)
                 caching.ResponseCache = ResponseCache.From(response);
+
             return elementEndpoint;
         }
 

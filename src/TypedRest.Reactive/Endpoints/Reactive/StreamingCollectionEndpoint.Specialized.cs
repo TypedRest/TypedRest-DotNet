@@ -36,7 +36,7 @@ namespace TypedRest.Endpoints.Reactive
         IElementEndpoint<TEntity> ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>.this[TEntity entity]
             => this[entity];
 
-        ITask<IElementEndpoint<TEntity>> ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>.CreateAsync(TEntity entity, CancellationToken cancellationToken)
+        ITask<IElementEndpoint<TEntity>?> ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>.CreateAsync(TEntity entity, CancellationToken cancellationToken)
             => CreateAsync(entity, cancellationToken);
     }
 }
