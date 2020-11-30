@@ -81,7 +81,7 @@ namespace TypedRest.OAuth
             return response.TokenEndpoint;
         }
 
-        private static readonly ActivitySource _activitySource = new ActivitySource("TypedRest.OAuth");
+        private static readonly ActivitySource _activitySource = new("TypedRest.OAuth");
 
         private static async Task<TResponse> HandleAsync<TResponse>(Func<Task<TResponse>> request, [CallerMemberName] string caller = "unknown")
             where TResponse : ProtocolResponse

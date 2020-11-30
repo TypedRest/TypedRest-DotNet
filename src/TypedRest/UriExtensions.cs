@@ -44,7 +44,7 @@ namespace TypedRest
         /// Debug.Assert(new Uri("http://myhost/path").Join("./subpath") == new Uri("http://myhost/path/subpath"));
         /// </code></example>
         public static Uri Join(this Uri baseUri, string relativeUri)
-            => new Uri(relativeUri.StartsWith("./") ? baseUri.EnsureTrailingSlash() : baseUri, relativeUri);
+            => new(relativeUri.StartsWith("./") ? baseUri.EnsureTrailingSlash() : baseUri, relativeUri);
 
         /// <summary>
         /// Resolves a relative URI using this URI as the base.

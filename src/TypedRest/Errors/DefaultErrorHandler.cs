@@ -59,11 +59,8 @@ namespace TypedRest.Errors
                 HttpStatusCode.BadRequest => new InvalidDataException(message, innerException),
                 HttpStatusCode.Unauthorized => new AuthenticationException(message, innerException),
                 HttpStatusCode.Forbidden => new UnauthorizedAccessException(message, innerException),
-                HttpStatusCode.NotFound => new KeyNotFoundException(message, innerException),
-                HttpStatusCode.Gone => new KeyNotFoundException(message, innerException),
-                HttpStatusCode.Conflict => throw new InvalidOperationException(message, innerException),
-                HttpStatusCode.PreconditionFailed => new InvalidOperationException(message, innerException),
-                HttpStatusCode.RequestedRangeNotSatisfiable => new InvalidOperationException(message, innerException),
+                HttpStatusCode.NotFound or HttpStatusCode.Gone => new KeyNotFoundException(message, innerException),
+                HttpStatusCode.Conflict or HttpStatusCode.PreconditionFailed or HttpStatusCode.RequestedRangeNotSatisfiable => new InvalidOperationException(message, innerException),
                 HttpStatusCode.RequestTimeout => new TimeoutException(message, innerException),
                 _ => innerException
             };

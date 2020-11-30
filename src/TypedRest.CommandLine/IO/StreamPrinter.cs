@@ -9,7 +9,7 @@ namespace TypedRest.CommandLine.IO
     /// </summary>
     public class StreamPrinter<TEntity> : IObserver<TEntity>
     {
-        private readonly TaskCompletionSource<bool> _quitEvent = new TaskCompletionSource<bool>();
+        private readonly TaskCompletionSource<bool> _quitEvent = new();
         private readonly IConsole _console;
 
         /// <summary>

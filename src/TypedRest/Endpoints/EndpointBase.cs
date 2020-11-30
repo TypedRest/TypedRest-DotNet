@@ -84,7 +84,7 @@ namespace TypedRest.Endpoints
             return response;
         }
 
-        private static readonly ActivitySource _activitySource = new ActivitySource("TypedRest");
+        private static readonly ActivitySource _activitySource = new("TypedRest");
 
         /// <summary>
         /// Starts a new <see cref="Activity"/> if there is any listener registered (e.g. OpenTelemetry), returns <c>null</c> otherwise.

@@ -112,7 +112,7 @@ namespace TypedRest.Endpoints.Generic
 
         public async Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default)
         {
-            if (!(Serializer is JsonMediaTypeFormatter serializer))
+            if (Serializer is not JsonMediaTypeFormatter serializer)
                 throw new NotSupportedException($"JSON Patch can only be used if the endpoint's serializer is a {nameof(JsonMediaTypeFormatter)}.");
 
             using var activity = StartActivity();

@@ -10,8 +10,8 @@ namespace TypedRest.CommandLine.Commands
         where TCommand : EndpointCommand<TEndpoint>
         where TEndpoint : class, IEndpoint
     {
-        protected readonly Mock<TEndpoint> EndpointMock = new Mock<TEndpoint>();
-        protected readonly Mock<IConsole> ConsoleMock = new Mock<IConsole>();
+        protected readonly Mock<TEndpoint> EndpointMock = new();
+        protected readonly Mock<IConsole> ConsoleMock = new();
 
         private readonly TCommand _command;
 

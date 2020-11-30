@@ -32,8 +32,7 @@ namespace TypedRest.CommandLine.Commands.Generic
 
             switch (args[0].ToLowerInvariant())
             {
-                case "set":
-                case "update": // deprecated
+                case "set" or "update": // deprecated
                 {
                     var updatedEntity = InputEntity(args.Skip(1).ToList());
                     var result = await Endpoint.SetAsync(updatedEntity, cancellationToken);

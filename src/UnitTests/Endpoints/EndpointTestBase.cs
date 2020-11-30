@@ -8,7 +8,7 @@ namespace TypedRest.Endpoints
     {
         public const string JsonMime = "application/json";
 
-        protected readonly MockHttpMessageHandler Mock = new MockHttpMessageHandler();
+        protected readonly MockHttpMessageHandler Mock = new();
         protected readonly IEndpoint EntryEndpoint;
 
         protected EndpointTestBase()

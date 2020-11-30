@@ -23,7 +23,7 @@ namespace TypedRest.CommandLine.Commands
         {}
 
         private readonly Dictionary<string, Func<TEndpoint, IEndpointCommand>> _commandProviders =
-            new Dictionary<string, Func<TEndpoint, IEndpointCommand>>(StringComparer.OrdinalIgnoreCase);
+            new(StringComparer.OrdinalIgnoreCase);
 
         #region Enumerable
         public IEnumerator<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>> GetEnumerator() => _commandProviders.GetEnumerator();
