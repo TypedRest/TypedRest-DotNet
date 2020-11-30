@@ -54,7 +54,7 @@ namespace TypedRest.Endpoints
             : this(new HttpClient(), uri, serializer, errorHandler, linkExtractor)
         {
             var basicAuthCredentials = credentials?.GetCredential(Uri, authType: "Basic");
-            string? userInfo = (basicAuthCredentials != null)
+            string userInfo = (basicAuthCredentials != null)
                 ? basicAuthCredentials.UserName + ":" + basicAuthCredentials.Password
                 : uri.UserInfo;
 
