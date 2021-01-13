@@ -71,7 +71,7 @@ namespace TypedRest.OAuth
             if (response.IsError) throw new AuthenticationException(response.Error);
             _accessToken = new AccessToken(
                 response.AccessToken,
-                DateTime.Now.AddSeconds(response.ExpiresIn - 15 /* buffer time */));
+                DateTime.Now + TimeSpan.FromSeconds(response.ExpiresIn) - _oAuthOptions.TokenLifetimeBuffer);
         }
 
         private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)

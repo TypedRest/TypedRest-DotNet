@@ -31,5 +31,10 @@ namespace TypedRest.OAuth
         /// The audience to request an authentication token for.
         /// </summary>
         public string? Audience { get; set; }
+
+        /// <summary>
+        /// How long before a token expires to request a new one.
+        /// </summary>
+        public TimeSpan TokenLifetimeBuffer { get; set; } = TimeSpan.FromMinutes(1);
     }
 }
