@@ -61,10 +61,9 @@ namespace TypedRest.OAuth
                 Address = await DiscoverTokenEndpointAsync(cancellationToken),
                 ClientId = _oAuthOptions.ClientId,
                 ClientSecret = _oAuthOptions.ClientSecret,
-                Scope = _oAuthOptions.Scope,
+                Scope = _oAuthOptions.Scope
             };
-            if (_oAuthOptions.Audience != null)
-                request.Parameters[OidcConstants.TokenRequest.Audience] = _oAuthOptions.Audience;
+            request.Parameters.AddOptional(OidcConstants.TokenRequest.Audience, _oAuthOptions.Audience);
 
             var response = await HandleAsync(() => _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken)).ConfigureAwait(false);
 
