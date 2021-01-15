@@ -57,10 +57,6 @@ namespace TypedRest.CommandLine
                         _endpointProvider.ResetAuthentication();
                         return await ExecAsync();
 
-                    case 5:
-                        _endpointProvider.ResetUri();
-                        return await ExecAsync();
-
                     default:
                         return exitCode;
                 }

@@ -1,6 +1,6 @@
 using TypedRest.Endpoints;
 
-namespace TypedRest
+namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Builds <see cref="IEndpoint"/> instances.
@@ -9,11 +9,6 @@ namespace TypedRest
     public interface IEndpointProvider<out T>
         where T : IEndpoint
     {
-        /// <summary>
-        /// Resets any stored endpoint URI information.
-        /// </summary>
-        void ResetUri();
-
         /// <summary>
         /// Clears any cached authentication information.
         /// </summary>

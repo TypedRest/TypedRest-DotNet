@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using TypedRest.CommandLine.IO;
 using TypedRest.Endpoints;
 
@@ -10,8 +9,7 @@ namespace TypedRest.CommandLine
     /// <summary>
     /// Builds <see cref="EntryEndpoint"/>s using config files, interactive authentication, OAuth tokens, etc.
     /// </summary>
-    /// <typeparam name="T">The type of entry endpoint created. Must have constructors with the following signatures: (<see cref="Uri"/>, <see cref="ICredentials"/>) for HTTP Basic Auth and (<see cref="Uri"/>, <see cref="string"/>) for OAuth token.
-    /// </typeparam>
+    /// <typeparam name="T">The type of entry endpoint to be created. Must have a constructor with the following signature: (<see cref="Uri"/>)</typeparam>
     public class CliEndpointProvider<T> : EndpointProviderBase<T>
         where T : EntryEndpoint
     {
@@ -49,7 +47,7 @@ namespace TypedRest.CommandLine
         {
             if (!Environment.UserInteractive) return;
 
-            var endpoint = NewEndpoint(uri, new NetworkCredential());
+            var endpoint = NewEndpoint(uri);
             try
             {
                 Process.Start(endpoint.Link("token-provider").AbsoluteUri);

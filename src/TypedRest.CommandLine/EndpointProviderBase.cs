@@ -1,29 +1,29 @@
 using System;
 using System.IO;
-using System.Net;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using TypedRest.Endpoints;
 
-namespace TypedRest
+namespace TypedRest.CommandLine
 {
     /// <summary>
     /// Builds <see cref="EntryEndpoint"/>s using config files, interactive authentication, OAuth tokens, etc.
     /// </summary>
-    /// <typeparam name="T">The type of entry endpoint created. Must have a constructors with the following signatures: (<see cref="Uri"/>, <see cref="ICredentials"/>) for HTTP Basic Auth and (<see cref="Uri"/>, <see cref="string"/>) for OAuth token.</typeparam>
+    /// <typeparam name="T">The type of entry endpoint to be created. Must have a constructor with the following signature: (<see cref="Uri"/>)</typeparam>
     public abstract class EndpointProviderBase<T> : IEndpointProvider<T>
         where T : EntryEndpoint
     {
-        private static string ConfigDir => Path.Combine(
+        protected virtual string ConfigDir => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             Assembly.GetEntryAssembly()?.GetName().Name ?? "TypedRest");
 
-        private static string UriFile => Path.Combine(ConfigDir, "uri");
+        private string UriFile => Path.Combine(ConfigDir, "uri");
 
         /// <summary>
         /// Gets an URI and stores it.
         /// </summary>
-        private Uri GetUri()
+        protected virtual Uri GetUri()
         {
             var uri = GetLocalUri() ?? GetStoredUri();
             if (uri != null) return uri;
@@ -40,7 +40,7 @@ namespace TypedRest
         /// Gets an endpoint URI placed in a file next to the executable.
         /// </summary>
         /// <returns>The stored URI or <c>null</c> if none exists.</returns>
-        private Uri? GetLocalUri()
+        private static Uri? GetLocalUri()
         {
             try
             {
@@ -81,19 +81,14 @@ namespace TypedRest
         /// <returns>The endpoint URI or <c>null</c> if it cannot be requested.</returns>
         protected abstract Uri? RequestUri();
 
-        public void ResetUri()
-        {
-            if (File.Exists(UriFile)) File.Delete(UriFile);
-        }
-
-        private string TokenCacheFile => Path.Combine(ConfigDir, "token");
+        protected virtual string TokenCacheFile => Path.Combine(ConfigDir, "token");
 
         /// <summary>
         /// Gets an OAuth token and caches it.
         /// </summary>
         private string GetToken(Uri uri)
         {
-            var token = GetCachedToken();
+            string? token = GetCachedToken();
             if (token != null) return token;
 
             token = RequestToken(uri);
@@ -128,42 +123,23 @@ namespace TypedRest
 
         public T Build()
         {
-            var uri = GetUri();
-            var credentials = ExtractCredentials(ref uri);
+            var endpoint = NewEndpoint(GetUri());
 
-            return (credentials == null)
-                ? NewEndpoint(uri, GetToken(uri))
-                : NewEndpoint(uri, credentials);
-        }
+            if (string.IsNullOrEmpty(endpoint.Uri.UserInfo))
+            {
+                string token = GetToken(endpoint.Uri);
+                endpoint.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
 
-        private static ICredentials? ExtractCredentials(ref Uri uri)
-        {
-            var builder = new UriBuilder(uri);
-            if (string.IsNullOrEmpty(builder.UserName)) return null;
-
-            var credentials = new NetworkCredential(builder.UserName, builder.Password);
-            builder.UserName = "";
-            builder.Password = "";
-            uri = builder.Uri;
-            return credentials;
+            return endpoint;
         }
 
         /// <summary>
-        /// Instantiates a <typeparamref name="T"/> with an <see cref="Uri"/> and <see cref="ICredentials"/>.
+        /// Instantiates a <typeparamref name="T"/>.
         /// </summary>
         /// <param name="uri">The base URI of the REST API.</param>
-        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
-        protected virtual T NewEndpoint(Uri uri, ICredentials credentials)
-            => Activator.CreateInstance(typeof(T), uri, credentials) as T
-            ?? throw new MissingMethodException($"Unable to find matching ctor({nameof(Uri)}, {nameof(ICredentials)}) on {typeof(T).Name}.");
-
-        /// <summary>
-        /// Instantiates a <typeparamref name="T"/> with an <see cref="Uri"/> and a token.
-        /// </summary>
-        /// <param name="uri">The base URI of the REST API.</param>
-        /// <param name="token">The OAuth token to present as a "Bearer" to the REST API.</param>
-        protected virtual T NewEndpoint(Uri uri, string token)
-            => Activator.CreateInstance(typeof(T), uri, token) as T
-            ?? throw new MissingMethodException($"Unable to find matching ctor({nameof(Uri)}, string) on {typeof(T).Name}.");
+        protected virtual T NewEndpoint(Uri uri)
+            => Activator.CreateInstance(typeof(T), uri) as T
+            ?? throw new MissingMethodException($"Unable to find matching constructor {typeof(T).Name}({nameof(Uri)}).");
     }
 }
