@@ -5,10 +5,10 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypedRest.Errors;
+using TypedRest.Http;
 using TypedRest.Links;
 using TypedRest.Serializers;
 
@@ -46,23 +46,27 @@ namespace TypedRest.Endpoints
         /// Creates a new entry endpoint.
         /// </summary>
         /// <param name="uri">The base URI of the REST API.</param>
-        /// <param name="credentials">Optional HTTP Basic Auth credentials used to authenticate against the REST API.</param>
+        /// <param name="credentials">Optional HTTP Basic authentication credentials used to authenticate against the REST API.</param>
         /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
         /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
         /// <param name="linkExtractor">Detects links in HTTP responses. Leave unset for default implementation.</param>
-        public EntryEndpoint(Uri uri, ICredentials? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
+        public EntryEndpoint(Uri uri, NetworkCredential? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
             : this(new HttpClient(), uri, serializer, errorHandler, linkExtractor)
         {
-            var basicAuthCredentials = credentials?.GetCredential(Uri, authType: "Basic");
-            string userInfo = (basicAuthCredentials != null)
-                ? basicAuthCredentials.UserName + ":" + basicAuthCredentials.Password
-                : uri.UserInfo;
+            credentials ??= ExtractCredentials(uri);
+            if (credentials != null)
+                HttpClient.AddBasicAuth(credentials);
+        }
 
-            if (!string.IsNullOrEmpty(userInfo))
-            {
-                HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1").GetBytes(userInfo)));
-            }
+        /// <summary>
+        /// Extracts credentials from user info in URI if set.
+        /// </summary>
+        private static NetworkCredential? ExtractCredentials(Uri uri)
+        {
+            var builder = new UriBuilder(uri);
+            return string.IsNullOrEmpty(builder.UserName)
+                ? null
+                : new NetworkCredential(builder.UserName, builder.Password);
         }
 
         /// <summary>

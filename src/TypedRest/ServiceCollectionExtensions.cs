@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using TypedRest.Endpoints;
+using TypedRest.Http;
 
 namespace TypedRest
 {
@@ -42,5 +44,31 @@ namespace TypedRest
             where TInterface : class
             where TEndpoint : EntryEndpoint, TInterface
             => services.AddHttpClient<TInterface, TEndpoint>(client => client.BaseAddress = uri);
+
+        /// <summary>
+        /// Adds HTTP Basic authentication.
+        /// </summary>
+        /// <param name="builder">The builder to apply the configuration to.</param>
+        /// <param name="configureCredentials">A delegate that is used to configure <see cref="NetworkCredential"/>.</param>
+        public static IHttpClientBuilder AddBasicAuth(this IHttpClientBuilder builder, Action<NetworkCredential> configureCredentials)
+            => builder.ConfigureHttpClient(httpClient =>
+            {
+                var credentials = new NetworkCredential();
+                configureCredentials(credentials);
+                httpClient.AddBasicAuth(credentials);
+            });
+
+        /// <summary>
+        /// Adds HTTP Basic authentication.
+        /// </summary>
+        /// <param name="builder">The builder to apply the configuration to.</param>
+        /// <param name="credentials">A credential provider. Will be queried using <see cref="HttpClient.BaseAddress"/> as the uri and "Basic" as the authType.</param>
+        public static IHttpClientBuilder AddBasicAuth(this IHttpClientBuilder builder, ICredentials credentials)
+            => builder.ConfigureHttpClient(httpClient =>
+            {
+                var networkCredential = credentials.GetCredential(httpClient.BaseAddress ?? throw new InvalidOperationException("HttpClient.BaseAddress must be set."), "Basic");
+                if (networkCredential != null)
+                    httpClient.AddBasicAuth(networkCredential);
+            });
     }
 }
