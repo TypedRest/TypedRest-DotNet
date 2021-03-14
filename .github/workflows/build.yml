@@ -11,7 +11,7 @@ jobs:
           fetch-depth: 0
       - uses: gittools/actions/gitversion/setup@v0.9.9
         with:
-          versionSpec: '5.5.x'
+          versionSpec: '5.6.x'
       - uses: gittools/actions/gitversion/execute@v0.9.9
         id: gitversion
       - uses: actions/cache@v2
@@ -75,7 +75,7 @@ jobs:
           fetch-depth: 0
       - uses: gittools/actions/gitversion/setup@v0.9.9
         with:
-          versionSpec: '5.5.x'
+          versionSpec: '5.6.x'
       - uses: gittools/actions/gitversion/execute@v0.9.9
         id: gitversion
       - uses: actions/setup-dotnet@v1
