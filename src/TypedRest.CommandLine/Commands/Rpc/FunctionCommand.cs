@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using TypedRest.Endpoints.Rpc;
 
 namespace TypedRest.CommandLine.Commands.Rpc
@@ -29,7 +28,7 @@ namespace TypedRest.CommandLine.Commands.Rpc
         /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-            => (args.Count == 0) ? Console.Read<TEntity>() : JsonConvert.DeserializeObject<TEntity>(args[0]);
+            => Input<TEntity>(args);
 
         /// <summary>
         /// Outputs a <typeparamref name="TResult"/> to the user via the console.

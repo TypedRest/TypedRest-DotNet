@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using TypedRest.CommandLine.IO;
 using TypedRest.Endpoints;
 
@@ -55,5 +56,15 @@ namespace TypedRest.CommandLine.Commands
         /// <param name="cancellationToken">Used to cancel the request.</param>
         protected virtual Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
             => throw new ArgumentException("Unknown command: " + args[0]);
+
+        /// <summary>
+        /// Reads an input object (usually in JSON format) either from the command-line or stdin.
+        /// </summary>
+        /// <param name="args">The command-line to check for input data.</param>
+        /// <typeparam name="T">The type of object to read.</typeparam>
+        protected virtual T Input<T>(IReadOnlyList<string> args)
+            => (args.Count == 0)
+                ? Console.Read<T>()
+                : JsonConvert.DeserializeObject<T>(args[0]);
     }
 }

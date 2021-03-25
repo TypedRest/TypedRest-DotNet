@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.CommandLine.Commands.Generic
@@ -81,13 +80,13 @@ namespace TypedRest.CommandLine.Commands.Generic
         /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
         protected virtual TEntity InputEntity(IReadOnlyList<string> args)
-            => (args.Count == 0) ? Console.Read<TEntity>() : JsonConvert.DeserializeObject<TEntity>(args[0]);
+            => Input<TEntity>(args);
 
         /// <summary>
         /// Acquires a <typeparamref name="TEntity"/> from the user, e.g. by parsing the <paramref name="args"/> or via JSON on the console.
         /// </summary>
         protected virtual IEnumerable<TEntity> InputEntities(IReadOnlyList<string> args)
-            => (args.Count == 0) ? Console.Read<List<TEntity>>() : JsonConvert.DeserializeObject<List<TEntity>>(args[0]);
+            => Input<List<TEntity>>(args);
 
         /// <summary>
         /// Outputs a collection of <typeparamref name="TEntity"/>s to the user, e.g., via <see cref="object.ToString"/> on the console.
