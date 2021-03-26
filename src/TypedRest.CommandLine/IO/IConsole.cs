@@ -11,7 +11,7 @@ namespace TypedRest.CommandLine.IO
         /// Reads an input object (usually in JSON format).
         /// </summary>
         /// <typeparam name="T">The type of object to read.</typeparam>
-        T Read<T>();
+        T? Read<T>();
 
         /// <summary>
         /// Reads a text input.

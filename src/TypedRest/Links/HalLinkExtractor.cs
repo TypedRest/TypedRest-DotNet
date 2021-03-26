@@ -66,7 +66,7 @@ namespace TypedRest.Links
             var templated = obj["templated"];
             return new(
                 rel,
-                href.Value<string>(),
+                href.Value<string>() ?? throw new FormatException("Link href must not be null."),
                 (title?.Type == JTokenType.String) ? title.Value<string>() : null,
                 templated?.Type == JTokenType.Boolean && templated.Value<bool>());
         }

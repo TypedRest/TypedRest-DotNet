@@ -63,8 +63,9 @@ namespace TypedRest.CommandLine.Commands
         /// <param name="args">The command-line to check for input data.</param>
         /// <typeparam name="T">The type of object to read.</typeparam>
         protected virtual T Input<T>(IReadOnlyList<string> args)
-            => (args.Count == 0)
-                ? Console.Read<T>()
-                : JsonConvert.DeserializeObject<T>(args[0]);
+            => ((args.Count == 0)
+                   ? Console.Read<T>()
+                   : JsonConvert.DeserializeObject<T>(args[0]))
+            ?? throw new InvalidOperationException($"Expected {typeof(T)} but got null as input");
     }
 }

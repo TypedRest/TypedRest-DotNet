@@ -9,7 +9,7 @@ namespace TypedRest.CommandLine.IO
     /// </summary>
     public class JsonConsole : IConsole
     {
-        public T Read<T>()
+        public T? Read<T>()
             => JsonConvert.DeserializeObject<T>(Console.ReadLine() ?? throw new EndOfStreamException());
 
         public string Read(string prompt)
