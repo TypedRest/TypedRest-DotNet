@@ -64,7 +64,7 @@ namespace TypedRest.Links
             var href = obj["href"] ?? throw new FormatException("The link header is lacking the mandatory href.");
             var title = obj["title"];
             var templated = obj["templated"];
-            return new Link(
+            return new(
                 rel,
                 href.Value<string>(),
                 (title?.Type == JTokenType.String) ? title.Value<string>() : null,

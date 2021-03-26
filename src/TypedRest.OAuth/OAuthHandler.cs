@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
@@ -34,7 +33,7 @@ namespace TypedRest.OAuth
             _oAuthOptions = oAuthOptions;
 
             if (innerHandler != null) InnerHandler = innerHandler;
-            _httpClient = new Lazy<HttpClient>(() => new HttpClient(InnerHandler ?? new HttpClientHandler()));
+            _httpClient = new(() => new HttpClient(InnerHandler ?? new HttpClientHandler()));
         }
 
         private AccessToken? _accessToken;
@@ -69,7 +68,7 @@ namespace TypedRest.OAuth
 
             if (response.Exception != null) throw response.Exception;
             if (response.IsError) throw new AuthenticationException(response.Error);
-            _accessToken = new AccessToken(
+            _accessToken = new(
                 response.AccessToken,
                 DateTime.Now + TimeSpan.FromSeconds(response.ExpiresIn) - _oAuthOptions.TokenLifetimeBuffer);
         }
@@ -116,7 +115,7 @@ namespace TypedRest.OAuth
 
         private async Task<HttpResponseMessage> SendAuthenticatedAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken!.Value);
+            request.Headers.Authorization = new("Bearer", _accessToken!.Value);
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
     }

@@ -105,8 +105,8 @@ namespace TypedRest.Endpoints
         private IReadOnlyList<Link> _links = Array.Empty<Link>();
 
         // NOTE: Only modified during initial setup of the endpoint.
-        private readonly IDictionary<string, Uri> _defaultLinks = new Dictionary<string, Uri>();
-        private readonly IDictionary<string, UriTemplate> _defaultLinkTemplates = new Dictionary<string, UriTemplate>();
+        private readonly Dictionary<string, Uri> _defaultLinks = new();
+        private readonly Dictionary<string, UriTemplate> _defaultLinkTemplates = new();
 
         /// <summary>
         /// Registers one or more default links for a specific relation type.
@@ -136,7 +136,7 @@ namespace TypedRest.Endpoints
         public void SetDefaultLinkTemplate(string rel, string? href)
         {
             if (string.IsNullOrEmpty(href)) _defaultLinkTemplates.Remove(rel);
-            else _defaultLinkTemplates[rel] = new UriTemplate(href);
+            else _defaultLinkTemplates[rel] = new(href);
         }
 
         public IReadOnlyList<(Uri uri, string? title)> GetLinks(string rel)
@@ -240,11 +240,11 @@ namespace TypedRest.Endpoints
         protected virtual void HandleCapabilities(HttpResponseMessage response)
         {
             if (response.Content.Headers.Allow.Count != 0)
-                _allowedMethods = new HashSet<string>(response.Content.Headers.Allow);
+                _allowedMethods = new(response.Content.Headers.Allow);
         }
 
         // NOTE: Always replace entire set rather than modifying it to ensure thread-safety.
-        private ISet<string> _allowedMethods = new HashSet<string>();
+        private HashSet<string> _allowedMethods = new();
 
         /// <summary>
         /// Shows whether the server has indicated that a specific HTTP method is currently allowed.

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
@@ -120,11 +119,11 @@ namespace TypedRest.Endpoints.Generic
             var patch = new JsonPatchDocument<TEntity>(new List<Operation<TEntity>>(), serializer.SerializerSettings.ContractResolver);
             patchAction(patch);
 
-            var response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethods.Patch, Uri)
+            var response = await HttpClient.SendAsync(new(HttpMethods.Patch, Uri)
             {
                 Content = new StringContent(JsonConvert.SerializeObject(patch))
                 {
-                    Headers = {ContentType = new MediaTypeHeaderValue("application/json-patch+json")}
+                    Headers = {ContentType = new("application/json-patch+json")}
                 }
             }, cancellationToken).NoContext();
 

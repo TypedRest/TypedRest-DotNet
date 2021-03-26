@@ -102,11 +102,11 @@ namespace TypedRest.Endpoints.Generic
         {
             var request = new HttpRequestMessage(HttpMethod.Get, Uri)
             {
-                Headers = {Range = new RangeHeaderValue {Ranges = {range}, Unit = RangeUnit}}
+                Headers = {Range = new() {Ranges = {range}, Unit = RangeUnit}}
             };
 
             var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken)).NoContext();
-            return new PartialResponse<TEntity>(
+            return new(
                 elements: await response.Content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext(),
                 range: response.Content.Headers.ContentRange);
         }

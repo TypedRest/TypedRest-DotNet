@@ -19,7 +19,7 @@ namespace TypedRest.Endpoints
 
         public CustomEndpointTest()
         {
-            _endpoint = new CustomEndpoint(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace TypedRest.Endpoints
         public async Task TestLink()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -67,7 +67,7 @@ namespace TypedRest.Endpoints
         public void TestLinkLazy()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -83,7 +83,7 @@ namespace TypedRest.Endpoints
         public async Task TestLinkAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -100,7 +100,7 @@ namespace TypedRest.Endpoints
         public void TestLinkException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers = {{"Link", "<a>; rel=target1"}}
                  });
@@ -112,7 +112,7 @@ namespace TypedRest.Endpoints
         public async Task TestGetLinks()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -132,7 +132,7 @@ namespace TypedRest.Endpoints
         public async Task TestGetLinksEscaping()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -159,7 +159,7 @@ namespace TypedRest.Endpoints
         public async Task TestLinkTemplate()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -176,7 +176,7 @@ namespace TypedRest.Endpoints
         public async Task TestLinkTemplateResolve()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -193,7 +193,7 @@ namespace TypedRest.Endpoints
         public async Task TestLinkTemplateResolveAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -210,7 +210,7 @@ namespace TypedRest.Endpoints
         public async Task TestLinkTemplateResolveQuery()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -227,7 +227,7 @@ namespace TypedRest.Endpoints
         public void TestLinkTemplateException()
         {
             Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent)
+                .Respond(_ => new(HttpStatusCode.NoContent)
                  {
                      Headers =
                      {
@@ -291,7 +291,7 @@ namespace TypedRest.Endpoints
         public void TestErrorHandlingWithNoContent()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict));
+                .Respond(_ => new(HttpStatusCode.Conflict));
 
             _endpoint.Awaiting(x => x.GetAsync())
                      .Should().Throw<InvalidOperationException>()
@@ -302,7 +302,7 @@ namespace TypedRest.Endpoints
         public void TestErrorHandlingWithMessage()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict)
+                .Respond(_ => new(HttpStatusCode.Conflict)
                  {
                      Content = new StringContent("{\"message\":\"my message\"}")
                      {
@@ -319,7 +319,7 @@ namespace TypedRest.Endpoints
         public void TestErrorHandlingWithArray()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict)
+                .Respond(_ => new(HttpStatusCode.Conflict)
                  {
                      Content = new StringContent("[{\"message\":\"my message\"}]")
                      {
@@ -336,7 +336,7 @@ namespace TypedRest.Endpoints
         public void TestErrorHandlingWithUnknownContentType()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
+                .Respond(_ => new(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
 
             _endpoint.Awaiting(x => x.GetAsync())
                      .Should().Throw<InvalidOperationException>()

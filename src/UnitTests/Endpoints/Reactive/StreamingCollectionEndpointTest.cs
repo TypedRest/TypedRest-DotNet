@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Text;
 using FluentAssertions;
@@ -13,11 +12,11 @@ namespace TypedRest.Endpoints.Reactive
     [Collection("Endpoint")]
     public class StreamingCollectionEndpointTest : EndpointTestBase
     {
-        private readonly IStreamingCollectionEndpoint<MockEntity> _endpoint;
+        private readonly StreamingCollectionEndpoint<MockEntity> _endpoint;
 
         public StreamingCollectionEndpointTest()
         {
-            _endpoint = new StreamingCollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]
@@ -28,7 +27,7 @@ namespace TypedRest.Endpoints.Reactive
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 0, to: 1) {Unit = "elements"}}
                      });
 
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
@@ -36,7 +35,7 @@ namespace TypedRest.Endpoints.Reactive
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 2, to: 2, length: 3) {Unit = "elements"}}
                      });
 
             var observable = _endpoint.GetObservable();
@@ -54,7 +53,7 @@ namespace TypedRest.Endpoints.Reactive
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 2, to: 2, length: 3) {Unit = "elements"}}
                      });
 
             var observable = _endpoint.GetObservable(startIndex: 2);
@@ -69,7 +68,7 @@ namespace TypedRest.Endpoints.Reactive
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":7,\"name\":\"test3\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2, length: 3) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 2, to: 2, length: 3) {Unit = "elements"}}
                      });
 
             var observable = _endpoint.GetObservable(startIndex: -1);

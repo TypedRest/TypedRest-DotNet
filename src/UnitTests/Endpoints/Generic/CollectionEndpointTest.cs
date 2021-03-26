@@ -18,7 +18,7 @@ namespace TypedRest.Endpoints.Generic
 
         public CollectionEndpointTest()
         {
-            _endpoint = new CollectionEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestGetByIdWithLinkHeaderRelative()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
                      Headers =
@@ -49,7 +49,7 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestGetByIdWithLinkHeaderAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
                      Headers =
@@ -71,7 +71,7 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestGetByEntityWithLinkHeaderRelative()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
                      Headers =
@@ -89,7 +89,7 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestGetByEntityWithLinkHeaderAbsolute()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("[]", Encoding.UTF8, JsonMime),
                      Headers =
@@ -117,10 +117,10 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestReadAllCache()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                     Headers = {ETag = new("\"123abc\"")}
                  });
             var result1 = await _endpoint.ReadAllAsync();
             result1.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
@@ -143,10 +143,10 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 1, to: 1, length: 2) {Unit = "elements"}}
                      });
 
-            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 1, to: null));
+            var response = await _endpoint.ReadRangeAsync(new(from: 1, to: null));
             response.Elements.Should().Equal(new MockEntity {Id = 6, Name = "test2"});
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"});
         }
@@ -159,10 +159,10 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 0, to: 1, length: 2) {Unit = "elements"}}
                      });
 
-            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 0, to: 1));
+            var response = await _endpoint.ReadRangeAsync(new(from: 0, to: 1));
             response.Elements.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"});
         }
@@ -175,10 +175,10 @@ namespace TypedRest.Endpoints.Generic
                 .Respond(HttpStatusCode.PartialContent,
                      new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {ContentRange = new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"}}
+                         Headers = {ContentRange = new(from: 2, to: 2) {Unit = "elements"}}
                      });
 
-            var response = await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: null, to: 1));
+            var response = await _endpoint.ReadRangeAsync(new(from: null, to: 1));
             response.Elements.Should().Equal(new MockEntity(6, "test2"));
             response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"});
         }
@@ -220,7 +220,7 @@ namespace TypedRest.Endpoints.Generic
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .WithContent("{\"id\":0,\"name\":\"test\"}")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Created)
+                .Respond(_ => new(HttpStatusCode.Created)
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                      Headers = {Location = new Uri("/endpoint/new", UriKind.Relative)}
@@ -236,7 +236,7 @@ namespace TypedRest.Endpoints.Generic
         {
             Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
                 .WithContent("{\"id\":0,\"name\":\"test\"}")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Accepted));
+                .Respond(_ => new(HttpStatusCode.Accepted));
 
             var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
             element.Should().BeNull();
@@ -247,9 +247,9 @@ namespace TypedRest.Endpoints.Generic
         {
             Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
                 .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Accepted));
+                .Respond(_ => new(HttpStatusCode.Accepted));
 
-            await _endpoint.CreateAllAsync(new[] {new MockEntity(5, "test1"), new MockEntity(6, "test2")});
+            await _endpoint.CreateAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")});
         }
 
         [Fact]
@@ -257,26 +257,26 @@ namespace TypedRest.Endpoints.Generic
         {
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent));
+                .Respond(_ => new(HttpStatusCode.NoContent));
 
-            await _endpoint.SetAllAsync(new[] {new MockEntity(5, "test1"), new MockEntity(6, "test2")});
+            await _endpoint.SetAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")});
         }
 
         [Fact]
         public async Task TestSetAllETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                     Headers = {ETag = new("\"123abc\"")}
                  });
             var result = await _endpoint.ReadAllAsync();
 
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
                 .WithHeaders("If-Match", "\"123abc\"")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.NoContent));
+                .Respond(_ => new(HttpStatusCode.NoContent));
 
             await _endpoint.SetAllAsync(result);
         }

@@ -73,7 +73,7 @@ namespace TypedRest.CommandLine.Commands.Generic
             long? from = null, to = null;
             if (long.TryParse(parts[0], out long fromOut)) from = fromOut;
             if (long.TryParse(parts[1], out long toOut)) to = toOut;
-            return new RangeItemHeaderValue(from, to);
+            return new(from, to);
         }
 
         /// <summary>

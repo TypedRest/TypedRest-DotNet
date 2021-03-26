@@ -13,7 +13,7 @@ namespace TypedRest.Endpoints
         public void TestUriFromHttpClient()
         {
             var endpoint = new EntryEndpoint(new HttpClient {BaseAddress = new Uri("http://localhost")});
-            endpoint.Uri.Should().Be( new Uri("http://localhost/"));
+            endpoint.Uri.Should().Be(new Uri("http://localhost/"));
         }
 
         [Fact]

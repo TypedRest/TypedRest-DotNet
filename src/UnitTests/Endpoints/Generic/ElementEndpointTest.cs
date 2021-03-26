@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -14,11 +13,11 @@ namespace TypedRest.Endpoints.Generic
     [Collection("Endpoint")]
     public class ElementEndpointTest : EndpointTestBase
     {
-        private readonly IElementEndpoint<MockEntity> _endpoint;
+        private readonly ElementEndpoint<MockEntity> _endpoint;
 
         public ElementEndpointTest()
         {
-            _endpoint = new ElementEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]
@@ -45,10 +44,10 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestReadCacheETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                     Headers = {ETag = new("\"123abc\"")}
                  });
             var result1 = await _endpoint.ReadAsync();
             result1.Should().Be(new MockEntity(5, "test"));
@@ -67,11 +66,11 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestReadCacheLastModified()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {LastModified = new DateTimeOffset(new DateTime(2015, 10, 21), TimeSpan.Zero)}
+                         Headers = {LastModified = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
                      }
                  });
             var result1 = await _endpoint.ReadAsync();
@@ -133,10 +132,10 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestSetETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                     Headers = {ETag = new("\"123abc\"")}
                  });
             var result = await _endpoint.ReadAsync();
 
@@ -151,11 +150,11 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestSetLastModified()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime)
                      {
-                         Headers = {LastModified = new DateTimeOffset(new DateTime(2015, 10, 21), TimeSpan.Zero)}
+                         Headers = {LastModified = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
                      }
                  });
             var result = await _endpoint.ReadAsync();
@@ -171,20 +170,20 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestUpdateRetry()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
+                     Headers = {ETag = new("\"1\"")}
                  });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"testX\"}")
                 .WithHeaders("If-Match", "\"1\"")
                 .Respond(HttpStatusCode.PreconditionFailed);
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test2\"}", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"2\"")}
+                     Headers = {ETag = new("\"2\"")}
                  });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"testX\"}")
@@ -198,10 +197,10 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestUpdateFail()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"1\"")}
+                     Headers = {ETag = new("\"1\"")}
                  });
             Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
                 .WithContent("{\"id\":5,\"name\":\"testX\"}")
@@ -226,7 +225,7 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestJsonPatchFallback()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime)
                  });
@@ -273,10 +272,10 @@ namespace TypedRest.Endpoints.Generic
         public async Task TestDeleteETag()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                     Headers = {ETag = new EntityTagHeaderValue("\"123abc\"")}
+                     Headers = {ETag = new("\"123abc\"")}
                  });
             await _endpoint.ReadAsync();
 

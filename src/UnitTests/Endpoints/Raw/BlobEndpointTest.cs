@@ -11,11 +11,11 @@ namespace TypedRest.Endpoints.Raw
     [Collection("Endpoint")]
     public class BlobEndpointTest : EndpointTestBase
     {
-        private readonly IBlobEndpoint _endpoint;
+        private readonly BlobEndpoint _endpoint;
 
         public BlobEndpointTest()
         {
-            _endpoint = new BlobEndpoint(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]

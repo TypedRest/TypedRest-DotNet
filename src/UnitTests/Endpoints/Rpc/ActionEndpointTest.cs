@@ -10,11 +10,11 @@ namespace TypedRest.Endpoints.Rpc
     [Collection("Endpoint")]
     public class ActionEndpointTest : EndpointTestBase
     {
-        private readonly IActionEndpoint _endpoint;
+        private readonly ActionEndpoint _endpoint;
 
         public ActionEndpointTest()
         {
-            _endpoint = new ActionEndpoint(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]

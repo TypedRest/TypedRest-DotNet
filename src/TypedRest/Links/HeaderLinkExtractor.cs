@@ -55,7 +55,7 @@ namespace TypedRest.Links
                 }
             }
 
-            return new Link(
+            return new(
                 rel ?? throw new FormatException("The link header is lacking the mandatory 'rel' field."),
                 href,
                 title,

@@ -9,11 +9,11 @@ namespace TypedRest.Endpoints.Rpc
     [Collection("Endpoint")]
     public class ConsumerEndpointTest : EndpointTestBase
     {
-        private readonly IConsumerEndpoint<MockEntity> _endpoint;
+        private readonly ConsumerEndpoint<MockEntity> _endpoint;
 
         public ConsumerEndpointTest()
         {
-            _endpoint = new ConsumerEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]

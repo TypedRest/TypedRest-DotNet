@@ -21,7 +21,7 @@ namespace TypedRest.Http
         /// <returns>The <see cref="ResponseCache"/>; <c>null</c> if the response is not eligible for caching.</returns>
         public static ResponseCache? From(HttpResponseMessage response)
             => response.IsSuccessStatusCode && !(response.Headers.CacheControl?.NoStore ?? false)
-                ? new ResponseCache(response)
+                ? new(response)
                 : null;
 
         private ResponseCache(HttpResponseMessage response)

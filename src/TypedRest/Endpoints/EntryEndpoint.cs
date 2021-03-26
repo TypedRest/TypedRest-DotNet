@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace TypedRest.Endpoints
             foreach (var mediaType in Serializer.SupportedMediaTypes)
             {
                 if (mediaType.MediaType != null)
-                    HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType.MediaType));
+                    HttpClient.DefaultRequestHeaders.Accept.Add(new(mediaType.MediaType));
             }
         }
 

@@ -11,7 +11,7 @@ namespace TypedRest.Endpoints.Generic
 
         public IndexerEndpointTest()
         {
-            _endpoint = new IndexerEndpoint<ElementEndpoint<MockEntity>>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]

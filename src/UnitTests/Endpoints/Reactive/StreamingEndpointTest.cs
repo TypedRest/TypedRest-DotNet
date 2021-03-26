@@ -12,11 +12,11 @@ namespace TypedRest.Endpoints.Reactive
     [Collection("Endpoint")]
     public class StreamingEndpointTest : EndpointTestBase
     {
-        private readonly IStreamingEndpoint<MockEntity> _endpoint;
+        private readonly StreamingEndpoint<MockEntity> _endpoint;
 
         public StreamingEndpointTest()
         {
-            _endpoint = new StreamingEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace TypedRest.Endpoints.Reactive
         public void TestErrorHandling()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage(HttpStatusCode.Conflict)
+                .Respond(_ => new(HttpStatusCode.Conflict)
                  {
                      Content = new StringContent("{\"message\":\"my message\"}")
                  });

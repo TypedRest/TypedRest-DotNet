@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Text;
 using FluentAssertions;
@@ -13,11 +12,11 @@ namespace TypedRest.Endpoints.Reactive
     [Collection("Endpoint")]
     public class PollingEndpointTest : EndpointTestBase
     {
-        private readonly IPollingEndpoint<MockEntity> _endpoint;
+        private readonly PollingEndpoint<MockEntity> _endpoint;
 
         public PollingEndpointTest()
         {
-            _endpoint = new PollingEndpoint<MockEntity>(EntryEndpoint, "endpoint", endCondition: x => x.Id == 3)
+            _endpoint = new(EntryEndpoint, "endpoint", endCondition: x => x.Id == 3)
             {
                 PollingInterval = TimeSpan.Zero
             };
@@ -31,10 +30,10 @@ namespace TypedRest.Endpoints.Reactive
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(JsonMime, "{\"id\":2,\"name\":\"test\"}");
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-                .Respond(_ => new HttpResponseMessage
+                .Respond(_ => new()
                  {
                      Content = new StringContent("{\"id\":3,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
-                     Headers = {RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromSeconds(42))}
+                     Headers = {RetryAfter = new(TimeSpan.FromSeconds(42))}
                  });
 
             var observable = _endpoint.GetObservable();

@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using TypedRest.Endpoints;
@@ -128,7 +127,7 @@ namespace TypedRest.CommandLine
             if (string.IsNullOrEmpty(endpoint.Uri.UserInfo))
             {
                 string token = GetToken(endpoint.Uri);
-                endpoint.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                endpoint.HttpClient.DefaultRequestHeaders.Authorization = new("Bearer", token);
             }
 
             return endpoint;

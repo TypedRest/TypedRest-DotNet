@@ -9,11 +9,11 @@ namespace TypedRest.Endpoints.Rpc
     [Collection("Endpoint")]
     public class ProducerEndpointTest : EndpointTestBase
     {
-        private readonly IProducerEndpoint<MockEntity> _endpoint;
+        private readonly ProducerEndpoint<MockEntity> _endpoint;
 
         public ProducerEndpointTest()
         {
-            _endpoint = new ProducerEndpoint<MockEntity>(EntryEndpoint, "endpoint");
+            _endpoint = new(EntryEndpoint, "endpoint");
         }
 
         [Fact]
