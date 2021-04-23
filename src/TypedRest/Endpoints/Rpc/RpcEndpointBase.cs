@@ -29,8 +29,8 @@ namespace TypedRest.Endpoints.Rpc
             : base(referrer, relativeUri)
         {}
 
-        public Task ProbeAsync(CancellationToken cancellationToken = default)
-            => HandleAsync(() => HttpClient.OptionsAsync(Uri, cancellationToken));
+        public async Task ProbeAsync(CancellationToken cancellationToken = default)
+            => await HandleAsync(() => HttpClient.OptionsAsync(Uri, cancellationToken)).NoContext();
 
         public bool? InvokeAllowed => IsMethodAllowed(HttpMethod.Post);
     }

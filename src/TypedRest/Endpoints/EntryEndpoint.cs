@@ -75,7 +75,7 @@ namespace TypedRest.Endpoints
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        public Task ReadMetaAsync(CancellationToken cancellationToken = default)
-            => HandleAsync(() => HttpClient.GetAsync(Uri, cancellationToken));
+        public async Task ReadMetaAsync(CancellationToken cancellationToken = default)
+            => await HandleAsync(() => HttpClient.GetAsync(Uri, cancellationToken)).NoContext();
     }
 }

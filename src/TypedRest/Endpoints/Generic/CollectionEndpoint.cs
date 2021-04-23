@@ -147,11 +147,11 @@ namespace TypedRest.Endpoints.Generic
 
         public bool? CreateAllAllowed => IsMethodAllowed(HttpMethods.Patch);
 
-        public virtual Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        public virtual async Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-            return HandleAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken));
+            await HandleAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken)).NoContext();
         }
 
         public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);

@@ -29,11 +29,11 @@ namespace TypedRest.Endpoints.Rpc
             : base(referrer, relativeUri)
         {}
 
-        public Task InvokeAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task InvokeAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            return HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+            await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
         }
     }
 }

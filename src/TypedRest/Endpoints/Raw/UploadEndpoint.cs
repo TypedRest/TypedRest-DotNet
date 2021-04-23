@@ -38,7 +38,7 @@ namespace TypedRest.Endpoints.Raw
             _formField = formField;
         }
 
-        public Task UploadFromAsync(Stream stream, string? fileName = null, string? mimeType = null, CancellationToken cancellationToken = default)
+        public async Task UploadFromAsync(Stream stream, string? fileName = null, string? mimeType = null, CancellationToken cancellationToken = default)
         {
             HttpContent content = new StreamContent(stream);
             if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
@@ -50,7 +50,7 @@ namespace TypedRest.Endpoints.Raw
                     : new MultipartFormDataContent {{content, _formField, fileName}};
             }
 
-            return HandleAsync(() => HttpClient.PostAsync(Uri, content, cancellationToken));
+            await HandleAsync(() => HttpClient.PostAsync(Uri, content, cancellationToken)).NoContext();
         }
     }
 }

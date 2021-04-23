@@ -32,9 +32,9 @@ namespace TypedRest.Endpoints.Rpc
 
         public async ITask<TResult> InvokeAsync(CancellationToken cancellationToken = default)
         {
-            var response = await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken));
+            var response = await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
 
-            return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken);
+            return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken).NoContext();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace TypedRest.Endpoints.Rpc
             : base(referrer, relativeUri)
         {}
 
-        public Task InvokeAsync(CancellationToken cancellationToken = default)
-            => HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken));
+        public async Task InvokeAsync(CancellationToken cancellationToken = default)
+            => await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
     }
 }

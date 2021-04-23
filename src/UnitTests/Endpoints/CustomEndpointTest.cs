@@ -282,9 +282,11 @@ namespace TypedRest.Endpoints
                 : base(referrer, relativeUri)
             {}
 
-            public Task GetAsync() => HandleAsync(() => HttpClient.GetAsync(Uri));
+            public async Task GetAsync()
+                => await HandleAsync(() => HttpClient.GetAsync(Uri)).NoContext();
 
-            public new bool? IsMethodAllowed(HttpMethod method) => base.IsMethodAllowed(method);
+            public new bool? IsMethodAllowed(HttpMethod method)
+                => base.IsMethodAllowed(method);
         }
 
         [Fact]

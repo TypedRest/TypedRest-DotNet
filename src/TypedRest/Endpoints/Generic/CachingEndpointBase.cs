@@ -78,14 +78,14 @@ namespace TypedRest.Endpoints.Generic
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected Task<HttpResponseMessage> PutContentAsync(HttpContent content, CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
+        protected async Task<HttpResponseMessage> PutContentAsync(HttpContent content, CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
         {
             var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
             var cache = ResponseCache; // Copy reference for thread-safety
             cache?.SetIfUnmodifiedHeaders(request.Headers);
 
             ResponseCache = null;
-            return HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller);
+            return await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
         }
 
         /// <summary>
@@ -100,14 +100,14 @@ namespace TypedRest.Endpoints.Generic
         /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
         /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
         /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-        protected Task<HttpResponseMessage> DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
+        protected async Task<HttpResponseMessage> DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
             var cache = ResponseCache; // Copy reference for thread-safety
             cache?.SetIfUnmodifiedHeaders(request.Headers);
 
             ResponseCache = null;
-            return HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller);
+            return await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
         }
     }
 }

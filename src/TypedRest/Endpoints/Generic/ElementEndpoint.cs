@@ -73,7 +73,7 @@ namespace TypedRest.Endpoints.Generic
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken));
+            var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
             ResponseCache = null;
             return await TryReadAsAsync(response, cancellationToken);
         }
@@ -139,7 +139,7 @@ namespace TypedRest.Endpoints.Generic
         {
             try
             {
-                return await response.Content.ReadAsAsync<TEntity?>(Serializer, cancellationToken);
+                return await response.Content.ReadAsAsync<TEntity?>(Serializer, cancellationToken).NoContext();
             }
             catch (UnsupportedMediaTypeException)
             {

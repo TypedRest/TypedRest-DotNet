@@ -35,9 +35,9 @@ namespace TypedRest.Endpoints.Rpc
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken));
+            var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
-            return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken);
+            return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken).NoContext();
         }
     }
 }
