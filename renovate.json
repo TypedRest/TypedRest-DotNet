@@ -11,6 +11,7 @@
     },
     {
       "packagePatterns": ["gittools", "SourceLink", "ValueTuple", "IdentityModel"],
+      "packageNames": ["System.ValueTuple", "IdentityModel"],
       "automerge": true,
       "automergeType": "branch"
     },
