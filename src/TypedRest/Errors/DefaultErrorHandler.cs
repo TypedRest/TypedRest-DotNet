@@ -25,6 +25,7 @@ namespace TypedRest.Errors
 
             var exception = MapException(response.StatusCode, message);
             exception.SetHttpResponseHeaders(response.Headers);
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (body != null) exception.SetHttpResponseBody(body);
             throw exception;
         }

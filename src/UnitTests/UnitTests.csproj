@@ -22,7 +22,7 @@
     <ProjectReference Include="..\TypedRest.CommandLine\TypedRest.CommandLine.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="FluentAssertions" Version="6.0.0" />
     <PackageReference Include="JUnitTestLogger" Version="1.1.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />

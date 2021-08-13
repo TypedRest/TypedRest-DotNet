@@ -123,9 +123,11 @@ namespace TypedRest.Endpoints
 
             await _endpoint.GetAsync();
 
-            _endpoint.GetLinks("child").Should().BeEquivalentTo(
+            _endpoint.GetLinks("child").Should().BeEquivalentTo(new[]
+            {
                 (new Uri("http://localhost/target1"), "Title"),
-                (new Uri("http://localhost/target2"), (string?)null));
+                (new Uri("http://localhost/target2"), (string?)null)
+            });
         }
 
         [Fact]
@@ -142,9 +144,11 @@ namespace TypedRest.Endpoints
 
             await _endpoint.GetAsync();
 
-            _endpoint.GetLinks("child").Should().BeEquivalentTo(
+            _endpoint.GetLinks("child").Should().BeEquivalentTo(new[]
+            {
                 (new Uri("http://localhost/target1"), "Title,= 1"),
-                (new Uri("http://localhost/target2"), (string?)null));
+                (new Uri("http://localhost/target2"), (string?)null)
+            });
         }
 
         [Fact]
@@ -255,9 +259,11 @@ namespace TypedRest.Endpoints
             await _endpoint.GetAsync();
 
             _endpoint.Link("single").Should().Be(new Uri("http://localhost/a"));
-            _endpoint.GetLinks("collection").Should().BeEquivalentTo(
+            _endpoint.GetLinks("collection").Should().BeEquivalentTo(new[]
+            {
                 (new Uri("http://localhost/b"), "Title 1"),
-                (new Uri("http://localhost/c"), (string?)null));
+                (new Uri("http://localhost/c"), (string?)null)
+            });
             _endpoint.GetLinkTemplate("template").ToString().Should().Be("{id}");
         }
 
@@ -290,18 +296,18 @@ namespace TypedRest.Endpoints
         }
 
         [Fact]
-        public void TestErrorHandlingWithNoContent()
+        public async Task TestErrorHandlingWithNoContent()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new(HttpStatusCode.Conflict));
 
-            _endpoint.Awaiting(x => x.GetAsync())
-                     .Should().Throw<InvalidOperationException>()
-                     .WithMessage("http://localhost/endpoint responded with 409 Conflict");
+            await _endpoint.Awaiting(x => x.GetAsync())
+                           .Should().ThrowAsync<InvalidOperationException>()
+                           .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
 
         [Fact]
-        public void TestErrorHandlingWithMessage()
+        public async Task TestErrorHandlingWithMessage()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new(HttpStatusCode.Conflict)
@@ -312,13 +318,13 @@ namespace TypedRest.Endpoints
                      }
                  });
 
-            _endpoint.Awaiting(x => x.GetAsync())
-                     .Should().Throw<InvalidOperationException>()
-                     .WithMessage("my message");
+            await _endpoint.Awaiting(x => x.GetAsync())
+                           .Should().ThrowAsync<InvalidOperationException>()
+                           .WithMessage("my message");
         }
 
         [Fact]
-        public void TestErrorHandlingWithArray()
+        public async Task TestErrorHandlingWithArray()
         {
             Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
                 .Respond(_ => new(HttpStatusCode.Conflict)
@@ -329,9 +335,9 @@ namespace TypedRest.Endpoints
                      }
                  });
 
-            _endpoint.Awaiting(x => x.GetAsync())
-                     .Should().Throw<InvalidOperationException>()
-                     .WithMessage("http://localhost/endpoint responded with 409 Conflict");
+            await _endpoint.Awaiting(x => x.GetAsync())
+                           .Should().ThrowAsync<InvalidOperationException>()
+                           .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
 
         [Fact]
@@ -341,7 +347,7 @@ namespace TypedRest.Endpoints
                 .Respond(_ => new(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
 
             _endpoint.Awaiting(x => x.GetAsync())
-                     .Should().Throw<InvalidOperationException>()
+                     .Should().ThrowAsync<InvalidOperationException>()
                      .WithMessage("http://localhost/endpoint responded with 409 Conflict");
         }
     }
