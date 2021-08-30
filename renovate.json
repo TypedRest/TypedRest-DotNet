@@ -1,28 +1,29 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
-      "packagePatterns": ["Test", "Assert", "Mock", "[Xx]unit", "Moq"],
+      "matchPackagePatterns": ["Test", "Assert", "Mock", "[Xx]unit", "Moq"],
       "groupName": "Testing deps",
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "packagePatterns": ["gittools", "SourceLink", "ValueTuple", "IdentityModel"],
-      "packageNames": ["System.ValueTuple", "IdentityModel"],
+      "matchPackagePatterns": ["gittools", "SourceLink", "ValueTuple", "IdentityModel"],
+      "matchPackageNames": ["System.ValueTuple", "IdentityModel"],
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "packagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
+      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
       "groupName": "Microsoft Extensions",
+      "automerge": true,
+      "automergeType": "branch",
       "separateMinorPatch": true
     },
     {
-      "packagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
-      "updateTypes": ["major", "minor"],
+      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
+      "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
   ]
