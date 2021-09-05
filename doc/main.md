@@ -1,6 +1,6 @@
 TypedRest helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
 
-```csharp
+```{.cs}
 var client = new MyClient(new Uri("http://example.com/"));
 
 // GET /contacts
