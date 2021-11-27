@@ -8,7 +8,7 @@
     <PackageTags>REST;Client;Type-safe</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework)=='netstandard2.1' Or $(TargetFramework)=='net5.0'">
+  <PropertyGroup Condition="$(TargetFramework)!='netstandard2.0'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -19,7 +19,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Resta.UriTemplates" Version="1.4.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.1" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
@@ -33,6 +33,10 @@
   <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.12" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

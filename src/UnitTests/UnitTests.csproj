@@ -3,12 +3,12 @@
   <!-- Project properties -->
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
-    <TargetFrameworks>net48;net5.0</TargetFrameworks>
+    <TargetFrameworks>net48;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <IsPackable>False</IsPackable>
     <DeterministicSourcePaths>False</DeterministicSourcePaths>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework)=='net5.0'">
+  <PropertyGroup Condition="$(TargetFramework)=='net6.0'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -26,7 +26,7 @@
     <PackageReference Include="JUnitTestLogger" Version="1.1.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />

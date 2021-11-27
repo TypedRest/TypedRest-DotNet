@@ -8,7 +8,7 @@
     <PackageTags>REST;Client;Type-safe;Reactive;Rx;Streaming</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework)=='netstandard2.1' Or $(TargetFramework)=='net5.0'">
+  <PropertyGroup Condition="$(TargetFramework)!='netstandard2.0'">
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
