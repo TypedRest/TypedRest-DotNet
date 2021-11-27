@@ -17,6 +17,7 @@ namespace TypedRest.Links
         {
             var links = response.Content.Headers.ContentType?.MediaType switch
             {
+                // ReSharper disable once RedundantSuppressNullableWarningExpression
                 "application/hal+json" => ParseJsonBody(await response.Content!.ReadAsStringAsync().NoContext()),
                 _ => Enumerable.Empty<Link>()
             };

@@ -90,6 +90,7 @@ namespace TypedRest.Endpoints.Reactive
                         observer.OnError(ex);
                         return;
                     }
+                    // ReSharper disable once RedundantSuppressNullableWarningExpression
                     if (!newEntity!.Equals(previousEntity))
                         observer.OnNext(newEntity);
 
