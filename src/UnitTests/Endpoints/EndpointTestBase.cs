@@ -1,7 +1,3 @@
-using System;
-using System.Net.Http;
-using RichardSzalay.MockHttp;
-
 namespace TypedRest.Endpoints
 {
     public abstract class EndpointTestBase : IDisposable

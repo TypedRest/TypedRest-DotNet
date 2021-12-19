@@ -1,4 +1,3 @@
-using System;
 using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.Endpoints.Reactive

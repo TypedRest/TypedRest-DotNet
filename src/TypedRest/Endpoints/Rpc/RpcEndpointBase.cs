@@ -1,9 +1,3 @@
-using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using TypedRest.Http;
-
 namespace TypedRest.Endpoints.Rpc
 {
     /// <summary>

@@ -1,5 +1,3 @@
-using System;
-
 namespace TypedRest.OAuth
 {
     internal class AccessToken

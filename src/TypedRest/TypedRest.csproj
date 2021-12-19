@@ -37,4 +37,12 @@
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.1" />
   </ItemGroup>
 
+  <!-- Global usings -->
+  <ItemGroup>
+    <Using Include="MorseCode.ITask" />
+    <Using Include="System.Net.Http.Headers" />
+    <Using Include="System.Net.Http.Formatting" />
+    <Using Include="TypedRest.Http" />
+  </ItemGroup>
+
 </Project>

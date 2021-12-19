@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using TypedRest.Endpoints.Rpc;
+﻿using TypedRest.Endpoints.Rpc;
 
 namespace TypedRest.CommandLine.Commands.Rpc
 {

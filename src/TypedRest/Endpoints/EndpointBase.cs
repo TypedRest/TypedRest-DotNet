@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Resta.UriTemplates;
 using TypedRest.Errors;
-using TypedRest.Http;
 using TypedRest.Links;
 
 namespace TypedRest.Endpoints

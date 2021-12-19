@@ -1,8 +1,5 @@
-using System;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using TypedRest.Endpoints;
-using Xunit;
 
 namespace TypedRest
 {

@@ -1,7 +1,3 @@
-using System.Linq;
-using System.Net.Http;
-using RichardSzalay.MockHttp;
-
 namespace TypedRest
 {
     internal class MultipartFormContentMatcher : IMockedRequestMatcher

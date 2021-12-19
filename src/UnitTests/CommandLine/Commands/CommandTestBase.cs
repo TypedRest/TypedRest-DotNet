@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using Moq;
 using TypedRest.CommandLine.IO;
 using TypedRest.Endpoints;
 

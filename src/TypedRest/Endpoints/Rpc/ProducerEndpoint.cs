@@ -1,9 +1,3 @@
-using System;
-using System.Net.Http;
-using System.Threading;
-using MorseCode.ITask;
-using TypedRest.Http;
-
 namespace TypedRest.Endpoints.Rpc
 {
     /// <summary>

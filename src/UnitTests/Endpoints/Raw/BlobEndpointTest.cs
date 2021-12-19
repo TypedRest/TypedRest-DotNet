@@ -1,11 +1,3 @@
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using FluentAssertions;
-using RichardSzalay.MockHttp;
-using Xunit;
-
 namespace TypedRest.Endpoints.Raw
 {
     [Collection("Endpoint")]

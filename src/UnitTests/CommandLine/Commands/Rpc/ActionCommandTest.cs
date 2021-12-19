@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using TypedRest.Endpoints.Rpc;
-using Xunit;
 
 namespace TypedRest.CommandLine.Commands.Rpc
 {

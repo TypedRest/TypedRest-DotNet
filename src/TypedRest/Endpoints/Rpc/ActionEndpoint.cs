@@ -1,9 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace TypedRest.Endpoints.Rpc
+﻿namespace TypedRest.Endpoints.Rpc
 {
     /// <summary>
     /// RPC endpoint that is invoked with no input or output.

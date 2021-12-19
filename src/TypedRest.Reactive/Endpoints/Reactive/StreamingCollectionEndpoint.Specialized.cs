@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using MorseCode.ITask;
 using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.Endpoints.Reactive

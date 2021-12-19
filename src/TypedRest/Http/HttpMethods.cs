@@ -1,5 +1,3 @@
-using System.Net.Http;
-
 namespace TypedRest.Http
 {
     /// <summary>

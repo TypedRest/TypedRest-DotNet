@@ -1,5 +1,3 @@
-using System;
-
 namespace TypedRest.Endpoints.Reactive
 {
     /// <summary>

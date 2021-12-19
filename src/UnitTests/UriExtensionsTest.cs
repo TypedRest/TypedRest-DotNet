@@ -1,7 +1,3 @@
-using System;
-using FluentAssertions;
-using Xunit;
-
 namespace TypedRest
 {
     public class UriExtensionsTest

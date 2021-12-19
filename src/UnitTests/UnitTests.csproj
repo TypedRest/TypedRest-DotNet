@@ -32,4 +32,17 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
 
+  <!-- Global usings -->
+  <ItemGroup>
+    <Using Include="MorseCode.ITask" />
+    <Using Include="System.Reactive.Linq" />
+    <Using Include="System.Net.Http.Headers" />
+    <Using Include="System.Net.Http.Formatting" />
+    <Using Include="TypedRest.Http" />
+    <Using Include="Xunit" />
+    <Using Include="FluentAssertions" />
+    <Using Include="Moq" />
+    <Using Include="RichardSzalay.MockHttp" />
+  </ItemGroup>
+
 </Project>

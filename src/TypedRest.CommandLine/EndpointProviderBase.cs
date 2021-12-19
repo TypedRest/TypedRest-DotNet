@@ -1,7 +1,4 @@
-using System;
-using System.IO;
 using System.Reflection;
-using System.Text;
 using TypedRest.Endpoints;
 
 namespace TypedRest.CommandLine

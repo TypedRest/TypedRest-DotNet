@@ -1,5 +1,3 @@
-using TypedRest.Http;
-
 namespace TypedRest.Endpoints
 {
     /// <summary>

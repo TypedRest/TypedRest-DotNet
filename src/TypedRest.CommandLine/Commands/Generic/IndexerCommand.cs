@@ -1,4 +1,3 @@
-using System;
 using TypedRest.Endpoints;
 using TypedRest.Endpoints.Generic;
 

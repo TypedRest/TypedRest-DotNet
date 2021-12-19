@@ -1,9 +1,3 @@
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Reactive.Linq;
-using TypedRest.Http;
-
 namespace TypedRest.Endpoints.Reactive
 {
     /// <summary>

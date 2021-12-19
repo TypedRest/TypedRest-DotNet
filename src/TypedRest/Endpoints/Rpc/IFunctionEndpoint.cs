@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Security.Authentication;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace TypedRest.Endpoints.Rpc
 {
     /// <summary>

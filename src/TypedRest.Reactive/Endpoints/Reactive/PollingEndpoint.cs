@@ -1,8 +1,4 @@
-using System;
-using System.Net.Http;
-using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.Endpoints.Reactive

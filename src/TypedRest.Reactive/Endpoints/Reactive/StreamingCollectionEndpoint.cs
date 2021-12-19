@@ -1,8 +1,4 @@
-using System;
-using System.Net.Http.Headers;
-using System.Reactive.Linq;
 using TypedRest.Endpoints.Generic;
-using TypedRest.Http;
 
 namespace TypedRest.Endpoints.Reactive
 {

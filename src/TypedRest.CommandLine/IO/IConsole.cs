@@ -1,5 +1,3 @@
-using System;
-
 namespace TypedRest.CommandLine.IO
 {
     /// <summary>

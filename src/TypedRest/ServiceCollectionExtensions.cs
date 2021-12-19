@@ -1,9 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TypedRest.Endpoints;
-using TypedRest.Http;
 
 namespace TypedRest
 {

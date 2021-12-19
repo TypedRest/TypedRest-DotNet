@@ -1,15 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Authentication;
-using System.Threading;
-using System.Threading.Tasks;
-using MorseCode.ITask;
-using TypedRest.Http;
-
 namespace TypedRest.Endpoints.Generic
 {
     /// <summary>

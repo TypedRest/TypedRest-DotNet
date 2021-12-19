@@ -1,12 +1,3 @@
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reactive.Linq;
-using FluentAssertions;
-using RichardSzalay.MockHttp;
-using Xunit;
-
 namespace TypedRest.Endpoints.Reactive
 {
     [Collection("Endpoint")]

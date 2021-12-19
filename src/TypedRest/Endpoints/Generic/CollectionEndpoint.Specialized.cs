@@ -1,7 +1,3 @@
-using System;
-using System.Threading;
-using MorseCode.ITask;
-
 namespace TypedRest.Endpoints.Generic
 {
     /// <summary>

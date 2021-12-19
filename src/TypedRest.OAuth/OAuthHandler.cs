@@ -1,11 +1,5 @@
-using System;
 using System.Diagnostics;
-using System.Net;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Security.Authentication;
-using System.Threading;
-using System.Threading.Tasks;
 using IdentityModel;
 using IdentityModel.Client;
 

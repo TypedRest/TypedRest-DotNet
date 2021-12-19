@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Security.Authentication;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace TypedRest.Endpoints.Rpc
+﻿namespace TypedRest.Endpoints.Rpc
 {
     /// <summary>
     /// RPC endpoint that is invoked with no input or output.

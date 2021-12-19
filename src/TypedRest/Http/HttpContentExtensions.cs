@@ -1,8 +1,3 @@
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace TypedRest.Http
 {
     /// <summary>

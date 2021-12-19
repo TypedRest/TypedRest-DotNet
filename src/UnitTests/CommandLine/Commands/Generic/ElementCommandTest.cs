@@ -1,7 +1,4 @@
-using System.Threading.Tasks;
-using Moq;
 using TypedRest.Endpoints.Generic;
-using Xunit;
 
 namespace TypedRest.CommandLine.Commands.Generic
 {

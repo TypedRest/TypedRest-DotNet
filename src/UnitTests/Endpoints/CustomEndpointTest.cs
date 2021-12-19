@@ -1,14 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using FluentAssertions;
 using Newtonsoft.Json;
-using RichardSzalay.MockHttp;
 using TypedRest.Endpoints.Rpc;
-using Xunit;
 
 namespace TypedRest.Endpoints
 {

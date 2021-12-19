@@ -1,7 +1,3 @@
-using System;
-using FluentAssertions;
-using Xunit;
-
 namespace TypedRest.Endpoints.Generic
 {
     [Collection("Endpoint")]
