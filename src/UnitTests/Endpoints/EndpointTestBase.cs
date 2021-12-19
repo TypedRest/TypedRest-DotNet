@@ -1,24 +1,23 @@
-namespace TypedRest.Endpoints
+namespace TypedRest.Endpoints;
+
+public abstract class EndpointTestBase : IDisposable
 {
-    public abstract class EndpointTestBase : IDisposable
+    public const string JsonMime = "application/json";
+
+    protected readonly MockHttpMessageHandler Mock = new();
+    protected readonly IEndpoint EntryEndpoint;
+
+    protected EndpointTestBase()
     {
-        public const string JsonMime = "application/json";
+        EntryEndpoint = new MockEntryEndpoint(Mock);
+    }
 
-        protected readonly MockHttpMessageHandler Mock = new();
-        protected readonly IEndpoint EntryEndpoint;
+    public void Dispose() => Mock.VerifyNoOutstandingExpectation();
 
-        protected EndpointTestBase()
-        {
-            EntryEndpoint = new MockEntryEndpoint(Mock);
-        }
-
-        public void Dispose() => Mock.VerifyNoOutstandingExpectation();
-
-        private class MockEntryEndpoint : EntryEndpoint
-        {
-            public MockEntryEndpoint(HttpMessageHandler messageHandler)
-                : base(new HttpClient(messageHandler), new Uri("http://localhost/"))
-            {}
-        }
+    private class MockEntryEndpoint : EntryEndpoint
+    {
+        public MockEntryEndpoint(HttpMessageHandler messageHandler)
+            : base(new HttpClient(messageHandler), new Uri("http://localhost/"))
+        {}
     }
 }

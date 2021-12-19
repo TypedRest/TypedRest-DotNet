@@ -1,22 +1,21 @@
 using TypedRest.Endpoints;
 
-namespace TypedRest.CommandLine
+namespace TypedRest.CommandLine;
+
+/// <summary>
+/// Builds <see cref="IEndpoint"/> instances.
+/// </summary>
+/// <typeparam name="T">The type of endpoint created.</typeparam>
+public interface IEndpointProvider<out T>
+    where T : IEndpoint
 {
     /// <summary>
-    /// Builds <see cref="IEndpoint"/> instances.
+    /// Clears any cached authentication information.
     /// </summary>
-    /// <typeparam name="T">The type of endpoint created.</typeparam>
-    public interface IEndpointProvider<out T>
-        where T : IEndpoint
-    {
-        /// <summary>
-        /// Clears any cached authentication information.
-        /// </summary>
-        void ResetAuthentication();
+    void ResetAuthentication();
 
-        /// <summary>
-        /// Builds a new endpoint.
-        /// </summary>
-        T Build();
-    }
+    /// <summary>
+    /// Builds a new endpoint.
+    /// </summary>
+    T Build();
 }

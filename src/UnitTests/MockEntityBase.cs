@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TypedRest
+namespace TypedRest;
+
+public class MockEntityBase
 {
-    public class MockEntityBase
-    {
-        [Key]
-        public virtual long Id { get; set; }
-    }
+    [Key]
+    public virtual long Id { get; set; }
 }

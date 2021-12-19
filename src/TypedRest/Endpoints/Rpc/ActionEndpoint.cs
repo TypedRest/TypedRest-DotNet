@@ -1,29 +1,28 @@
-﻿namespace TypedRest.Endpoints.Rpc
+﻿namespace TypedRest.Endpoints.Rpc;
+
+/// <summary>
+/// RPC endpoint that is invoked with no input or output.
+/// </summary>
+public class ActionEndpoint : RpcEndpointBase, IActionEndpoint
 {
     /// <summary>
-    /// RPC endpoint that is invoked with no input or output.
+    /// Creates a new action endpoint.
     /// </summary>
-    public class ActionEndpoint : RpcEndpointBase, IActionEndpoint
-    {
-        /// <summary>
-        /// Creates a new action endpoint.
-        /// </summary>
-        /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
-        public ActionEndpoint(IEndpoint referrer, Uri relativeUri)
-            : base(referrer, relativeUri)
-        {}
+    /// <param name="referrer">The endpoint used to navigate to this one.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
+    public ActionEndpoint(IEndpoint referrer, Uri relativeUri)
+        : base(referrer, relativeUri)
+    {}
 
-        /// <summary>
-        /// Creates a new action endpoint.
-        /// </summary>
-        /// <param name="referrer">The endpoint used to navigate to this one.</param>
-        /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
-        public ActionEndpoint(IEndpoint referrer, string relativeUri)
-            : base(referrer, relativeUri)
-        {}
+    /// <summary>
+    /// Creates a new action endpoint.
+    /// </summary>
+    /// <param name="referrer">The endpoint used to navigate to this one.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+    public ActionEndpoint(IEndpoint referrer, string relativeUri)
+        : base(referrer, relativeUri)
+    {}
 
-        public async Task InvokeAsync(CancellationToken cancellationToken = default)
-            => await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
-    }
+    public async Task InvokeAsync(CancellationToken cancellationToken = default)
+        => await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
 }

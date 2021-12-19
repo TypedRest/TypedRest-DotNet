@@ -1,21 +1,20 @@
 ﻿using TypedRest.Endpoints.Rpc;
 
-namespace TypedRest.CommandLine.Commands.Rpc
+namespace TypedRest.CommandLine.Commands.Rpc;
+
+/// <summary>
+/// Command operating on an <see cref="IActionEndpoint"/>.
+/// </summary>
+public class ActionCommand : EndpointCommand<IActionEndpoint>
 {
     /// <summary>
-    /// Command operating on an <see cref="IActionEndpoint"/>.
+    /// Creates a new REST action command.
     /// </summary>
-    public class ActionCommand : EndpointCommand<IActionEndpoint>
-    {
-        /// <summary>
-        /// Creates a new REST action command.
-        /// </summary>
-        /// <param name="endpoint">The endpoint this command operates on.</param>
-        public ActionCommand(IActionEndpoint endpoint)
-            : base(endpoint)
-        {}
+    /// <param name="endpoint">The endpoint this command operates on.</param>
+    public ActionCommand(IActionEndpoint endpoint)
+        : base(endpoint)
+    {}
 
-        protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
-            => await Endpoint.InvokeAsync(cancellationToken);
-    }
+    protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
+        => await Endpoint.InvokeAsync(cancellationToken);
 }

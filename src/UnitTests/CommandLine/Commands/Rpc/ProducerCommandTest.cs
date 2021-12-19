@@ -1,19 +1,18 @@
 using TypedRest.Endpoints.Rpc;
 
-namespace TypedRest.CommandLine.Commands.Rpc
+namespace TypedRest.CommandLine.Commands.Rpc;
+
+public class ProducerCommandTest : CommandTestBase<ProducerCommand<MockEntity>, IProducerEndpoint<MockEntity>>
 {
-    public class ProducerCommandTest : CommandTestBase<ProducerCommand<MockEntity>, IProducerEndpoint<MockEntity>>
+    [Fact]
+    public async Task TestInvoke()
     {
-        [Fact]
-        public async Task TestInvoke()
-        {
-            var output = new MockEntity(2, "b");
+        var output = new MockEntity(2, "b");
 
-            EndpointMock.Setup(x => x.InvokeAsync(default))
-                        .Returns(Task.FromResult(output).AsITask());
-            ConsoleMock.Setup(x => x.Write(output));
+        EndpointMock.Setup(x => x.InvokeAsync(default))
+                    .Returns(Task.FromResult(output).AsITask());
+        ConsoleMock.Setup(x => x.Write(output));
 
-            await ExecuteAsync();
-        }
+        await ExecuteAsync();
     }
 }

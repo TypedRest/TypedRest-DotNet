@@ -1,50 +1,49 @@
 using TypedRest.Endpoints.Generic;
 
-namespace TypedRest.CommandLine.Commands.Generic
+namespace TypedRest.CommandLine.Commands.Generic;
+
+public class ElementCommandTest : CommandTestBase<ElementCommand<MockEntity>, IElementEndpoint<MockEntity>>
 {
-    public class ElementCommandTest : CommandTestBase<ElementCommand<MockEntity>, IElementEndpoint<MockEntity>>
+    [Fact]
+    public async Task TestRead()
     {
-        [Fact]
-        public async Task TestRead()
-        {
-            var entity = new MockEntity(5, "test");
+        var entity = new MockEntity(5, "test");
 
-            ConsoleMock.Setup(x => x.Write(entity));
-            EndpointMock.Setup(x => x.ReadAsync(default)).ReturnsAsync(entity);
+        ConsoleMock.Setup(x => x.Write(entity));
+        EndpointMock.Setup(x => x.ReadAsync(default)).ReturnsAsync(entity);
 
-            await ExecuteAsync();
-        }
+        await ExecuteAsync();
+    }
 
-        [Fact]
-        public async Task TestSet()
-        {
-            var entity = new MockEntity(5, "test");
+    [Fact]
+    public async Task TestSet()
+    {
+        var entity = new MockEntity(5, "test");
 
-            ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(entity);
-            EndpointMock.Setup(x => x.SetAsync(entity, default)).ReturnsAsync(entity);
-            ConsoleMock.Setup(x => x.Write(entity));
+        ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(entity);
+        EndpointMock.Setup(x => x.SetAsync(entity, default)).ReturnsAsync(entity);
+        ConsoleMock.Setup(x => x.Write(entity));
 
-            await ExecuteAsync("set");
-        }
+        await ExecuteAsync("set");
+    }
 
-        [Fact]
-        public async Task TestMerge()
-        {
-            var entity = new MockEntity(5, "test");
+    [Fact]
+    public async Task TestMerge()
+    {
+        var entity = new MockEntity(5, "test");
 
-            ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(entity);
-            EndpointMock.Setup(x => x.MergeAsync(entity, default)).ReturnsAsync(entity);
-            ConsoleMock.Setup(x => x.Write(entity));
+        ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(entity);
+        EndpointMock.Setup(x => x.MergeAsync(entity, default)).ReturnsAsync(entity);
+        ConsoleMock.Setup(x => x.Write(entity));
 
-            await ExecuteAsync("merge");
-        }
+        await ExecuteAsync("merge");
+    }
 
-        [Fact]
-        public async Task TestDelete()
-        {
-            EndpointMock.Setup(x => x.DeleteAsync(default)).Returns(Task.CompletedTask);
+    [Fact]
+    public async Task TestDelete()
+    {
+        EndpointMock.Setup(x => x.DeleteAsync(default)).Returns(Task.CompletedTask);
 
-            await ExecuteAsync("delete");
-        }
+        await ExecuteAsync("delete");
     }
 }

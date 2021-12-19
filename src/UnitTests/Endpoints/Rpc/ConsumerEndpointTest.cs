@@ -1,23 +1,22 @@
-namespace TypedRest.Endpoints.Rpc
+namespace TypedRest.Endpoints.Rpc;
+
+[Collection("Endpoint")]
+public class ConsumerEndpointTest : EndpointTestBase
 {
-    [Collection("Endpoint")]
-    public class ConsumerEndpointTest : EndpointTestBase
+    private readonly ConsumerEndpoint<MockEntity> _endpoint;
+
+    public ConsumerEndpointTest()
     {
-        private readonly ConsumerEndpoint<MockEntity> _endpoint;
+        _endpoint = new(EntryEndpoint, "endpoint");
+    }
 
-        public ConsumerEndpointTest()
-        {
-            _endpoint = new(EntryEndpoint, "endpoint");
-        }
+    [Fact]
+    public async Task TestInvoke()
+    {
+        Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
+            .WithContent("{\"id\":1,\"name\":\"input\"}")
+            .Respond(HttpStatusCode.Accepted);
 
-        [Fact]
-        public async Task TestInvoke()
-        {
-            Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-                .WithContent("{\"id\":1,\"name\":\"input\"}")
-                .Respond(HttpStatusCode.Accepted);
-
-            await _endpoint.InvokeAsync(new MockEntity(1, "input"));
-        }
+        await _endpoint.InvokeAsync(new MockEntity(1, "input"));
     }
 }
