@@ -1,6 +1,12 @@
+---
+title: Home
+---
+
+# TypedRest for .NET
+
 TypedRest helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
 
-```{.cs}
+```csharp
 var client = new MyClient(new Uri("http://example.com/"));
 
 // GET /contacts
@@ -23,11 +29,9 @@ Note note = await smith.Note.ReadAsync();
 await smith.DeleteAsync();
 ```
 
-Read a more detailed [**Introduction**](https://typedrest.net/introduction/) to TypedRest or jump right in with the [**Getting started**](https://typedrest.net/getting-started/dotnet/) guide.
+Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
 
-Take a look at the \ref TypedRest.Endpoints "TypedRest.Endpoints namespace" to get an overview of the available functionality.
-
-[**GitHub repository**](https://github.com/TypedRest/TypedRest-DotNet)
+Take a look at the <xref:TypedRest.Endpoints.Generic> namespace to get an overview of the available functionality.
 
 **NuGet packages**
 

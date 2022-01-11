@@ -6,11 +6,7 @@ namespace TypedRest.Endpoints.Reactive;
 /// Endpoint for a resource that can be polled for state changes.
 /// </summary>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-public interface IPollingEndpoint<
-#if DOXYGEN
-out
-#endif
-    TEntity> : IElementEndpoint<TEntity>
+public interface IPollingEndpoint<TEntity> : IElementEndpoint<TEntity>
     where TEntity : class
 {
     /// <summary>
