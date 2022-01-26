@@ -37,8 +37,11 @@ public class HttpEntityStream<TEntity>
     /// <exception cref="TaskCanceledException">The <paramref name="cancellationToken"/> was triggered.</exception>
     public async Task<TEntity> GetNextAsync(CancellationToken cancellationToken = default)
     {
-        if (_stream == null)
-            _stream = await _content.ReadAsStreamAsync();
+        _stream ??= await _content.ReadAsStreamAsync(
+#if NET
+            cancellationToken
+#endif
+        );
 
         if (_startIndex >= _endIndex)
         {

@@ -31,7 +31,11 @@ public class BlobEndpoint : EndpointBase, IBlobEndpoint
     public async Task<Stream> DownloadAsync(CancellationToken cancellationToken = default)
     {
         var response = await HandleAsync(() => HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken)).NoContext();
-        return await response.Content.ReadAsStreamAsync().NoContext();
+        return await response.Content.ReadAsStreamAsync(
+#if NET
+            cancellationToken
+#endif
+        ).NoContext();
     }
 
     public bool? UploadAllowed => IsMethodAllowed(HttpMethod.Put);
