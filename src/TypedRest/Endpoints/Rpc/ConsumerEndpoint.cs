@@ -28,6 +28,6 @@ public class ConsumerEndpoint<TEntity> : RpcEndpointBase, IConsumerEndpoint<TEnt
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
+        await FinalizeAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
     }
 }

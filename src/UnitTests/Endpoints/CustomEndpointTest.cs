@@ -279,8 +279,8 @@ public class CustomEndpointTest : EndpointTestBase
             : base(referrer, relativeUri)
         {}
 
-        public async Task GetAsync()
-            => await HandleAsync(() => HttpClient.GetAsync(Uri)).NoContext();
+        public Task GetAsync()
+            => FinalizeAsync(() => HttpClient.GetAsync(Uri));
 
         public new bool? IsMethodAllowed(HttpMethod method)
             => base.IsMethodAllowed(method);

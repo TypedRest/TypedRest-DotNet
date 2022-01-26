@@ -49,7 +49,7 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
             return cache.GetContent();
         else
         {
-            await HandleAsync(() => Task.FromResult(response), caller).NoContext();
+            response = await HandleAsync(() => Task.FromResult(response), caller);
             ResponseCache = ResponseCache.From(response);
             return response.Content;
         }
@@ -83,20 +83,19 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     /// </summary>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
-    /// <returns>The response message.</returns>
     /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
     /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-    protected async Task<HttpResponseMessage> DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
+    protected async Task DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
         var cache = ResponseCache; // Copy reference for thread-safety
         cache?.SetIfUnmodifiedHeaders(request.Headers);
 
         ResponseCache = null;
-        return await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
+        await FinalizeAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
     }
 }

@@ -97,7 +97,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
             Headers = {Range = new() {Ranges = {range}, Unit = RangeUnit}}
         };
 
-        var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken)).NoContext();
+        using var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken)).NoContext();
         return new(
             elements: await response.Content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext(),
             range: response.Content.Headers.ContentRange);
@@ -143,7 +143,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-        await HandleAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken)).NoContext();
+        await FinalizeAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken)).NoContext();
     }
 
     public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);
@@ -152,7 +152,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-        var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializer);
-        await PutContentAsync(content, cancellationToken);
+        using var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializer);
+        (await PutContentAsync(content, cancellationToken)).Dispose();
     }
 }

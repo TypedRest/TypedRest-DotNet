@@ -43,6 +43,6 @@ public class UploadEndpoint : EndpointBase, IUploadEndpoint
                 : new MultipartFormDataContent {{content, _formField, fileName}};
         }
 
-        await HandleAsync(() => HttpClient.PostAsync(Uri, content, cancellationToken)).NoContext();
+        await FinalizeAsync(() => HttpClient.PostAsync(Uri, content, cancellationToken)).NoContext();
     }
 }

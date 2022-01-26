@@ -23,6 +23,6 @@ public class ActionEndpoint : RpcEndpointBase, IActionEndpoint
         : base(referrer, relativeUri)
     {}
 
-    public async Task InvokeAsync(CancellationToken cancellationToken = default)
-        => await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
+    public Task InvokeAsync(CancellationToken cancellationToken = default)
+        => FinalizeAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken));
 }

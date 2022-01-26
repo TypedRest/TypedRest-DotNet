@@ -23,8 +23,8 @@ public class BlobEndpoint : EndpointBase, IBlobEndpoint
         : base(referrer, relativeUri)
     {}
 
-    public async Task ProbeAsync(CancellationToken cancellationToken = default)
-        => await HandleAsync(async () => await HttpClient.OptionsAsync(Uri, cancellationToken)).NoContext();
+    public Task ProbeAsync(CancellationToken cancellationToken = default)
+        => FinalizeAsync(async () => await HttpClient.OptionsAsync(Uri, cancellationToken));
 
     public bool? DownloadAllowed => IsMethodAllowed(HttpMethod.Get);
 
@@ -44,11 +44,11 @@ public class BlobEndpoint : EndpointBase, IBlobEndpoint
     {
         var content = new StreamContent(stream);
         if (!string.IsNullOrEmpty(mimeType)) content.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
-        await HandleAsync(() => HttpClient.PutAsync(Uri, content, cancellationToken)).NoContext();
+        await FinalizeAsync(() => HttpClient.PutAsync(Uri, content, cancellationToken)).NoContext();
     }
 
     public bool? DeleteAllowed => IsMethodAllowed(HttpMethod.Delete);
 
-    public async Task DeleteAsync(CancellationToken cancellationToken = default)
-        => await HandleAsync(() => HttpClient.DeleteAsync(Uri, cancellationToken)).NoContext();
+    public Task DeleteAsync(CancellationToken cancellationToken = default)
+        => FinalizeAsync(() => HttpClient.DeleteAsync(Uri, cancellationToken));
 }

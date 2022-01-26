@@ -23,8 +23,8 @@ public abstract class RpcEndpointBase : EndpointBase, IRpcEndpoint
         : base(referrer, relativeUri)
     {}
 
-    public async Task ProbeAsync(CancellationToken cancellationToken = default)
-        => await HandleAsync(() => HttpClient.OptionsAsync(Uri, cancellationToken)).NoContext();
+    public Task ProbeAsync(CancellationToken cancellationToken = default)
+        => FinalizeAsync(() => HttpClient.OptionsAsync(Uri, cancellationToken));
 
     public bool? InvokeAllowed => IsMethodAllowed(HttpMethod.Post);
 }

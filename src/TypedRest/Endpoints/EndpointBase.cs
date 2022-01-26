@@ -77,6 +77,14 @@ public abstract class EndpointBase : IEndpoint
         return response;
     }
 
+    /// <summary>
+    /// Handles various cross-cutting concerns regarding a response message such as discovering links and handling errors and then disposes the response message.
+    /// </summary>
+    /// <param name="request">A callback that performs the actual HTTP request.</param>
+    /// <param name="caller">The name of the method calling this method.</param>
+    protected async Task FinalizeAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
+        => (await HandleAsync(request, caller).NoContext()).Dispose();
+
     private static readonly ActivitySource _activitySource = new("TypedRest");
 
     /// <summary>
@@ -159,7 +167,7 @@ public abstract class EndpointBase : IEndpoint
             {
                 try
                 {
-                    await HandleAsync(() => HttpClient.HeadAsync(Uri)).NoContext();
+                    await FinalizeAsync(() => HttpClient.HeadAsync(Uri)).NoContext();
                 }
                 catch (Exception ex)
                 {
@@ -199,7 +207,7 @@ public abstract class EndpointBase : IEndpoint
             {
                 try
                 {
-                    await HandleAsync(() => HttpClient.HeadAsync(Uri)).NoContext();
+                    await FinalizeAsync(() => HttpClient.HeadAsync(Uri)).NoContext();
                 }
                 catch (Exception ex)
                 {

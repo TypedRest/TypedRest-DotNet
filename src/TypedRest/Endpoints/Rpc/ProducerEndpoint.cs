@@ -26,8 +26,7 @@ public class ProducerEndpoint<TResult> : RpcEndpointBase, IProducerEndpoint<TRes
 
     public async ITask<TResult> InvokeAsync(CancellationToken cancellationToken = default)
     {
-        var response = await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
-
+        using var response = await HandleAsync(() => HttpClient.SendAsync(new(HttpMethod.Post, Uri), cancellationToken)).NoContext();
         return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken).NoContext();
     }
 }
