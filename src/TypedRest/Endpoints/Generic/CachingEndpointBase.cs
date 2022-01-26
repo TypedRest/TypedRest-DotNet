@@ -45,7 +45,7 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
         cache?.SetIfModifiedHeaders(request.Headers);
 
         var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
-        if (response.StatusCode == HttpStatusCode.NotModified && cache != null && !cache.IsExpired)
+        if (response.StatusCode == HttpStatusCode.NotModified && cache is {IsExpired: false})
             return cache.GetContent();
         else
         {
