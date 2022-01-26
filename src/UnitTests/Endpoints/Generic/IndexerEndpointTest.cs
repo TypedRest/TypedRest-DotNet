@@ -19,8 +19,7 @@ public class IndexerEndpointTest : EndpointTestBase
     [Fact]
     public void RejectsTypesWithoutSuitablePublicConstructor()
     {
-        var endpoint = new IndexerEndpoint<EndpointBase>(EntryEndpoint, "endpoint");
-        Func<EndpointBase> getter = () => endpoint["1"];
+        Func<EndpointBase> getter = () => new IndexerEndpoint<EndpointBase>(EntryEndpoint, "endpoint")["1"];
         getter.Should().Throw<TypeInitializationException>();
     }
 }
