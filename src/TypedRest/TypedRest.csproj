@@ -30,11 +30,11 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.14" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.2" />
   </ItemGroup>
 
   <!-- Global usings -->
