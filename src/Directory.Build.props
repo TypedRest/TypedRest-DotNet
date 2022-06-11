@@ -4,7 +4,7 @@
     <!-- Build configuration -->
     <LangVersion>10.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
     <Nullable>annotations</Nullable>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <OutputType>Library</OutputType>
