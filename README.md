@@ -1,4 +1,4 @@
-# ![TypedRest](logo.svg) for .NET
+# ![TypedRest](https://raw.githubusercontent.com/TypedRest/TypedRest-DotNet/master/logo.svg) for .NET
 
 [![Build](https://github.com/TypedRest/TypedRest-DotNet/workflows/Build/badge.svg?branch=master)](https://github.com/TypedRest/TypedRest-DotNet/actions?query=workflow%3ABuild)
 [![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://dotnet.typedrest.net/)  
