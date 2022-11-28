@@ -3,6 +3,7 @@
   <!-- Project properties -->
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Summary>streaming with ReactiveX (Rx) for TypedRest</Summary>
     <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest.</Description>
     <PackageTags>REST;Client;Type-safe;Reactive;Rx;Streaming</PackageTags>

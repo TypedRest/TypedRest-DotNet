@@ -3,6 +3,7 @@
   <!-- Project properties -->
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
     <Summary>Build type-safe fluent-style REST API clients</Summary>
     <Description>TypedRest helps you build type-safe fluent-style REST API clients.</Description>
     <PackageTags>REST;Client;Type-safe</PackageTags>
