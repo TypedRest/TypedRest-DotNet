@@ -2,67 +2,7 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  windows:
-    runs-on: windows-2022
-    steps:
-      # Prepare
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: gittools/actions/gitversion/setup@v0.10.2
-        with:
-          versionSpec: '5.12.x'
-      - uses: gittools/actions/gitversion/execute@v0.10.2
-        id: gitversion
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~\AppData\Roaming\0install.net
-            ~\AppData\Local\0install.net
-            C:\ProgramData\0install.net
-          key: 0install-${{hashFiles('**/build.ps1')}}
-
-      # Build
-      - name: Build (pre-release)
-        if: steps.gitversion.outputs.preReleaseLabel != ''
-        run: .\build.ps1 ${{steps.gitversion.outputs.nuGetVersion}}-${{steps.gitversion.outputs.shortSha}}
-      - name: Build (release)
-        if: steps.gitversion.outputs.preReleaseLabel == ''
-        run: .\build.ps1 ${{steps.gitversion.outputs.nuGetVersion}}
-      - name: Report test results
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Test Report
-          reporter: dotnet-trx
-          path: src/UnitTests/TestResults/*.trx
-          check_name: windows - Test Report
-
-      # Release
-      - name: Create GitHub Release
-        if: steps.gitversion.outputs.preReleaseLabel == ''
-        uses: softprops/action-gh-release@v1
-
-      # Publish
-      - name: Publish documentation
-        if: steps.gitversion.outputs.preReleaseLabel == ''
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{github.token}}
-          force_orphan: true
-          publish_dir: artifacts/Documentation
-          cname: dotnet.typedrest.net
-      - name: Publish packages (GitHub)
-        if: github.event_name == 'push' && !startsWith(github.ref, 'refs/heads/renovate/')
-        run: |
-          Get-ChildItem artifacts\Release\*.nupkg | ForEach-Object {
-            curl.exe -sS -X PUT -u "${{github.actor}}:${{github.token}}" -F package=@$_ https://nuget.pkg.github.com/${{github.repository_owner}}/
-          }
-      - name: Publish packages (NuGet.org)
-        if: steps.gitversion.outputs.preReleaseLabel == ''
-        run: dotnet nuget push artifacts\Release\*.nupkg --source nuget.org --api-key ${{secrets.NUGET_API_KEY}}
-
-  linux:
+  build:
     runs-on: ubuntu-latest
     steps:
       # Prepare
@@ -77,10 +17,10 @@ jobs:
 
       # Build
       - name: Build (pre-release)
-        if: steps.gitversion.outputs.preReleaseLabel != ''
+        if: github.ref_type != 'tag'
         run: ./build.sh ${{steps.gitversion.outputs.nuGetVersion}}-${{steps.gitversion.outputs.shortSha}}
       - name: Build (release)
-        if: steps.gitversion.outputs.preReleaseLabel == ''
+        if: github.ref_type == 'tag'
         run: ./build.sh ${{steps.gitversion.outputs.nuGetVersion}}
       - name: Report test results
         if: always()
@@ -89,4 +29,24 @@ jobs:
           name: Test Report
           reporter: dotnet-trx
           path: src/UnitTests/TestResults/*.trx
-          check_name: linux - Test Report
+
+      # Release
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v1
+
+      # Publish
+      - name: Publish documentation
+        if: github.ref_type == 'tag'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{github.token}}
+          force_orphan: true
+          publish_dir: artifacts/Documentation
+          cname: dotnet.typedrest.net
+      - name: Publish packages (GitHub)
+        if: github.event_name == 'push' && !startsWith(github.ref_name, 'renovate/')
+        run: dotnet nuget push artifacts/Release/*.nupkg --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json --api-key ${{github.token}} --no-symbols --skip-duplicate
+      - name: Publish packages (NuGet.org)
+        if: github.ref_type == 'tag'
+        run: dotnet nuget push artifacts/Release/*.nupkg --source nuget.org --api-key ${{secrets.NUGET_API_KEY}}
