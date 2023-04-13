@@ -9,7 +9,7 @@ public interface IConsumerEndpoint<in TEntity> : IRpcEndpoint
     /// <summary>
     /// Sends the entity to the consumer.
     /// </summary>
-    /// <param name="entity">The <typeparamref name="TEntity"/> to post as input.</param>
+    /// <param name="entity">The entity to post as input.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>

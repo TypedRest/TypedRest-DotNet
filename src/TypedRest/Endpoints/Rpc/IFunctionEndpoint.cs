@@ -10,9 +10,9 @@ public interface IFunctionEndpoint<in TEntity, TResult> : IRpcEndpoint
     /// <summary>
     /// Invokes the function.
     /// </summary>
-    /// <param name="entity">The <typeparamref name="TEntity"/> to post as input.</param>
+    /// <param name="entity">The entity to post as input.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <returns>The <typeparamref name="TResult"/> returned by the server.</returns>
+    /// <returns>The result returned by the server.</returns>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
     /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>

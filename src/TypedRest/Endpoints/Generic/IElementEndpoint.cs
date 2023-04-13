@@ -15,7 +15,7 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     TEntity? Response { get; }
 
     /// <summary>
-    /// Returns the <typeparamref name="TEntity"/>.
+    /// Returns the entitiy.
     /// </summary>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -32,11 +32,11 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     bool? SetAllowed { get; }
 
     /// <summary>
-    /// Sets/replaces the <typeparamref name="TEntity"/>.
+    /// Sets/replaces the entity.
     /// </summary>
-    /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
+    /// <param name="entity">The new entities.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <returns>The <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+    /// <returns>The entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
     /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -53,11 +53,11 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     bool? MergeAllowed { get; }
 
     /// <summary>
-    /// Modifies an existing <typeparamref name="TEntity"/> by merging changes on the server-side.
+    /// Modifies an existing entity by merging changes on the server-side.
     /// </summary>
-    /// <param name="entity">The <typeparamref name="TEntity"/> data to merge with the existing one.</param>
+    /// <param name="entity">The entity data to merge with the existing one.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <returns>The modified <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+    /// <returns>The modified entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
     /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -72,7 +72,7 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// <param name="updateAction">A callback that takes the current state of the entity and applies the desired modifications.</param>
     /// <param name="maxRetries">The maximum number of retries to perform for optimistic concurrency before giving up.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <returns>The <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+    /// <returns>The entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
     /// <exception cref="InvalidOperationException">The number of retries performed for optimistic concurrency exceeded <paramref name="maxRetries"/>.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -87,7 +87,7 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// <param name="patchAction">Callback for building a patch document describing the desired modifications.</param>
     /// <param name="maxRetries">The maximum number of retries to perform for optimistic concurrency before giving up.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <returns>The <typeparamref name="TEntity"/> as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+    /// <returns>The entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
     /// <exception cref="InvalidOperationException">The number of retries performed for optimistic concurrency exceeded <paramref name="maxRetries"/>.</exception>
     /// <exception cref="NotSupportedException"><see cref="IEndpoint.Serializer"/> is not a <see cref="JsonMediaTypeFormatter"/>.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>

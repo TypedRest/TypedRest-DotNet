@@ -8,7 +8,7 @@ public interface IIndexerEndpoint<out TElementEndpoint> : IEndpoint
     where TElementEndpoint : IEndpoint
 {
     /// <summary>
-    /// Returns a <typeparamref name="TElementEndpoint"/> for a specific child element.
+    /// Returns an element endpoint for a specific child element.
     /// </summary>
     /// <param name="id">The ID identifying the entity.</param>
     TElementEndpoint this[string id] { get; }

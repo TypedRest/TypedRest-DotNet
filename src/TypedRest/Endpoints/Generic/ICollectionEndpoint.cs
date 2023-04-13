@@ -24,7 +24,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     bool? ReadAllAllowed { get; }
 
     /// <summary>
-    /// Returns all <typeparamref name="TEntity"/>s in the collection.
+    /// Returns all entities in the collection.
     /// </summary>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -41,7 +41,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     bool? ReadRangeAllowed { get; }
 
     /// <summary>
-    /// Returns all <typeparamref name="TEntity"/>s within a specific range of the collection.
+    /// Returns all entities within a specific range of the collection.
     /// </summary>
     /// <param name="range">The range of entities to retrieve.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
@@ -61,9 +61,9 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     bool? CreateAllowed { get; }
 
     /// <summary>
-    /// Adds a <typeparamref name="TEntity"/> as a new element to the collection.
+    /// Adds a entity as a new element to the collection.
     /// </summary>
-    /// <param name="entity">The new <typeparamref name="TEntity"/>.</param>
+    /// <param name="entity">The new entity.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <returns>An endpoint for the newly created entity; <c>null</c> if the server returned neither a "Location" header nor an entity with an ID in the response body.</returns>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
@@ -81,9 +81,9 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     bool? CreateAllAllowed { get; }
 
     /// <summary>
-    /// Adds (or updates) multiple <typeparamref name="TEntity"/>s as elements in the collection.
+    /// Adds (or updates) multiple entities as elements in the collection.
     /// </summary>
-    /// <param name="entities">The <typeparamref name="TEntity"/>s to create or modify.</param>
+    /// <param name="entities">The entities to create or modify.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -101,9 +101,9 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     bool? SetAllAllowed { get; }
 
     /// <summary>
-    /// Replaces the entire content of the collection with new <typeparamref name="TEntity"/>s.
+    /// Replaces the entire content of the collection with new entities.
     /// </summary>
-    /// <param name="entities">The new set of <typeparamref name="TEntity"/>s the collection shall contain.</param>
+    /// <param name="entities">The new set of entities the collection shall contain.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
