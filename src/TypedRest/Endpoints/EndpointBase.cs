@@ -117,8 +117,8 @@ public abstract class EndpointBase : IEndpoint
     /// <param name="rel">The relation type of the link to add.</param>
     /// <param name="href">The href of the link relative to this endpoint's URI. Use <c>null</c> to remove any previous entries for the relation type.</param>
     /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
-    /// <seealso cref="IEndpoint.GetLinks"/>
-    /// <seealso cref="IEndpoint.Link"/>
+    /// <seealso cref="GetLinks"/>
+    /// <seealso cref="Link"/>
     public void SetDefaultLink(string rel, string? href)
     {
         if (string.IsNullOrEmpty(href)) _defaultLinks.Remove(rel);
@@ -133,7 +133,7 @@ public abstract class EndpointBase : IEndpoint
     /// <param name="rel">The relation type of the link template to add.</param>
     /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
     /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
-    /// <seealso cref="IEndpoint.LinkTemplate(string,object)"/>
+    /// <seealso cref="LinkTemplate(string,object)"/>
     public void SetDefaultLinkTemplate(string rel, string? href)
     {
         if (string.IsNullOrEmpty(href)) _defaultLinkTemplates.Remove(rel);
