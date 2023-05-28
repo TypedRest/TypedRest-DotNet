@@ -63,14 +63,14 @@ public class OAuthHandler : DelegatingHandler
         if (response.Exception != null) throw response.Exception;
         if (response.IsError) throw new AuthenticationException(response.Error);
         _accessToken = new(
-            response.AccessToken,
+            response.AccessToken ?? throw new AuthenticationException("Missing access token in response."),
             DateTime.Now + TimeSpan.FromSeconds(response.ExpiresIn) - _oAuthOptions.TokenLifetimeBuffer);
     }
 
     private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)
     {
         var response = await HandleAsync(() => _httpClient.Value.GetDiscoveryDocumentAsync(_oAuthOptions.Uri.OriginalString, cancellationToken)).ConfigureAwait(false);
-        return response.TokenEndpoint;
+        return response.TokenEndpoint ?? throw new AuthenticationException("Missing token endpoint in service discovery document.");
     }
 
     private static readonly ActivitySource _activitySource = new("TypedRest.OAuth");
