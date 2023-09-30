@@ -64,7 +64,7 @@ public abstract class EndpointBase : IEndpoint
 
         var response = await request().NoContext();
 
-        // ReSharper disable once ConstantNullCoalescingCondition
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
         response.Content ??= new ByteArrayContent(Array.Empty<byte>());
 
         activity?.AddTag("http.method", response.RequestMessage!.Method.Method)

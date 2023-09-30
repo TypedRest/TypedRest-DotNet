@@ -18,7 +18,7 @@ public class DefaultErrorHandler : IErrorHandler
 
         var exception = MapException(response.StatusCode, message);
         exception.SetHttpResponseHeaders(response.Headers);
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (body != null) exception.SetHttpResponseBody(body);
         throw exception;
     }

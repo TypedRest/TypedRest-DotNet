@@ -85,6 +85,7 @@ public class OAuthHandler : DelegatingHandler
         try
         {
             var response = await request().ConfigureAwait(false);
+            // ReSharper disable once RedundantSuppressNullableWarningExpression
             activity?.AddTag("http.url", response.HttpResponse!.RequestMessage!.RequestUri!.ToString())
                      .AddTag("http.method", response.HttpResponse.RequestMessage.Method.Method)
                      .AddTag("http.status_code", ((int)response.HttpResponse.StatusCode).ToString());
