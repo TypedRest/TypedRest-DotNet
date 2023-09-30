@@ -1,13 +1,12 @@
 namespace TypedRest.Endpoints.Generic;
 
-[Collection("Endpoint")]
-public class ElementEndpointTest : EndpointTestBase
+public abstract class ElementEndpointTestBase : EndpointTestBase
 {
-    private readonly ElementEndpoint<MockEntity> _endpoint;
+    protected readonly ElementEndpoint<MockEntity> Endpoint;
 
-    public ElementEndpointTest()
+    protected ElementEndpointTestBase(MediaTypeFormatter serializer) : base(serializer)
     {
-        _endpoint = new(EntryEndpoint, "endpoint");
+        Endpoint = new(EntryEndpoint, "endpoint");
     }
 
     [Fact]
@@ -16,7 +15,7 @@ public class ElementEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(JsonMime, "{\"id\":5,\"name\":\"test\"}");
 
-        var result = await _endpoint.ReadAsync();
+        var result = await Endpoint.ReadAsync();
         result.Should().Be(new MockEntity(5, "test"));
     }
 
@@ -26,7 +25,7 @@ public class ElementEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond("application/sample+json", "{\"id\":5,\"name\":\"test\"}");
 
-        var result = await _endpoint.ReadAsync();
+        var result = await Endpoint.ReadAsync();
         result.Should().Be(new MockEntity(5, "test"));
     }
 
@@ -39,13 +38,13 @@ public class ElementEndpointTest : EndpointTestBase
                  Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
-        var result1 = await _endpoint.ReadAsync();
+        var result1 = await Endpoint.ReadAsync();
         result1.Should().Be(new MockEntity(5, "test"));
 
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("If-None-Match", "\"123abc\"")
             .Respond(HttpStatusCode.NotModified);
-        var result2 = await _endpoint.ReadAsync();
+        var result2 = await Endpoint.ReadAsync();
         result2.Should().Be(new MockEntity(5, "test"));
 
         result2.Should().NotBeSameAs(result1,
@@ -63,13 +62,13 @@ public class ElementEndpointTest : EndpointTestBase
                      Headers = {LastModified = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
                  }
              });
-        var result1 = await _endpoint.ReadAsync();
+        var result1 = await Endpoint.ReadAsync();
         result1.Should().Be(new MockEntity(5, "test"));
 
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("If-Modified-Since", "Wed, 21 Oct 2015 00:00:00 GMT")
             .Respond(HttpStatusCode.NotModified);
-        var result2 = await _endpoint.ReadAsync();
+        var result2 = await Endpoint.ReadAsync();
         result2.Should().Be(new MockEntity(5, "test"));
 
         result2.Should().NotBeSameAs(result1,
@@ -82,7 +81,7 @@ public class ElementEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
             .Respond(HttpStatusCode.OK);
 
-        bool result = await _endpoint.ExistsAsync();
+        bool result = await Endpoint.ExistsAsync();
         result.Should().BeTrue();
     }
 
@@ -92,7 +91,7 @@ public class ElementEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")
             .Respond(HttpStatusCode.NotFound);
 
-        bool result = await _endpoint.ExistsAsync();
+        bool result = await Endpoint.ExistsAsync();
         result.Should().BeFalse();
     }
 
@@ -103,7 +102,7 @@ public class ElementEndpointTest : EndpointTestBase
             .WithContent("{\"id\":5,\"name\":\"test\"}")
             .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
 
-        var result = await _endpoint.SetAsync(new MockEntity(5, "test"));
+        var result = await Endpoint.SetAsync(new MockEntity(5, "test"));
         result.Should().Be(new MockEntity(5, "testXXX"));
     }
 
@@ -114,7 +113,7 @@ public class ElementEndpointTest : EndpointTestBase
             .WithContent("{\"id\":5,\"name\":\"test\"}")
             .Respond(HttpStatusCode.NoContent);
 
-        var result = await _endpoint.SetAsync(new MockEntity(5, "test"));
+        var result = await Endpoint.SetAsync(new MockEntity(5, "test"));
         result.Should().BeNull();
     }
 
@@ -127,13 +126,13 @@ public class ElementEndpointTest : EndpointTestBase
                  Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
-        var result = await _endpoint.ReadAsync();
+        var result = await Endpoint.ReadAsync();
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
             .WithContent("{\"id\":5,\"name\":\"test\"}")
             .WithHeaders("If-Match", "\"123abc\"")
             .Respond(HttpStatusCode.NoContent);
-        await _endpoint.SetAsync(result);
+        await Endpoint.SetAsync(result);
     }
 
     [Fact]
@@ -147,13 +146,13 @@ public class ElementEndpointTest : EndpointTestBase
                      Headers = {LastModified = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
                  }
              });
-        var result = await _endpoint.ReadAsync();
+        var result = await Endpoint.ReadAsync();
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
             .WithContent("{\"id\":5,\"name\":\"test\"}")
             .WithHeaders("If-Unmodified-Since", "Wed, 21 Oct 2015 00:00:00 GMT")
             .Respond(HttpStatusCode.NoContent);
-        await _endpoint.SetAsync(result);
+        await Endpoint.SetAsync(result);
     }
 
     [Fact]
@@ -180,7 +179,7 @@ public class ElementEndpointTest : EndpointTestBase
             .WithHeaders("If-Match", "\"2\"")
             .Respond(HttpStatusCode.NoContent);
 
-        await _endpoint.UpdateAsync(x => x.Name = "testX");
+        await Endpoint.UpdateAsync(x => x.Name = "testX");
     }
 
     [Fact]
@@ -197,34 +196,7 @@ public class ElementEndpointTest : EndpointTestBase
             .WithHeaders("If-Match", "\"1\"")
             .Respond(HttpStatusCode.PreconditionFailed);
 
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await _endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
-    }
-
-    [Fact]
-    public async Task TestJsonPatch()
-    {
-        Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
-            .WithContent("[{\"value\":\"testX\",\"path\":\"/name\",\"op\":\"replace\"}]")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"testX\"}");
-
-        var result = await _endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
-        result.Should().Be(new MockEntity(5, "testX"));
-    }
-
-    [Fact]
-    public async Task TestJsonPatchFallback()
-    {
-        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(_ => new()
-             {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime)
-             });
-        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"testX\"}")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"testX\"}");
-
-        var result = await _endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
-        result.Should().Be(new MockEntity(5, "testX"));
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await Endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
     }
 
     [Fact]
@@ -234,7 +206,7 @@ public class ElementEndpointTest : EndpointTestBase
             .WithContent("{\"id\":5,\"name\":\"test\"}")
             .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
 
-        var result = await _endpoint.MergeAsync(new MockEntity(5, "test"));
+        var result = await Endpoint.MergeAsync(new MockEntity(5, "test"));
         result.Should().Be(new MockEntity(5, "testXXX"));
     }
 
@@ -245,7 +217,7 @@ public class ElementEndpointTest : EndpointTestBase
             .WithContent("{\"id\":5,\"name\":\"test\"}")
             .Respond(HttpStatusCode.NoContent);
 
-        var result = await _endpoint.MergeAsync(new MockEntity(5, "test"));
+        var result = await Endpoint.MergeAsync(new MockEntity(5, "test"));
         result.Should().BeNull();
     }
 
@@ -255,7 +227,7 @@ public class ElementEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
             .Respond(HttpStatusCode.NoContent);
 
-        await _endpoint.DeleteAsync();
+        await Endpoint.DeleteAsync();
     }
 
     [Fact]
@@ -267,12 +239,12 @@ public class ElementEndpointTest : EndpointTestBase
                  Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
-        await _endpoint.ReadAsync();
+        await Endpoint.ReadAsync();
 
         Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
             .WithHeaders("If-Match", "\"123abc\"")
             .Respond(HttpStatusCode.NoContent);
 
-        await _endpoint.DeleteAsync();
+        await Endpoint.DeleteAsync();
     }
 }
