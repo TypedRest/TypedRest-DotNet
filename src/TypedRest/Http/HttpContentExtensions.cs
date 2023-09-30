@@ -14,11 +14,17 @@ public static class HttpContentExtensions
     /// <param name="cancellationToken">Used to cancel the request.</param>
     public static Task<T> ReadAsAsync<T>(this HttpContent content, MediaTypeFormatter serializer, CancellationToken cancellationToken = default)
     {
-        if (content.Headers.ContentType?.MediaType != null
-         && content.Headers.ContentType.MediaType.EndsWith("+json")
-         && serializer is JsonMediaTypeFormatter)
-            content.Headers.ContentType.MediaType = "application/json";
-
+        HandleCustomJsonMediaTypes(content.Headers, serializer);
         return content.ReadAsAsync<T>(new[] {serializer}, cancellationToken);
+    }
+
+    private static readonly MediaTypeHeaderValue _jsonMediaType = new("application/json");
+
+    private static void HandleCustomJsonMediaTypes(HttpContentHeaders headers, MediaTypeFormatter serializer)
+    {
+        if (headers.ContentType?.MediaType is {} mediaType
+         && mediaType.EndsWith("+json")
+         && serializer.SupportedMediaTypes.Contains(_jsonMediaType))
+            headers.ContentType.MediaType = _jsonMediaType.MediaType!;
     }
 }
