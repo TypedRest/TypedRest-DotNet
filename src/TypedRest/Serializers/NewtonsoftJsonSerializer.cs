@@ -5,11 +5,12 @@ using Newtonsoft.Json.Serialization;
 namespace TypedRest.Serializers;
 
 /// <summary>
-/// Handles serializing/deserializing from/to JSON using camel-case naming.
+/// Handles serializing/deserializing from/to JSON using <see cref="Newtonsoft.Json"/>.
+/// Uses camel-case naming and does not serialize <c>null</c> by default.
 /// </summary>
-public class DefaultJsonSerializer : JsonMediaTypeFormatter
+public class NewtonsoftJsonSerializer : JsonMediaTypeFormatter
 {
-    public DefaultJsonSerializer()
+    public NewtonsoftJsonSerializer()
     {
         SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));

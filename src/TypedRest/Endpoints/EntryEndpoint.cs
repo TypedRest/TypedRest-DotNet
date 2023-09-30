@@ -14,14 +14,14 @@ public class EntryEndpoint : EndpointBase
     /// </summary>
     /// <param name="httpClient">The HTTP client used to communicate with the REST API.</param>
     /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically. <see cref="HttpClient.BaseAddress"/> is used if this is unset.</param>
-    /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to <see cref="DefaultJsonSerializer"/> if unset.</param>
+    /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to <see cref="NewtonsoftJsonSerializer"/> if unset.</param>
     /// <param name="errorHandler">Handles errors in HTTP responses. Defaults to <see cref="DefaultErrorHandler"/> if unset.</param>
     /// <param name="linkExtractor">Detects links in HTTP responses. Combines <see cref="HeaderLinkExtractor"/> and <see cref="HalLinkExtractor"/> if unset.</param>
     public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
         : base(
             (uri ?? httpClient.BaseAddress ?? throw new ArgumentException("uri or httpClient.BaseAddress must be set.", nameof(uri))).EnsureTrailingSlash(),
             httpClient,
-            serializer ?? new DefaultJsonSerializer(),
+            serializer ?? new NewtonsoftJsonSerializer(),
             errorHandler ?? new DefaultErrorHandler(),
             linkExtractor ?? new AggregateLinkExtractor(new HeaderLinkExtractor(), new HalLinkExtractor()))
     {
