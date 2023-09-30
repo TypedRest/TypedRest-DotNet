@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace TypedRest.CommandLine.IO;
 
@@ -8,7 +8,7 @@ namespace TypedRest.CommandLine.IO;
 public class JsonConsole : IConsole
 {
     public T? Read<T>()
-        => JsonConvert.DeserializeObject<T>(Console.ReadLine() ?? throw new EndOfStreamException());
+        => JsonSerializer.Deserialize<T>(Console.ReadLine() ?? throw new EndOfStreamException());
 
     public string Read(string prompt)
     {
@@ -48,7 +48,7 @@ public class JsonConsole : IConsole
         bool hasCustomToString = output.GetType().GetMethod(nameof(ToString))?.DeclaringType != typeof(object);
         Console.WriteLine(hasCustomToString
             ? output.ToString()
-            : JsonConvert.SerializeObject(output, Formatting.Indented));
+            : JsonSerializer.Serialize(output, options: new() {WriteIndented = true}));
     }
 
     public void WriteError(string output)
