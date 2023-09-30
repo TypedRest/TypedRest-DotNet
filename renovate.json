@@ -15,14 +15,14 @@
       "automergeType": "branch"
     },
     {
-      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
+      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore", "^System\\.Text\\.Json"],
       "groupName": "Microsoft Extensions",
       "automerge": true,
       "automergeType": "branch",
       "separateMinorPatch": true
     },
     {
-      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
+      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore", "^System\\.Text\\.Json"],
       "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
