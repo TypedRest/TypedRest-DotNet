@@ -21,9 +21,8 @@ public class SystemTextJsonSerializer : MediaTypeFormatter
     /// <summary>
     /// Serializer options.
     /// </summary>
-    public JsonSerializerOptions Options { get; } = new()
+    public JsonSerializerOptions Options { get; } = new(JsonSerializerDefaults.Web)
     {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
