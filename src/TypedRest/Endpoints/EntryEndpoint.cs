@@ -14,18 +14,18 @@ public class EntryEndpoint : EndpointBase
     /// </summary>
     /// <param name="httpClient">The HTTP client used to communicate with the REST API.</param>
     /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically. <see cref="HttpClient.BaseAddress"/> is used if this is unset.</param>
-    /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to <see cref="NewtonsoftJsonSerializer"/> if unset.</param>
+    /// <param name="serializers">A list of serializers used for entities received from the server, sorted from most to least preferred. Always uses first for sending to the server.</param>
     /// <param name="errorHandler">Handles errors in HTTP responses. Defaults to <see cref="DefaultErrorHandler"/> if unset.</param>
     /// <param name="linkExtractor">Detects links in HTTP responses. Combines <see cref="HeaderLinkExtractor"/> and <see cref="HalLinkExtractor"/> if unset.</param>
-    public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
+    protected EntryEndpoint(HttpClient httpClient, IReadOnlyList<MediaTypeFormatter> serializers, Uri? uri = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
         : base(
             (uri ?? httpClient.BaseAddress ?? throw new ArgumentException("uri or httpClient.BaseAddress must be set.", nameof(uri))).EnsureTrailingSlash(),
             httpClient,
-            serializer ?? new NewtonsoftJsonSerializer(),
+            serializers,
             errorHandler ?? new DefaultErrorHandler(),
             linkExtractor ?? new AggregateLinkExtractor(new HeaderLinkExtractor(), new HalLinkExtractor()))
     {
-        foreach (var mediaType in Serializer.SupportedMediaTypes)
+        foreach (var mediaType in Serializers.SelectMany(x=> x.SupportedMediaTypes).Distinct())
         {
             if (mediaType.MediaType != null)
                 HttpClient.DefaultRequestHeaders.Accept.Add(new(mediaType.MediaType));
@@ -35,9 +35,21 @@ public class EntryEndpoint : EndpointBase
     /// <summary>
     /// Creates a new entry endpoint.
     /// </summary>
+    /// <param name="httpClient">The HTTP client used to communicate with the REST API.</param>
+    /// <param name="uri">The base URI of the REST API. Missing trailing slash will be appended automatically. <see cref="HttpClient.BaseAddress"/> is used if this is unset.</param>
+    /// <param name="serializer">The serializer used for entities sent to and received from the server. Defaults to <see cref="NewtonsoftJsonSerializer"/> if unset.</param>
+    /// <param name="errorHandler">Handles errors in HTTP responses. Defaults to <see cref="DefaultErrorHandler"/> if unset.</param>
+    /// <param name="linkExtractor">Detects links in HTTP responses. Combines <see cref="HeaderLinkExtractor"/> and <see cref="HalLinkExtractor"/> if unset.</param>
+    public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
+        : this(httpClient, new[] {serializer ?? new NewtonsoftJsonSerializer()}, uri, errorHandler, linkExtractor)
+    {}
+
+    /// <summary>
+    /// Creates a new entry endpoint.
+    /// </summary>
     /// <param name="uri">The base URI of the REST API.</param>
     /// <param name="credentials">Optional HTTP Basic authentication credentials used to authenticate against the REST API.</param>
-    /// <param name="serializer">Controls the serialization of entities sent to and received from the server. Defaults to a JSON serializer if unset.</param>
+    /// <param name="serializer">The serializer used for entities sent to and received from the server. Defaults to <see cref="NewtonsoftJsonSerializer"/> if unset.</param>
     /// <param name="errorHandler">Handles errors in HTTP responses. Leave unset for default implementation.</param>
     /// <param name="linkExtractor">Detects links in HTTP responses. Leave unset for default implementation.</param>
     public EntryEndpoint(Uri uri, NetworkCredential? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)

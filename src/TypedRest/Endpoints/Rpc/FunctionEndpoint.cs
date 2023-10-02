@@ -29,7 +29,7 @@ public class FunctionEndpoint<TEntity, TResult> : RpcEndpointBase, IFunctionEndp
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        using var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
-        return await response.Content.ReadAsAsync<TResult>(Serializer, cancellationToken).NoContext();
+        using var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializers[0], cancellationToken)).NoContext();
+        return await response.Content.ReadAsAsync<TResult>(Serializers, cancellationToken).NoContext();
     }
 }

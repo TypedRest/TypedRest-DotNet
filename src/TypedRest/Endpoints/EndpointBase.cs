@@ -13,7 +13,7 @@ public abstract class EndpointBase : IEndpoint
 {
     public Uri Uri { get; }
     public HttpClient HttpClient { get; }
-    public MediaTypeFormatter Serializer { get; }
+    public IReadOnlyList<MediaTypeFormatter> Serializers { get; }
     public IErrorHandler ErrorHandler { get; }
     public ILinkExtractor LinkExtractor { get; }
 
@@ -22,14 +22,14 @@ public abstract class EndpointBase : IEndpoint
     /// </summary>
     /// <param name="uri">The HTTP URI of the remote element.</param>
     /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
-    /// <param name="serializer">Controls the serialization of entities sent to and received from the server.</param>
+    /// <param name="serializers">A list of serializers used for entities received from the server, sorted from most to least preferred. Always uses first for sending to the server.</param>
     /// <param name="errorHandler">Handles errors in HTTP responses.</param>
     /// <param name="linkExtractor">Detects links in HTTP responses.</param>
-    protected EndpointBase(Uri uri, HttpClient httpClient, MediaTypeFormatter serializer, IErrorHandler errorHandler, ILinkExtractor linkExtractor)
+    protected EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList<MediaTypeFormatter> serializers, IErrorHandler errorHandler, ILinkExtractor linkExtractor)
     {
         Uri = uri ?? throw new ArgumentNullException(nameof(uri));
         HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+        Serializers = serializers ?? throw new ArgumentNullException(nameof(serializers));
         ErrorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler));
         LinkExtractor = linkExtractor ?? throw new ArgumentNullException(nameof(linkExtractor));
     }
@@ -40,7 +40,7 @@ public abstract class EndpointBase : IEndpoint
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
     /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
     protected EndpointBase(IEndpoint referrer, Uri relativeUri)
-        : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkExtractor)
+        : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializers, referrer.ErrorHandler, referrer.LinkExtractor)
     {}
 
     /// <summary>
@@ -49,7 +49,7 @@ public abstract class EndpointBase : IEndpoint
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
     /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
     protected EndpointBase(IEndpoint referrer, string relativeUri)
-        : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializer, referrer.ErrorHandler, referrer.LinkExtractor)
+        : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializers, referrer.ErrorHandler, referrer.LinkExtractor)
     {}
 
     /// <summary>

@@ -74,7 +74,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     public virtual async Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default)
     {
         var content = await GetContentAsync(cancellationToken);
-        return await content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext();
+        return await content.ReadAsAsync<List<TEntity>>(Serializers, cancellationToken).NoContext();
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
 
         using var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken)).NoContext();
         return new(
-            elements: await response.Content.ReadAsAsync<List<TEntity>>(Serializer, cancellationToken).NoContext(),
+            elements: await response.Content.ReadAsAsync<List<TEntity>>(Serializers, cancellationToken).NoContext(),
             range: response.Content.Headers.ContentRange);
     }
 
@@ -109,7 +109,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
+        var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializers[0], cancellationToken)).NoContext();
 
         TElementEndpoint elementEndpoint;
         if (response.Headers.Location == null)
@@ -143,7 +143,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-        await FinalizeAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken)).NoContext();
+        await FinalizeAsync(() => HttpClient.PatchAsync(Uri, entities, Serializers[0], cancellationToken)).NoContext();
     }
 
     public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);
@@ -152,7 +152,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-        using var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializer);
+        using var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializers[0]);
         (await PutContentAsync(content, cancellationToken)).Dispose();
     }
 }

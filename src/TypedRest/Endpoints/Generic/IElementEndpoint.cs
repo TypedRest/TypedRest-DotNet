@@ -89,7 +89,7 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <returns>The entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
     /// <exception cref="InvalidOperationException">The number of retries performed for optimistic concurrency exceeded <paramref name="maxRetries"/>.</exception>
-    /// <exception cref="NotSupportedException"><see cref="IEndpoint.Serializer"/> is not a <see cref="JsonMediaTypeFormatter"/>.</exception>
+    /// <exception cref="NotSupportedException"><see cref="IEndpoint.Serializers"/> does not contain a <see cref="JsonMediaTypeFormatter"/>.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>

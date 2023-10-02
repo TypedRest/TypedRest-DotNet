@@ -19,9 +19,9 @@ public interface IEndpoint
     HttpClient HttpClient { get; }
 
     /// <summary>
-    /// Controls the serialization of entities sent to and received from the server.
+    /// A list of serializers used for entities received from the server, sorted from most to least preferred. Always uses first for sending to the server.
     /// </summary>
-    MediaTypeFormatter Serializer { get; }
+    IReadOnlyList<MediaTypeFormatter> Serializers { get; }
 
     /// <summary>
     /// Handles errors in responses.

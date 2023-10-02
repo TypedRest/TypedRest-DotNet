@@ -30,12 +30,12 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {}
 
     public TEntity? Response
-        => ResponseCache?.GetContent().ReadAsAsync<TEntity>(Serializer).Result;
+        => ResponseCache?.GetContent().ReadAsAsync<TEntity>(Serializers).Result;
 
     public virtual async Task<TEntity> ReadAsync(CancellationToken cancellationToken = default)
     {
         var content = await GetContentAsync(cancellationToken);
-        return await content.ReadAsAsync<TEntity>(Serializer, cancellationToken).NoContext();
+        return await content.ReadAsAsync<TEntity>(Serializers, cancellationToken).NoContext();
     }
 
     public async Task<bool> ExistsAsync(CancellationToken cancellationToken = default)
@@ -54,7 +54,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        using var content = new ObjectContent<TEntity>(entity, Serializer);
+        using var content = new ObjectContent<TEntity>(entity, Serializers[0]);
         using var response = await PutContentAsync(content, cancellationToken);
         return await TryReadAsAsync(response, cancellationToken);
     }
@@ -65,7 +65,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
+        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializers[0], cancellationToken)).NoContext();
         ResponseCache = null;
         return await TryReadAsAsync(response, cancellationToken);
     }
@@ -103,8 +103,8 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
 
     public async Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default)
     {
-        if (Serializer is not JsonMediaTypeFormatter serializer)
-            throw new NotSupportedException($"JSON Patch can only be used if the endpoint's serializer is a {nameof(JsonMediaTypeFormatter)}.");
+        if (Serializers.OfType<JsonMediaTypeFormatter>().FirstOrDefault() is not {} serializer)
+            throw new NotSupportedException($"JSON Patch can only be used if the endpoint's serializers contain a {nameof(JsonMediaTypeFormatter)}.");
 
         using var activity = StartActivity();
 
@@ -131,7 +131,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         try
         {
-            return await response.Content.ReadAsAsync<TEntity?>(Serializer, cancellationToken).NoContext();
+            return await response.Content.ReadAsAsync<TEntity?>(Serializers, cancellationToken).NoContext();
         }
         catch (UnsupportedMediaTypeException)
         {
