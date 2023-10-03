@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Project properties -->
+  <PropertyGroup>
+    <RootNamespace>TypedRest</RootNamespace>
+    <Summary>System.Text.Json support for TypedRest</Summary>
+    <Description>Adds support for serializing using System.Text.Json to TypedRest. Pass new SystemTextJsonSerializer() to the EntryEndpoint constructor.</Description>
+    <PackageTags>REST;Client;Type-safe;JSON;Serializer;System.Text.JSON</PackageTags>
+    <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework)!='netstandard2.0'">
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Dependencies -->
+  <ItemGroup>
+    <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="6.0.8" />
+  </ItemGroup>
+
+</Project>

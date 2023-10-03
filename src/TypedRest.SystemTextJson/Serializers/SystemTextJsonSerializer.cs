@@ -1,3 +1,4 @@
+using System.Net.Http.Formatting;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -6,6 +7,8 @@ namespace TypedRest.Serializers;
 /// <summary>
 /// Handles serializing/deserializing from/to JSON using <see cref="System.Text.Json"/>.
 /// Uses camel-case naming and does not serialize <c>null</c> by default.
+///
+/// **NuGet:** [TypedRest.SystemTextJson](https://www.nuget.org/packages/TypedRest.SystemTextJson/)
 /// </summary>
 public class SystemTextJsonSerializer : MediaTypeFormatter
 {

@@ -40,6 +40,10 @@ The main TypedRest library.
 Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/).  
 Create endpoints using the types in the `TypedRest.Endpoints.Reactive` namespace.
 
+[![TypedRest.SystemTextJson](https://img.shields.io/nuget/v/TypedRest.SystemTextJson.svg?label=TypedRest.SystemTextJson)](https://www.nuget.org/packages/TypedRest.Reactive/)  
+Adds support for serializing using [System.Text.Json](https://learn.microsoft.com/en-us/dotnet/api/system.text.json) instead of [Newtonsoft.Json](https://www.newtonsoft.com/json).  
+Pass `new SystemTextJsonSerializer()` to the `EntryEndpoint` constructor.
+
 [![TypedRest.OAuth](https://img.shields.io/nuget/v/TypedRest.OAuth.svg?label=TypedRest.OAuth)](https://www.nuget.org/packages/TypedRest.OAuth/)  
 Adds support for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication to [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient).  
 Call `.AddOAuthHandler()` after `.AddTypedRest()` (or `.AddHttpClient()` when not using main TypedRest package).
