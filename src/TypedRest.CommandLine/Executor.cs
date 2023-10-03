@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Newtonsoft.Json;
 using TypedRest.CommandLine.Commands;
 using TypedRest.Endpoints;
 

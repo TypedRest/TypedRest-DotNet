@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Newtonsoft.Json;
 using TypedRest.CommandLine.IO;
 using TypedRest.Endpoints;
 
@@ -60,6 +60,6 @@ public abstract class EndpointCommand<TEndpoint> : IEndpointCommand
     protected virtual T Input<T>(IReadOnlyList<string> args)
         => ((args.Count == 0)
                ? Console.Read<T>()
-               : JsonSerializer.Deserialize<T>(args[0]))
+               : JsonConvert.DeserializeObject<T>(args[0]))
         ?? throw new InvalidOperationException($"Expected {typeof(T)} but got null as input");
 }
