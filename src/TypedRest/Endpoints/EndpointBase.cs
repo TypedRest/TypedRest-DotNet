@@ -12,9 +12,21 @@ namespace TypedRest.Endpoints;
 public abstract class EndpointBase : IEndpoint
 {
     public Uri Uri { get; }
+
     public HttpClient HttpClient { get; }
+
     public IReadOnlyList<MediaTypeFormatter> Serializers { get; }
+
+    /// <summary>
+    /// The serializer used for entities sent to the server. Equal to the first entry in <see cref="Serializers"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException"><see cref="Serializers"/> is empty.</exception>
+    protected virtual MediaTypeFormatter Serializer
+        => Serializers.FirstOrDefault()
+        ?? throw new InvalidOperationException($"{nameof(Serializers)} is empty.");
+
     public IErrorHandler ErrorHandler { get; }
+
     public ILinkExtractor LinkExtractor { get; }
 
     /// <summary>

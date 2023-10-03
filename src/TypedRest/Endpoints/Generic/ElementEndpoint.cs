@@ -54,7 +54,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        using var content = new ObjectContent<TEntity>(entity, Serializers[0]);
+        using var content = new ObjectContent<TEntity>(entity, Serializer);
         using var response = await PutContentAsync(content, cancellationToken);
         return await TryReadAsAsync(response, cancellationToken);
     }
@@ -65,7 +65,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializers[0], cancellationToken)).NoContext();
+        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
         ResponseCache = null;
         return await TryReadAsAsync(response, cancellationToken);
     }

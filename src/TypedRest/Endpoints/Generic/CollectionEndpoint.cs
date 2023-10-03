@@ -109,7 +109,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializers[0], cancellationToken)).NoContext();
+        var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
         TElementEndpoint elementEndpoint;
         if (response.Headers.Location == null)
@@ -143,7 +143,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-        await FinalizeAsync(() => HttpClient.PatchAsync(Uri, entities, Serializers[0], cancellationToken)).NoContext();
+        await FinalizeAsync(() => HttpClient.PatchAsync(Uri, entities, Serializer, cancellationToken)).NoContext();
     }
 
     public bool? SetAllAllowed => IsMethodAllowed(HttpMethod.Put);
@@ -152,7 +152,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     {
         if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-        using var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializers[0]);
+        using var content = new ObjectContent<IEnumerable<TEntity>>(entities, Serializer);
         (await PutContentAsync(content, cancellationToken)).Dispose();
     }
 }

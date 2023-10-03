@@ -47,7 +47,7 @@ public class StreamingEndpoint<TEntity> : EndpointBase, IStreamingEndpoint<TEnti
             using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             await ErrorHandler.HandleAsync(response);
 
-            var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializers[0], _separator, BufferSize);
+            var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, _separator, BufferSize);
 
             while (!cancellationToken.IsCancellationRequested)
             {
