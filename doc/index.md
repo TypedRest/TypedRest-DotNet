@@ -39,11 +39,13 @@ Take a look at the <xref:TypedRest.Endpoints.Generic> namespace to get an overvi
 The main TypedRest library.
 
 [TypedRest.Reactive](https://www.nuget.org/packages/TypedRest.Reactive/)  
-Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/) to TypedRest.
+Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/).  
+Create endpoints using the types in the <xref:TypedRest.Endpoints.Reactive> namespace.
 
 [TypedRest.OAuth](https://www.nuget.org/packages/TypedRest.OAuth/)  
-Provides an [HttpClient DelegatingHandler](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.delegatinghandler) for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication.  
-This can also be used independently of the other TypedRest packages.
+Adds support for [OAuth 2.0](https://oauth.net/2/) / [OpenID Connect](https://openid.net/connect/) authentication to <xref:System.Net.Http.HttpClient>.  
+Call `.AddOAuthHandler()` after `.AddTypedRest()` (or `.AddHttpClient()` when not using main TypedRest package).
 
 [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)  
-Build command-line interfaces for TypedRest clients.
+Build command-line interfaces for TypedRest clients.  
+Create commands mirroring the endpoints using the types in the <xref:TypedRest.CommandLine.Commands> namespace.

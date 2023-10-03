@@ -4,7 +4,7 @@
   <PropertyGroup>
     <RootNamespace>TypedRest.OAuth</RootNamespace>
     <Summary>OAuth 2.0 / OpenID Connect authentication for HttpClient</Summary>
-    <Description>Provides an HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication. This can also be used independently of the other TypedRest packages.</Description>
+    <Description>Adds support for OAuth 2.0 / OpenID Connect authentication to HttpClient. Call .AddOAuthHandler() after .AddTypedRest() (or .AddHttpClient() when not using main TypedRest package).</Description>
     <PackageTags>OAuth;OIDC;HttpClient;DelegatingHandler</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
   </PropertyGroup>

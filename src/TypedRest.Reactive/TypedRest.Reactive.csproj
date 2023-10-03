@@ -4,7 +4,7 @@
   <PropertyGroup>
     <RootNamespace>TypedRest</RootNamespace>
     <Summary>streaming with ReactiveX (Rx) for TypedRest</Summary>
-    <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest.</Description>
+    <Description>Adds support for streaming with ReactiveX (Rx) to TypedRest. Create endpoints using the types in the TypedRest.Endpoints.Reactive namespace.</Description>
     <PackageTags>REST;Client;Type-safe;Reactive;Rx;Streaming</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
   </PropertyGroup>

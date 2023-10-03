@@ -4,7 +4,7 @@
   <PropertyGroup>
     <RootNamespace>TypedRest.CommandLine</RootNamespace>
     <Summary>build CLIs for TypedRest clients</Summary>
-    <Description>Build command-line interfaces for TypedRest clients.</Description>
+    <Description>Build command-line interfaces for TypedRest clients. Create commands mirroring the endpoints using the types in the TypedRest.CommandLine.Commands namespace.</Description>
     <PackageTags>REST;Client;Type-safe;CLI;command-line</PackageTags>
     <OutputPath>..\..\artifacts\$(Configuration)\</OutputPath>
   </PropertyGroup>
