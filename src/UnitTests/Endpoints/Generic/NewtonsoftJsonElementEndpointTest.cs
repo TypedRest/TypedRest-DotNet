@@ -23,6 +23,9 @@ public class NewtonsoftJsonElementEndpointTest : ElementEndpointTestBase
     [Fact]
     public async Task TestJsonPatchFallback()
     {
+        Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
+            .Respond(HttpStatusCode.MethodNotAllowed);
+
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
