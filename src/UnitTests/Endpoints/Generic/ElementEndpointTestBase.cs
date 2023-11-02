@@ -196,7 +196,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
             .WithHeaders("If-Match", "\"1\"")
             .Respond(HttpStatusCode.PreconditionFailed);
 
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await Endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => Endpoint.UpdateAsync(x => x.Name = "testX", maxRetries: 0));
     }
 
     [Fact]
