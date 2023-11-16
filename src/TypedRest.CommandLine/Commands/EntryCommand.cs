@@ -6,18 +6,11 @@ namespace TypedRest.CommandLine.Commands;
 /// <summary>
 /// Command providing an entry point to a hierarchy of named <see cref="IEndpointCommand"/>s.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparamref name="TEndpoint">The specific type of <see cref="IEndpoint"/> the command starts with.</typeparamref>
-public class EntryCommand<TEndpoint> : EndpointCommand<TEndpoint>, IEnumerable<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>>
+public class EntryCommand<TEndpoint>(TEndpoint endpoint) : EndpointCommand<TEndpoint>(endpoint), IEnumerable<KeyValuePair<string, Func<TEndpoint, IEndpointCommand>>>
     where TEndpoint : IEndpoint
 {
-    /// <summary>
-    /// Creates a new REST entry command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public EntryCommand(TEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     private readonly Dictionary<string, Func<TEndpoint, IEndpointCommand>> _commandProviders =
         new(StringComparer.OrdinalIgnoreCase);
 

@@ -5,18 +5,11 @@ namespace TypedRest.CommandLine.Commands.Generic;
 /// <summary>
 /// Command operating on an <see cref="IElementEndpoint{TEntity}"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-public class ElementCommand<TEntity> : EndpointCommand<IElementEndpoint<TEntity>>
+public class ElementCommand<TEntity>(IElementEndpoint<TEntity> endpoint) : EndpointCommand<IElementEndpoint<TEntity>>(endpoint)
     where TEntity : class
 {
-    /// <summary>
-    /// Creates a new REST element command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public ElementCommand(IElementEndpoint<TEntity> endpoint)
-        : base(endpoint)
-    {}
-
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
     {
         if (args.Count == 0)

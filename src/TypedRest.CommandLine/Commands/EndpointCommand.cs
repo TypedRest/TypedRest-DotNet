@@ -7,23 +7,15 @@ namespace TypedRest.CommandLine.Commands;
 /// <summary>
 /// Command operating on an <see cref="IEndpoint"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEndpoint">The specific type of <see cref="IEndpoint"/> to operate on.</typeparam>
-public abstract class EndpointCommand<TEndpoint> : IEndpointCommand
+public abstract class EndpointCommand<TEndpoint>(TEndpoint endpoint) : IEndpointCommand
     where TEndpoint : IEndpoint
 {
     /// <summary>
     /// The endpoint this command operates on.
     /// </summary>
-    protected readonly TEndpoint Endpoint;
-
-    /// <summary>
-    /// Creates a new endpoint command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    protected EndpointCommand(TEndpoint endpoint)
-    {
-        Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-    }
+    protected readonly TEndpoint Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
 
     /// <summary>
     /// The text input/output device used for user interaction.

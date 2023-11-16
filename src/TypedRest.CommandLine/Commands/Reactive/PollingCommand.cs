@@ -7,21 +7,12 @@ namespace TypedRest.CommandLine.Commands.Reactive;
 /// <summary>
 /// Command operating on an <see cref="IPollingEndpoint{TEntity}"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
-public class PollingCommand<TEntity> : ElementCommand<TEntity>
+public class PollingCommand<TEntity>(IPollingEndpoint<TEntity> endpoint) : ElementCommand<TEntity>(endpoint)
     where TEntity : class
 {
-    protected new readonly IPollingEndpoint<TEntity> Endpoint;
-
-    /// <summary>
-    /// Creates a new REST polling command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public PollingCommand(IPollingEndpoint<TEntity> endpoint)
-        : base(endpoint)
-    {
-        Endpoint = endpoint;
-    }
+    protected new readonly IPollingEndpoint<TEntity> Endpoint = endpoint;
 
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
     {

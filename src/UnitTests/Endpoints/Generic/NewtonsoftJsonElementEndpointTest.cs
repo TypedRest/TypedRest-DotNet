@@ -3,12 +3,8 @@ using TypedRest.Serializers;
 namespace TypedRest.Endpoints.Generic;
 
 [Collection("Endpoint")]
-public class NewtonsoftJsonElementEndpointTest : ElementEndpointTestBase
+public class NewtonsoftJsonElementEndpointTest() : ElementEndpointTestBase(new NewtonsoftJsonSerializer())
 {
-    public NewtonsoftJsonElementEndpointTest()
-        : base(new NewtonsoftJsonSerializer())
-    {}
-
     [Fact]
     public async Task TestJsonPatch()
     {

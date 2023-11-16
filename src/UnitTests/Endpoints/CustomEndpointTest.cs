@@ -273,12 +273,8 @@ public class CustomEndpointTest : EndpointTestBase
         new ActionEndpoint(_endpoint, "./subresource").Uri.Should().Be(new Uri("http://localhost/endpoint/subresource"));
     }
 
-    private class CustomEndpoint : EndpointBase
+    private class CustomEndpoint(IEndpoint referrer, string relativeUri) : EndpointBase(referrer, relativeUri)
     {
-        public CustomEndpoint(IEndpoint referrer, string relativeUri)
-            : base(referrer, relativeUri)
-        {}
-
         public Task GetAsync()
             => FinalizeAsync(() => HttpClient.GetAsync(Uri));
 

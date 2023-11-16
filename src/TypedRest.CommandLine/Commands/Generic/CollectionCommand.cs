@@ -6,24 +6,17 @@ namespace TypedRest.CommandLine.Commands.Generic;
 /// <summary>
 /// Command operating on a <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
 /// <typeparam name="TEndpoint">The specific type of <see cref="ICollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
 /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
 /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. Must have a public constructor with a <typeparamref name="TElementEndpoint"/> parameter.</typeparam>
-public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : IndexerCommand<TEndpoint, TElementEndpoint, TElementCommand>
+public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>(TEndpoint endpoint) : IndexerCommand<TEndpoint, TElementEndpoint, TElementCommand>(endpoint)
     where TEntity : class
     where TEndpoint : ICollectionEndpoint<TEntity, TElementEndpoint>
     where TElementEndpoint : IElementEndpoint<TEntity>
     where TElementCommand : IEndpointCommand
 {
-    /// <summary>
-    /// Creates a new REST collection command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    protected CollectionCommand(TEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     public override async Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
     {
         if (args.Count == 0)

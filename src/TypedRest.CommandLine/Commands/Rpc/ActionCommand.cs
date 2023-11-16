@@ -5,16 +5,9 @@ namespace TypedRest.CommandLine.Commands.Rpc;
 /// <summary>
 /// Command operating on an <see cref="IActionEndpoint"/>.
 /// </summary>
-public class ActionCommand : EndpointCommand<IActionEndpoint>
+/// <param name="endpoint">The endpoint this command operates on.</param>
+public class ActionCommand(IActionEndpoint endpoint) : EndpointCommand<IActionEndpoint>(endpoint)
 {
-    /// <summary>
-    /// Creates a new REST action command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public ActionCommand(IActionEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         => await Endpoint.InvokeAsync(cancellationToken);
 }

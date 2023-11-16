@@ -14,10 +14,6 @@ public abstract class EndpointTestBase : IDisposable
 
     public void Dispose() => Mock.VerifyNoOutstandingExpectation();
 
-    private class MockEntryEndpoint : EntryEndpoint
-    {
-        public MockEntryEndpoint(HttpMessageHandler messageHandler, MediaTypeFormatter? serializer)
-            : base(new HttpClient(messageHandler), new Uri("http://localhost/"), serializer)
-        {}
-    }
+    private class MockEntryEndpoint(HttpMessageHandler messageHandler, MediaTypeFormatter? serializer)
+        : EntryEndpoint(new HttpClient(messageHandler), new Uri("http://localhost/"), serializer);
 }
