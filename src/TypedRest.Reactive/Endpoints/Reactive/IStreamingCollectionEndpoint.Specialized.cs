@@ -7,5 +7,4 @@ namespace TypedRest.Endpoints.Reactive;
 /// </summary>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
 public interface IStreamingCollectionEndpoint<TEntity> : IStreamingCollectionEndpoint<TEntity, IElementEndpoint<TEntity>>, ICollectionEndpoint<TEntity>
-    where TEntity : class
-{}
+    where TEntity : class;

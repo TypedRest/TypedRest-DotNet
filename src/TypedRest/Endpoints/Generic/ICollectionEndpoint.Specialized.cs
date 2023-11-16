@@ -5,5 +5,4 @@ namespace TypedRest.Endpoints.Generic;
 /// </summary>
 /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
 public interface ICollectionEndpoint<TEntity> : ICollectionEndpoint<TEntity, IElementEndpoint<TEntity>>
-    where TEntity : class
-{}
+    where TEntity : class;
