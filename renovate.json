@@ -15,14 +15,16 @@
       "automergeType": "branch"
     },
     {
-      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore", "^System\\.Text\\.Json"],
+      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
+      "matchPackageNames": ["System.Text.Json", "System.Diagnostics.DiagnosticSource"],
       "groupName": "Microsoft Extensions",
       "automerge": true,
       "automergeType": "branch",
       "separateMinorPatch": true
     },
     {
-      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore", "^System\\.Text\\.Json"],
+      "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
+      "matchPackageNames": ["System.Text.Json", "System.Diagnostics.DiagnosticSource"],
       "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
