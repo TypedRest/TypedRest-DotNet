@@ -5,18 +5,11 @@ namespace TypedRest.CommandLine.Commands.Rpc;
 /// <summary>
 /// Command operating on an <see cref="IFunctionEndpoint{TEntity,TResult}"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEntity">The type of entity the <see cref="IFunctionEndpoint{TEntity,TResult}"/> takes as input.</typeparam>
 /// <typeparam name="TResult">The type of entity the <see cref="IFunctionEndpoint{TEntity,TResult}"/> returns as a result.</typeparam>
-public class FunctionCommand<TEntity, TResult> : EndpointCommand<IFunctionEndpoint<TEntity, TResult>>
+public class FunctionCommand<TEntity, TResult>(IFunctionEndpoint<TEntity, TResult> endpoint) : EndpointCommand<IFunctionEndpoint<TEntity, TResult>>(endpoint)
 {
-    /// <summary>
-    /// Creates a new REST function command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public FunctionCommand(IFunctionEndpoint<TEntity, TResult> endpoint)
-        : base(endpoint)
-    {}
-
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         => OutputEntity(await Endpoint.InvokeAsync(InputEntity(args.Skip(1).ToList()), cancellationToken));
 

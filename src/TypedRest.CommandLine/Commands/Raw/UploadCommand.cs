@@ -5,16 +5,9 @@ namespace TypedRest.CommandLine.Commands.Raw;
 /// <summary>
 /// Command operating on an <see cref="IUploadEndpoint"/>.
 /// </summary>
-public class UploadCommand : EndpointCommand<IUploadEndpoint>
+/// <param name="endpoint">The endpoint this command operates on.</param>
+public class UploadCommand(IUploadEndpoint endpoint) : EndpointCommand<IUploadEndpoint>(endpoint)
 {
-    /// <summary>
-    /// Creates a new REST upload command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public UploadCommand(IUploadEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
     {
         switch (args[0])

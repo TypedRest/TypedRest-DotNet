@@ -6,19 +6,12 @@ namespace TypedRest.CommandLine.Commands.Reactive;
 /// <summary>
 /// Command operating on a <see cref="IStreamingEndpoint{TEntity}"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
 /// <typeparam name="TEndpoint">The specific type of <see cref="IStreamingEndpoint{TEntity}"/> to operate on.</typeparam>
-public abstract class StreamingCommand<TEntity, TEndpoint> : EndpointCommand<TEndpoint>
+public abstract class StreamingCommand<TEntity, TEndpoint>(TEndpoint endpoint) : EndpointCommand<TEndpoint>(endpoint)
     where TEndpoint : IStreamingEndpoint<TEntity>
 {
-    /// <summary>
-    /// Creates a new REST streaming command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    protected StreamingCommand(TEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
         => await OutputEntitiesAsync(Endpoint.GetObservable(), cancellationToken);
 

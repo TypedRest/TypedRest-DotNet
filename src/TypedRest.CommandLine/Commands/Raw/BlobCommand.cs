@@ -5,16 +5,9 @@ namespace TypedRest.CommandLine.Commands.Raw;
 /// <summary>
 /// Command operating on an <see cref="IBlobEndpoint"/>.
 /// </summary>
-public class BlobCommand : EndpointCommand<IBlobEndpoint>
+/// <param name="endpoint">The endpoint this command operates on.</param>
+public class BlobCommand(IBlobEndpoint endpoint) : EndpointCommand<IBlobEndpoint>(endpoint)
 {
-    /// <summary>
-    /// Creates a new REST blob command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    public BlobCommand(IBlobEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     protected override async Task ExecuteInnerAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
     {
         switch (args[0])

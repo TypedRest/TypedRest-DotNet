@@ -9,13 +9,18 @@ namespace TypedRest.Endpoints;
 /// <summary>
 /// Base class for building endpoints, i.e. remote HTTP resources.
 /// </summary>
-public abstract class EndpointBase : IEndpoint
+/// <param name="uri">The HTTP URI of the remote element.</param>
+/// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
+/// <param name="serializers">A list of serializers used for entities received from the server, sorted from most to least preferred. Always uses first for sending to the server.</param>
+/// <param name="errorHandler">Handles errors in HTTP responses.</param>
+/// <param name="linkExtractor">Detects links in HTTP responses.</param>
+public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList<MediaTypeFormatter> serializers, IErrorHandler errorHandler, ILinkExtractor linkExtractor) : IEndpoint
 {
-    public Uri Uri { get; }
+    public Uri Uri { get; } = uri ?? throw new ArgumentNullException(nameof(uri));
 
-    public HttpClient HttpClient { get; }
+    public HttpClient HttpClient { get; } = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
-    public IReadOnlyList<MediaTypeFormatter> Serializers { get; }
+    public IReadOnlyList<MediaTypeFormatter> Serializers { get; } = serializers ?? throw new ArgumentNullException(nameof(serializers));
 
     /// <summary>
     /// The serializer used for entities sent to the server. Equal to the first entry in <see cref="Serializers"/>.
@@ -25,26 +30,9 @@ public abstract class EndpointBase : IEndpoint
         => Serializers.FirstOrDefault()
         ?? throw new InvalidOperationException($"{nameof(Serializers)} is empty.");
 
-    public IErrorHandler ErrorHandler { get; }
+    public IErrorHandler ErrorHandler { get; } = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler));
 
-    public ILinkExtractor LinkExtractor { get; }
-
-    /// <summary>
-    /// Creates a new endpoint with an absolute URI.
-    /// </summary>
-    /// <param name="uri">The HTTP URI of the remote element.</param>
-    /// <param name="httpClient">The HTTP client used to communicate with the remote element.</param>
-    /// <param name="serializers">A list of serializers used for entities received from the server, sorted from most to least preferred. Always uses first for sending to the server.</param>
-    /// <param name="errorHandler">Handles errors in HTTP responses.</param>
-    /// <param name="linkExtractor">Detects links in HTTP responses.</param>
-    protected EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList<MediaTypeFormatter> serializers, IErrorHandler errorHandler, ILinkExtractor linkExtractor)
-    {
-        Uri = uri ?? throw new ArgumentNullException(nameof(uri));
-        HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        Serializers = serializers ?? throw new ArgumentNullException(nameof(serializers));
-        ErrorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler));
-        LinkExtractor = linkExtractor ?? throw new ArgumentNullException(nameof(linkExtractor));
-    }
+    public ILinkExtractor LinkExtractor { get; } = linkExtractor ?? throw new ArgumentNullException(nameof(linkExtractor));
 
     /// <summary>
     /// Creates a new endpoint with a relative URI.

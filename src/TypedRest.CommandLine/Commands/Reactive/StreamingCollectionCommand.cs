@@ -8,24 +8,17 @@ namespace TypedRest.CommandLine.Commands.Reactive;
 /// <summary>
 /// Command operating on a <see cref="IStreamingCollectionEndpoint{TEntity,TElementEndpoint}"/>.
 /// </summary>
+/// <param name="endpoint">The endpoint this command operates on.</param>
 /// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
 /// <typeparam name="TEndpoint">The specific type of <see cref="IStreamingCollectionEndpoint{TEntity,TElementEndpoint}"/> to operate on.</typeparam>
 /// <typeparam name="TElementEndpoint">The specific type of <see cref="IElementEndpoint{TEntity}"/> the <typeparamref name="TEndpoint"/> provides for individual <typeparamref name="TEntity"/>s.</typeparam>
 /// <typeparam name="TElementCommand">The specific type of <see cref="IEndpointCommand"/> is used to handle <typeparamref name="TElementEndpoint"/>s. Must have a public constructor with a <typeparamref name="TElementEndpoint"/> parameter.</typeparam>
-public abstract class StreamingCollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand> : CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>
+public abstract class StreamingCollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>(TEndpoint endpoint) : CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>(endpoint)
     where TEntity : class
     where TEndpoint : IStreamingCollectionEndpoint<TEntity, TElementEndpoint>
     where TElementEndpoint : IElementEndpoint<TEntity>
     where TElementCommand : IEndpointCommand
 {
-    /// <summary>
-    /// Creates a new REST streaming collection command.
-    /// </summary>
-    /// <param name="endpoint">The endpoint this command operates on.</param>
-    protected StreamingCollectionCommand(TEndpoint endpoint)
-        : base(endpoint)
-    {}
-
     public override async Task ExecuteAsync(IReadOnlyList<string> args, CancellationToken cancellationToken = default)
     {
         if (args.Count > 0 && args[0].ToLowerInvariant() == "stream")
