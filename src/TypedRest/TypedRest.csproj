@@ -30,6 +30,7 @@
   <!-- Global usings -->
   <ItemGroup>
     <Using Include="MorseCode.ITask" />
+    <Using Include="System.Net.Http" />
     <Using Include="System.Net.Http.Headers" />
     <Using Include="System.Net.Http.Formatting" />
     <Using Include="TypedRest.Http" />
