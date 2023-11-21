@@ -3,29 +3,20 @@ namespace TypedRest.Http;
 /// <summary>
 /// Represents a subset of a set of elements.
 /// </summary>
+/// <param name="elements">The returned elements.</param>
+/// <param name="range">The range the <paramref name="elements"/> come from.</param>
 /// <typeparam name="TEntity">The type of element the response contains.</typeparam>
-public class PartialResponse<TEntity>
+public class PartialResponse<TEntity>(IReadOnlyList<TEntity> elements, ContentRangeHeaderValue? range)
 {
     /// <summary>
     /// The returned elements.
     /// </summary>
-    public IReadOnlyList<TEntity> Elements { get; }
+    public IReadOnlyList<TEntity> Elements { get; } = elements;
 
     /// <summary>
     /// The range the <see cref="Elements"/> come from.
     /// </summary>
-    public ContentRangeHeaderValue? Range { get; }
-
-    /// <summary>
-    /// Creates a new partial response.
-    /// </summary>
-    /// <param name="elements">The returned elements.</param>
-    /// <param name="range">The range the <paramref name="elements"/> come from.</param>
-    public PartialResponse(IReadOnlyList<TEntity> elements, ContentRangeHeaderValue? range)
-    {
-        Elements = elements ?? throw new ArgumentNullException(nameof(elements));
-        Range = range;
-    }
+    public ContentRangeHeaderValue? Range { get; } = range;
 
     /// <summary>
     /// Indicates whether the response reaches the end of the elements available on the server.
