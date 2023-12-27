@@ -8,14 +8,14 @@ namespace TypedRest;
 public static class TaskExtensions
 {
     /// <summary>
-    /// Convenience wrapper for <see cref="Task.ConfigureAwait"/><c>(false)</c>.
+    /// Convenience wrapper for <see cref="Task.ConfigureAwait(bool)"/><c>(false)</c>.
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ConfiguredTaskAwaitable NoContext(this Task task)
         => task.ConfigureAwait(continueOnCapturedContext: false);
 
     /// <summary>
-    /// Convenience wrapper for <see cref="Task{T}.ConfigureAwait"/><c>(false)</c>.
+    /// Convenience wrapper for <see cref="Task{TResult}.ConfigureAwait(bool)"/><c>(false)</c>.
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ConfiguredTaskAwaitable<TResult> NoContext<TResult>(this Task<TResult> task)
