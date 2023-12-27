@@ -9,7 +9,7 @@
       "automergeType": "branch"
     },
     {
-      "matchPackagePatterns": ["gittools", "SourceLink", "ValueTuple", "IdentityModel"],
+      "matchPackagePatterns": ["gittools", "docfx", "SourceLink", "ValueTuple", "IdentityModel"],
       "matchPackageNames": ["System.ValueTuple", "IdentityModel"],
       "automerge": true,
       "automergeType": "branch"
