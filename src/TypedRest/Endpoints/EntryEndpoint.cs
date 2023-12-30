@@ -41,7 +41,7 @@ public class EntryEndpoint : EndpointBase
     /// <param name="errorHandler">Handles errors in HTTP responses. Defaults to <see cref="DefaultErrorHandler"/> if unset.</param>
     /// <param name="linkExtractor">Detects links in HTTP responses. Combines <see cref="HeaderLinkExtractor"/> and <see cref="HalLinkExtractor"/> if unset.</param>
     public EntryEndpoint(HttpClient httpClient, Uri? uri = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
-        : this(httpClient, new[] {serializer ?? new NewtonsoftJsonSerializer()}, uri, errorHandler, linkExtractor)
+        : this(httpClient, [serializer ?? new NewtonsoftJsonSerializer()], uri, errorHandler, linkExtractor)
     {}
 
     /// <summary>

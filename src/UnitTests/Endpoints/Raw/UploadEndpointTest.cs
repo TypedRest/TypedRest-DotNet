@@ -8,7 +8,7 @@ public class UploadEndpointTest : EndpointTestBase
     {
         var endpoint = new UploadEndpoint(EntryEndpoint, "endpoint");
 
-        byte[] data = {1, 2, 3};
+        byte[] data = [1, 2, 3];
 
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
             .With(new ByteContentMatcher(data, mimeType: "mock/type"))
@@ -23,7 +23,7 @@ public class UploadEndpointTest : EndpointTestBase
     {
         var endpoint = new UploadEndpoint(EntryEndpoint, "endpoint", formField: "data");
 
-        byte[] data = {1, 2, 3};
+        byte[] data = [1, 2, 3];
 
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
             .With(new MultipartFormContentMatcher("data", data, mimeType: "mock/type", fileName: "file.dat"))

@@ -25,7 +25,7 @@ public class BlobEndpointTest : EndpointTestBase
     [Fact]
     public async Task TestDownload()
     {
-        byte[] data = {1, 2, 3};
+        byte[] data = [1, 2, 3];
 
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new ByteArrayContent(data));
@@ -39,7 +39,7 @@ public class BlobEndpointTest : EndpointTestBase
     [Fact]
     public async Task TestUpload()
     {
-        byte[] data = {1, 2, 3};
+        byte[] data = [1, 2, 3];
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
             .With(new ByteContentMatcher(data, mimeType: "mock/type"))

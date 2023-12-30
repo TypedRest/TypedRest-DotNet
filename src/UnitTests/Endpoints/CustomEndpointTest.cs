@@ -114,11 +114,11 @@ public class CustomEndpointTest : EndpointTestBase
 
         await _endpoint.GetAsync();
 
-        _endpoint.GetLinks("child").Should().BeEquivalentTo(new[]
-        {
+        _endpoint.GetLinks("child").Should().BeEquivalentTo(
+        [
             (new Uri("http://localhost/target1"), "Title"),
-            (new Uri("http://localhost/target2"), (string?)null)
-        });
+            (new Uri("http://localhost/target2"), null)
+        ]);
     }
 
     [Fact]
@@ -135,11 +135,11 @@ public class CustomEndpointTest : EndpointTestBase
 
         await _endpoint.GetAsync();
 
-        _endpoint.GetLinks("child").Should().BeEquivalentTo(new[]
-        {
+        _endpoint.GetLinks("child").Should().BeEquivalentTo(
+        [
             (new Uri("http://localhost/target1"), "Title,= 1"),
-            (new Uri("http://localhost/target2"), (string?)null)
-        });
+            (new Uri("http://localhost/target2"), null)
+        ]);
     }
 
     [Fact]
@@ -250,11 +250,11 @@ public class CustomEndpointTest : EndpointTestBase
         await _endpoint.GetAsync();
 
         _endpoint.Link("single").Should().Be(new Uri("http://localhost/a"));
-        _endpoint.GetLinks("collection").Should().BeEquivalentTo(new[]
-        {
+        _endpoint.GetLinks("collection").Should().BeEquivalentTo(
+        [
             (new Uri("http://localhost/b"), "Title 1"),
-            (new Uri("http://localhost/c"), (string?)null)
-        });
+            (new Uri("http://localhost/c"), null)
+        ]);
         _endpoint.GetLinkTemplate("template").ToString().Should().Be("{id}");
     }
 

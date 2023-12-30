@@ -25,14 +25,14 @@ public class HeaderLinkExtractor : ILinkExtractor
 
     private static Link ParseLink(string value)
     {
-        var split = value.Split(new [] {'>'}, 2);
+        var split = value.Split(['>'], 2);
         string href = split[0].Substring(1);
         string? rel = null, title = null;
         bool templated = false;
 
         foreach (string param in _regexLinkFields.Matches(split[1]).Cast<Match>().Select(x => x.Groups.Cast<Group>().First().Value))
         {
-            var paramSplit = param.Split(new [] {'='}, 2);
+            var paramSplit = param.Split(['='], 2);
             if (paramSplit.Length != 2) continue;
             switch (paramSplit[0])
             {

@@ -241,11 +241,11 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
     protected virtual void HandleCapabilities(HttpResponseMessage response)
     {
         if (response.Content.Headers.Allow.Count != 0)
-            _allowedMethods = new(response.Content.Headers.Allow);
+            _allowedMethods = [..response.Content.Headers.Allow];
     }
 
     // NOTE: Always replace entire set rather than modifying it to ensure thread-safety.
-    private HashSet<string> _allowedMethods = new();
+    private HashSet<string> _allowedMethods = [];
 
     /// <summary>
     /// Shows whether the server has indicated that a specific HTTP method is currently allowed.
