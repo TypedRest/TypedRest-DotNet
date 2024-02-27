@@ -8,9 +8,6 @@
           "exclude": ["UnitTests/*"]
         }
       ],
-      "properties": {
-        "TargetFramework": "net8.0"
-      },
       "namespaceLayout": "nested",
       "dest": "api"
     }
