@@ -72,8 +72,7 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     protected async Task<HttpResponseMessage> PutContentAsync(HttpContent content, CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
         var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
-        var cache = ResponseCache; // Copy reference for thread-safety
-        cache?.SetIfUnmodifiedHeaders(request.Headers);
+        ResponseCache?.SetIfUnmodifiedHeaders(request.Headers); // Prevent lost updates
 
         ResponseCache = null;
         return await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
@@ -94,8 +93,7 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     protected async Task DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
-        var cache = ResponseCache; // Copy reference for thread-safety
-        cache?.SetIfUnmodifiedHeaders(request.Headers);
+        ResponseCache?.SetIfUnmodifiedHeaders(request.Headers);
 
         ResponseCache = null;
         await FinalizeAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
