@@ -65,7 +65,7 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
         var response = await request().NoContext();
 
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-        response.Content ??= new ByteArrayContent(Array.Empty<byte>());
+        response.Content ??= new ByteArrayContent([]);
 
         activity?.AddTag("http.method", response.RequestMessage!.Method.Method)
                  .AddTag("http.status_code", ((int)response.StatusCode).ToString());

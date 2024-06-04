@@ -331,7 +331,7 @@ public class CustomEndpointTest : EndpointTestBase
     public void TestErrorHandlingWithUnknownContentType()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(_ => new(HttpStatusCode.Conflict) {Content = new ByteArrayContent(new byte[0])});
+            .Respond(_ => new(HttpStatusCode.Conflict) {Content = new ByteArrayContent([])});
 
         _endpoint.Awaiting(x => x.GetAsync())
                  .Should().ThrowAsync<InvalidOperationException>()

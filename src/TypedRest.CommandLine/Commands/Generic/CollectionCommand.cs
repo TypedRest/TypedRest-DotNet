@@ -39,7 +39,7 @@ public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TE
                 var newEntity = InputEntity(args.Skip(1).ToList());
                 var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
                 if (newEndpoint != null)
-                    await GetElementCommand(newEndpoint).ExecuteAsync(new string[0], cancellationToken);
+                    await GetElementCommand(newEndpoint).ExecuteAsync([], cancellationToken);
                 return;
 
             case "create-all":
