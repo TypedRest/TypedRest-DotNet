@@ -30,7 +30,7 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     /// <summary>
     /// Performs an HTTP GET request on the <see cref="IEndpoint.Uri"/> and caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>.
     /// </summary>
-    /// <remarks>Sends If-None-Match header if there is already a cached ETag.</remarks>
+    /// <remarks>Sends <see cref="HttpRequestHeaders.IfNoneMatch"/> if there is already a cached ETag.</remarks>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
     /// <returns>The response of the request or the cached response if the server responded with <see cref="HttpStatusCode.NotModified"/>.</returns>
@@ -42,7 +42,7 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     {
         var request = new HttpRequestMessage(HttpMethod.Get, Uri);
         var cache = ResponseCache; // Copy reference for thread-safety
-        cache?.SetIfModifiedHeaders(request.Headers);
+        cache?.SetIfModifiedHeaders(request.Headers); // Only fetch if changed
 
         var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
         if (response.StatusCode == HttpStatusCode.NotModified && cache is {IsExpired: false})
@@ -56,8 +56,9 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     }
 
     /// <summary>
-    /// Performs an <see cref="HttpMethod.Put"/> request on the <see cref="IEndpoint.Uri"/>. Sets <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached <see cref="HttpResponseHeader.ETag"/> to detect lost updates.
+    /// Performs an <see cref="HttpMethod.Put"/> request on the <see cref="IEndpoint.Uri"/>.
     /// </summary>
+    /// <remarks>Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached <see cref="HttpResponseHeader.ETag"/> to detect lost updates.</remarks>
     /// <param name="content">The content to send to the server.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
@@ -79,8 +80,9 @@ public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
     }
 
     /// <summary>
-    /// Performs an <see cref="HttpMethod.Delete"/> request on the <see cref="IEndpoint.Uri"/>. Sets <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached ETag to detect lost updates.
+    /// Performs an <see cref="HttpMethod.Delete"/> request on the <see cref="IEndpoint.Uri"/>.
     /// </summary>
+    /// <remarks>Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached ETag to detect lost updates.</remarks>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
     /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>

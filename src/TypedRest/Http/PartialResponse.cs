@@ -32,7 +32,7 @@ public class PartialResponse<TEntity>(IReadOnlyList<TEntity> elements, ContentRa
             }
             else if (!Range.Length.HasValue)
             {
-                // No length specified, can't be end
+                // No length specified, can't be the end
                 return false;
             }
             else return Range.To.Value == Range.Length.Value - 1;

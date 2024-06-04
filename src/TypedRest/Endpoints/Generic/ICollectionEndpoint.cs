@@ -17,7 +17,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     TElementEndpoint this[TEntity entity] { get; }
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="ReadAllAsync"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="ReadAllAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
@@ -34,7 +34,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     Task<List<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="ReadRangeAsync"/> is allowed.
+    /// Indicates whether the server has specified <see cref="ReadRangeAsync"/> is allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns>An indicator whether the method is allowed. If no request has been sent yet.</returns>
@@ -54,7 +54,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     Task<PartialResponse<TEntity>> ReadRangeAsync(RangeItemHeaderValue range, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="CreateAsync(TEntity,CancellationToken)"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
@@ -74,7 +74,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     ITask<TElementEndpoint?> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="CreateAllAllowed"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="CreateAllAllowed"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>
@@ -94,7 +94,7 @@ public interface ICollectionEndpoint<TEntity, out TElementEndpoint> : IIndexerEn
     Task CreateAllAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="SetAllAllowed"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="SetAllAllowed"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns>An indicator whether the verb is allowed. If no request has been sent yet or the server did not specify allowed verbs <c>null</c> is returned.</returns>

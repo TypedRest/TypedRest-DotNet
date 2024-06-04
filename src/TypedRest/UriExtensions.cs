@@ -37,7 +37,6 @@ public static class UriExtensions
     /// </summary>
     /// <param name="baseUri">The base URI to resolve from.</param>
     /// <param name="relativeUri">The relative URI to resolve. Prepend <c>./</c> to imply a trailing slash in <paramref name="baseUri"/> even if it is missing there.</param>
-    /// <returns></returns>
     /// <example><code>
     /// Debug.Assert(new Uri("http://myhost/path").Join("./subpath") == new Uri("http://myhost/path/subpath"));
     /// </code></example>
@@ -49,7 +48,6 @@ public static class UriExtensions
     /// </summary>
     /// <param name="baseUri">The base URI to resolve from.</param>
     /// <param name="relativeUri">The relative URI to resolve. Prepend <c>./</c> to imply a trailing slash in <paramref name="baseUri"/> even if it is missing there.</param>
-    /// <returns></returns>
     /// <example><code>
     /// Debug.Assert(new Uri("http://myhost/path").Join(new Uri("./subpath", UriKind.Relative)) == new Uri("http://myhost/path/subpath"));
     /// </code></example>

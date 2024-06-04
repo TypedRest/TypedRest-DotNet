@@ -111,9 +111,11 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
 
     /// <summary>
     /// Registers one or more default links for a specific relation type.
+    /// </summary>
+    /// <remarks>
     /// These links are used when no links with this relation type are provided by the server.
     /// This should only be called during initial setup of the endpoint.
-    /// </summary>
+    /// </remarks>
     /// <param name="rel">The relation type of the link to add.</param>
     /// <param name="href">The href of the link relative to this endpoint's URI. Use <c>null</c> to remove any previous entries for the relation type.</param>
     /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
@@ -127,9 +129,11 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
 
     /// <summary>
     /// Registers a default link template for a specific relation type.
+    /// </summary>
+    /// <remarks>
     /// This template is used when no template with this relation type is provided by the server.
     /// This should only be called during initial setup of the endpoint.
-    /// </summary>
+    /// </remarks>
     /// <param name="rel">The relation type of the link template to add.</param>
     /// <param name="href">The href of the link template relative to this endpoint's URI. Use <c>null</c> to remove any previous entry for the relation type.</param>
     /// <remarks>This method is not thread-safe! Call this before performing any requests.</remarks>
@@ -248,7 +252,7 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
     private HashSet<string> _allowedMethods = [];
 
     /// <summary>
-    /// Shows whether the server has indicated that a specific HTTP method is currently allowed.
+    /// Indicates whether the server has specified a specific HTTP method is currently allowed.
     /// </summary>
     /// <param name="method">The HTTP methods (e.g. GET, POST, ...) to check.</param>
     /// <remarks>Uses cached data from last response.</remarks>

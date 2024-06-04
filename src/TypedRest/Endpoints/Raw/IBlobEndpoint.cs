@@ -16,7 +16,7 @@ public interface IBlobEndpoint : IEndpoint
     Task ProbeAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="DownloadAsync"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="DownloadAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
@@ -27,7 +27,6 @@ public interface IBlobEndpoint : IEndpoint
     /// </summary>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <returns>A stream with the blob's content.</returns>
-    /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
     /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
@@ -35,7 +34,7 @@ public interface IBlobEndpoint : IEndpoint
     Task<Stream> DownloadAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="UploadFromAsync"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="UploadFromAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
@@ -54,7 +53,7 @@ public interface IBlobEndpoint : IEndpoint
     Task UploadFromAsync(Stream stream, string? mimeType = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="DeleteAsync"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="DeleteAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>

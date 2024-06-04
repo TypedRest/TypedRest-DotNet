@@ -12,6 +12,7 @@ public static class UploadEndpointExtensions
     /// <param name="path">The path of the file to read the upload data from.</param>
     /// <param name="mimeType">The MIME type of the data to upload.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
+    /// <exception cref="IOException">Failed to read the file.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>

@@ -72,7 +72,7 @@ public class EntryEndpoint : EndpointBase
     }
 
     /// <summary>
-    /// Fetches meta data such as links from the server.
+    /// Fetches metadata such as links from the server.
     /// </summary>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>

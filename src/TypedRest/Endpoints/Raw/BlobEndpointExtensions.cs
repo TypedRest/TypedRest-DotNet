@@ -12,7 +12,7 @@ public static class BlobEndpointExtensions
     /// <param name="path">The path of the file to write the download data to.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <returns>A stream with the blob's content.</returns>
-    /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+    /// <exception cref="IOException">Failed to write the file.</exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
     /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
@@ -31,6 +31,7 @@ public static class BlobEndpointExtensions
     /// <param name="path">The path of the file to read the upload data from.</param>
     /// <param name="mimeType">The MIME type of the data to upload.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
+    /// <exception cref="IOException">Failed to read the file.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>

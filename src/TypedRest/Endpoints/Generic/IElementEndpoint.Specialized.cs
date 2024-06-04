@@ -15,7 +15,7 @@ public interface IElementEndpoint : IEndpoint
     Task<bool> ExistsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Shows whether the server has indicated that <see cref="DeleteAsync"/> is currently allowed.
+    /// Indicates whether the server has specified <see cref="DeleteAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
     /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
