@@ -65,8 +65,8 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
         ResponseCache = null;
+        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
         return await TryReadAsAsync(response, cancellationToken);
     }
 
