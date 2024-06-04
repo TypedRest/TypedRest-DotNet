@@ -53,4 +53,15 @@ public static class UriExtensions
     /// </code></example>
     public static Uri Join(this Uri baseUri, Uri relativeUri)
         => baseUri.Join(relativeUri.OriginalString);
+
+    /// <summary>
+    /// Extracts credentials from user info in URI if set.
+    /// </summary>
+    public static NetworkCredential? ExtractCredentials(this Uri uri)
+    {
+        var builder = new UriBuilder(uri);
+        return string.IsNullOrEmpty(builder.UserName)
+            ? null
+            : new NetworkCredential(builder.UserName, builder.Password);
+    }
 }

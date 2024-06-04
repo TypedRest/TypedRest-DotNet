@@ -55,20 +55,9 @@ public class EntryEndpoint : EndpointBase
     public EntryEndpoint(Uri uri, NetworkCredential? credentials = null, MediaTypeFormatter? serializer = null, IErrorHandler? errorHandler = null, ILinkExtractor? linkExtractor = null)
         : this(new HttpClient(), uri, serializer, errorHandler, linkExtractor)
     {
-        credentials ??= ExtractCredentials(uri);
+        credentials ??= uri.ExtractCredentials();
         if (credentials != null)
             HttpClient.AddBasicAuth(credentials);
-    }
-
-    /// <summary>
-    /// Extracts credentials from user info in URI if set.
-    /// </summary>
-    private static NetworkCredential? ExtractCredentials(Uri uri)
-    {
-        var builder = new UriBuilder(uri);
-        return string.IsNullOrEmpty(builder.UserName)
-            ? null
-            : new NetworkCredential(builder.UserName, builder.Password);
     }
 
     /// <summary>
