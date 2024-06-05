@@ -3,24 +3,18 @@ namespace TypedRest.Endpoints.Raw;
 /// <summary>
 /// Endpoint for a binary blob that can be downloaded or uploaded.
 /// </summary>
-public class BlobEndpoint : EndpointBase, IBlobEndpoint
+/// <param name="referrer">The endpoint used to navigate to this one.</param>
+/// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
+public class BlobEndpoint(IEndpoint referrer, Uri relativeUri)
+    : EndpointBase(referrer, relativeUri), IBlobEndpoint
 {
-    /// <summary>
-    /// Creates a new blob endpoint.
-    /// </summary>
-    /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
-    public BlobEndpoint(IEndpoint referrer, Uri relativeUri)
-        : base(referrer, relativeUri)
-    {}
-
     /// <summary>
     /// Creates a new blob endpoint.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
     /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
     public BlobEndpoint(IEndpoint referrer, string relativeUri)
-        : base(referrer, relativeUri)
+        : this(referrer, new Uri(relativeUri, UriKind.Relative))
     {}
 
     public Task ProbeAsync(CancellationToken cancellationToken = default)

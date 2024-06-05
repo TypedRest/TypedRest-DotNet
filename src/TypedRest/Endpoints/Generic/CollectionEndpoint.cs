@@ -5,9 +5,12 @@ namespace TypedRest.Endpoints.Generic;
 /// <summary>
 /// Endpoint for a collection of <typeparamref name="TEntity"/>s addressable as <typeparamref name="TElementEndpoint"/>s.
 /// </summary>
+/// <param name="referrer">The endpoint used to navigate to this one.</param>
+/// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
 /// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
 /// <typeparam name="TElementEndpoint">The type of <see cref="IElementEndpoint{TEntity}"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
-public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase, ICollectionEndpoint<TEntity, TElementEndpoint>
+public class CollectionEndpoint<TEntity, TElementEndpoint>(IEndpoint referrer, Uri relativeUri)
+    : CachingEndpointBase(referrer, relativeUri), ICollectionEndpoint<TEntity, TElementEndpoint>
     where TEntity : class
     where TElementEndpoint : class, IElementEndpoint<TEntity>
 {
@@ -15,25 +18,9 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
     /// Creates a new element collection endpoint.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s.</param>
-    public CollectionEndpoint(IEndpoint referrer, Uri relativeUri)
-        : base(referrer, relativeUri)
-    {
-        SetupElementHandling();
-    }
-
-    /// <summary>
-    /// Creates a new element collection endpoint.
-    /// </summary>
-    /// <param name="referrer">The endpoint used to navigate to this one.</param>
     /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
     public CollectionEndpoint(IEndpoint referrer, string relativeUri)
-        : base(referrer, relativeUri)
-    {
-        SetupElementHandling();
-    }
-
-    private void SetupElementHandling()
+        : this(referrer, new Uri(relativeUri, UriKind.Relative))
     {
         SetDefaultLinkTemplate(rel: "child", href: "./{id}");
     }

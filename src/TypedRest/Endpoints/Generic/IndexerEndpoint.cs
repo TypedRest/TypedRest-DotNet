@@ -15,7 +15,7 @@ public class IndexerEndpoint<TElementEndpoint> : EndpointBase, IIndexerEndpoint<
     public IndexerEndpoint(IEndpoint referrer, Uri relativeUri)
         : base(referrer, relativeUri)
     {
-        SetupElementHandling();
+        SetDefaultLinkTemplate(rel: "child", href: "./{id}");
     }
 
     /// <summary>
@@ -24,15 +24,7 @@ public class IndexerEndpoint<TElementEndpoint> : EndpointBase, IIndexerEndpoint<
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
     /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
     public IndexerEndpoint(IEndpoint referrer, string relativeUri)
-        : base(referrer, relativeUri)
-    {
-        SetupElementHandling();
-    }
-
-    private void SetupElementHandling()
-    {
-        SetDefaultLinkTemplate(rel: "child", href: "./{id}");
-    }
+        : this(referrer, new Uri(relativeUri, UriKind.Relative)) {}
 
     /// <summary>
     /// Instantiates a <typeparamref name="TElementEndpoint"/> with a referrer and a relative URI.

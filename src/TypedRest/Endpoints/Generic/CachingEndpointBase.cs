@@ -5,25 +5,18 @@ namespace TypedRest.Endpoints.Generic;
 /// <summary>
 /// Base class for building endpoints that use ETags and Last-Modified timestamps for caching and to avoid lost updates.
 /// </summary>
-public abstract class CachingEndpointBase : EndpointBase, ICachingEndpoint
+/// <param name="referrer">The endpoint used to navigate to this one.</param>
+/// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
+    : EndpointBase(referrer, relativeUri), ICachingEndpoint
 {
     /// <summary>
     /// Creates a new endpoint with a relative URI.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
     /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
-    protected CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
-        : base(referrer, relativeUri)
-    {}
-
-    /// <summary>
-    /// Creates a new endpoint with a relative URI.
-    /// </summary>
-    /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
     protected CachingEndpointBase(IEndpoint referrer, string relativeUri)
-        : base(referrer, relativeUri)
-    {}
+        : this(referrer, new Uri(relativeUri, UriKind.Relative)) {}
 
     public ResponseCache? ResponseCache { get; set; }
 
