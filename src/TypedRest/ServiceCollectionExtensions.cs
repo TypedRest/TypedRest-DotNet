@@ -62,8 +62,7 @@ public static class ServiceCollectionExtensions
     public static IHttpClientBuilder AddBasicAuth(this IHttpClientBuilder builder, ICredentials credentials)
         => builder.ConfigureHttpClient(httpClient =>
         {
-            var networkCredential = credentials.GetCredential(httpClient.BaseAddress ?? throw new InvalidOperationException("HttpClient.BaseAddress must be set."), "Basic");
-            if (networkCredential != null)
+            if (credentials.GetCredential(httpClient.BaseAddress ?? throw new InvalidOperationException("HttpClient.BaseAddress must be set."), "Basic") is {} networkCredential)
                 httpClient.AddBasicAuth(networkCredential);
         });
 }

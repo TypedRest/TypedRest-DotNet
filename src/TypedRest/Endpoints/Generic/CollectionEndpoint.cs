@@ -112,7 +112,12 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
         var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
         TElementEndpoint elementEndpoint;
-        if (response.Headers.Location == null)
+        if (response.Headers.Location is {} location)
+        {
+            // Explicit element endpoint URL from "Location" header
+            elementEndpoint = _getElementEndpoint(this, response.Headers.Location);
+        }
+        else
         {
             try
             {
@@ -124,11 +129,6 @@ public class CollectionEndpoint<TEntity, TElementEndpoint> : CachingEndpointBase
                 // No element endpoint
                 return null;
             }
-        }
-        else
-        {
-            // Explicit element endpoint URL from "Location" header
-            elementEndpoint = _getElementEndpoint(this, response.Headers.Location);
         }
 
         if (elementEndpoint is ICachingEndpoint caching)

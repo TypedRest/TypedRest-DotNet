@@ -23,16 +23,16 @@ public class ElementCommand<TEntity>(IElementEndpoint<TEntity> endpoint) : Endpo
             case "set" or "update": // deprecated
             {
                 var updatedEntity = InputEntity(args.Skip(1).ToList());
-                var result = await Endpoint.SetAsync(updatedEntity, cancellationToken);
-                if (result != null) OutputEntity(result);
+                if (await Endpoint.SetAsync(updatedEntity, cancellationToken) is {} result)
+                    OutputEntity(result);
                 break;
             }
 
             case "merge": // deprecated
             {
                 var partialEntity = InputEntity(args.Skip(1).ToList());
-                var result = await Endpoint.MergeAsync(partialEntity, cancellationToken);
-                if (result != null) OutputEntity(result);
+                if (await Endpoint.MergeAsync(partialEntity, cancellationToken) is {} result)
+                    OutputEntity(result);
                 break;
             }
 

@@ -25,8 +25,7 @@ public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TE
             return;
         }
 
-        var range = GetRange(args[0]);
-        if (range != null)
+        if (GetRange(args[0]) is {} range)
         {
             var elements = await Endpoint.ReadRangeAsync(range, cancellationToken);
             OutputEntities(elements.Elements);
@@ -37,8 +36,7 @@ public abstract class CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TE
         {
             case "create":
                 var newEntity = InputEntity(args.Skip(1).ToList());
-                var newEndpoint = await Endpoint.CreateAsync(newEntity, cancellationToken);
-                if (newEndpoint != null)
+                if (await Endpoint.CreateAsync(newEntity, cancellationToken) is {} newEndpoint)
                     await GetElementCommand(newEndpoint).ExecuteAsync([], cancellationToken);
                 return;
 

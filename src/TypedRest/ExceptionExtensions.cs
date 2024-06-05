@@ -56,8 +56,7 @@ public static class ExceptionExtensions
     /// </summary>
     public static async Task HttpRetryDelayAsync(this Exception exception, CancellationToken cancellationToken = default)
     {
-        var wait = exception.GetHttpResponseHeaders()?.RetryAfter?.Delta;
-        if (wait != null)
-            await Task.Delay(wait.Value, cancellationToken);
+        if (exception.GetHttpResponseHeaders()?.RetryAfter?.Delta is {} wait)
+            await Task.Delay(wait, cancellationToken);
     }
 }

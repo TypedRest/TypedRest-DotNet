@@ -29,8 +29,8 @@ public class ResponseCache
         _lastModified = response.Content.Headers.LastModified;
 
         _expires = response.Content.Headers.Expires;
-        if (_expires == null && response.Headers.CacheControl?.MaxAge != null)
-            _expires = DateTimeOffset.Now + response.Headers.CacheControl.MaxAge;
+        if (_expires == null && response.Headers.CacheControl?.MaxAge is {} maxAge)
+            _expires = DateTimeOffset.Now + maxAge;
 
         // Treat no-cache as expired immediately
         if (response.Headers.CacheControl?.NoCache ?? false)
