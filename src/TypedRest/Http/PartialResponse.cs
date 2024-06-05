@@ -6,7 +6,7 @@ namespace TypedRest.Http;
 /// <param name="elements">The returned elements.</param>
 /// <param name="range">The range the <paramref name="elements"/> come from.</param>
 /// <typeparam name="TEntity">The type of element the response contains.</typeparam>
-public class PartialResponse<TEntity>(IReadOnlyList<TEntity> elements, ContentRangeHeaderValue? range)
+public sealed class PartialResponse<TEntity>(IReadOnlyList<TEntity> elements, ContentRangeHeaderValue? range)
 {
     /// <summary>
     /// The returned elements.

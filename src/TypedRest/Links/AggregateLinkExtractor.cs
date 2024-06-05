@@ -3,7 +3,7 @@ namespace TypedRest.Links;
 /// <summary>
 /// Combines the results of multiple <see cref="ILinkExtractor"/>s.
 /// </summary>
-public class AggregateLinkExtractor : ILinkExtractor
+public sealed class AggregateLinkExtractor : ILinkExtractor
 {
     private readonly ILinkExtractor[] _extractors;
 

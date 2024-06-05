@@ -6,7 +6,7 @@ namespace TypedRest.Errors;
 /// <summary>
 /// Handles errors in HTTP responses by mapping status codes to common exception types.
 /// </summary>
-public class DefaultErrorHandler : IErrorHandler
+public sealed class DefaultErrorHandler : IErrorHandler
 {
     public async Task HandleAsync(HttpResponseMessage response)
     {

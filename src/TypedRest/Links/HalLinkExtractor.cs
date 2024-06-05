@@ -6,7 +6,7 @@ namespace TypedRest.Links;
 /// <summary>
 /// Extracts links from JSON bodies according to the Hypertext Application Language (HAL) specification.
 /// </summary>
-public class HalLinkExtractor : ILinkExtractor
+public sealed class HalLinkExtractor : ILinkExtractor
 {
     public async Task<IReadOnlyList<Link>> GetLinksAsync(HttpResponseMessage response)
     {

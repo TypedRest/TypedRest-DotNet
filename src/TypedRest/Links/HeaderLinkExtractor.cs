@@ -5,7 +5,7 @@ namespace TypedRest.Links;
 /// <summary>
 /// Extracts links from HTTP headers.
 /// </summary>
-public class HeaderLinkExtractor : ILinkExtractor
+public sealed class HeaderLinkExtractor : ILinkExtractor
 {
     // ReSharper disable RedundantEnumerableCastCall
 

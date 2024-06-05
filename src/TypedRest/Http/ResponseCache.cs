@@ -3,7 +3,7 @@ namespace TypedRest.Http;
 /// <summary>
 /// Captures the content of an <see cref="HttpResponseMessage"/> for caching.
 /// </summary>
-public class ResponseCache
+public sealed class ResponseCache
 {
     private readonly byte[] _content;
     private readonly MediaTypeHeaderValue? _contentType;
