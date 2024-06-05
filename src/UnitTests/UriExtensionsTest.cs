@@ -33,12 +33,22 @@ public class UriExtensionsTest
             new Uri("http://localhost/test/?x=1", UriKind.Absolute));
 
     [Fact]
-    public void TestJoinNormal()
+    public void TestJoinStringNormal()
         => new Uri("http://localhost/test?x=1", UriKind.Absolute).Join(relativeUri: "subpath").Should().Be(
             new Uri("http://localhost/subpath", UriKind.Absolute));
 
     [Fact]
-    public void TestJoinWithDotSlash()
+    public void TestJoinUriNormal()
+        => new Uri("http://localhost/test?x=1", UriKind.Absolute).Join(relativeUri: new Uri("subpath", UriKind.Relative)).Should().Be(
+            new Uri("http://localhost/subpath", UriKind.Absolute));
+
+    [Fact]
+    public void TestJoinStringWithDotSlash()
         => new Uri("http://localhost/test?x=1", UriKind.Absolute).Join(relativeUri: "./subpath").Should().Be(
+            new Uri("http://localhost/test/subpath", UriKind.Absolute));
+
+    [Fact]
+    public void TestJoinUriWithDotSlash()
+        => new Uri("http://localhost/test?x=1", UriKind.Absolute).Join(relativeUri: new Uri("./subpath", UriKind.Relative)).Should().Be(
             new Uri("http://localhost/test/subpath", UriKind.Absolute));
 }
