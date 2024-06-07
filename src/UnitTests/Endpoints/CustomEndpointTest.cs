@@ -129,7 +129,7 @@ public class CustomEndpointTest : EndpointTestBase
              {
                  Headers =
                  {
-                     {"Link", "<target1>; rel=child; title=\"Title,= 1\", <target2>; rel=child"}
+                     {"Link", """<target1>; rel=child; title="Title,= 1", <target2>; rel=child"""}
                  }
              });
 
@@ -299,7 +299,7 @@ public class CustomEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new(HttpStatusCode.Conflict)
              {
-                 Content = new StringContent("{\"message\":\"my message\"}")
+                 Content = new StringContent("""{"message":"my message"}""")
                  {
                      Headers = {ContentType = MediaTypeHeaderValue.Parse(JsonMime)}
                  }
@@ -316,7 +316,7 @@ public class CustomEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new(HttpStatusCode.Conflict)
              {
-                 Content = new StringContent("[{\"message\":\"my message\"}]")
+                 Content = new StringContent("""[{"message":"my message"}]""")
                  {
                      Headers = {ContentType = MediaTypeHeaderValue.Parse(JsonMime)}
                  }

@@ -96,7 +96,7 @@ public class CollectionEndpointTest : EndpointTestBase
     public async Task TestReadAll()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(JsonMime, "[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]");
+            .Respond(JsonMime, """[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""");
 
         var result = await _endpoint.ReadAllAsync();
         result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
@@ -108,7 +108,7 @@ public class CollectionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
         var result1 = await _endpoint.ReadAllAsync();
@@ -130,7 +130,7 @@ public class CollectionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("Range", "elements=1-")
             .Respond(HttpStatusCode.PartialContent,
-                 new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                 new StringContent("""[{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime)
                  {
                      Headers = {ContentRange = new(from: 1, to: 1, length: 2) {Unit = "elements"}}
                  });
@@ -146,7 +146,7 @@ public class CollectionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("Range", "elements=0-1")
             .Respond(HttpStatusCode.PartialContent,
-                 new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                 new StringContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime)
                  {
                      Headers = {ContentRange = new(from: 0, to: 1, length: 2) {Unit = "elements"}}
                  });
@@ -162,7 +162,7 @@ public class CollectionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("Range", "elements=-1")
             .Respond(HttpStatusCode.PartialContent,
-                 new StringContent("[{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime)
+                 new StringContent("""[{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime)
                  {
                      Headers = {ContentRange = new(from: 2, to: 2) {Unit = "elements"}}
                  });
@@ -177,7 +177,7 @@ public class CollectionEndpointTest : EndpointTestBase
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("Range", "elements=5-10")
-            .Respond(HttpStatusCode.RequestedRangeNotSatisfiable, JsonMime, "{\"message\":\"test\"}");
+            .Respond(HttpStatusCode.RequestedRangeNotSatisfiable, JsonMime, """{"message":"test"}""");
 
         string? exceptionMessage = null;
         try
@@ -196,8 +196,8 @@ public class CollectionEndpointTest : EndpointTestBase
     public async Task TestCreate()
     {
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-            .WithContent("{\"id\":0,\"name\":\"test\"}")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"test\"}");
+            .WithContent("""{"id":0,"name":"test"}""")
+            .Respond(JsonMime, """{"id":5,"name":"test"}""");
 
         var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
         element.Response.Should().Be(new MockEntity(5, "test"));
@@ -208,10 +208,10 @@ public class CollectionEndpointTest : EndpointTestBase
     public async Task TestCreateLocation()
     {
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-            .WithContent("{\"id\":0,\"name\":\"test\"}")
+            .WithContent("""{"id":0,"name":"test"}""")
             .Respond(_ => new(HttpStatusCode.Created)
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
                  Headers = {Location = new Uri("/endpoint/new", UriKind.Relative)}
              });
 
@@ -224,7 +224,7 @@ public class CollectionEndpointTest : EndpointTestBase
     public async Task TestCreateNull()
     {
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
-            .WithContent("{\"id\":0,\"name\":\"test\"}")
+            .WithContent("""{"id":0,"name":"test"}""")
             .Respond(_ => new(HttpStatusCode.Accepted));
 
         var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
@@ -235,7 +235,7 @@ public class CollectionEndpointTest : EndpointTestBase
     public async Task TestCreateAll()
     {
         Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
-            .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
+            .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .Respond(_ => new(HttpStatusCode.Accepted));
 
         await _endpoint.CreateAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")});
@@ -245,7 +245,7 @@ public class CollectionEndpointTest : EndpointTestBase
     public async Task TestSetAll()
     {
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
+            .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .Respond(_ => new(HttpStatusCode.NoContent));
 
         await _endpoint.SetAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")});
@@ -257,13 +257,13 @@ public class CollectionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
         var result = await _endpoint.ReadAllAsync();
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("[{\"id\":5,\"name\":\"test1\"},{\"id\":6,\"name\":\"test2\"}]")
+            .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .WithHeaders("If-Match", "\"123abc\"")
             .Respond(_ => new(HttpStatusCode.NoContent));
 

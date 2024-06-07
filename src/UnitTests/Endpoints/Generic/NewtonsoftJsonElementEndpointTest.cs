@@ -9,8 +9,8 @@ public class NewtonsoftJsonElementEndpointTest() : ElementEndpointTestBase(new N
     public async Task TestJsonPatch()
     {
         Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
-            .WithContent("[{\"value\":\"testX\",\"path\":\"/name\",\"op\":\"replace\"}]")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"testX\"}");
+            .WithContent("""[{"value":"testX","path":"/name","op":"replace"}]""")
+            .Respond(JsonMime, """{"id":5,"name":"testX"}""");
 
         var result = await Endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
         result.Should().Be(new MockEntity(5, "testX"));
@@ -25,11 +25,11 @@ public class NewtonsoftJsonElementEndpointTest() : ElementEndpointTestBase(new N
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime)
+                 Content = new StringContent("""{"id":5,"name":"test1"}""", Encoding.UTF8, JsonMime)
              });
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"testX\"}")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"testX\"}");
+            .WithContent("""{"id":5,"name":"testX"}""")
+            .Respond(JsonMime, """{"id":5,"name":"testX"}""");
 
         var result = await Endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
         result.Should().Be(new MockEntity(5, "testX"));

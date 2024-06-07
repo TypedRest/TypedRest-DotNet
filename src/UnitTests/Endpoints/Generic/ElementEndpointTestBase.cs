@@ -13,7 +13,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     public async Task TestRead()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"test\"}");
+            .Respond(JsonMime, """{"id":5,"name":"test"}""");
 
         var result = await Endpoint.ReadAsync();
         result.Should().Be(new MockEntity(5, "test"));
@@ -23,7 +23,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     public async Task TestReadCustomMimeWithJsonSuffix()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond("application/sample+json", "{\"id\":5,\"name\":\"test\"}");
+            .Respond("application/sample+json", """{"id":5,"name":"test"}""");
 
         var result = await Endpoint.ReadAsync();
         result.Should().Be(new MockEntity(5, "test"));
@@ -35,7 +35,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
         var result1 = await Endpoint.ReadAsync();
@@ -57,7 +57,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime)
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime)
                  {
                      Headers = {LastModified = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
                  }
@@ -99,8 +99,8 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     public async Task TestSetResult()
     {
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"test\"}")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
+            .WithContent("""{"id":5,"name":"test"}""")
+            .Respond(JsonMime, """{"id":5,"name":"testXXX"}""");
 
         var result = await Endpoint.SetAsync(new MockEntity(5, "test"));
         result.Should().Be(new MockEntity(5, "testXXX"));
@@ -110,7 +110,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     public async Task TestSetNoResult()
     {
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"test\"}")
+            .WithContent("""{"id":5,"name":"test"}""")
             .Respond(HttpStatusCode.NoContent);
 
         var result = await Endpoint.SetAsync(new MockEntity(5, "test"));
@@ -123,13 +123,13 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
         var result = await Endpoint.ReadAsync();
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"test\"}")
+            .WithContent("""{"id":5,"name":"test"}""")
             .WithHeaders("If-Match", "\"123abc\"")
             .Respond(HttpStatusCode.NoContent);
         await Endpoint.SetAsync(result);
@@ -141,7 +141,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime)
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime)
                  {
                      Headers = {LastModified = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
                  }
@@ -149,7 +149,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         var result = await Endpoint.ReadAsync();
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"test\"}")
+            .WithContent("""{"id":5,"name":"test"}""")
             .WithHeaders("If-Unmodified-Since", "Wed, 21 Oct 2015 00:00:00 GMT")
             .Respond(HttpStatusCode.NoContent);
         await Endpoint.SetAsync(result);
@@ -161,21 +161,21 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test1"}""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"1\"")}
              });
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"testX\"}")
+            .WithContent("""{"id":5,"name":"testX"}""")
             .WithHeaders("If-Match", "\"1\"")
             .Respond(HttpStatusCode.PreconditionFailed);
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test2\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test2"}""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"2\"")}
              });
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"testX\"}")
+            .WithContent("""{"id":5,"name":"testX"}""")
             .WithHeaders("If-Match", "\"2\"")
             .Respond(HttpStatusCode.NoContent);
 
@@ -188,11 +188,11 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test1\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test1"}""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"1\"")}
              });
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"testX\"}")
+            .WithContent("""{"id":5,"name":"testX"}""")
             .WithHeaders("If-Match", "\"1\"")
             .Respond(HttpStatusCode.PreconditionFailed);
 
@@ -203,8 +203,8 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     public async Task TestMergeResult()
     {
         Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"test\"}")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"testXXX\"}");
+            .WithContent("""{"id":5,"name":"test"}""")
+            .Respond(JsonMime, """{"id":5,"name":"testXXX"}""");
 
         var result = await Endpoint.MergeAsync(new MockEntity(5, "test"));
         result.Should().Be(new MockEntity(5, "testXXX"));
@@ -214,7 +214,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     public async Task TestMergeNoResult()
     {
         Mock.Expect(HttpMethods.Patch, "http://localhost/endpoint")
-            .WithContent("{\"id\":5,\"name\":\"test\"}")
+            .WithContent("""{"id":5,"name":"test"}""")
             .Respond(HttpStatusCode.NoContent);
 
         var result = await Endpoint.MergeAsync(new MockEntity(5, "test"));
@@ -236,7 +236,7 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":5,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
         await Endpoint.ReadAsync();

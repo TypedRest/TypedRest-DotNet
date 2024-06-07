@@ -9,7 +9,7 @@ public sealed class HeaderLinkExtractor : ILinkExtractor
 {
     // ReSharper disable RedundantEnumerableCastCall
 
-    private static readonly Regex _regexHeaderLinks = new("<[^>]*>\\s*(\\s*;\\s*[^\\(\\)<>@,;:\\\"\\/\\[\\]\\?={} \\t]+=(([^\\(\\)<>@,;:\\\"\\/\\[\\]\\?={} \\t]+)|(\\\"[^\\\"]*\\\")))*(,|$)", RegexOptions.Compiled);
+    private static readonly Regex _regexHeaderLinks = new("""<[^>]*>\s*(\s*;\s*[^\(\)<>@,;:\"\/\[\]\?={} \t]+=(([^\(\)<>@,;:\"\/\[\]\?={} \t]+)|(\"[^\"]*\")))*(,|$)""", RegexOptions.Compiled);
 
     public Task<IReadOnlyList<Link>> GetLinksAsync(HttpResponseMessage response)
         => Task.FromResult<IReadOnlyList<Link>>(
@@ -21,7 +21,7 @@ public sealed class HeaderLinkExtractor : ILinkExtractor
                     .Select(x => ParseLink(x.Groups.Cast<Group>().First().Value))
                     .ToList());
 
-    private static readonly Regex _regexLinkFields = new("[^\\(\\)<>@,;:\"\\/\\[\\]\\?={} \\t]+=(([^\\(\\)<>@,;:\"\\/\\[\\]\\?={} \\t]+)|(\"[^\"]*\"))", RegexOptions.Compiled);
+    private static readonly Regex _regexLinkFields = new("""[^\(\)<>@,;:"\/\[\]\?={} \t]+=(([^\(\)<>@,;:"\/\[\]\?={} \t]+)|("[^"]*"))""", RegexOptions.Compiled);
 
     private static Link ParseLink(string value)
     {

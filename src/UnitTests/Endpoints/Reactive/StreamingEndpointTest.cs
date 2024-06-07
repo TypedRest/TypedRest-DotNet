@@ -14,7 +14,11 @@ public class StreamingEndpointTest : EndpointTestBase
     public void TestGetObservable()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(JsonMime, "{\"id\":5,\"name\":\"test1\"}\n{\"id\":6,\"name\":\"test2\"}\n{\"id\":7,\"name\":\"test3\"}");
+            .Respond(JsonMime, """
+                               {"id":5,"name":"test1"}
+                               {"id":6,"name":"test2"}
+                               {"id":7,"name":"test3"}
+                               """);
 
         var observable = _endpoint.GetObservable();
         observable.ToEnumerable().ToList().Should().Equal(
@@ -29,7 +33,7 @@ public class StreamingEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new(HttpStatusCode.Conflict)
              {
-                 Content = new StringContent("{\"message\":\"my message\"}")
+                 Content = new StringContent("""{"message":"my message"}""")
              });
 
         var observable = _endpoint.GetObservable();

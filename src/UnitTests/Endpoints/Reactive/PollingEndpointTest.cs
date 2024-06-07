@@ -17,13 +17,13 @@ public class PollingEndpointTest : EndpointTestBase
     public void TestGetObservable()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(JsonMime, "{\"id\":1,\"name\":\"test\"}");
+            .Respond(JsonMime, """{"id":1,"name":"test"}""");
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
-            .Respond(JsonMime, "{\"id\":2,\"name\":\"test\"}");
+            .Respond(JsonMime, """{"id":2,"name":"test"}""");
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new()
              {
-                 Content = new StringContent("{\"id\":3,\"name\":\"test\"}", Encoding.UTF8, JsonMime),
+                 Content = new StringContent("""{"id":3,"name":"test"}""", Encoding.UTF8, JsonMime),
                  Headers = {RetryAfter = new(TimeSpan.FromSeconds(42))}
              });
 
