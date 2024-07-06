@@ -55,7 +55,7 @@ public sealed class ResponseCache
         => _expires.HasValue && DateTime.Now >= _expires;
 
     /// <summary>
-    /// Returns the cached <see cref="HttpClient"/>.
+    /// Returns a copy of the cached <see cref="HttpContent"/>.
     /// </summary>
     public HttpContent GetContent()
     {

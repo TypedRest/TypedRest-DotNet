@@ -57,7 +57,7 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
     /// </summary>
     /// <param name="request">A callback that performs the actual HTTP request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
-    /// <returns>The resolved <paramref name="request"/>.</returns>
+    /// <returns>The HTTP response.</returns>
     protected virtual async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
     {
         using var activity = StartActivity(caller);
