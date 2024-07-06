@@ -136,7 +136,7 @@ public class CollectionEndpointTest : EndpointTestBase
                  });
 
         var response = await _endpoint.ReadRangeAsync(new(from: 1, to: null));
-        response.Elements.Should().Equal(new MockEntity {Id = 6, Name = "test2"});
+        response.Elements.Should().Equal(new MockEntity(6, "test2"));
         response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"});
     }
 
@@ -266,7 +266,6 @@ public class CollectionEndpointTest : EndpointTestBase
             .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .WithHeaders("If-Match", "\"123abc\"")
             .Respond(_ => new(HttpStatusCode.NoContent));
-
         await _endpoint.SetAllAsync(result);
     }
 }
