@@ -16,7 +16,7 @@ public sealed class ResponseCache
     /// </summary>
     /// <returns>The <see cref="ResponseCache"/>; <c>null</c> if the response is not eligible for caching.</returns>
     public static ResponseCache? From(HttpResponseMessage response)
-        => response.IsSuccessStatusCode && !(response.Headers.CacheControl?.NoStore ?? false)
+        => response is {IsSuccessStatusCode: true, Headers.CacheControl: null or {NoStore: false}}
             ? new(response)
             : null;
 

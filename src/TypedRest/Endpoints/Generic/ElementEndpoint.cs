@@ -42,7 +42,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         var response = await HttpClient.HeadAsync(Uri, cancellationToken).NoContext();
         if (response.IsSuccessStatusCode) return true;
-        if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Gone) return false;
+        if (response.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.Gone) return false;
 
         await ErrorHandler.HandleAsync(response).NoContext();
         return false;
@@ -119,7 +119,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
             }
         }, cancellationToken).NoContext();
 
-        if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.MethodNotAllowed)
+        if (response.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.MethodNotAllowed)
             return await UpdateAsync(patch.ApplyTo, maxRetries, cancellationToken);
 
         await ErrorHandler.HandleAsync(response).NoContext();

@@ -102,7 +102,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint>(IEndpoint referrer, U
         if (response.Headers.Location is {} location)
         {
             // Explicit element endpoint URL from "Location" header
-            elementEndpoint = _getElementEndpoint(this, response.Headers.Location);
+            elementEndpoint = _getElementEndpoint(this, location);
         }
         else
         {
