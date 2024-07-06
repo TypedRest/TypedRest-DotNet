@@ -129,6 +129,8 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
 
     private async Task<TEntity?> TryReadAsAsync(HttpResponseMessage response, CancellationToken cancellationToken)
     {
+        if (response.StatusCode == HttpStatusCode.NoContent) return null;
+
         try
         {
             return await response.Content.ReadAsAsync<TEntity?>(Serializers, cancellationToken).NoContext();
