@@ -6,15 +6,15 @@ namespace TypedRest.Errors;
 /// <summary>
 /// Handles errors in HTTP responses by mapping status codes to common exception types.
 /// </summary>
-public sealed class DefaultErrorHandler : IErrorHandler
+public class DefaultErrorHandler : IErrorHandler
 {
     public async Task HandleAsync(HttpResponseMessage response)
     {
         if (response.IsSuccessStatusCode) return;
-
         string? body = await response.Content.ReadAsStringAsync().NoContext();
-        string message = ExtractJsonMessage(response, body)
-                      ?? $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
+
+        string? message = string.IsNullOrEmpty(body) ? null : ExtractMessage(body, response.Content.Headers.ContentType);
+        message ??= $"{response.RequestMessage?.RequestUri} responded with {(int)response.StatusCode} {response.ReasonPhrase}";
 
         var exception = MapException(response.StatusCode, message);
         exception.SetHttpResponseHeaders(response.Headers);
@@ -23,11 +23,14 @@ public sealed class DefaultErrorHandler : IErrorHandler
         throw exception;
     }
 
-    private static string? ExtractJsonMessage(HttpResponseMessage response, string? body)
+    /// <summary>
+    /// Tries to extract an error message from the response body.
+    /// </summary>
+    /// <param name="body">The response body in string form.</param>
+    /// <param name="contentType">The content type of the response body.</param>
+    protected virtual string? ExtractMessage(string body, MediaTypeHeaderValue? contentType)
     {
-        if (string.IsNullOrEmpty(body)) return null;
-
-        string? mediaType = response.Content.Headers.ContentType?.MediaType;
+        string? mediaType = contentType?.MediaType;
         if (mediaType != "application/json" && (mediaType == null || !mediaType.EndsWith("+json"))) return null;
 
         try
@@ -45,7 +48,12 @@ public sealed class DefaultErrorHandler : IErrorHandler
         return null;
     }
 
-    private static Exception MapException(HttpStatusCode statusCode, string message)
+    /// <summary>
+    /// Maps the HTTP status code to an exception.
+    /// </summary>
+    /// <param name="statusCode">The status code.</param>
+    /// <param name="message">An error message to include in the exception.</param>
+    protected virtual Exception MapException(HttpStatusCode statusCode, string message)
     {
         var innerException = new HttpRequestException(message);
         return statusCode switch
