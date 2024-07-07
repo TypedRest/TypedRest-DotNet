@@ -79,6 +79,21 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
     /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+    Task<TEntity?> UpdateAsync(Func<TEntity, TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads the current state of the entity, applies a change to it and stores the result. Applies optimistic concurrency using automatic retries.
+    /// </summary>
+    /// <param name="updateAction">A callback that takes the current state of the entity and applies the desired modifications.</param>
+    /// <param name="maxRetries">The maximum number of retries to perform for optimistic concurrency before giving up.</param>
+    /// <param name="cancellationToken">Used to cancel the request.</param>
+    /// <returns>The entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
+    /// <exception cref="InvalidOperationException">The number of retries performed for optimistic concurrency exceeded <paramref name="maxRetries"/>.</exception>
+    /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+    /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+    /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+    /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+    /// <exception cref="HttpRequestException">Other non-success status code.</exception>
     Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default);
 
     /// <summary>

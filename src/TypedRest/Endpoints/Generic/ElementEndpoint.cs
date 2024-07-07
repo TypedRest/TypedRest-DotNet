@@ -75,17 +75,14 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     public virtual async Task DeleteAsync(CancellationToken cancellationToken = default)
         => await DeleteContentAsync(cancellationToken);
 
-    public async Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> UpdateAsync(Func<TEntity, TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
     {
         using var activity = StartActivity();
 
         int retryCounter = 0;
         while (true)
         {
-            var entity = await ReadAsync(cancellationToken);
-            cancellationToken.ThrowIfCancellationRequested();
-
-            updateAction(entity);
+            var entity = updateAction(await ReadAsync(cancellationToken));
             cancellationToken.ThrowIfCancellationRequested();
 
             try
@@ -100,6 +97,13 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
             }
         }
     }
+
+    public Task<TEntity?> UpdateAsync(Action<TEntity> updateAction, int maxRetries = 3, CancellationToken cancellationToken = default)
+        => UpdateAsync(entity =>
+        {
+            updateAction(entity);
+            return entity;
+        }, maxRetries, cancellationToken);
 
     public async Task<TEntity?> UpdateAsync(Action<JsonPatchDocument<TEntity>> patchAction, int maxRetries = 3, CancellationToken cancellationToken = default)
     {
@@ -120,7 +124,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
         }, cancellationToken).NoContext();
 
         if (response.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.MethodNotAllowed)
-            return await UpdateAsync(patch.ApplyTo, maxRetries, cancellationToken);
+            return await UpdateAsync(x => patch.ApplyTo(x), maxRetries, cancellationToken);
 
         await ErrorHandler.HandleAsync(response).NoContext();
 
