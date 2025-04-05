@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Shared/">
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="TypedRest/TypedRest.csproj" />
+  <Project Path="TypedRest.Reactive/TypedRest.Reactive.csproj" />
+  <Project Path="TypedRest.SystemTextJson/TypedRest.SystemTextJson.csproj" />
+  <Project Path="TypedRest.OAuth/TypedRest.OAuth.csproj" />
+  <Project Path="TypedRest.CommandLine/TypedRest.CommandLine.csproj" />
+  <Project Path="UnitTests/UnitTests.csproj" />
+</Solution>

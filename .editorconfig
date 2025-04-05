@@ -16,16 +16,12 @@ insert_final_newline = false
 [*.{json,xml,yml,htm,html,js,ts,css,scss,less}]
 indent_size = 2
 
-[*.{*proj,resx,config,ruleset,cd,props,targets,nuspec}]
+[*.{*proj,slnx,resx,config,ruleset,cd,props,targets,nuspec}]
 indent_size = 2
 
 [*.{bat,cmd}]
 charset = latin1
 end_of_line = crlf
-
-[*.sln]
-end_of_line = crlf
-indent_style = tab
 
 [*.cd]
 end_of_line = crlf
