@@ -7,7 +7,8 @@ namespace TypedRest.Endpoints.Reactive;
 public interface IStreamingEndpoint<out TEntity> : IEndpoint
 {
     /// <summary>
-    /// Provides an observable stream of entities. The observable is cold; HTTP communication only starts on <see cref="IObservable{T}.Subscribe"/>.
+    /// Provides an observable stream of entities.
     /// </summary>
+    /// <returns>A cold observable. HTTP communication only starts on <see cref="IObservable{T}.Subscribe"/>.</returns>
     IObservable<TEntity> GetObservable();
 }

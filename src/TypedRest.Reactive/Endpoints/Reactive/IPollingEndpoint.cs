@@ -11,7 +11,7 @@ public interface IPollingEndpoint<TEntity> : IElementEndpoint<TEntity>
 {
     /// <summary>
     /// The interval in which to send requests to the server.
-    /// The server can modify this value using the "Retry-After" header.
+    /// The server can modify this value using the <c>Retry-After</c> header.
     /// </summary>
     TimeSpan PollingInterval { get; set; }
 

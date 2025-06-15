@@ -5,7 +5,7 @@ namespace TypedRest.Endpoints.Reactive;
 /// <summary>
 /// Endpoint for a collection of <typeparamref name="TEntity"/>s observable as an append-only stream using long-polling.
 /// </summary>
-/// <typeparam name="TEntity">The type of entity the endpoint represents.</typeparam>
+/// <typeparam name="TEntity">The type of individual elements in the collection.</typeparam>
 /// <typeparam name="TElementEndpoint">The type of <see cref="IEndpoint"/> to provide for individual <typeparamref name="TEntity"/>s. Must have a public constructor with an <see cref="IEndpoint"/> and an <see cref="Uri"/> or string parameter.</typeparam>
 public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : CollectionEndpoint<TEntity, TElementEndpoint>, IStreamingCollectionEndpoint<TEntity, TElementEndpoint>
     where TEntity : class
