@@ -53,45 +53,16 @@ public class PollingEndpoint<TEntity> : ElementEndpoint<TEntity>, IPollingEndpoi
         {
             using var activity = StartActivity();
 
-            TEntity previousEntity;
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                previousEntity = await ReadAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                observer.OnError(ex);
-                return;
-            }
-            observer.OnNext(previousEntity);
+                var entity = await ReadAsync(cancellationToken);
+                observer.OnNext(entity);
+                if (_endCondition?.Invoke(entity) == true) break;
 
-            while (_endCondition == null || !_endCondition(previousEntity))
-            {
-                try
-                {
-                    await Task.Delay(PollingInterval, cancellationToken);
-                }
-                catch (OperationCanceledException)
-                {
-                    return;
-                }
-
-                TEntity newEntity;
-                try
-                {
-                    newEntity = await ReadAsync(cancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    observer.OnError(ex);
-                    return;
-                }
-                // ReSharper disable once RedundantSuppressNullableWarningExpression
-                if (!newEntity!.Equals(previousEntity))
-                    observer.OnNext(newEntity);
-
-                previousEntity = newEntity;
+                await Task.Delay(PollingInterval, cancellationToken);
             }
+
             observer.OnCompleted();
-        });
+        })
+       .DistinctUntilChanged();
 }

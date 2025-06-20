@@ -27,9 +27,7 @@ public class StreamingEndpoint<TEntity>(IEndpoint referrer, Uri relativeUri, str
     public virtual IObservable<TEntity> GetObservable()
         => Observable.Create<TEntity>(async (observer, cancellationToken) =>
         {
-            using var activity = StartActivity();
-
-            activity?.AddTag("http.method", HttpMethod.Get.Method);
+            using var activity = StartActivity()?.AddTag("http.method", HttpMethod.Get.Method);
 
             using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             await ErrorHandler.HandleAsync(response);
@@ -38,10 +36,9 @@ public class StreamingEndpoint<TEntity>(IEndpoint referrer, Uri relativeUri, str
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                TEntity entity;
                 try
                 {
-                    entity = await entityStream.GetNextAsync(cancellationToken);
+                    observer.OnNext(await entityStream.GetNextAsync(cancellationToken));
                 }
                 catch (OperationCanceledException)
                 {
@@ -52,14 +49,6 @@ public class StreamingEndpoint<TEntity>(IEndpoint referrer, Uri relativeUri, str
                     observer.OnCompleted();
                     return;
                 }
-                catch (Exception ex)
-                {
-                    activity?.AddException(ex);
-                    observer.OnError(ex);
-                    return;
-                }
-
-                observer.OnNext(entity);
             }
         });
 }

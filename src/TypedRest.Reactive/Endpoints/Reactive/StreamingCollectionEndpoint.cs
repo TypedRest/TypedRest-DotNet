@@ -52,11 +52,6 @@ public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : Collection
                     // No new data available yet, keep polling
                     continue;
                 }
-                catch (Exception ex)
-                {
-                    observer.OnError(ex);
-                    return;
-                }
 
                 foreach (var entity in response.Elements)
                     observer.OnNext(entity);
@@ -68,8 +63,8 @@ public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : Collection
                 }
 
                 // Continue polling for more data
-                if (response.Range?.To == null) return;
-                currentStartIndex = response.Range.To.Value + 1;
+                if (response.Range?.To is {} value) currentStartIndex = value + 1;
+                else return;
             }
         });
 }
