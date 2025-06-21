@@ -39,10 +39,7 @@ public class PollingEndpoint<TEntity> : ElementEndpoint<TEntity>, IPollingEndpoi
     protected override async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
     {
         var response = await base.HandleAsync(request, caller);
-        PollingInterval =
-            response.Headers.RetryAfter?.Delta ??
-            (response.Headers.RetryAfter?.Date - DateTime.UtcNow) ??
-            PollingInterval;
+        PollingInterval = response.Headers.RetryAfterDuration() ?? PollingInterval;
         return response;
     }
 
