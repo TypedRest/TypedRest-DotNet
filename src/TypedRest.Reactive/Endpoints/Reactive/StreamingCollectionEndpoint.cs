@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using TypedRest.Endpoints.Generic;
 
 namespace TypedRest.Endpoints.Reactive;
@@ -28,6 +29,15 @@ public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : Collection
     public StreamingCollectionEndpoint(IEndpoint referrer, string relativeUri)
         : base(referrer, relativeUri)
     {}
+
+    protected override async Task<HttpResponseMessage> HandleAsync(Func<Task<HttpResponseMessage>> request, [CallerMemberName] string caller = "unknown")
+    {
+        var response = await base.HandleAsync(request, caller);
+        PollingInterval = response.Headers.RetryAfterDuration() ?? PollingInterval;
+        return response;
+    }
+
+    public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(3);
 
     public IObservable<TEntity> GetObservable(long startIndex = 0)
         => Observable.Create<TEntity>(async (observer, cancellationToken) =>

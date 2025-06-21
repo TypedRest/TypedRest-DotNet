@@ -13,6 +13,12 @@ public interface IStreamingCollectionEndpoint<TEntity, out TElementEndpoint> : I
     where TElementEndpoint : IElementEndpoint<TEntity>
 {
     /// <summary>
+    /// The interval in which to send requests to the server.
+    /// The server can modify this value using the <c>Retry-After</c> header.
+    /// </summary>
+    TimeSpan PollingInterval { get; set; }
+
+    /// <summary>
     /// Provides an observable stream of elements.
     /// </summary>
     /// <param name="startIndex">The index of the first element to return in the stream. Use negative values to start counting from the end of the stream.</param>

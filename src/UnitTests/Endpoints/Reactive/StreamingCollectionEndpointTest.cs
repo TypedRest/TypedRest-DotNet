@@ -7,7 +7,7 @@ public class StreamingCollectionEndpointTest : EndpointTestBase
 
     public StreamingCollectionEndpointTest()
     {
-        _endpoint = new(EntryEndpoint, "endpoint");
+        _endpoint = new(EntryEndpoint, "endpoint") {PollingInterval = TimeSpan.Zero};
     }
 
     [Fact]
@@ -23,17 +23,23 @@ public class StreamingCollectionEndpointTest : EndpointTestBase
 
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("Range", "elements=2-")
-            .Respond(HttpStatusCode.PartialContent,
-                 new StringContent("""[{"id":7,"name":"test3"}]""", Encoding.UTF8, JsonMime)
+            .Respond(_ => new()
+             {
+                 StatusCode = HttpStatusCode.PartialContent,
+                 Content = new StringContent("""[{"id":7,"name":"test3"}]""", Encoding.UTF8, JsonMime)
                  {
                      Headers = {ContentRange = new(from: 2, to: 2, length: 3) {Unit = "elements"}}
-                 });
+                 },
+                 Headers = {RetryAfter = new(TimeSpan.FromSeconds(42))}
+             });
 
         var observable = _endpoint.GetObservable();
         observable.ToEnumerable().ToList().Should().Equal(
             new MockEntity(5, "test1"),
             new MockEntity(6, "test2"),
             new MockEntity(7, "test3"));
+
+        _endpoint.PollingInterval.Should().Be(TimeSpan.FromSeconds(42));
     }
 
     [Fact]
