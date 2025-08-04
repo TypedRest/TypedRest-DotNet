@@ -1,6 +1,6 @@
 # ![TypedRest](https://raw.githubusercontent.com/TypedRest/TypedRest-DotNet/master/logo.svg) for .NET
 
-[![Build](https://github.com/TypedRest/TypedRest-DotNet/workflows/Build/badge.svg?branch=master)](https://github.com/TypedRest/TypedRest-DotNet/actions?query=workflow%3ABuild)
+[![Build](https://github.com/TypedRest/TypedRest-DotNet/actions/workflows/build.yml/badge.svg)](https://github.com/TypedRest/TypedRest-DotNet/actions/workflows/build.yml)
 [![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://dotnet.typedrest.net/)  
 TypedRest helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
 
