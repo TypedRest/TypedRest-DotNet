@@ -39,7 +39,7 @@ public class StreamingEndpointTest : EndpointTestBase
         var observable = _endpoint.GetObservable();
         observable.Invoking(x =>
         {
-            var _ = x.ToEnumerable().ToList();
+            _ = x.ToEnumerable().ToList();
         }).Should().Throw<InvalidOperationException>("my message");
     }
 }
