@@ -17,7 +17,7 @@
     <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="6.0.1" />
+    <PackageReference Include="System.Reactive" Version="6.0.2" />
   </ItemGroup>
 
   <!-- Global usings -->
