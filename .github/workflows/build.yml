@@ -41,6 +41,7 @@ jobs:
         run: |
           {
             echo "message<<EOF"
+            git fetch -f origin tag ${{github.ref_name}}
             git tag -l ${{github.ref_name}} --format="%(contents)"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
