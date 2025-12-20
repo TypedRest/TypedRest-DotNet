@@ -18,28 +18,26 @@ public class JsonConsole : IConsole
 
     public string ReadSecret(string prompt)
     {
-        // Increase maximum length for Console.ReadLine()
-        var defaultReader = Console.In;
-        try
+        Console.Write(prompt + " ");
+        var input = new StringBuilder();
+
+        ConsoleKeyInfo key;
+        while ((key = Console.ReadKey(intercept: true)).Key != ConsoleKey.Enter)
         {
-            var inputBuffer = new byte[1024];
-            var inputStream = Console.OpenStandardInput(inputBuffer.Length);
-            Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
-        }
-        catch
-        {
-            // May fail on some platforms
+            if (key.Key == ConsoleKey.Backspace && input.Length > 0)
+            {
+                input.Length--;
+                Console.Write("\b \b");
+            }
+            else if (!char.IsControl(key.KeyChar))
+            {
+                input.Append(key.KeyChar);
+                Console.Write("*");
+            }
         }
 
-        try
-        {
-            Console.Write(prompt + " ");
-            return Console.ReadLine() ?? throw new EndOfStreamException();
-        }
-        finally
-        {
-            Console.SetIn(defaultReader);
-        }
+        Console.WriteLine();
+        return input.ToString();
     }
 
     public void Write(object? output)
