@@ -1,0 +1,1609 @@
+{
+  "source_base_path": "/home/runner/work/TypedRest-DotNet/TypedRest-DotNet/doc",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.ActivityExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.ActivityExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.ActivityExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.ActivityExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Diagnostics.Activity\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.ArrayExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.ArrayExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.ArrayExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.ArrayExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for arrays.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.CliEndpointProvider-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.CliEndpointProvider-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.CliEndpointProvider<T>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.CliEndpointProvider-1.yml\" sourcestartlinenumber=\"1\">Builds <xref href=\"TypedRest.Endpoints.EntryEndpoint\" data-throw-if-not-resolved=\"false\"></xref>s using config files, interactive authentication, OAuth tokens, etc.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.EndpointCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.EndpointCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.EndpointCommand<TEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.EndpointCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.IEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.EntryCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.EntryCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.EntryCommand<TEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.EntryCommand-1.yml\" sourcestartlinenumber=\"1\">Command providing an entry point to a hierarchy of named <xref href=\"TypedRest.CommandLine.Commands.IEndpointCommand\" data-throw-if-not-resolved=\"false\"></xref>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Generic.CollectionCommand<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Generic.ICollectionEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-3.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Generic.CollectionCommand<TEntity, TElementEndpoint, TElementCommand>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-3.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Generic.ICollectionEndpoint%602\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-4.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Generic.CollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Generic.CollectionCommand-4.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Generic.ICollectionEndpoint%602\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Generic.ElementCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Generic.ElementCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Generic.ElementCommand<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Generic.ElementCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Generic.IElementEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Generic.IndexerCommand-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Generic.IndexerCommand-3.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Generic.IndexerCommand<TEndpoint, TElementEndpoint, TElementCommand>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Generic.IndexerCommand-3.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Generic.IIndexerEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Generic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Generic.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Generic",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/Commands/Generic/_Namespace.md\" sourcestartlinenumber=\"5\">Commands for operating on <xref href=\"TypedRest.Endpoints.Generic\" data-throw-if-not-resolved=\"True\" data-raw-source=\"&lt;xref:TypedRest.Endpoints.Generic&gt;\" sourcefile=\"../src/TypedRest.CommandLine/Commands/Generic/_Namespace.md\" sourcestartlinenumber=\"5\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.IEndpointCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.IEndpointCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.IEndpointCommand",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.IEndpointCommand.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.IEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Raw.BlobCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Raw.BlobCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Raw.BlobCommand",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Raw.BlobCommand.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Raw.IBlobEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Raw.UploadCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Raw.UploadCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Raw.UploadCommand",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Raw.UploadCommand.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Raw.IUploadEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Raw.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Raw.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Raw",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/Commands/Raw/_Namespace.md\" sourcestartlinenumber=\"5\">Commands for operating on <xref href=\"TypedRest.Endpoints.Raw\" data-throw-if-not-resolved=\"True\" data-raw-source=\"&lt;xref:TypedRest.Endpoints.Raw&gt;\" sourcefile=\"../src/TypedRest.CommandLine/Commands/Raw/_Namespace.md\" sourcestartlinenumber=\"5\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Reactive.PollingCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Reactive.PollingCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Reactive.PollingCommand<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Reactive.PollingCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Reactive.IPollingEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-3.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand<TEntity, TElementEndpoint, TElementCommand>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-3.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint%602\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-4.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand<TEntity, TEndpoint, TElementEndpoint, TElementCommand>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Reactive.StreamingCollectionCommand-4.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint%602\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCommand-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Reactive.StreamingCommand-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Reactive.StreamingCommand<TEntity, TEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Reactive.StreamingCommand-2.yml\" sourcestartlinenumber=\"1\">Command operating on a <xref href=\"TypedRest.Endpoints.Reactive.IStreamingEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Reactive.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Reactive.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Reactive",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/Commands/Reactive/_Namespace.md\" sourcestartlinenumber=\"5\">Commands for operating on <xref href=\"TypedRest.Endpoints.Reactive\" data-throw-if-not-resolved=\"True\" data-raw-source=\"&lt;xref:TypedRest.Endpoints.Reactive&gt;\" sourcefile=\"../src/TypedRest.CommandLine/Commands/Reactive/_Namespace.md\" sourcestartlinenumber=\"5\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Rpc.ActionCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Rpc.ActionCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Rpc.ActionCommand",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Rpc.ActionCommand.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Rpc.IActionEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Rpc.ConsumerCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Rpc.ConsumerCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Rpc.ConsumerCommand<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Rpc.ConsumerCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Rpc.IConsumerEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Rpc.FunctionCommand-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Rpc.FunctionCommand-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Rpc.FunctionCommand<TEntity, TResult>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Rpc.FunctionCommand-2.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Rpc.IFunctionEndpoint%602\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Rpc.ProducerCommand-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Rpc.ProducerCommand-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Rpc.ProducerCommand<TResult>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Commands.Rpc.ProducerCommand-1.yml\" sourcestartlinenumber=\"1\">Command operating on an <xref href=\"TypedRest.Endpoints.Rpc.IProducerEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.Rpc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.Rpc.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands.Rpc",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/Commands/Rpc/_Namespace.md\" sourcestartlinenumber=\"5\">Commands for operating on <xref href=\"TypedRest.Endpoints.Rpc\" data-throw-if-not-resolved=\"True\" data-raw-source=\"&lt;xref:TypedRest.Endpoints.Rpc&gt;\" sourcefile=\"../src/TypedRest.CommandLine/Commands/Rpc/_Namespace.md\" sourcestartlinenumber=\"5\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Commands.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Commands.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Commands",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/Commands/_Namespace.md\" sourcestartlinenumber=\"5\">Commands operating on <xref href=\"TypedRest.Endpoints\" data-throw-if-not-resolved=\"True\" data-raw-source=\"&lt;xref:TypedRest.Endpoints&gt;\" sourcefile=\"../src/TypedRest.CommandLine/Commands/_Namespace.md\" sourcestartlinenumber=\"5\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.EndpointProviderBase-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.EndpointProviderBase-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.EndpointProviderBase<T>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.EndpointProviderBase-1.yml\" sourcestartlinenumber=\"1\">Builds <xref href=\"TypedRest.Endpoints.EntryEndpoint\" data-throw-if-not-resolved=\"false\"></xref>s using config files, interactive authentication, OAuth tokens, etc.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.Executor-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.Executor-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.Executor<TEndpoint, TCommand>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.Executor-2.yml\" sourcestartlinenumber=\"1\">Executes <xref href=\"TypedRest.CommandLine.Commands.IEndpointCommand\" data-throw-if-not-resolved=\"false\"></xref>s based on command-line arguments.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.IEndpointProvider-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.IEndpointProvider-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.IEndpointProvider<T>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.IEndpointProvider-1.yml\" sourcestartlinenumber=\"1\">Builds <xref href=\"TypedRest.Endpoints.IEndpoint\" data-throw-if-not-resolved=\"false\"></xref> instances.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.IO.IConsole.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.IO.IConsole.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.IO.IConsole",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.IO.IConsole.yml\" sourcestartlinenumber=\"1\">Represents a text input/output device (e.g. a terminal/console) and a serialization strategy for objects.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.IO.JsonConsole.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.IO.JsonConsole.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.IO.JsonConsole",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.IO.JsonConsole.yml\" sourcestartlinenumber=\"1\">Reads from and writes to the default system console (stdin/stdout/stderr) using JSON serialization for objects.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.IO.StreamPrinter-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.IO.StreamPrinter-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.IO.StreamPrinter<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.CommandLine.IO.StreamPrinter-1.yml\" sourcestartlinenumber=\"1\">Prints a stream of <code class=\"typeparamref\">TEntity</code>s to an <xref href=\"TypedRest.CommandLine.IO.IConsole\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.IO.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.IO.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine.IO",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/IO/_Namespace.md\" sourcestartlinenumber=\"5\">Input and output methods for command-line interfaces.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.CommandLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.CommandLine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.CommandLine",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.CommandLine/_Namespace.md\" sourcestartlinenumber=\"5\">Build command-line interfaces for TypedRest clients.</p>\n<p sourcefile=\"../src/TypedRest.CommandLine/_Namespace.md\" sourcestartlinenumber=\"7\"><strong sourcefile=\"../src/TypedRest.CommandLine/_Namespace.md\" sourcestartlinenumber=\"7\">NuGet:</strong> <a href=\"https://www.nuget.org/packages/TypedRest.CommandLine/\" sourcefile=\"../src/TypedRest.CommandLine/_Namespace.md\" sourcestartlinenumber=\"7\">TypedRest.CommandLine</a></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.EndpointBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.EndpointBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.EndpointBase",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.EndpointBase.yml\" sourcestartlinenumber=\"1\">Base class for building endpoints, i.e. remote HTTP resources.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.EntryEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.EntryEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.EntryEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.EntryEndpoint.yml\" sourcestartlinenumber=\"1\">Represent the top-level URI of an API. Derive from this class and add your own set of child-<xref href=\"TypedRest.Endpoints.IEndpoint\" data-throw-if-not-resolved=\"false\"></xref>s as properties.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.CachingEndpointBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.CachingEndpointBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.CachingEndpointBase",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.CachingEndpointBase.yml\" sourcestartlinenumber=\"1\">Base class for building endpoints that use ETags and Last-Modified timestamps for caching and to avoid lost updates.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.CollectionEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.CollectionEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.CollectionEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.CollectionEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s addressable as <xref href=\"TypedRest.Endpoints.Generic.ElementEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.CollectionEndpoint-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.CollectionEndpoint-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.CollectionEndpoint<TEntity, TElementEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.CollectionEndpoint-2.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s addressable as <code class=\"typeparamref\">TElementEndpoint</code>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.CollectionEndpointExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.CollectionEndpointExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.CollectionEndpointExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.CollectionEndpointExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"TypedRest.Endpoints.Generic.IIndexerEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref> and <xref href=\"TypedRest.Endpoints.Generic.ICollectionEndpoint%602\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.ElementEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.ElementEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.ElementEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.ElementEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for an individual resource.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.ICollectionEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.ICollectionEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.ICollectionEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.ICollectionEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s addressable as <xref href=\"TypedRest.Endpoints.Generic.IElementEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.ICollectionEndpoint-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.ICollectionEndpoint-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.ICollectionEndpoint<TEntity, TElementEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.ICollectionEndpoint-2.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s addressable as <code class=\"typeparamref\">TElementEndpoint</code>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.IElementEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.IElementEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.IElementEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.IElementEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for an individual resource.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.IElementEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.IElementEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.IElementEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.IElementEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint for an individual resource. Usually you will want to use the typed-variant of this interface: <xref href=\"TypedRest.Endpoints.Generic.IElementEndpoint%601\" data-throw-if-not-resolved=\"false\"></xref></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.IIndexerEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.IIndexerEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.IIndexerEndpoint<TElementEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.IIndexerEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint that addresses child <code class=\"typeparamref\">TElementEndpoint</code>s by ID.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.IndexerEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.IndexerEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic.IndexerEndpoint<TElementEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Generic.IndexerEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint that addresses child <code class=\"typeparamref\">TElementEndpoint</code>s by ID.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Generic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Generic.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Generic",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Endpoints/Generic/_Namespace.md\" sourcestartlinenumber=\"5\">Generic endpoints allow you to model collections and elements.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.ICachingEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.ICachingEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.ICachingEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.ICachingEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint that caches the last response.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.IEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.IEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.IEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.IEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint, i.e. a remote HTTP resource.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.BlobEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.BlobEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw.BlobEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Raw.BlobEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint for a binary blob that can be downloaded or uploaded.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.BlobEndpointExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.BlobEndpointExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw.BlobEndpointExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Raw.BlobEndpointExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"TypedRest.Endpoints.Raw.IBlobEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.IBlobEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.IBlobEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw.IBlobEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Raw.IBlobEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint for a binary blob that can be downloaded or uploaded.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.IUploadEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.IUploadEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw.IUploadEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Raw.IUploadEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint that accepts binary uploads.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.UploadEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.UploadEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw.UploadEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Raw.UploadEndpoint.yml\" sourcestartlinenumber=\"1\">Endpoint that accepts binary uploads using multi-part form encoding or raw bodies.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.UploadEndpointExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.UploadEndpointExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw.UploadEndpointExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Raw.UploadEndpointExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"TypedRest.Endpoints.Raw.IUploadEndpoint\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Raw.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Raw.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Raw",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Endpoints/Raw/_Namespace.md\" sourcestartlinenumber=\"5\">Raw endpoints allow you to transmit binary data rather than serialized objects.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.IPollingEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.IPollingEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.IPollingEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.IPollingEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a resource that can be polled for state changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s observable as an append-only stream.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint<TEntity, TElementEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.IStreamingCollectionEndpoint-2.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s observable as an append-only stream.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.IStreamingEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.IStreamingEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.IStreamingEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.IStreamingEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a stream of <code class=\"typeparamref\">TEntity</code>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.PollingEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.PollingEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.PollingEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.PollingEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a resource that can be polled for state changes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s observable as an append-only stream using long-polling.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint<TEntity, TElementEndpoint>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.StreamingCollectionEndpoint-2.yml\" sourcestartlinenumber=\"1\">Endpoint for a collection of <code class=\"typeparamref\">TEntity</code>s observable as an append-only stream using long-polling.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.StreamingEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.StreamingEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive.StreamingEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Reactive.StreamingEndpoint-1.yml\" sourcestartlinenumber=\"1\">Endpoint for a stream of <code class=\"typeparamref\">TEntity</code>s using a persistent HTTP connection.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Reactive.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Reactive.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Reactive",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.Reactive/Endpoints/Reactive/_Namespace.md\" sourcestartlinenumber=\"5\">Reactive endpoints allow you to receive data as push streams rather than explicitly pulling.</p>\n<p sourcefile=\"../src/TypedRest.Reactive/Endpoints/Reactive/_Namespace.md\" sourcestartlinenumber=\"7\"><strong sourcefile=\"../src/TypedRest.Reactive/Endpoints/Reactive/_Namespace.md\" sourcestartlinenumber=\"7\">NuGet:</strong> <a href=\"https://www.nuget.org/packages/TypedRest.Reactive/\" sourcefile=\"../src/TypedRest.Reactive/Endpoints/Reactive/_Namespace.md\" sourcestartlinenumber=\"7\">TypedRest.Reactive</a></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.ActionEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.ActionEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.ActionEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.ActionEndpoint.yml\" sourcestartlinenumber=\"1\">RPC endpoint that is invoked with no input or output.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.ConsumerEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.ConsumerEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.ConsumerEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.ConsumerEndpoint-1.yml\" sourcestartlinenumber=\"1\">RPC endpoint that takes <code class=\"typeparamref\">TEntity</code> as input when invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.FunctionEndpoint-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.FunctionEndpoint-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.FunctionEndpoint<TEntity, TResult>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.FunctionEndpoint-2.yml\" sourcestartlinenumber=\"1\">RPC endpoint that takes <code class=\"typeparamref\">TEntity</code> as input and returns <code class=\"typeparamref\">TResult</code> as output when invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.IActionEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.IActionEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.IActionEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.IActionEndpoint.yml\" sourcestartlinenumber=\"1\">RPC endpoint that is invoked with no input or output.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.IConsumerEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.IConsumerEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.IConsumerEndpoint<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.IConsumerEndpoint-1.yml\" sourcestartlinenumber=\"1\">RPC endpoint that takes <code class=\"typeparamref\">TEntity</code> as input when invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.IFunctionEndpoint-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.IFunctionEndpoint-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.IFunctionEndpoint<TEntity, TResult>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.IFunctionEndpoint-2.yml\" sourcestartlinenumber=\"1\">RPC endpoint that takes <code class=\"typeparamref\">TEntity</code> as input and returns <code class=\"typeparamref\">TResult</code> as output when invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.IProducerEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.IProducerEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.IProducerEndpoint<TResult>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.IProducerEndpoint-1.yml\" sourcestartlinenumber=\"1\">RPC endpoint that takes no input and returns <code class=\"typeparamref\">TResult</code> as output when invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.IRpcEndpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.IRpcEndpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.IRpcEndpoint",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.IRpcEndpoint.yml\" sourcestartlinenumber=\"1\">An endpoint for a non-RESTful resource that acts like a callable function.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.ProducerEndpoint-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.ProducerEndpoint-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.ProducerEndpoint<TResult>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.ProducerEndpoint-1.yml\" sourcestartlinenumber=\"1\">RPC endpoint that returns <code class=\"typeparamref\">TResult</code> as output when invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.RpcEndpointBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.RpcEndpointBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc.RpcEndpointBase",
+      "Summary": "<p sourcefile=\"api/TypedRest.Endpoints.Rpc.RpcEndpointBase.yml\" sourcestartlinenumber=\"1\">Base class for building RPC endpoints.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.Rpc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.Rpc.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints.Rpc",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Endpoints/Rpc/_Namespace.md\" sourcestartlinenumber=\"5\">RPC endpoints allow you to interact with non-RESTful resources that act like callable functions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Endpoints.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Endpoints.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Endpoints",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Endpoints/_Namespace.md\" sourcestartlinenumber=\"5\"><a href=\"https://typedrest.net/endpoints/\" sourcefile=\"../src/TypedRest/Endpoints/_Namespace.md\" sourcestartlinenumber=\"5\">Endpoints</a> represent URIs that provides methods for operating on specific resources.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Errors.DefaultErrorHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Errors.DefaultErrorHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Errors.DefaultErrorHandler",
+      "Summary": "<p sourcefile=\"api/TypedRest.Errors.DefaultErrorHandler.yml\" sourcestartlinenumber=\"1\">Handles errors in HTTP responses by mapping status codes to common exception types.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Errors.IErrorHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Errors.IErrorHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Errors.IErrorHandler",
+      "Summary": "<p sourcefile=\"api/TypedRest.Errors.IErrorHandler.yml\" sourcestartlinenumber=\"1\">Handles errors in HTTP responses.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Errors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Errors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Errors",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Errors/_Namespace.md\" sourcestartlinenumber=\"5\"><a href=\"https://typedrest.net/error-handling/\" sourcefile=\"../src/TypedRest/Errors/_Namespace.md\" sourcestartlinenumber=\"5\">Handling errors</a> in HTTP responses.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.ExceptionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.ExceptionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.ExceptionExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.ExceptionExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Exception\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.HttpClientExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.HttpClientExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.HttpClientExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.HttpClientExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Net.Http.HttpClient\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.HttpContentExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.HttpContentExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.HttpContentExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.HttpContentExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Net.Http.HttpContent\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.HttpEntityStream-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.HttpEntityStream-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.HttpEntityStream<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.HttpEntityStream-1.yml\" sourcestartlinenumber=\"1\">Exposes an HTTP body as a stream of deserialized entities.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.HttpMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.HttpMethods.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.HttpMethods",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.HttpMethods.yml\" sourcestartlinenumber=\"1\">Provides additional values for <xref href=\"System.Net.Http.HttpMethod\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.HttpResponseHeadersExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.HttpResponseHeadersExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.HttpResponseHeadersExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.HttpResponseHeadersExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Net.Http.Headers.HttpResponseHeaders\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.PartialResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.PartialResponse-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.PartialResponse<TEntity>",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.PartialResponse-1.yml\" sourcestartlinenumber=\"1\">Represents a subset of a set of elements.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.ResponseCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.ResponseCache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http.ResponseCache",
+      "Summary": "<p sourcefile=\"api/TypedRest.Http.ResponseCache.yml\" sourcestartlinenumber=\"1\">Captures the content of an <xref href=\"System.Net.Http.HttpResponseMessage\" data-throw-if-not-resolved=\"false\"></xref> for caching.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Http.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Http.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Http",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Http/_Namespace.md\" sourcestartlinenumber=\"5\">Helper methods and structures for performing HTTP requests.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Links.AggregateLinkExtractor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Links.AggregateLinkExtractor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Links.AggregateLinkExtractor",
+      "Summary": "<p sourcefile=\"api/TypedRest.Links.AggregateLinkExtractor.yml\" sourcestartlinenumber=\"1\">Combines the results of multiple <xref href=\"TypedRest.Links.ILinkExtractor\" data-throw-if-not-resolved=\"false\"></xref>s.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Links.HalLinkExtractor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Links.HalLinkExtractor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Links.HalLinkExtractor",
+      "Summary": "<p sourcefile=\"api/TypedRest.Links.HalLinkExtractor.yml\" sourcestartlinenumber=\"1\">Extracts links from JSON bodies according to the Hypertext Application Language (HAL) specification.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Links.HeaderLinkExtractor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Links.HeaderLinkExtractor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Links.HeaderLinkExtractor",
+      "Summary": "<p sourcefile=\"api/TypedRest.Links.HeaderLinkExtractor.yml\" sourcestartlinenumber=\"1\">Extracts links from HTTP headers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Links.ILinkExtractor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Links.ILinkExtractor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Links.ILinkExtractor",
+      "Summary": "<p sourcefile=\"api/TypedRest.Links.ILinkExtractor.yml\" sourcestartlinenumber=\"1\">Extracts links from responses.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Links.Link.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Links.Link.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Links.Link",
+      "Summary": "<p sourcefile=\"api/TypedRest.Links.Link.yml\" sourcestartlinenumber=\"1\">Represents a link to another resource.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Links.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Links.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Links",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Links/_Namespace.md\" sourcestartlinenumber=\"5\"><a href=\"https://typedrest.net/link-handling/\" sourcefile=\"../src/TypedRest/Links/_Namespace.md\" sourcestartlinenumber=\"5\">Handling links</a> between HTTP resources.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.OAuth.HttpClientBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.OAuth.HttpClientBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.OAuth.HttpClientBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.OAuth.HttpClientBuilderExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"Microsoft.Extensions.DependencyInjection.IHttpClientBuilder\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.OAuth.OAuthHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.OAuth.OAuthHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.OAuth.OAuthHandler",
+      "Summary": "<p sourcefile=\"api/TypedRest.OAuth.OAuthHandler.yml\" sourcestartlinenumber=\"1\">HTTP message delegating handler that transparently performs OAuth 2.0 authentication with a client secret. Performs OpenID Connect discovery to find the token endpoint.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.OAuth.OAuthOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.OAuth.OAuthOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.OAuth.OAuthOptions",
+      "Summary": "<p sourcefile=\"api/TypedRest.OAuth.OAuthOptions.yml\" sourcestartlinenumber=\"1\">Options for OAuth 2.0 / OpenID Connect authentication.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.OAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.OAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.OAuth",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest.OAuth/_Namespace.md\" sourcestartlinenumber=\"5\">HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication.</p>\n<p sourcefile=\"../src/TypedRest.OAuth/_Namespace.md\" sourcestartlinenumber=\"7\"><strong sourcefile=\"../src/TypedRest.OAuth/_Namespace.md\" sourcestartlinenumber=\"7\">NuGet:</strong> <a href=\"https://www.nuget.org/packages/TypedRest.OAuth/\" sourcefile=\"../src/TypedRest.OAuth/_Namespace.md\" sourcestartlinenumber=\"7\">TypedRest.OAuth</a></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Serializers.BsonSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Serializers.BsonSerializer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Serializers.BsonSerializer",
+      "Summary": "<p sourcefile=\"api/TypedRest.Serializers.BsonSerializer.yml\" sourcestartlinenumber=\"1\">Handles serializing/deserializing from/to BSON using <xref href=\"Newtonsoft.Json\" data-throw-if-not-resolved=\"false\"></xref>.\nUses camel-case naming and does not serialize <code>null</code> by default.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Serializers.NewtonsoftJsonSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Serializers.NewtonsoftJsonSerializer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Serializers.NewtonsoftJsonSerializer",
+      "Summary": "<p sourcefile=\"api/TypedRest.Serializers.NewtonsoftJsonSerializer.yml\" sourcestartlinenumber=\"1\">Handles serializing/deserializing from/to JSON using <xref href=\"Newtonsoft.Json\" data-throw-if-not-resolved=\"false\"></xref>.\nUses camel-case naming and does not serialize <code>null</code> by default.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Serializers.SystemTextJsonSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Serializers.SystemTextJsonSerializer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Serializers.SystemTextJsonSerializer",
+      "Summary": "<p sourcefile=\"api/TypedRest.Serializers.SystemTextJsonSerializer.yml\" sourcestartlinenumber=\"1\">Handles serializing/deserializing from/to JSON using <xref href=\"System.Text.Json\" data-throw-if-not-resolved=\"false\"></xref>.\nUses camel-case naming and does not serialize <code>null</code> by default.</p>\n<p sourcefile=\"api/TypedRest.Serializers.SystemTextJsonSerializer.yml\" sourcestartlinenumber=\"4\"><strong sourcefile=\"api/TypedRest.Serializers.SystemTextJsonSerializer.yml\" sourcestartlinenumber=\"4\">NuGet:</strong> <a href=\"https://www.nuget.org/packages/TypedRest.SystemTextJson/\" sourcefile=\"api/TypedRest.Serializers.SystemTextJsonSerializer.yml\" sourcestartlinenumber=\"4\">TypedRest.SystemTextJson</a></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Serializers.XmlSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Serializers.XmlSerializer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Serializers.XmlSerializer",
+      "Summary": "<p sourcefile=\"api/TypedRest.Serializers.XmlSerializer.yml\" sourcestartlinenumber=\"1\">Handles serializing/deserializing from/to XML using <xref href=\"TypedRest.Serializers.XmlSerializer\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.Serializers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.Serializers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.Serializers",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/Serializers/_Namespace.md\" sourcestartlinenumber=\"5\">Serialization of entities sent to and received from the server.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.ServiceCollectionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"Microsoft.Extensions.DependencyInjection.IServiceCollection\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.TaskExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.TaskExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.TaskExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.TaskExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Threading.Tasks.Task\" data-throw-if-not-resolved=\"false\"></xref> and <xref href=\"System.Threading.Tasks.Task%601\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.TypeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.TypeExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.TypeExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.TypeExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Type\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.UriExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.UriExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest.UriExtensions",
+      "Summary": "<p sourcefile=\"api/TypedRest.UriExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for <xref href=\"System.Uri\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TypedRest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TypedRest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "TypedRest",
+      "Summary": "\n<p sourcefile=\"../src/TypedRest/_Namespace.md\" sourcestartlinenumber=\"5\">TypedRest helps you build type-safe fluent-style REST API clients</p>\n<p sourcefile=\"../src/TypedRest/_Namespace.md\" sourcestartlinenumber=\"7\"><strong sourcefile=\"../src/TypedRest/_Namespace.md\" sourcestartlinenumber=\"7\">NuGet:</strong> <a href=\"https://www.nuget.org/packages/TypedRest/\" sourcefile=\"../src/TypedRest/_Namespace.md\" sourcestartlinenumber=\"7\">TypedRest</a></p>\n"
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
