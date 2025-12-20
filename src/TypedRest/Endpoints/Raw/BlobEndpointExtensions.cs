@@ -19,9 +19,15 @@ public static class BlobEndpointExtensions
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
     public static async Task DownloadAsync(this IBlobEndpoint endpoint, string path, CancellationToken cancellationToken = default)
     {
+#if NETSTANDARD2_0
         using var fileStream = File.Create(path);
         using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
         await downloadStream.CopyToAsync(fileStream);
+#else
+        await using var fileStream = File.Create(path);
+        await using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
+        await downloadStream.CopyToAsync(fileStream, cancellationToken);
+#endif
     }
 
     /// <summary>
@@ -39,7 +45,11 @@ public static class BlobEndpointExtensions
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
     public static async Task UploadFromAsync(this IBlobEndpoint endpoint, string path, string? mimeType = null, CancellationToken cancellationToken = default)
     {
+#if NETSTANDARD2_0
         using var fileStream = File.OpenRead(path);
+#else
+        await using var fileStream = File.OpenRead(path);
+#endif
         await endpoint.UploadFromAsync(fileStream, mimeType, cancellationToken);
     }
 }
