@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.CommandLine.IO
-summary: *content
+summary: Input and output methods for command-line interfaces.
 ---
-Input and output methods for command-line interfaces.

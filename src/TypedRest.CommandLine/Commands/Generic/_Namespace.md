@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.CommandLine.Commands.Generic
-summary: *content
+summary: Commands for operating on <xref:TypedRest.Endpoints.Generic>.
 ---
-Commands for operating on <xref:TypedRest.Endpoints.Generic>.

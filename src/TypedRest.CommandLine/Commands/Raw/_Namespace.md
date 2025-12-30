@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.CommandLine.Commands.Raw
-summary: *content
+summary: Commands for operating on <xref:TypedRest.Endpoints.Raw>.
 ---
-Commands for operating on <xref:TypedRest.Endpoints.Raw>.

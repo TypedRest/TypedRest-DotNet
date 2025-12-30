@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Http
-summary: *content
+summary: Helper methods and structures for performing HTTP requests.
 ---
-Helper methods and structures for performing HTTP requests.

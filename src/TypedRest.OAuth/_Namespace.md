@@ -1,7 +1,6 @@
 ---
 uid: TypedRest.OAuth
-summary: *content
+summary: HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication.
 ---
-HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication.
-
-**NuGet:** [TypedRest.OAuth](https://www.nuget.org/packages/TypedRest.OAuth/)  
+> [!NOTE]
+> NuGet package: [TypedRest.OAuth](https://www.nuget.org/packages/TypedRest.OAuth/)  

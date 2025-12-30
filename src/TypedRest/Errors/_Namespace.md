@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Errors
-summary: *content
+summary: '[Handling errors](https://typedrest.net/error-handling/) in HTTP responses.'
 ---
-[Handling errors](https://typedrest.net/error-handling/) in HTTP responses.

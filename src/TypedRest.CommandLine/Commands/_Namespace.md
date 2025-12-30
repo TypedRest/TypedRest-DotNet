@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.CommandLine.Commands
-summary: *content
+summary: Commands operating on <xref:TypedRest.Endpoints>.
 ---
-Commands operating on <xref:TypedRest.Endpoints>.

@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Endpoints.Rpc
-summary: *content
+summary: RPC endpoints allow you to interact with non-RESTful resources that act like callable functions.
 ---
-RPC endpoints allow you to interact with non-RESTful resources that act like callable functions.

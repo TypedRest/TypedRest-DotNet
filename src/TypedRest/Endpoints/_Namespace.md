@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Endpoints
-summary: *content
+summary: '[Endpoints](https://typedrest.net/endpoints/) represent URIs that provides methods for operating on specific resources.'
 ---
-[Endpoints](https://typedrest.net/endpoints/) represent URIs that provides methods for operating on specific resources.

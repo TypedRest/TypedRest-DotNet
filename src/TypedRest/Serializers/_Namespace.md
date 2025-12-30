@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Serializers
-summary: *content
+summary: Serialization of entities sent to and received from the server.
 ---
-Serialization of entities sent to and received from the server.

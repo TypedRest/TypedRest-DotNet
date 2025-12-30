@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.CommandLine.Commands.Reactive
-summary: *content
+summary: Commands for operating on <xref:TypedRest.Endpoints.Reactive>.
 ---
-Commands for operating on <xref:TypedRest.Endpoints.Reactive>.

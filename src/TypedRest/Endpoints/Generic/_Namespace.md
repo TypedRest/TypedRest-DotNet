@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Endpoints.Generic
-summary: *content
+summary: Generic endpoints allow you to model collections and elements.
 ---
-Generic endpoints allow you to model collections and elements.

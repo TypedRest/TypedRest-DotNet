@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.Endpoints.Raw
-summary: *content
+summary: Raw endpoints allow you to transmit binary data rather than serialized objects.
 ---
-Raw endpoints allow you to transmit binary data rather than serialized objects.

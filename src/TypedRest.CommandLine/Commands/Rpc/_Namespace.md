@@ -1,5 +1,4 @@
 ---
 uid: TypedRest.CommandLine.Commands.Rpc
-summary: *content
+summary: Commands for operating on <xref:TypedRest.Endpoints.Rpc>.
 ---
-Commands for operating on <xref:TypedRest.Endpoints.Rpc>.

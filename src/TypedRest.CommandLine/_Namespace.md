@@ -1,7 +1,6 @@
 ---
 uid: TypedRest.CommandLine
-summary: *content
+summary: Build command-line interfaces for TypedRest clients.
 ---
-Build command-line interfaces for TypedRest clients.
-
-**NuGet:** [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
+> [!NOTE]
+> NuGet package: [TypedRest.CommandLine](https://www.nuget.org/packages/TypedRest.CommandLine/)
