@@ -27,7 +27,7 @@ Note note = await smith.Note.ReadAsync();
 await smith.DeleteAsync();
 ```
 
-Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[Getting started](https://typedrest.net/getting-started/dotnet/)** guide.
+Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[setup guide](https://typedrest.net/setup/dotnet/)**.
 
 You can also take a look at our [Sample project](https://github.com/TypedRest/Sample-DotNet).
 
