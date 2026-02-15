@@ -20,6 +20,7 @@
     "globalMetadata": {
       "_baseUrl": "https://dotnet.typedrest.net/",
       "_appTitle": "TypedRest for .NET",
+       "_appLogoPath": "icon.png",
       "_appFooter": "Copyright Bastian Eicher"
     },
     "content": [
@@ -29,6 +30,12 @@
           "toc.yml",
           "api/*.yml"
         ]
+      }
+    ],
+    "resource": [
+      {
+        "src": "..",
+        "files": ["icon.png"]
       }
     ],
     "overwrite": [
