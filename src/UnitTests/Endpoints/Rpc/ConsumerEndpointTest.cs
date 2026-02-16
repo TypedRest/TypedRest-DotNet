@@ -17,6 +17,6 @@ public class ConsumerEndpointTest : EndpointTestBase
             .WithContent("""{"id":1,"name":"input"}""")
             .Respond(HttpStatusCode.Accepted);
 
-        await _endpoint.InvokeAsync(new MockEntity(1, "input"));
+        await _endpoint.InvokeAsync(new MockEntity(1, "input"), TestContext.Current.CancellationToken);
     }
 }

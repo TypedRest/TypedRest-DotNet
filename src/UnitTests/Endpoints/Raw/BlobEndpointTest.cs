@@ -16,7 +16,7 @@ public class BlobEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
             .Respond(_ => new StringContent("") {Headers = {Allow = {HttpMethod.Put.Method}}});
 
-        await _endpoint.ProbeAsync();
+        await _endpoint.ProbeAsync(TestContext.Current.CancellationToken);
 
         _endpoint.DownloadAllowed.Should().BeFalse();
         _endpoint.UploadAllowed.Should().BeTrue();
@@ -30,9 +30,13 @@ public class BlobEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(_ => new ByteArrayContent(data));
 
-        using var downloadStream = await _endpoint.DownloadAsync();
+        using var downloadStream = await _endpoint.DownloadAsync(TestContext.Current.CancellationToken);
         using var memStream = new MemoryStream();
-        await downloadStream.CopyToAsync(memStream);
+        await downloadStream.CopyToAsync(memStream
+#if NET
+            , TestContext.Current.CancellationToken
+#endif
+        );
         memStream.ToArray().Should().Equal(data);
     }
 
@@ -46,6 +50,6 @@ public class BlobEndpointTest : EndpointTestBase
             .Respond(HttpStatusCode.NoContent);
 
         using var stream = new MemoryStream(data);
-        await _endpoint.UploadFromAsync(stream, mimeType: "mock/type");
+        await _endpoint.UploadFromAsync(stream, mimeType: "mock/type", cancellationToken: TestContext.Current.CancellationToken);
     }
 }

@@ -15,7 +15,7 @@ public class UploadEndpointTest : EndpointTestBase
             .Respond(HttpStatusCode.NoContent);
 
         using var stream = new MemoryStream(data);
-        await endpoint.UploadFromAsync(stream, mimeType: "mock/type");
+        await endpoint.UploadFromAsync(stream, mimeType: "mock/type", cancellationToken: TestContext.Current.CancellationToken);
     }
 
     [Fact]
@@ -30,6 +30,6 @@ public class UploadEndpointTest : EndpointTestBase
             .Respond(HttpStatusCode.NoContent);
 
         using var stream = new MemoryStream(data);
-        await endpoint.UploadFromAsync(stream, mimeType: "mock/type", fileName: "file.dat");
+        await endpoint.UploadFromAsync(stream, mimeType: "mock/type", fileName: "file.dat", cancellationToken: TestContext.Current.CancellationToken);
     }
 }

@@ -16,7 +16,7 @@ public class ActionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Options, "http://localhost/endpoint")
             .Respond(_ => new StringContent("") {Headers = {Allow = {"POST"}}});
 
-        await _endpoint.ProbeAsync();
+        await _endpoint.ProbeAsync(TestContext.Current.CancellationToken);
 
         _endpoint.InvokeAllowed.Should().BeTrue();
     }
@@ -27,6 +27,6 @@ public class ActionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
             .Respond(HttpStatusCode.Accepted);
 
-        await _endpoint.InvokeAsync();
+        await _endpoint.InvokeAsync(TestContext.Current.CancellationToken);
     }
 }
