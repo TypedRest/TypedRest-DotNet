@@ -12,7 +12,7 @@ public class NewtonsoftJsonElementEndpointTest() : ElementEndpointTestBase(new N
             .WithContent("""[{"value":"testX","path":"/name","op":"replace"}]""")
             .Respond(JsonMime, """{"id":5,"name":"testX"}""");
 
-        var result = await Endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
+        var result = await Endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"), cancellationToken: TestContext.Current.CancellationToken);
         result.Should().Be(new MockEntity(5, "testX"));
     }
 
@@ -31,7 +31,7 @@ public class NewtonsoftJsonElementEndpointTest() : ElementEndpointTestBase(new N
             .WithContent("""{"id":5,"name":"testX"}""")
             .Respond(JsonMime, """{"id":5,"name":"testX"}""");
 
-        var result = await Endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"));
+        var result = await Endpoint.UpdateAsync(patch => patch.Replace(x => x.Name, "testX"), cancellationToken: TestContext.Current.CancellationToken);
         result.Should().Be(new MockEntity(5, "testX"));
     }
 }

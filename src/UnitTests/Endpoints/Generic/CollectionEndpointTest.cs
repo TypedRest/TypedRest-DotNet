@@ -28,7 +28,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      {"Link", "<children{?id}>; rel=child; templated=true"}
                  }
              });
-        await _endpoint.ReadAllAsync();
+        await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
 
         _endpoint["1"]
            .Uri.Should().Be(new Uri("http://localhost/children?id=1"));
@@ -46,7 +46,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      {"Link", "<http://localhost/children{?id}>; rel=child; templated=true"}
                  }
              });
-        await _endpoint.ReadAllAsync();
+        await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
 
         _endpoint["1"]
            .Uri.Should().Be(new Uri("http://localhost/children?id=1"));
@@ -68,7 +68,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      {"Link", "<children/{id}>; rel=child; templated=true"}
                  }
              });
-        await _endpoint.ReadAllAsync();
+        await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
 
         _endpoint[new MockEntity(1, "test")]
            .Uri.Should().Be(new Uri("http://localhost/children/1"));
@@ -86,7 +86,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      {"Link", "<http://localhost/children/{id}>; rel=child; templated=true"}
                  }
              });
-        await _endpoint.ReadAllAsync();
+        await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
 
         _endpoint[new MockEntity(1, "test")]
            .Uri.Should().Be(new Uri("http://localhost/children/1"));
@@ -98,7 +98,7 @@ public class CollectionEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .Respond(JsonMime, """[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""");
 
-        var result = await _endpoint.ReadAllAsync();
+        var result = await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
         result.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
     }
 
@@ -111,13 +111,13 @@ public class CollectionEndpointTest : EndpointTestBase
                  Content = new StringContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
-        var result1 = await _endpoint.ReadAllAsync();
+        var result1 = await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
         result1.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
 
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
             .WithHeaders("If-None-Match", "\"123abc\"")
             .Respond(HttpStatusCode.NotModified);
-        var result2 = await _endpoint.ReadAllAsync();
+        var result2 = await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
         result2.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
 
         result2.Should().NotBeSameAs(result1,
@@ -135,7 +135,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      Headers = {ContentRange = new(from: 1, to: 1, length: 2) {Unit = "elements"}}
                  });
 
-        var response = await _endpoint.ReadRangeAsync(new(from: 1, to: null));
+        var response = await _endpoint.ReadRangeAsync(new(from: 1, to: null), TestContext.Current.CancellationToken);
         response.Elements.Should().Equal(new MockEntity(6, "test2"));
         response.Range.Should().Be(new ContentRangeHeaderValue(from: 1, to: 1, length: 2) {Unit = "elements"});
     }
@@ -151,7 +151,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      Headers = {ContentRange = new(from: 0, to: 1, length: 2) {Unit = "elements"}}
                  });
 
-        var response = await _endpoint.ReadRangeAsync(new(from: 0, to: 1));
+        var response = await _endpoint.ReadRangeAsync(new(from: 0, to: 1), TestContext.Current.CancellationToken);
         response.Elements.Should().Equal(new MockEntity(5, "test1"), new MockEntity(6, "test2"));
         response.Range.Should().Be(new ContentRangeHeaderValue(from: 0, to: 1, length: 2) {Unit = "elements"});
     }
@@ -167,7 +167,7 @@ public class CollectionEndpointTest : EndpointTestBase
                      Headers = {ContentRange = new(from: 2, to: 2) {Unit = "elements"}}
                  });
 
-        var response = await _endpoint.ReadRangeAsync(new(from: null, to: 1));
+        var response = await _endpoint.ReadRangeAsync(new(from: null, to: 1), TestContext.Current.CancellationToken);
         response.Elements.Should().Equal(new MockEntity(6, "test2"));
         response.Range.Should().Be(new ContentRangeHeaderValue(from: 2, to: 2) {Unit = "elements"});
     }
@@ -182,7 +182,7 @@ public class CollectionEndpointTest : EndpointTestBase
         string? exceptionMessage = null;
         try
         {
-            await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 5, to: 10));
+            await _endpoint.ReadRangeAsync(new RangeItemHeaderValue(from: 5, to: 10), TestContext.Current.CancellationToken);
         }
         catch (InvalidOperationException ex)
         {
@@ -199,7 +199,7 @@ public class CollectionEndpointTest : EndpointTestBase
             .WithContent("""{"id":0,"name":"test"}""")
             .Respond(JsonMime, """{"id":5,"name":"test"}""");
 
-        var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
+        var element = (await _endpoint.CreateAsync(new MockEntity(0, "test"), TestContext.Current.CancellationToken))!;
         element.Response.Should().Be(new MockEntity(5, "test"));
         element.Uri.Should().Be(new Uri("http://localhost/endpoint/5"));
     }
@@ -215,7 +215,7 @@ public class CollectionEndpointTest : EndpointTestBase
                  Headers = {Location = new Uri("/endpoint/new", UriKind.Relative)}
              });
 
-        var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
+        var element = (await _endpoint.CreateAsync(new MockEntity(0, "test"), TestContext.Current.CancellationToken))!;
         element.Response.Should().Be(new MockEntity(5, "test"));
         element.Uri.Should().Be(new Uri("http://localhost/endpoint/new"));
     }
@@ -227,7 +227,7 @@ public class CollectionEndpointTest : EndpointTestBase
             .WithContent("""{"id":0,"name":"test"}""")
             .Respond(_ => new(HttpStatusCode.Accepted));
 
-        var element = (await _endpoint.CreateAsync(new MockEntity(0, "test")))!;
+        var element = (await _endpoint.CreateAsync(new MockEntity(0, "test"), TestContext.Current.CancellationToken))!;
         element.Should().BeNull();
     }
 
@@ -238,7 +238,7 @@ public class CollectionEndpointTest : EndpointTestBase
             .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .Respond(_ => new(HttpStatusCode.Accepted));
 
-        await _endpoint.CreateAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")});
+        await _endpoint.CreateAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")}, TestContext.Current.CancellationToken);
     }
 
     [Fact]
@@ -248,7 +248,7 @@ public class CollectionEndpointTest : EndpointTestBase
             .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .Respond(_ => new(HttpStatusCode.NoContent));
 
-        await _endpoint.SetAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")});
+        await _endpoint.SetAllAsync(new MockEntity[] {new(5, "test1"), new(6, "test2")}, TestContext.Current.CancellationToken);
     }
 
     [Fact]
@@ -260,12 +260,12 @@ public class CollectionEndpointTest : EndpointTestBase
                  Content = new StringContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""", Encoding.UTF8, JsonMime),
                  Headers = {ETag = new("\"123abc\"")}
              });
-        var result = await _endpoint.ReadAllAsync();
+        var result = await _endpoint.ReadAllAsync(TestContext.Current.CancellationToken);
 
         Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
             .WithContent("""[{"id":5,"name":"test1"},{"id":6,"name":"test2"}]""")
             .WithHeaders("If-Match", "\"123abc\"")
             .Respond(_ => new(HttpStatusCode.NoContent));
-        await _endpoint.SetAllAsync(result);
+        await _endpoint.SetAllAsync(result, TestContext.Current.CancellationToken);
     }
 }

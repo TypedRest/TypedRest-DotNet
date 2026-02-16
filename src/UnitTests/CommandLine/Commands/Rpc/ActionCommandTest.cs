@@ -7,7 +7,7 @@ public class ActionCommandTest : CommandTestBase<ActionCommand, IActionEndpoint>
     [Fact]
     public async Task TestInvoke()
     {
-        EndpointMock.Setup(x => x.InvokeAsync(default)).Returns(Task.CompletedTask);
+        EndpointMock.Setup(x => x.InvokeAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         await ExecuteAsync();
     }

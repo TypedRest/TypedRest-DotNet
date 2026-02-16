@@ -10,7 +10,7 @@ public class ConsumerCommandTest : CommandTestBase<ConsumerCommand<MockEntity>, 
         var input = new MockEntity(1, "a");
 
         ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(input);
-        EndpointMock.Setup(x => x.InvokeAsync(input, default)).Returns(Task.CompletedTask);
+        EndpointMock.Setup(x => x.InvokeAsync(input, It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         await ExecuteAsync();
     }

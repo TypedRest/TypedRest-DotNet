@@ -9,7 +9,7 @@ public class ProducerCommandTest : CommandTestBase<ProducerCommand<MockEntity>, 
     {
         var output = new MockEntity(2, "b");
 
-        EndpointMock.Setup(x => x.InvokeAsync(default))
+        EndpointMock.Setup(x => x.InvokeAsync(It.IsAny<CancellationToken>()))
                     .Returns(Task.FromResult(output).AsITask());
         ConsoleMock.Setup(x => x.Write(output));
 

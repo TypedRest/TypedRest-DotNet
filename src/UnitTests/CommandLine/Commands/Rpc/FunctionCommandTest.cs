@@ -11,7 +11,7 @@ public class FunctionCommandTest : CommandTestBase<FunctionCommand<MockEntity, M
         var output = new MockEntity(2, "b");
 
         ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(input);
-        EndpointMock.Setup(x => x.InvokeAsync(input, default)).ReturnsAsync(output);
+        EndpointMock.Setup(x => x.InvokeAsync(input, It.IsAny<CancellationToken>())).ReturnsAsync(output);
         ConsoleMock.Setup(x => x.Write(output));
 
         await ExecuteAsync();

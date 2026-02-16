@@ -10,7 +10,7 @@ public class ElementCommandTest : CommandTestBase<ElementCommand<MockEntity>, IE
         var entity = new MockEntity(5, "test");
 
         ConsoleMock.Setup(x => x.Write(entity));
-        EndpointMock.Setup(x => x.ReadAsync(default)).ReturnsAsync(entity);
+        EndpointMock.Setup(x => x.ReadAsync(It.IsAny<CancellationToken>())).ReturnsAsync(entity);
 
         await ExecuteAsync();
     }
@@ -21,7 +21,7 @@ public class ElementCommandTest : CommandTestBase<ElementCommand<MockEntity>, IE
         var entity = new MockEntity(5, "test");
 
         ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(entity);
-        EndpointMock.Setup(x => x.SetAsync(entity, default)).ReturnsAsync(entity);
+        EndpointMock.Setup(x => x.SetAsync(entity, It.IsAny<CancellationToken>())).ReturnsAsync(entity);
         ConsoleMock.Setup(x => x.Write(entity));
 
         await ExecuteAsync("set");
@@ -33,7 +33,7 @@ public class ElementCommandTest : CommandTestBase<ElementCommand<MockEntity>, IE
         var entity = new MockEntity(5, "test");
 
         ConsoleMock.Setup(x => x.Read<MockEntity>()).Returns(entity);
-        EndpointMock.Setup(x => x.MergeAsync(entity, default)).ReturnsAsync(entity);
+        EndpointMock.Setup(x => x.MergeAsync(entity, It.IsAny<CancellationToken>())).ReturnsAsync(entity);
         ConsoleMock.Setup(x => x.Write(entity));
 
         await ExecuteAsync("merge");
@@ -42,7 +42,7 @@ public class ElementCommandTest : CommandTestBase<ElementCommand<MockEntity>, IE
     [Fact]
     public async Task TestDelete()
     {
-        EndpointMock.Setup(x => x.DeleteAsync(default)).Returns(Task.CompletedTask);
+        EndpointMock.Setup(x => x.DeleteAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         await ExecuteAsync("delete");
     }

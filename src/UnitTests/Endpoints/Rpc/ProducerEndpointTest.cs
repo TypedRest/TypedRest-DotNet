@@ -16,7 +16,7 @@ public class ProducerEndpointTest : EndpointTestBase
         Mock.Expect(HttpMethod.Post, "http://localhost/endpoint")
             .Respond(JsonMime, """{"id":2,"name":"result"}""");
 
-        var result = await _endpoint.InvokeAsync();
+        var result = await _endpoint.InvokeAsync(TestContext.Current.CancellationToken);
         result.Should().Be(new MockEntity(2, "result"));
     }
 }
