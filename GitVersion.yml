@@ -3,13 +3,14 @@ mode: ContinuousDeployment
 branches:
   # Mainline branches
   develop:
-    tag: alpha
-    increment: patch
-  master: 
-    tag: beta
+    label: alpha
+    increment: Patch
+  main:
+    mode: ContinuousDelivery
+    label: beta
 
   # Stabilization branches
   release:
-    tag: rc
+    label: rc
   hotfix:
-    tag: rc
+    label: rc

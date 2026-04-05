@@ -10,10 +10,10 @@ jobs:
         with:
           fetch-depth: 0
           show-progress: false
-      - uses: gittools/actions/gitversion/setup@v3.2.1
+      - uses: gittools/actions/gitversion/setup@v4.4.2
         with:
-          versionSpec: '5.12.x'
-      - uses: gittools/actions/gitversion/execute@v3.2.1
+          versionSpec: '6.7.x'
+      - uses: gittools/actions/gitversion/execute@v4.4.2
         id: gitversion
       - uses: actions/setup-dotnet@v5
         with:
@@ -22,10 +22,10 @@ jobs:
       # Build
       - name: Build (pre-release)
         if: github.ref_type != 'tag'
-        run: ./build.sh ${{steps.gitversion.outputs.nuGetVersion}}-${{steps.gitversion.outputs.shortSha}}
+        run: ./build.sh ${{steps.gitversion.outputs.semVer}}-${{steps.gitversion.outputs.shortSha}}
       - name: Build (release)
         if: github.ref_type == 'tag'
-        run: ./build.sh ${{steps.gitversion.outputs.nuGetVersion}}
+        run: ./build.sh ${{steps.gitversion.outputs.semVer}}
       - name: Report test results
         if: always()
         uses: dorny/test-reporter@v3
@@ -50,7 +50,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body: |
-            **[NuGet package](https://www.nuget.org/packages/TypedRest/${{steps.gitversion.outputs.nuGetVersion}})**
+            **[NuGet package](https://www.nuget.org/packages/TypedRest/${{steps.gitversion.outputs.semVer}})**
             ## Changes
             ${{steps.tag_message.outputs.message}}
 
