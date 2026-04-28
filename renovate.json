@@ -20,7 +20,7 @@
     },
     {
       "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
-      "matchPackageNames": ["System.Text.Json", "System.Diagnostics.DiagnosticSource"],
+      "matchPackageNames": ["System.Text.Json", "System.Diagnostics.DiagnosticSource", "System.Net.ServerSentEvents"],
       "groupName": "Microsoft Extensions",
       "automerge": true,
       "automergeType": "branch",
@@ -28,7 +28,7 @@
     },
     {
       "matchPackagePatterns": ["^Microsoft\\.Extensions", "^Microsoft\\.AspNetCore"],
-      "matchPackageNames": ["System.Text.Json", "System.Diagnostics.DiagnosticSource"],
+      "matchPackageNames": ["System.Text.Json", "System.Diagnostics.DiagnosticSource", "System.Net.ServerSentEvents"],
       "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
