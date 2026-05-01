@@ -39,7 +39,10 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
 
         var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
         if (response.StatusCode == HttpStatusCode.NotModified && cache is {IsExpired: false})
+        {
+            response.Dispose();
             return cache.GetContent();
+        }
         else
         {
             response = await HandleAsync(() => Task.FromResult(response), caller);
