@@ -96,7 +96,7 @@ public class CollectionEndpoint<TEntity, TElementEndpoint>(IEndpoint referrer, U
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
+        using var response = await HandleAsync(() => HttpClient.PostAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
 
         TElementEndpoint elementEndpoint;
         if (response.Headers.Location is {} location)

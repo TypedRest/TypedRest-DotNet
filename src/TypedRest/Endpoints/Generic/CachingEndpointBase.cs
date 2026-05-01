@@ -33,7 +33,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
     protected async Task<HttpContent> GetContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, Uri);
+        using var request = new HttpRequestMessage(HttpMethod.Get, Uri);
         var cache = ResponseCache; // Copy reference for thread-safety
         cache?.SetIfModifiedHeaders(request.Headers); // Only fetch if changed
 
@@ -64,7 +64,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
     protected async Task<HttpResponseMessage> PutContentAsync(HttpContent content, CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
-        var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
+        using var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
         ResponseCache?.SetIfUnmodifiedHeaders(request.Headers); // Prevent lost updates
 
         ResponseCache = null;
@@ -85,7 +85,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     /// <exception cref="HttpRequestException">Other non-success status code.</exception>
     protected async Task DeleteContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
-        var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
+        using var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
         ResponseCache?.SetIfUnmodifiedHeaders(request.Headers);
 
         ResponseCache = null;

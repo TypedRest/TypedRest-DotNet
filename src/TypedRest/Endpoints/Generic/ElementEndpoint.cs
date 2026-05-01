@@ -40,7 +40,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
 
     public async Task<bool> ExistsAsync(CancellationToken cancellationToken = default)
     {
-        var response = await HttpClient.HeadAsync(Uri, cancellationToken).NoContext();
+        using var response = await HttpClient.HeadAsync(Uri, cancellationToken).NoContext();
         if (response.IsSuccessStatusCode) return true;
         if (response.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.Gone) return false;
 
@@ -115,13 +115,14 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
         var patch = new JsonPatchDocument<TEntity>(new List<Operation<TEntity>>(), serializer.SerializerSettings.ContractResolver);
         patchAction(patch);
 
-        var response = await HttpClient.SendAsync(new(HttpMethods.Patch, Uri)
+        using var request = new HttpRequestMessage(HttpMethods.Patch, Uri)
         {
             Content = new StringContent(JsonConvert.SerializeObject(patch))
             {
                 Headers = {ContentType = new("application/json-patch+json")}
             }
-        }, cancellationToken).NoContext();
+        };
+        using var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
 
         if (response.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.MethodNotAllowed)
             return await UpdateAsync(x => patch.ApplyTo(x), maxRetries, cancellationToken);
