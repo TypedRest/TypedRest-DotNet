@@ -115,6 +115,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
         var patch = new JsonPatchDocument<TEntity>(new List<Operation<TEntity>>(), serializer.SerializerSettings.ContractResolver);
         patchAction(patch);
 
+        ResponseCache = null;
         using var request = new HttpRequestMessage(HttpMethods.Patch, Uri)
         {
             Content = new StringContent(JsonConvert.SerializeObject(patch))
