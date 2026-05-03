@@ -55,8 +55,9 @@ public sealed class ResponseCache
         => _expires.HasValue && DateTime.Now >= _expires;
 
     /// <summary>
-    /// Returns a copy of the cached <see cref="HttpContent"/>.
+    /// Returns a new <see cref="HttpContent"/> backed by the cached bytes.
     /// </summary>
+    /// <remarks>Each call produces an independent copy so the body can be consumed multiple times.</remarks>
     public HttpContent GetContent()
     {
         // Build new response for each request to avoid shared Stream.Position
@@ -64,8 +65,9 @@ public sealed class ResponseCache
     }
 
     /// <summary>
-    /// Sets request headers that require that the resource has been modified since it was cached.
+    /// Sets request headers asserting that the resource <em>has</em> been modified since it was cached.
     /// </summary>
+    /// <remarks>Suitable for GET/HEAD requests that should bypass the cache.</remarks>
     public void SetIfModifiedHeaders(HttpRequestHeaders headers)
     {
         if (_eTag != null) headers.IfNoneMatch.Add(_eTag);
@@ -73,8 +75,9 @@ public sealed class ResponseCache
     }
 
     /// <summary>
-    /// Sets request headers that require that the resource has not been modified since it was cached.
+    /// Sets request headers asserting that the resource has <em>not</em> been modified since it was cached.
     /// </summary>
+    /// <remarks>Suitable for PUT/DELETE requests to prevent lost updates.</remarks>
     public void SetIfUnmodifiedHeaders(HttpRequestHeaders headers)
     {
         if (_eTag != null) headers.IfMatch.Add(_eTag);
