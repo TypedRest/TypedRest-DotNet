@@ -37,12 +37,10 @@ public sealed class HeaderLinkExtractor : ILinkExtractor
             switch (paramSplit[0])
             {
                 case "rel":
-                    rel = paramSplit[1];
+                    rel = Unquote(paramSplit[1]);
                     break;
                 case "title":
-                    title = paramSplit[1];
-                    if (title.StartsWith("\"") && title.EndsWith("\""))
-                        title = title.Substring(1, title.Length - 2);
+                    title = Unquote(paramSplit[1]);
                     break;
                 case "templated" when paramSplit[1] == "true":
                     templated = true;
@@ -56,4 +54,9 @@ public sealed class HeaderLinkExtractor : ILinkExtractor
             title,
             templated);
     }
+
+    private static string Unquote(string value)
+        => value.StartsWith("\"") && value.EndsWith("\"")
+            ? value.Substring(1, value.Length - 2)
+            : value;
 }

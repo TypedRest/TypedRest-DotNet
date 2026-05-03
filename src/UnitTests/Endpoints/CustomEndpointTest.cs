@@ -143,6 +143,29 @@ public class CustomEndpointTest : EndpointTestBase
     }
 
     [Fact]
+    public async Task TestGetLinksQuotedRel()
+    {
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .Respond(_ => new(HttpStatusCode.NoContent)
+             {
+                 Headers =
+                 {
+                     {"Link", """
+                              <target1>; rel="child"; title="Title 1", <target2>; rel="child"
+                              """}
+                 }
+             });
+
+        await _endpoint.GetAsync();
+
+        _endpoint.GetLinks("child").Should().BeEquivalentTo(
+        [
+            (new Uri("http://localhost/target1"), "Title 1"),
+            (new Uri("http://localhost/target2"), null)
+        ]);
+    }
+
+    [Fact]
     public void TestSetDefaultLink()
     {
         _endpoint.SetDefaultLink(rel: "child", "target");
