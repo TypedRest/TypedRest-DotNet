@@ -59,18 +59,17 @@ public class HttpEntityStream<TEntity>
                 // Complete entity
                 return await ParseAsync(separatorIndex, cancellationToken);
             }
-            else if (separatorIndex < _endIndex)
+
+            // No separator found: try parsing the buffered bytes as a single entity (which may still be incomplete)
+            // On failure: read more bytes and try again until EOF
+            try
             {
-                // Potentially incomplete entity
-                try
-                {
-                    return await ParseAsync(_endIndex, cancellationToken);
-                }
-                catch
-                {
-                    int count = await FillBufferAsync(cancellationToken);
-                    if (count == 0) throw;
-                }
+                return await ParseAsync(_endIndex, cancellationToken);
+            }
+            catch
+            {
+                int count = await FillBufferAsync(cancellationToken);
+                if (count == 0) throw;
             }
         }
     }
