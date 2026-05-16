@@ -64,7 +64,7 @@ public class OAuthHandler : DelegatingHandler
         if (response.IsError) throw new AuthenticationException(response.Error);
         _accessToken = new(
             response.AccessToken ?? throw new AuthenticationException("Missing access token in response."),
-            DateTime.Now + TimeSpan.FromSeconds(response.ExpiresIn) - _oAuthOptions.TokenLifetimeBuffer);
+            DateTime.UtcNow + TimeSpan.FromSeconds(response.ExpiresIn) - _oAuthOptions.TokenLifetimeBuffer);
     }
 
     private async Task<string> DiscoverTokenEndpointAsync(CancellationToken cancellationToken)

@@ -30,11 +30,11 @@ public sealed class ResponseCache
 
         _expires = response.Content.Headers.Expires;
         if (_expires == null && response.Headers.CacheControl?.MaxAge is {} maxAge)
-            _expires = DateTimeOffset.Now + maxAge;
+            _expires = DateTimeOffset.UtcNow + maxAge;
 
         // Treat no-cache as expired immediately
         if (response.Headers.CacheControl?.NoCache ?? false)
-            _expires = DateTimeOffset.Now;
+            _expires = DateTimeOffset.UtcNow;
     }
 
     private static byte[] ReadContent(HttpContent content)
@@ -52,7 +52,7 @@ public sealed class ResponseCache
     /// Indicates whether this cached response has expired.
     /// </summary>
     public bool IsExpired
-        => _expires.HasValue && DateTime.Now >= _expires;
+        => _expires.HasValue && DateTimeOffset.UtcNow >= _expires;
 
     /// <summary>
     /// Returns a new <see cref="HttpContent"/> backed by the cached bytes.
