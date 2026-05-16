@@ -48,7 +48,9 @@ public class CliEndpointProvider<T> : EndpointProviderBase<T>
         var endpoint = NewEndpoint(uri);
         try
         {
-            Process.Start(endpoint.Link("token-provider").AbsoluteUri);
+            var link = endpoint.Link("token-provider");
+            if (link.Scheme != Uri.UriSchemeHttp && link.Scheme != Uri.UriSchemeHttps) return;
+            Process.Start(new ProcessStartInfo(link.AbsoluteUri) {UseShellExecute = true});
         }
         catch (KeyNotFoundException)
         {}
