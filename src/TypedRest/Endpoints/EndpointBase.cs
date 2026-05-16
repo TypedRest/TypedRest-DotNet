@@ -16,7 +16,12 @@ namespace TypedRest.Endpoints;
 /// <param name="linkExtractor">Detects links in HTTP responses.</param>
 public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList<MediaTypeFormatter> serializers, IErrorHandler errorHandler, ILinkExtractor linkExtractor) : IEndpoint
 {
-    public Uri Uri { get; } = uri ?? throw new ArgumentNullException(nameof(uri));
+    public Uri Uri { get; } = StripUserInfo(uri ?? throw new ArgumentNullException(nameof(uri)));
+
+    private static Uri StripUserInfo(Uri uri)
+        => uri.IsAbsoluteUri && !string.IsNullOrEmpty(uri.UserInfo)
+            ? new UriBuilder(uri) {UserName = "", Password = ""}.Uri
+            : uri;
 
     public HttpClient HttpClient { get; } = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
