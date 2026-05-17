@@ -44,7 +44,7 @@ public class OAuthHandler : DelegatingHandler
             await RequestAccessTokenAsync(cancellationToken);
 
         var response = await SendAuthenticatedAsync(request, cancellationToken);
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        if (response.StatusCode == HttpStatusCode.Unauthorized && IsInvalidToken(response) && CanReplay(request))
         {
             // Retry with new access token
             await RequestAccessTokenAsync(cancellationToken);
@@ -52,6 +52,17 @@ public class OAuthHandler : DelegatingHandler
         }
         else return response;
     }
+
+    private static bool IsInvalidToken(HttpResponseMessage response)
+    {
+        var bearerChallenge = response.Headers.WwwAuthenticate.FirstOrDefault(x => x.Scheme.Equals("Bearer", StringComparison.OrdinalIgnoreCase));
+        if (bearerChallenge?.Parameter == null) return true;
+        return bearerChallenge.Parameter.IndexOf("error=\"invalid_token\"", StringComparison.OrdinalIgnoreCase) >= 0
+            || bearerChallenge.Parameter.IndexOf("error=invalid_token", StringComparison.OrdinalIgnoreCase) >= 0;
+    }
+
+    private static bool CanReplay(HttpRequestMessage request)
+        => request.Content is not StreamContent;
 
     private async Task RequestAccessTokenAsync(CancellationToken cancellationToken)
     {
