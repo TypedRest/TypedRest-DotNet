@@ -29,26 +29,22 @@ public class StreamingEndpoint<TEntity>(IEndpoint referrer, Uri relativeUri, str
         {
             using var activity = StartActivity()?.AddTag("http.method", HttpMethod.Get.Method);
 
-            using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).NoContext();
-            await ErrorHandler.HandleAsync(response).NoContext();
-
-            var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, separator, BufferSize);
-
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                try
+                using var response = await HttpClient.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).NoContext();
+                await ErrorHandler.HandleAsync(response).NoContext();
+
+                var entityStream = new HttpEntityStream<TEntity>(response.Content, Serializer, separator, BufferSize);
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
                     observer.OnNext(await entityStream.GetNextAsync(cancellationToken).NoContext());
                 }
-                catch (OperationCanceledException)
-                {
-                    return;
-                }
-                catch (EndOfStreamException)
-                {
-                    observer.OnCompleted();
-                    return;
-                }
+            }
+            catch (OperationCanceledException) {}
+            catch (EndOfStreamException)
+            {
+                observer.OnCompleted();
             }
         });
 }
