@@ -66,8 +66,6 @@ public class OAuthHandler : DelegatingHandler
 
         var response = await HandleAsync(() => _httpClient.Value.RequestClientCredentialsTokenAsync(request, cancellationToken)).ConfigureAwait(false);
 
-        if (response.Exception != null) throw response.Exception;
-        if (response.IsError) throw new AuthenticationException(response.Error);
         _accessToken = new(
             response.AccessToken ?? throw new AuthenticationException("Missing access token in response."),
             DateTime.UtcNow + TimeSpan.FromSeconds(response.ExpiresIn) - _oAuthOptions.TokenLifetimeBuffer);
