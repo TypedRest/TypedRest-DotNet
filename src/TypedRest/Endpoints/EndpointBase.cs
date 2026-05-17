@@ -73,7 +73,7 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
         response.Content ??= new ByteArrayContent([]);
 
         activity?.AddTag("http.method", response.RequestMessage!.Method.Method)
-                 .AddTag("http.status_code", ((int)response.StatusCode).ToString());
+                 .AddTag("http.status_code", (int)response.StatusCode);
 
         _links = await LinkExtractor.GetLinksAsync(response).NoContext();
         HandleCapabilities(response);
