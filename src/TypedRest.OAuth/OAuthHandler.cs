@@ -27,7 +27,13 @@ public class OAuthHandler : DelegatingHandler
         _oAuthOptions = oAuthOptions;
 
         if (innerHandler != null) InnerHandler = innerHandler;
-        _httpClient = new(() => new HttpClient(InnerHandler ?? new HttpClientHandler()));
+        _httpClient = new(() => new HttpClient(InnerHandler ?? new HttpClientHandler(), disposeHandler: false));
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && _httpClient.IsValueCreated) _httpClient.Value.Dispose();
+        base.Dispose(disposing);
     }
 
     private AccessToken? _accessToken;
