@@ -19,7 +19,7 @@ public interface IBlobEndpoint : IEndpoint
     /// Indicates whether the server has specified <see cref="DownloadAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     bool? DownloadAllowed { get; }
 
     /// <summary>
@@ -37,11 +37,11 @@ public interface IBlobEndpoint : IEndpoint
     /// Indicates whether the server has specified <see cref="UploadFromAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     bool? UploadAllowed { get; }
 
     /// <summary>
-    /// Uploads data as the blob's content from a stream.
+    /// Uploads data from a stream as the blob's content.
     /// </summary>
     /// <param name="stream">The stream to read the upload data from.</param>
     /// <param name="mimeType">The MIME type of the data to upload.</param>
@@ -56,7 +56,7 @@ public interface IBlobEndpoint : IEndpoint
     /// Indicates whether the server has specified <see cref="DeleteAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     bool? DeleteAllowed { get; }
 
     /// <summary>

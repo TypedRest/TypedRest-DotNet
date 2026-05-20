@@ -52,7 +52,7 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
     /// Creates a new endpoint with a relative URI.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash in <paramref name="referrer"/>'s URI.</param>
     protected EndpointBase(IEndpoint referrer, string relativeUri)
         : this(referrer.Uri.Join(relativeUri), referrer.HttpClient, referrer.Serializers, referrer.ErrorHandler, referrer.LinkExtractor)
     {}
@@ -261,7 +261,7 @@ public abstract class EndpointBase(Uri uri, HttpClient httpClient, IReadOnlyList
     /// </summary>
     /// <param name="method">The HTTP methods (e.g. GET, POST, ...) to check.</param>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     protected bool? IsMethodAllowed(HttpMethod method)
     {
         if (_allowedMethods.Count == 0) return null;

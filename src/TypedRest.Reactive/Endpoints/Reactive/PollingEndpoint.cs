@@ -28,7 +28,7 @@ public class PollingEndpoint<TEntity> : ElementEndpoint<TEntity>, IPollingEndpoi
     /// Creates a new polling endpoint.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash in <paramref name="referrer"/>'s URI.</param>
     /// <param name="endCondition">A check to determine whether the entity has reached its final state and no further polling is required.</param>
     public PollingEndpoint(IEndpoint referrer, string relativeUri, Predicate<TEntity>? endCondition = null)
         : base(referrer, relativeUri)

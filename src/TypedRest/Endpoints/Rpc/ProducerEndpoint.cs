@@ -19,7 +19,7 @@ public class ProducerEndpoint<TResult> : RpcEndpointBase, IProducerEndpoint<TRes
     /// Creates a new function endpoint with a relative URI.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash in <paramref name="referrer"/>'s URI.</param>
     public ProducerEndpoint(IEndpoint referrer, string relativeUri)
         : base(referrer, relativeUri)
     {}

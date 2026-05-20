@@ -14,7 +14,7 @@ public class StreamingEndpoint<TEntity>(IEndpoint referrer, Uri relativeUri, str
     /// Creates a new streaming endpoint.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash in <paramref name="referrer"/>'s URI.</param>
     /// <param name="separator">The character sequence used to detect that a new element starts in an HTTP stream.</param>
     public StreamingEndpoint(IEndpoint referrer, string relativeUri, string separator = "\n")
         : this(referrer, new Uri(relativeUri, UriKind.Relative), separator) {}

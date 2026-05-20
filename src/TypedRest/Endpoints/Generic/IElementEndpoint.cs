@@ -15,7 +15,7 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     TEntity? Response { get; }
 
     /// <summary>
-    /// Returns the entitiy.
+    /// Returns the entity.
     /// </summary>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
@@ -28,13 +28,13 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// Indicates whether the server has specified <see cref="SetAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     bool? SetAllowed { get; }
 
     /// <summary>
     /// Sets/replaces the entity.
     /// </summary>
-    /// <param name="entity">The new entities.</param>
+    /// <param name="entity">The new entity.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <returns>The entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
     /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
@@ -49,7 +49,7 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// Indicates whether the server has specified <see cref="MergeAsync"/> is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     bool? MergeAllowed { get; }
 
     /// <summary>

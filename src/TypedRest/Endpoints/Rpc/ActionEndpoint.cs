@@ -18,7 +18,7 @@ public class ActionEndpoint : RpcEndpointBase, IActionEndpoint
     /// Creates a new action endpoint.
     /// </summary>
     /// <param name="referrer">The endpoint used to navigate to this one.</param>
-    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash <paramref name="referrer"/>'s URI.</param>
+    /// <param name="relativeUri">The URI of this endpoint relative to the <paramref name="referrer"/>'s. Add a <c>./</c> prefix here to imply a trailing slash in <paramref name="referrer"/>'s URI.</param>
     public ActionEndpoint(IEndpoint referrer, string relativeUri)
         : base(referrer, relativeUri)
     {}

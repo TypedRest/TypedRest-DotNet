@@ -19,6 +19,6 @@ public interface IRpcEndpoint : IEndpoint
     /// Indicates whether the server has specified the invoke method is currently allowed.
     /// </summary>
     /// <remarks>Uses cached data from last response.</remarks>
-    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> If no request has been sent yet or the server did not specify allowed methods.</returns>
+    /// <returns><c>true</c> if the method is allowed, <c>false</c> if the method is not allowed, <c>null</c> if no request has been sent yet or the server did not specify allowed methods.</returns>
     bool? InvokeAllowed { get; }
 }

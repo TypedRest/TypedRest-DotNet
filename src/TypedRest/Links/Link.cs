@@ -26,7 +26,7 @@ public sealed class Link
     public bool Templated { get; }
 
     /// <summary>
-    /// Creates a new link
+    /// Creates a new link.
     /// </summary>
     /// <param name="rel">The relation type of the link.</param>
     /// <param name="href">The href/target of the link.</param>
