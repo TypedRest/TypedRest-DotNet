@@ -24,7 +24,7 @@
     <ProjectReference Include="..\TypedRest.SystemTextJson\TypedRest.SystemTextJson.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="7.2.2" />
+    <PackageReference Include="AwesomeAssertions" Version="9.5.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
@@ -42,7 +42,7 @@
     <Using Include="System.Net.Http.Formatting" />
     <Using Include="TypedRest.Http" />
     <Using Include="Xunit" />
-    <Using Include="FluentAssertions" />
+    <Using Include="AwesomeAssertions" />
     <Using Include="Moq" />
     <Using Include="RichardSzalay.MockHttp" />
   </ItemGroup>
