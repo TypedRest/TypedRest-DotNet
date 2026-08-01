@@ -25,4 +25,11 @@ services.AddHttpClient<MyService>()
         });
 ```
 
-The `Action<OAuthOptions>` overload binds through the options system under the HTTP client's name, so the settings can also come from configuration.
+`OAuthOptions` carries the settings for that flow. The `Action<OAuthOptions>` overload registers them as named options under the HTTP client's name, so different clients in the same application can authenticate against different identity servers and the settings can also come from configuration. To keep the client secret out of your code, build the options from configuration instead:
+
+```csharp
+services.AddTypedRest<MyClient>(new Uri("https://example.com/api/"))
+        .AddOAuthHandler(_ => configuration.GetSection("OAuth").Get<OAuthOptions>()!);
+```
+
+`OAuthHandler` sits in the `HttpClient` pipeline and keeps authentication out of your calling code entirely. On the first request it looks up the token endpoint via OpenID Connect discovery, performs a client credentials flow and attaches the resulting token as a `Bearer` header. The token is then reused for subsequent requests until shortly before it expires, so the identity server is contacted only occasionally rather than per request. If a server rejects a token as invalid anyway, the request is retried once with a freshly requested one.
