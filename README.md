@@ -40,7 +40,7 @@ The main TypedRest library.
 Adds support for streaming with [ReactiveX (Rx)](http://reactivex.io/).  
 Create endpoints using the types in the `TypedRest.Endpoints.Reactive` namespace.
 
-[![TypedRest.SystemTextJson](https://img.shields.io/nuget/v/TypedRest.SystemTextJson.svg?label=TypedRest.SystemTextJson)](https://www.nuget.org/packages/TypedRest.Reactive/)  
+[![TypedRest.SystemTextJson](https://img.shields.io/nuget/v/TypedRest.SystemTextJson.svg?label=TypedRest.SystemTextJson)](https://www.nuget.org/packages/TypedRest.SystemTextJson/)  
 Adds support for serializing using [System.Text.Json](https://learn.microsoft.com/en-us/dotnet/api/system.text.json) instead of [Newtonsoft.Json](https://www.newtonsoft.com/json).  
 Pass `new SystemTextJsonSerializer()` to the `EntryEndpoint` constructor.
 
