@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Namespace TypedRest.OAuth | TypedRest for .NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Namespace TypedRest.OAuth | TypedRest for .NET ">
+      
+      <meta name="description" content="HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/TypedRest/TypedRest-DotNet/blob/1.7.0/src/TypedRest.OAuth/_Namespace.md/#L2">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../icon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="TypedRest.OAuth">
+
+  <h1 id="TypedRest_OAuth" data-uid="TypedRest.OAuth" class="text-break">Namespace TypedRest.OAuth</h1>
+  <div class="markdown level0 summary"><p>HttpClient DelegatingHandler for OAuth 2.0 / OpenID Connect authentication.</p>
+</div>
+  <div class="markdown level0 conceptual">
+<div class="NOTE">
+<h5>Note</h5>
+<p>NuGet package: <a href="https://www.nuget.org/packages/TypedRest.OAuth/">TypedRest.OAuth</a></p>
+</div>
+<h1 id="typedrest-oauth"><img src="https://raw.githubusercontent.com/TypedRest/TypedRest-DotNet/master/logo.svg" alt="TypedRest"> OAuth</h1>
+<p>Adds support for <a href="https://oauth.net/2/">OAuth 2.0</a> / <a href="https://openid.net/connect/">OpenID Connect</a> authentication to <a href="https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient">HttpClient</a>.</p>
+<pre><code>dotnet add package TypedRest.OAuth
+</code></pre>
+<p>This provides an <a href="https://learn.microsoft.com/en-us/dotnet/api/system.net.http.delegatinghandler">HttpClient DelegatingHandler</a> that transparently requests access tokens with a client secret and caches them until they expire. It can be used independently of the other <a href="https://www.nuget.org/packages/TypedRest/">TypedRest</a> packages.</p>
+<p>Call <code>.AddOAuthHandler()</code> after <code>.AddTypedRest()</code>:</p>
+<pre><code class="lang-csharp">services.AddTypedRest&lt;MyClient&gt;(new Uri(&quot;https://example.com/api/&quot;))
+        .AddOAuthHandler(new Uri(&quot;https://identity.example.com/&quot;), clientId: &quot;my-client&quot;, clientSecret: &quot;…&quot;);
+</code></pre>
+<p>or after <code>.AddHttpClient()</code> when you are not using the main TypedRest package:</p>
+<pre><code class="lang-csharp">services.AddHttpClient&lt;MyService&gt;()
+        .AddOAuthHandler(options =&gt;
+        {
+            options.Uri = new Uri(&quot;https://identity.example.com/&quot;);
+            options.ClientId = &quot;my-client&quot;;
+            options.ClientSecret = &quot;…&quot;;
+        });
+</code></pre>
+<p><code>OAuthOptions</code> carries the settings for that flow. The <code>Action&lt;OAuthOptions&gt;</code> overload registers them as named options under the HTTP client's name, so different clients in the same application can authenticate against different identity servers and the settings can also come from configuration. To keep the client secret out of your code, build the options from configuration instead:</p>
+<pre><code class="lang-csharp">services.AddTypedRest&lt;MyClient&gt;(new Uri(&quot;https://example.com/api/&quot;))
+        .AddOAuthHandler(_ =&gt; configuration.GetSection(&quot;OAuth&quot;).Get&lt;OAuthOptions&gt;()!);
+</code></pre>
+<p><code>OAuthHandler</code> sits in the <code>HttpClient</code> pipeline and keeps authentication out of your calling code entirely. On the first request it looks up the token endpoint via OpenID Connect discovery, performs a client credentials flow and attaches the resulting token as a <code>Bearer</code> header. The token is then reused for subsequent requests until shortly before it expires, so the identity server is contacted only occasionally rather than per request. If a server rejects a token as invalid anyway, the request is retried once with a freshly requested one.</p>
+<h2 id="api">API</h2>
+</div>
+  <div class="markdown level0 remarks"></div>
+
+    <h3 id="classes">
+Classes
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="TypedRest.OAuth.HttpClientBuilderExtensions.html">HttpClientBuilderExtensions</a></dt>
+      <dd><p>Provides extension methods for <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.ihttpclientbuilder">IHttpClientBuilder</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="TypedRest.OAuth.OAuthHandler.html">OAuthHandler</a></dt>
+      <dd><p>HTTP message delegating handler that transparently performs OAuth 2.0 authentication with a client secret. Performs OpenID Connect discovery to find the token endpoint.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="TypedRest.OAuth.OAuthOptions.html">OAuthOptions</a></dt>
+      <dd><p>Options for OAuth 2.0 / OpenID Connect authentication.</p>
+</dd>
+    </dl>
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/TypedRest/TypedRest-DotNet/blob/1.7.0/src/TypedRest.OAuth/_Namespace.md/#L2" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright Bastian Eicher
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
