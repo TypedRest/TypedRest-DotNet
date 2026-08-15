@@ -60,6 +60,7 @@ public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : Collection
                 catch (InvalidOperationException)
                 {
                     // No new data available yet, keep polling
+                    await Task.Delay(PollingInterval, cancellationToken);
                     continue;
                 }
 
@@ -75,6 +76,8 @@ public class StreamingCollectionEndpoint<TEntity, TElementEndpoint> : Collection
                 // Continue polling for more data
                 if (response.Range?.To is {} value) currentStartIndex = value + 1;
                 else return;
+
+                await Task.Delay(PollingInterval, cancellationToken);
             }
         });
 }
