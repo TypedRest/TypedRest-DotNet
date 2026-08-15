@@ -24,7 +24,7 @@ public static class ArrayExtensions
         if (count > array.Length - startIndex) throw new ArgumentException("Count must not exceed end of array.", nameof(count));
         if (count < 0) count = array.Length - startIndex;
 
-        for (int arrayIndex = startIndex; arrayIndex < startIndex + count - pattern.Length; arrayIndex++)
+        for (int arrayIndex = startIndex; arrayIndex <= startIndex + count - pattern.Length; arrayIndex++)
         {
             if (!pattern.Where((patternPart, patternIndex) => !Equals(patternPart, array[arrayIndex + patternIndex])).Any())
                 return arrayIndex;
