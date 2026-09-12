@@ -31,7 +31,7 @@
     <PackageReference Include="RichardSzalay.MockHttp" Version="7.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.0" />
-    <PackageReference Include="xunit.v3" Version="4.0.0" />
+    <PackageReference Include="xunit.v3" Version="4.0.1" />
   </ItemGroup>
 
   <!-- Global usings -->
