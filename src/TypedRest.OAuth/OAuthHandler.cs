@@ -44,7 +44,7 @@ public class OAuthHandler : DelegatingHandler
             await RequestAccessTokenAsync(cancellationToken);
 
         var response = await SendAuthenticatedAsync(request, cancellationToken);
-        if (response.StatusCode == HttpStatusCode.Unauthorized && IsInvalidToken(response) && CanReplay(request))
+        if (response.StatusCode == HttpStatusCode.Unauthorized && IsInvalidToken(response) && CanReplay(request.Content))
         {
             // Retry with new access token
             await RequestAccessTokenAsync(cancellationToken);
@@ -61,8 +61,16 @@ public class OAuthHandler : DelegatingHandler
             || bearerChallenge.Parameter.IndexOf("error=invalid_token", StringComparison.OrdinalIgnoreCase) >= 0;
     }
 
-    private static bool CanReplay(HttpRequestMessage request)
-        => request.Content is not StreamContent;
+    /// <summary>
+    /// Determines whether the content can be sent a second time. Streams (including ones wrapped in multipart content) have already been consumed by the first attempt.
+    /// </summary>
+    private static bool CanReplay(HttpContent? content)
+        => content switch
+        {
+            StreamContent => false,
+            MultipartContent multipart => multipart.All(CanReplay),
+            _ => true
+        };
 
     private async Task RequestAccessTokenAsync(CancellationToken cancellationToken)
     {
