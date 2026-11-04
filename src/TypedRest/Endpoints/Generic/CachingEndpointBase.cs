@@ -38,7 +38,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
         cache?.SetIfModifiedHeaders(request.Headers); // Only fetch if changed
 
         var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
-        if (response.StatusCode == HttpStatusCode.NotModified && cache is {IsExpired: false})
+        if (response.StatusCode == HttpStatusCode.NotModified && cache != null)
         {
             response.Dispose();
             return cache.GetContent();

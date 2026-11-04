@@ -76,6 +76,45 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     }
 
     [Fact]
+    public async Task TestReadCacheNoCache()
+    {
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .Respond(_ => new()
+             {
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
+                 Headers = {ETag = new("\"123abc\""), CacheControl = new() {NoCache = true}}
+             });
+        await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .WithHeaders("If-None-Match", "\"123abc\"")
+            .Respond(HttpStatusCode.NotModified);
+        var result = await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+        result.Should().Be(new MockEntity(5, "test"));
+    }
+
+    [Fact]
+    public async Task TestReadCacheExpired()
+    {
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .Respond(_ => new()
+             {
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime)
+                 {
+                     Headers = {Expires = new(new DateTime(2015, 10, 21), TimeSpan.Zero)}
+                 },
+                 Headers = {ETag = new("\"123abc\"")}
+             });
+        await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .WithHeaders("If-None-Match", "\"123abc\"")
+            .Respond(HttpStatusCode.NotModified);
+        var result = await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+        result.Should().Be(new MockEntity(5, "test"));
+    }
+
+    [Fact]
     public async Task TestExistsTrue()
     {
         Mock.Expect(HttpMethod.Head, "http://localhost/endpoint")

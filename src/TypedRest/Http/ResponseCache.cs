@@ -9,7 +9,6 @@ public sealed class ResponseCache
     private readonly MediaTypeHeaderValue? _contentType;
     private readonly EntityTagHeaderValue? _eTag;
     private readonly DateTimeOffset? _lastModified;
-    private readonly DateTimeOffset? _expires;
 
     /// <summary>
     /// Creates a <see cref="ResponseCache"/> from a <paramref name="response"/> if it is eligible for caching.
@@ -27,14 +26,6 @@ public sealed class ResponseCache
         _contentType = response.Content.Headers.ContentType;
         _eTag = response.Headers.ETag;
         _lastModified = response.Content.Headers.LastModified;
-
-        _expires = response.Content.Headers.Expires;
-        if (_expires == null && response.Headers.CacheControl?.MaxAge is {} maxAge)
-            _expires = DateTimeOffset.UtcNow + maxAge;
-
-        // Treat no-cache as expired immediately
-        if (response.Headers.CacheControl?.NoCache ?? false)
-            _expires = DateTimeOffset.UtcNow;
     }
 
     private static byte[] ReadContent(HttpContent content)
@@ -47,12 +38,6 @@ public sealed class ResponseCache
 
         return result;
     }
-
-    /// <summary>
-    /// Indicates whether this cached response has expired.
-    /// </summary>
-    public bool IsExpired
-        => _expires.HasValue && DateTimeOffset.UtcNow >= _expires;
 
     /// <summary>
     /// Returns a new <see cref="HttpContent"/> backed by the cached bytes.
