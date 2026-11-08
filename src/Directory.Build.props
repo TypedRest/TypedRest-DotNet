@@ -20,6 +20,7 @@
     <Authors>Bastian Eicher</Authors>
     <Copyright>Copyright Bastian Eicher et al.</Copyright>
     <RepositoryUrl>https://github.com/TypedRest/TypedRest-DotNet</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/TypedRest/TypedRest-DotNet/releases/tag/$(Version)</PackageReleaseNotes>
     <PackageProjectUrl>https://typedrest.net/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
