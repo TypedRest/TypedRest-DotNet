@@ -21,9 +21,9 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.14" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="10.0.14" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.15" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="10.0.15" />
   </ItemGroup>
 
   <!-- Global usings -->
