@@ -16,8 +16,11 @@
   <ItemGroup>
     <ProjectReference Include="..\TypedRest\TypedRest.csproj" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework)=='net10.0'">
     <PackageReference Include="System.Text.Json" Version="10.0.15" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework)!='net10.0'">
+    <PackageReference Include="System.Text.Json" Version="11.0.0" />
   </ItemGroup>
 
 </Project>
