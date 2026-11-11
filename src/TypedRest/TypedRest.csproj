@@ -20,20 +20,10 @@
     <PackageReference Include="Resta.UriTemplates" Version="1.4.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework)=='net8.0'">
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="8.0.34" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework)=='net9.0'">
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="9.0.23" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.23" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.23" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework)!='net8.0' And $(TargetFramework)!='net9.0'">
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.15" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.15" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="10.0.15" />
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="10.0.14" />
   </ItemGroup>
 
   <!-- Global usings -->
