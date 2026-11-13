@@ -5,51 +5,53 @@ namespace TypedRest.Endpoints.Raw;
 /// </summary>
 public static class BlobEndpointExtensions
 {
-    /// <summary>
-    /// Downloads the blob's content to a file.
-    /// </summary>
     /// <param name="endpoint">The blob endpoint.</param>
-    /// <param name="path">The path of the file to write the download data to.</param>
-    /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <returns>A stream with the blob's content.</returns>
-    /// <exception cref="IOException">Failed to write the file.</exception>
-    /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
-    /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
-    /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-    /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-    public static async Task DownloadAsync(this IBlobEndpoint endpoint, string path, CancellationToken cancellationToken = default)
+    extension(IBlobEndpoint endpoint)
     {
+        /// <summary>
+        /// Downloads the blob's content to a file.
+        /// </summary>
+        /// <param name="path">The path of the file to write the download data to.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <returns>A stream with the blob's content.</returns>
+        /// <exception cref="IOException">Failed to write the file.</exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        public async Task DownloadAsync(string path, CancellationToken cancellationToken = default)
+        {
 #if NETSTANDARD2_0
-        using var fileStream = File.Create(path);
-        using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
-        await downloadStream.CopyToAsync(fileStream);
+            using var fileStream = File.Create(path);
+            using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
+            await downloadStream.CopyToAsync(fileStream);
 #else
-        await using var fileStream = File.Create(path);
-        await using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
-        await downloadStream.CopyToAsync(fileStream, cancellationToken);
+            await using var fileStream = File.Create(path);
+            await using var downloadStream = await endpoint.DownloadAsync(cancellationToken);
+            await downloadStream.CopyToAsync(fileStream, cancellationToken);
 #endif
-    }
+        }
 
-    /// <summary>
-    /// Uploads content as the blob's content from a file.
-    /// </summary>
-    /// <param name="endpoint">The blob endpoint.</param>
-    /// <param name="path">The path of the file to read the upload data from.</param>
-    /// <param name="mimeType">The MIME type of the data to upload.</param>
-    /// <param name="cancellationToken">Used to cancel the request.</param>
-    /// <exception cref="IOException">Failed to read the file.</exception>
-    /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
-    /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
-    /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
-    /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
-    /// <exception cref="HttpRequestException">Other non-success status code.</exception>
-    public static async Task UploadFromAsync(this IBlobEndpoint endpoint, string path, string? mimeType = null, CancellationToken cancellationToken = default)
-    {
+        /// <summary>
+        /// Uploads content as the blob's content from a file.
+        /// </summary>
+        /// <param name="path">The path of the file to read the upload data from.</param>
+        /// <param name="mimeType">The MIME type of the data to upload.</param>
+        /// <param name="cancellationToken">Used to cancel the request.</param>
+        /// <exception cref="IOException">Failed to read the file.</exception>
+        /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
+        /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
+        /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
+        /// <exception cref="KeyNotFoundException"><see cref="HttpStatusCode.NotFound"/> or <see cref="HttpStatusCode.Gone"/></exception>
+        /// <exception cref="HttpRequestException">Other non-success status code.</exception>
+        public async Task UploadFromAsync(string path, string? mimeType = null, CancellationToken cancellationToken = default)
+        {
 #if NETSTANDARD2_0
         using var fileStream = File.OpenRead(path);
 #else
-        await using var fileStream = File.OpenRead(path);
+            await using var fileStream = File.OpenRead(path);
 #endif
-        await endpoint.UploadFromAsync(fileStream, mimeType, cancellationToken);
+            await endpoint.UploadFromAsync(fileStream, mimeType, cancellationToken);
+        }
     }
 }

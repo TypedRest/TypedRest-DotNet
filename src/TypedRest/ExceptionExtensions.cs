@@ -5,58 +5,61 @@ namespace TypedRest;
 /// </summary>
 public static class ExceptionExtensions
 {
-    /// <summary>
-    /// Concatenates the <see cref="Exception.Message"/>s of the entire <see cref="Exception.InnerException"/> tree.
-    /// </summary>
-    public static string GetFullMessage(this Exception exception)
-    {
-        var builder = new StringBuilder();
-        for (Exception? current = exception; current != null; current = current.InnerException)
-            builder.AppendLine(current.Message);
-        return builder.ToString();
-    }
-
     private const string HttpHeadersKey = "Http-Headers", HttpBodyKey = "Http-Body";
 
-    /// <summary>
-    /// Stores HTTP response headers in the exception.
-    /// </summary>
-    public static void SetHttpResponseHeaders(this Exception exception, HttpResponseHeaders headers)
+    extension(Exception exception)
     {
-        try
+        /// <summary>
+        /// Stores HTTP response headers in the exception.
+        /// </summary>
+        public void SetHttpResponseHeaders(HttpResponseHeaders headers)
         {
-            exception.Data[HttpHeadersKey] = headers;
+            try
+            {
+                exception.Data[HttpHeadersKey] = headers;
+            }
+            catch
+            {
+                // .NET Framework does not allow non-serializable data in exceptions
+            }
         }
-        catch
+
+        /// <summary>
+        /// Retrieves HTTP response headers from the exception.
+        /// </summary>
+        public HttpResponseHeaders? GetHttpResponseHeaders()
+            => exception.Data[HttpHeadersKey] as HttpResponseHeaders;
+
+        /// <summary>
+        /// Stores an HTTP response body in the exception.
+        /// </summary>
+        public void SetHttpResponseBody(string body)
+            => exception.Data[HttpBodyKey] = body;
+
+        /// <summary>
+        /// Retrieves an HTTP response body from the exception.
+        /// </summary>
+        public string? GetHttpResponseBody()
+            => exception.Data[HttpBodyKey] as string;
+
+        /// <summary>
+        /// Waits for the duration specified in Retry-After header if it was set.
+        /// </summary>
+        public async Task HttpRetryDelayAsync(CancellationToken cancellationToken = default)
         {
-            // .NET Framework does not allow non-serializable data in exceptions
+            if (exception.GetHttpResponseHeaders()?.RetryAfter?.Delta is {} wait)
+                await Task.Delay(wait, cancellationToken);
         }
-    }
 
-    /// <summary>
-    /// Retrieves HTTP response headers from the exception.
-    /// </summary>
-    public static HttpResponseHeaders? GetHttpResponseHeaders(this Exception exception)
-        => exception.Data[HttpHeadersKey] as HttpResponseHeaders;
-
-    /// <summary>
-    /// Stores an HTTP response body in the exception.
-    /// </summary>
-    public static void SetHttpResponseBody(this Exception exception, string body)
-        => exception.Data[HttpBodyKey] = body;
-
-    /// <summary>
-    /// Retrieves an HTTP response body from the exception.
-    /// </summary>
-    public static string? GetHttpResponseBody(this Exception exception)
-        => exception.Data[HttpBodyKey] as string;
-
-    /// <summary>
-    /// Waits for the duration specified in Retry-After header if it was set.
-    /// </summary>
-    public static async Task HttpRetryDelayAsync(this Exception exception, CancellationToken cancellationToken = default)
-    {
-        if (exception.GetHttpResponseHeaders()?.RetryAfter?.Delta is {} wait)
-            await Task.Delay(wait, cancellationToken);
+        /// <summary>
+        /// Concatenates the <see cref="Exception.Message"/>s of the entire <see cref="Exception.InnerException"/> tree.
+        /// </summary>
+        public string GetFullMessage()
+        {
+            var builder = new StringBuilder();
+            for (Exception? current = exception; current != null; current = current.InnerException)
+                builder.AppendLine(current.Message);
+            return builder.ToString();
+        }
     }
 }
