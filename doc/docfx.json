@@ -3,14 +3,10 @@
     {
       "src": [
         {
-          "src": "../src",
-          "files": ["*/*.csproj"],
-          "exclude": ["UnitTests/*"]
+          "src": "../artifacts/Release/net10.0",
+          "files": ["TypedRest*.dll"]
         }
       ],
-      "properties": {
-        "TargetFramework": "net10.0"
-      },
       "namespaceLayout": "nested",
       "dest": "api",
       "filter": "filterConfig.yml"
