@@ -1,8 +1,37 @@
 # ![TypedRest](https://raw.githubusercontent.com/TypedRest/TypedRest-DotNet/master/logo.svg) for .NET
 
 [![Build](https://github.com/TypedRest/TypedRest-DotNet/actions/workflows/build.yml/badge.svg)](https://github.com/TypedRest/TypedRest-DotNet/actions/workflows/build.yml)
-[![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://dotnet.typedrest.net/)  
-TypedRest helps you build type-safe, fluent-style REST API clients. Common REST patterns such as collections are represented as classes, allowing you to write more idiomatic code.
+[![API documentation](https://img.shields.io/badge/api-docs-orange.svg)](https://dotnet.typedrest.net/)
+
+**Describe your REST API as a tree of endpoints, not a list of HTTP calls.**
+
+TypedRest helps you build type-safe, fluent-style REST API clients. Common REST patterns are represented as classes that you compose to mirror the URL structure of your API.
+
+Tell TypedRest that `/contacts` is a collection and get type-safe listing, creating, reading, updating and deleting in return. Unlike typical generated clients, which give you one flat method per operation, TypedRest gives you a navigable tree of endpoints.
+
+## Define your client
+
+A few lines are enough to describe an API with a collection of contacts plus a "notes" endpoint nested underneath:
+
+```csharp
+class MyClient(Uri uri) : EntryEndpoint(uri)
+{
+  public ContactCollectionEndpoint Contacts => new(this);
+}
+
+class ContactCollectionEndpoint(IEndpoint referrer)
+  : CollectionEndpoint<Contact, ContactEndpoint>(referrer, relativeUri: "./contacts");
+
+class ContactEndpoint(IEndpoint referrer, Uri relativeUri)
+  : ElementEndpoint<Contact>(referrer, relativeUri)
+{
+  public ElementEndpoint<Note> Note => new(this, relativeUri: "./note");
+}
+```
+
+## Use it
+
+Navigate the API like an object model, with code completion guiding the way:
 
 ```csharp
 var client = new MyClient(new Uri("http://example.com/"));
@@ -27,9 +56,12 @@ Note note = await smith.Note.ReadAsync();
 await smith.DeleteAsync();
 ```
 
-Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[setup guide](https://typedrest.net/setup/dotnet/)**.
+## Learn more
 
-You can also take a look at our [Sample project](https://github.com/TypedRest/Sample-DotNet).
+Read a more detailed **[Introduction](https://typedrest.net/introduction/)** to TypedRest or jump right in with the **[setup guide](https://typedrest.net/setup/dotnet/)**.  
+You can also **[build your first client](https://typedrest.net/tutorials/first-client/)** step by step or **[generate one from OpenAPI](https://typedrest.net/tutorials/from-openapi/)**.
+
+Take a look at our [Sample project](https://github.com/TypedRest/Sample-DotNet) to see TypedRest in action.
 
 ## NuGet packages
 
@@ -51,6 +83,8 @@ Call `.AddOAuthHandler()` after `.AddTypedRest()` (or `.AddHttpClient()` when no
 [![TypedRest.CommandLine](https://img.shields.io/nuget/v/TypedRest.CommandLine.svg?label=TypedRest.CommandLine)](https://www.nuget.org/packages/TypedRest.CommandLine/)  
 Build command-line interfaces for TypedRest clients.  
 Create commands mirroring the endpoints using the types in the `TypedRest.CommandLine.Commands` namespace.
+
+To generate TypedRest clients from OpenAPI/Swagger documents, use [TypedRest.SourceGenerator](https://www.nuget.org/packages/TypedRest.SourceGenerator/) (at compile time) or [typedrest-codegen](https://www.nuget.org/packages/typedrest-codegen/) (as a .NET tool) from the [CodeGeneration](https://github.com/TypedRest/CodeGeneration) repository.
 
 ## Building
 
