@@ -195,6 +195,61 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     }
 
     [Fact]
+    public async Task TestSetCacheETag()
+    {
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .WithContent("""{"id":5,"name":"test"}""")
+            .Respond(_ => new(HttpStatusCode.NoContent) {Headers = {ETag = new("\"456def\"")}});
+        await Endpoint.SetAsync(new MockEntity(5, "test"), TestContext.Current.CancellationToken);
+
+        Endpoint.Response.Should().Be(new MockEntity(5, "test"));
+
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .WithHeaders("If-None-Match", "\"456def\"")
+            .Respond(HttpStatusCode.NotModified);
+        var result = await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+        result.Should().Be(new MockEntity(5, "test"));
+
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .WithContent("""{"id":5,"name":"test"}""")
+            .WithHeaders("If-Match", "\"456def\"")
+            .Respond(HttpStatusCode.NoContent);
+        await Endpoint.SetAsync(result, TestContext.Current.CancellationToken);
+    }
+
+    [Fact]
+    public async Task TestSetCacheETagWithResult()
+    {
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .WithContent("""{"id":5,"name":"test"}""")
+            .Respond(_ => new()
+             {
+                 Content = new StringContent("""{"id":5,"name":"testXXX"}""", Encoding.UTF8, JsonMime),
+                 Headers = {ETag = new("\"456def\"")}
+             });
+        var result = await Endpoint.SetAsync(new MockEntity(5, "test"), TestContext.Current.CancellationToken);
+        result.Should().Be(new MockEntity(5, "testXXX"));
+
+        Endpoint.Response.Should().Be(new MockEntity(5, "testXXX"));
+
+        Mock.Expect(HttpMethod.Delete, "http://localhost/endpoint")
+            .WithHeaders("If-Match", "\"456def\"")
+            .Respond(HttpStatusCode.NoContent);
+        await Endpoint.DeleteAsync(TestContext.Current.CancellationToken);
+    }
+
+    [Fact]
+    public async Task TestSetNoETag()
+    {
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .WithContent("""{"id":5,"name":"test"}""")
+            .Respond(HttpStatusCode.NoContent);
+        await Endpoint.SetAsync(new MockEntity(5, "test"), TestContext.Current.CancellationToken);
+
+        Endpoint.Response.Should().BeNull();
+    }
+
+    [Fact]
     public async Task TestUpdateRetry()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")

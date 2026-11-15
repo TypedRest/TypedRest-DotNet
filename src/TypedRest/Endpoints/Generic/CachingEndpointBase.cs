@@ -54,7 +54,10 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     /// <summary>
     /// Performs an <see cref="HttpMethod.Put"/> request on the <see cref="IEndpoint.Uri"/>.
     /// </summary>
-    /// <remarks>Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached <see cref="HttpResponseHeader.ETag"/> to detect lost updates.</remarks>
+    /// <remarks>
+    /// Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached <see cref="HttpResponseHeader.ETag"/> to detect lost updates.
+    /// Caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>, so later requests can be conditional without reading the resource again.
+    /// </remarks>
     /// <param name="content">The content to send to the server.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
@@ -71,7 +74,13 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
         ResponseCache?.SetIfUnmodifiedHeaders(request.Headers); // Prevent lost updates
 
         ResponseCache = null;
-        return await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
+
+        // Buffer the request body before sending, so it is still available for caching afterwards
+        var requestContent = await content.ReadAsByteArrayAsync().NoContext();
+
+        var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
+        ResponseCache = ResponseCache.FromPut(response, requestContent, content.Headers.ContentType);
+        return response;
     }
 
     /// <summary>

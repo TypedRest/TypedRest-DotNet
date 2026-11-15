@@ -19,13 +19,37 @@ public sealed class ResponseCache
             ? new(response)
             : null;
 
-    private ResponseCache(HttpResponseMessage response)
+    /// <summary>
+    /// Creates a <see cref="ResponseCache"/> from the <paramref name="response"/> to a PUT request if the server sent an <see cref="HttpResponseHeaders.ETag"/>.
+    /// </summary>
+    /// <param name="response">The response to the PUT request.</param>
+    /// <param name="requestContent">The body of the PUT request.</param>
+    /// <param name="requestContentType">The media type of <paramref name="requestContent"/>.</param>
+    /// <returns>The <see cref="ResponseCache"/>; <c>null</c> if the response is not eligible for caching.</returns>
+    public static ResponseCache? FromPut(HttpResponseMessage response, byte[] requestContent, MediaTypeHeaderValue? requestContentType)
     {
-        _content = ReadContent(response.Content ?? throw new ArgumentException("Missing content.", nameof(response)));
+        if (response is not {IsSuccessStatusCode: true, Headers: {ETag: {} eTag, CacheControl: null or {NoStore: false}}}) return null;
 
-        _contentType = response.Content.Headers.ContentType;
-        _eTag = response.Headers.ETag;
-        _lastModified = response.Content.Headers.LastModified;
+        var responseContent = response is {StatusCode: not HttpStatusCode.NoContent, Content: {} content} ? ReadContent(content) : [];
+        return responseContent.Length == 0
+            ? new(requestContent, requestContentType, eTag, lastModified: null)
+            : new(responseContent, response.Content!.Headers.ContentType, eTag, response.Content.Headers.LastModified);
+    }
+
+    private ResponseCache(HttpResponseMessage response)
+        : this(
+            ReadContent(response.Content ?? throw new ArgumentException("Missing content.", nameof(response))),
+            response.Content.Headers.ContentType,
+            response.Headers.ETag,
+            response.Content.Headers.LastModified)
+    {}
+
+    private ResponseCache(byte[] content, MediaTypeHeaderValue? contentType, EntityTagHeaderValue? eTag, DateTimeOffset? lastModified)
+    {
+        _content = content;
+        _contentType = contentType;
+        _eTag = eTag;
+        _lastModified = lastModified;
     }
 
     private static byte[] ReadContent(HttpContent content)
