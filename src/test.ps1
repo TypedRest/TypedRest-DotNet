@@ -7,6 +7,6 @@ function Run-DotNet {
 }
 
 echo "Run unit tests"
-Run-DotNet test --no-build ---configuration Release
+Run-DotNet test --no-build --configuration Release
 
 popd
