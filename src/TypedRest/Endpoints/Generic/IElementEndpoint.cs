@@ -58,7 +58,6 @@ public interface IElementEndpoint<TEntity> : IElementEndpoint
     /// <param name="entity">The entity data to merge with the existing one.</param>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <returns>The modified entity as returned by the server, possibly with additional fields set. <c>null</c> if the server does not respond with a result entity.</returns>
-    /// <exception cref="InvalidOperationException">The entity has changed since it was last retrieved with <see cref="ReadAsync"/>. Your changes were rejected to prevent a lost update.</exception>
     /// <exception cref="InvalidDataException"><see cref="HttpStatusCode.BadRequest"/></exception>
     /// <exception cref="AuthenticationException"><see cref="HttpStatusCode.Unauthorized"/></exception>
     /// <exception cref="UnauthorizedAccessException"><see cref="HttpStatusCode.Forbidden"/></exception>
