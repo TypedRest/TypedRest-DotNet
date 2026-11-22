@@ -55,7 +55,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     /// Performs an <see cref="HttpMethod.Put"/> request on the <see cref="IEndpoint.Uri"/>.
     /// </summary>
     /// <remarks>
-    /// Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached <see cref="HttpResponseHeader.ETag"/> to detect lost updates.
+    /// Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached strong <see cref="HttpResponseHeader.ETag"/> to detect lost updates.
     /// Caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>, so later requests can be conditional without reading the resource again.
     /// </remarks>
     /// <param name="content">The content to send to the server.</param>
@@ -86,7 +86,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     /// <summary>
     /// Performs an <see cref="HttpMethod.Delete"/> request on the <see cref="IEndpoint.Uri"/>.
     /// </summary>
-    /// <remarks>Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached ETag to detect lost updates.</remarks>
+    /// <remarks>Sends <see cref="HttpRequestHeaders.IfMatch"/> if there is a cached strong ETag to detect lost updates.</remarks>
     /// <param name="cancellationToken">Used to cancel the request.</param>
     /// <param name="caller">The name of the method calling this method.</param>
     /// <exception cref="InvalidOperationException">The content has changed since it was last retrieved with <see cref="GetContentAsync"/>. Your changes were rejected to prevent a lost update.</exception>

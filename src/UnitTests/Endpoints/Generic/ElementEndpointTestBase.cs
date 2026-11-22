@@ -175,6 +175,23 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
     }
 
     [Fact]
+    public async Task TestSetWeakETag()
+    {
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .Respond(_ => new()
+             {
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
+                 Headers = {ETag = new("\"v1\"", isWeak: true)}
+             });
+        await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .With(request => request.Headers.IfMatch.Count == 0) // If-Match uses strong comparison, so a weak ETag would never match
+            .Respond(HttpStatusCode.NoContent);
+        await Endpoint.SetAsync(new MockEntity(5, "changed"), TestContext.Current.CancellationToken);
+    }
+
+    [Fact]
     public async Task TestSetLastModified()
     {
         Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")

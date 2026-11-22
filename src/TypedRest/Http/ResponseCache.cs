@@ -89,7 +89,10 @@ public sealed class ResponseCache
     /// <remarks>Suitable for PUT/DELETE requests to prevent lost updates.</remarks>
     public void SetIfUnmodifiedHeaders(HttpRequestHeaders headers)
     {
-        if (_eTag != null) headers.IfMatch.Add(_eTag);
+        if (_eTag != null)
+        {
+            if (!_eTag.IsWeak) headers.IfMatch.Add(_eTag);
+        }
         else if (_lastModified != null) headers.IfUnmodifiedSince = _lastModified;
     }
 }
