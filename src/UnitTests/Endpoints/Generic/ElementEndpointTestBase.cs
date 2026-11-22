@@ -174,6 +174,73 @@ public abstract class ElementEndpointTestBase : EndpointTestBase
         await Endpoint.SetAsync(result, TestContext.Current.CancellationToken);
     }
 
+    /// <summary>
+    /// Reads the entity with ETag <c>"v1"</c>, then starts another read whose response is held back until the returned function is called.
+    /// </summary>
+    private async Task<(Task<MockEntity> Read, Action Release)> StartDelayedReadAsync(Func<HttpResponseMessage> response)
+    {
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .Respond(_ => new()
+             {
+                 Content = new StringContent("""{"id":5,"name":"test"}""", Encoding.UTF8, JsonMime),
+                 Headers = {ETag = new("\"v1\"")}
+             });
+        await Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+
+        var requested = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var released = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        Mock.Expect(HttpMethod.Get, "http://localhost/endpoint")
+            .WithHeaders("If-None-Match", "\"v1\"")
+            .Respond(async _ =>
+             {
+                 requested.SetResult(true);
+                 await released.Task;
+                 return response();
+             });
+        var read = Endpoint.ReadAsync(TestContext.Current.CancellationToken);
+        await requested.Task;
+        return (read, () => released.SetResult(true));
+    }
+
+    [Fact]
+    public async Task TestReadNotModifiedDuringSet()
+    {
+        var (read, release) = await StartDelayedReadAsync(() => new(HttpStatusCode.NotModified));
+
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .Respond(_ => new(HttpStatusCode.NoContent) {Headers = {ETag = new("\"v2\"")}});
+        await Endpoint.SetAsync(new MockEntity(5, "changed"), TestContext.Current.CancellationToken);
+        release();
+
+        (await read).Should().Be(new MockEntity(5, "test"),
+            because: "The server confirmed the version the read was based on, even though the cache has moved on since");
+        Endpoint.Response.Should().Be(new MockEntity(5, "changed"));
+    }
+
+    [Fact]
+    public async Task TestReadOutdatedDuringSet()
+    {
+        var (read, release) = await StartDelayedReadAsync(() => new()
+        {
+            Content = new StringContent("""{"id":5,"name":"outdated"}""", Encoding.UTF8, JsonMime),
+            Headers = {ETag = new("\"v1b\"")}
+        });
+
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .Respond(_ => new(HttpStatusCode.NoContent) {Headers = {ETag = new("\"v2\"")}});
+        await Endpoint.SetAsync(new MockEntity(5, "changed"), TestContext.Current.CancellationToken);
+        release();
+
+        (await read).Should().Be(new MockEntity(5, "outdated"));
+        Endpoint.Response.Should().Be(new MockEntity(5, "changed"),
+            because: "The outdated response must not replace the version from the newer write");
+
+        Mock.Expect(HttpMethod.Put, "http://localhost/endpoint")
+            .WithHeaders("If-Match", "\"v2\"")
+            .Respond(HttpStatusCode.NoContent);
+        await Endpoint.SetAsync(new MockEntity(5, "changed again"), TestContext.Current.CancellationToken);
+    }
+
     [Fact]
     public async Task TestSetWeakETag()
     {

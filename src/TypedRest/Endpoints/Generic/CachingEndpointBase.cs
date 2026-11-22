@@ -20,6 +20,65 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
 
     public ResponseCache? ResponseCache { get; set; }
 
+    // Track writes, so responses to requests that overlap a write do not cache outdated content.
+    private int _writesInProgress, _finishedWrites;
+    private readonly object _cacheLock = new();
+
+    private int StartWrite()
+    {
+        lock (_cacheLock)
+        {
+            ResponseCache = null;
+            _writesInProgress++;
+            return _finishedWrites;
+        }
+    }
+
+    private void EndWrite(int finishedWrites, ResponseCache? cache = null)
+    {
+        lock (_cacheLock)
+        {
+            _writesInProgress--;
+            if (cache != null && _writesInProgress == 0 && _finishedWrites == finishedWrites) ResponseCache = cache;
+            _finishedWrites++;
+        }
+    }
+
+    private (ResponseCache? cache, int finishedWrites) GetResponseCache()
+    {
+        lock (_cacheLock)
+        {
+            return (ResponseCache, _finishedWrites);
+        }
+    }
+
+    private void StoreResponseCache(ResponseCache? cache, int finishedWrites)
+    {
+        lock (_cacheLock)
+        {
+            if (_writesInProgress == 0 && _finishedWrites == finishedWrites)
+                ResponseCache = cache;
+        }
+    }
+
+    /// <summary>
+    /// Sends a request that modifies the resource and discards <see cref="ResponseCache"/>.
+    /// </summary>
+    /// <param name="request">Sends the request.</param>
+    /// <returns>The result of <paramref name="request"/>.</returns>
+    protected async Task<T> TrackWriteAsync<T>(Func<Task<T>> request)
+    {
+        int finishedWrites = StartWrite();
+        try
+        {
+            return await request().NoContext();
+        }
+        finally
+        {
+            EndWrite(finishedWrites);
+        }
+    }
+
     /// <summary>
     /// Performs an HTTP GET request on the <see cref="IEndpoint.Uri"/> and caches the response if the server sends an <see cref="HttpResponseHeaders.ETag"/>.
     /// </summary>
@@ -34,7 +93,8 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
     protected async Task<HttpContent> GetContentAsync(CancellationToken cancellationToken, [CallerMemberName] string caller = "unknown")
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, Uri);
-        var cache = ResponseCache; // Copy reference for thread-safety
+
+        (var cache, int finishedWrites) = GetResponseCache();
         cache?.SetIfModifiedHeaders(request.Headers); // Only fetch if changed
 
         var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
@@ -46,7 +106,7 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
         else
         {
             response = await HandleAsync(() => Task.FromResult(response), caller);
-            ResponseCache = ResponseCache.From(response);
+            StoreResponseCache(ResponseCache.From(response), finishedWrites);
             return response.Content;
         }
     }
@@ -73,14 +133,21 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
         using var request = new HttpRequestMessage(HttpMethod.Put, Uri) {Content = content};
         ResponseCache?.SetIfUnmodifiedHeaders(request.Headers); // Prevent lost updates
 
-        ResponseCache = null;
+        int finishedWrites = StartWrite();
+        ResponseCache? cache = null;
+        try
+        {
+            // Buffer the request body before sending, so it is still available for caching afterwards
+            var requestContent = await content.ReadAsByteArrayAsync().NoContext();
 
-        // Buffer the request body before sending, so it is still available for caching afterwards
-        var requestContent = await content.ReadAsByteArrayAsync().NoContext();
-
-        var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
-        ResponseCache = ResponseCache.FromPut(response, requestContent, content.Headers.ContentType);
-        return response;
+            var response = await HandleAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
+            cache = ResponseCache.FromPut(response, requestContent, content.Headers.ContentType);
+            return response;
+        }
+        finally
+        {
+            EndWrite(finishedWrites, cache);
+        }
     }
 
     /// <summary>
@@ -100,7 +167,14 @@ public abstract class CachingEndpointBase(IEndpoint referrer, Uri relativeUri)
         using var request = new HttpRequestMessage(HttpMethod.Delete, Uri);
         ResponseCache?.SetIfUnmodifiedHeaders(request.Headers);
 
-        ResponseCache = null;
-        await FinalizeAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
+        int finishedWrites = StartWrite();
+        try
+        {
+            await FinalizeAsync(() => HttpClient.SendAsync(request, cancellationToken), caller).NoContext();
+        }
+        finally
+        {
+            EndWrite(finishedWrites);
+        }
     }
 }

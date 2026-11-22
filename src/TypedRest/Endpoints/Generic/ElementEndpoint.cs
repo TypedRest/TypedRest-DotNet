@@ -65,8 +65,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-        ResponseCache = null;
-        using var response = await HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken)).NoContext();
+        using var response = await TrackWriteAsync(() => HandleAsync(() => HttpClient.PatchAsync(Uri, entity, Serializer, cancellationToken))).NoContext();
         return await TryReadAsAsync(response, cancellationToken);
     }
 
@@ -115,7 +114,6 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
         var patch = new JsonPatchDocument<TEntity>(new List<Operation<TEntity>>(), serializer.SerializerSettings.ContractResolver);
         patchAction(patch);
 
-        ResponseCache = null;
         using var request = new HttpRequestMessage(HttpMethods.Patch, Uri)
         {
             Content = new StringContent(JsonConvert.SerializeObject(patch))
@@ -123,7 +121,7 @@ public class ElementEndpoint<TEntity> : CachingEndpointBase, IElementEndpoint<TE
                 Headers = {ContentType = new("application/json-patch+json")}
             }
         };
-        using var response = await HttpClient.SendAsync(request, cancellationToken).NoContext();
+        using var response = await TrackWriteAsync(() => HttpClient.SendAsync(request, cancellationToken)).NoContext();
 
         if (response.StatusCode is HttpStatusCode.NotFound or HttpStatusCode.MethodNotAllowed)
             return await UpdateAsync(x => patch.ApplyTo(x), maxRetries, cancellationToken);
