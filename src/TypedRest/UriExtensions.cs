@@ -18,7 +18,7 @@ public static class UriExtensions
                 // Temporarily turn relative URIs into absolute ones for appending the slash
                 const string prefix = "http://fake:80/";
                 string resolvedWithFakeBase = new Uri(new Uri(prefix), uri).EnsureTrailingSlash().OriginalString;
-                return new Uri(resolvedWithFakeBase.Substring(uri.OriginalString.StartsWith("/")
+                return new Uri(resolvedWithFakeBase.Substring(uri.OriginalString.StartsWith("/", StringComparison.Ordinal)
                     ? prefix.Length - 1
                     : prefix.Length), UriKind.Relative);
             }
@@ -29,7 +29,7 @@ public static class UriExtensions
                 Host = uri.Host,
                 Port = uri.Port,
                 // Add trailing slash to path while preserving query parameters
-                Path = uri.AbsolutePath.EndsWith("/") ? uri.AbsolutePath : uri.AbsolutePath + "/",
+                Path = uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal) ? uri.AbsolutePath : uri.AbsolutePath + "/",
                 Query = uri.Query.TrimStart('?')
             };
             return new Uri(builder.ToString(), UriKind.Absolute);
@@ -43,7 +43,7 @@ public static class UriExtensions
         /// Debug.Assert(new Uri("http://myhost/path").Join("./subpath") == new Uri("http://myhost/path/subpath"));
         /// </code></example>
         public Uri Join(string relativeUri)
-            => new(relativeUri.StartsWith("./") ? uri.EnsureTrailingSlash() : uri, relativeUri);
+            => new(relativeUri.StartsWith("./", StringComparison.Ordinal) ? uri.EnsureTrailingSlash() : uri, relativeUri);
 
         /// <summary>
         /// Resolves a relative URI using this URI as the base.

@@ -23,7 +23,7 @@ public static class HttpContentExtensions
     private static void HandleCustomJsonMediaTypes(HttpContentHeaders headers, IEnumerable<MediaTypeFormatter> serializers)
     {
         if (headers.ContentType?.MediaType is {} mediaType
-         && mediaType.EndsWith("+json")
+         && mediaType.EndsWith("+json", StringComparison.Ordinal)
          && serializers.Any(x => x.SupportedMediaTypes.Contains(_jsonMediaType)))
             headers.ContentType.MediaType = _jsonMediaType.MediaType!;
     }

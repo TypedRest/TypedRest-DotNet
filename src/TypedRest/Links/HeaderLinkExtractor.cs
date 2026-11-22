@@ -56,7 +56,7 @@ public sealed class HeaderLinkExtractor : ILinkExtractor
     }
 
     private static string Unquote(string value)
-        => value.StartsWith("\"") && value.EndsWith("\"")
+        => value.StartsWith("\"", StringComparison.Ordinal) && value.EndsWith("\"", StringComparison.Ordinal)
             ? value.Substring(1, value.Length - 2)
             : value;
 }

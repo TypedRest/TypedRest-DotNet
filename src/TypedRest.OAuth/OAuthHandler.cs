@@ -131,7 +131,7 @@ public class OAuthHandler : DelegatingHandler
     }
 
     private static string TrimEnding(string value, string ending)
-        => value.EndsWith(ending)
+        => value.EndsWith(ending, StringComparison.Ordinal)
             ? value.Substring(0, value.Length - ending.Length)
             : value;
 

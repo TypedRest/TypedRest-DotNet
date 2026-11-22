@@ -31,7 +31,7 @@ public class DefaultErrorHandler : IErrorHandler
     protected virtual string? ExtractMessage(string body, MediaTypeHeaderValue? contentType)
     {
         string? mediaType = contentType?.MediaType;
-        if (mediaType != "application/json" && (mediaType == null || !mediaType.EndsWith("+json"))) return null;
+        if (mediaType != "application/json" && (mediaType == null || !mediaType.EndsWith("+json", StringComparison.Ordinal))) return null;
 
         try
         {
